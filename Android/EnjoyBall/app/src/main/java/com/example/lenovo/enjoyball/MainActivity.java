@@ -18,7 +18,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Activity_main extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private ImageView ivMainPortrait=null;
 
@@ -35,7 +35,7 @@ public class Activity_main extends AppCompatActivity {
             if (b){
                 imageView.setImageResource(selectImage);
                 textView.setTextColor(
-                        Color.parseColor("#000000"));
+                        Color.parseColor("#1afa29"));
             } else {
                 imageView.setImageResource(normalImage);
                 textView.setTextColor(
@@ -48,7 +48,7 @@ public class Activity_main extends AppCompatActivity {
             if (b){
                 imageView.setImageResource(selectImage);
                 textView.setTextColor(
-                        Color.parseColor("#FF0000"));
+                        Color.parseColor("#1afa29"));
             } else {
                 imageView.setImageResource(normalImage);
                 textView.setTextColor(
@@ -141,22 +141,22 @@ public class Activity_main extends AppCompatActivity {
                     changeTab(tabStrId[3]);
                     break;
                 case R.id.tab_spec_main_topall:
-                    changeTab(tabStrTopId[0]);
+                    changeTabTop(tabStrTopId[0]);
                     break;
                 case R.id.tab_spec_main_football:
-                    changeTab(tabStrTopId[1]);
+                    changeTabTop(tabStrTopId[1]);
                     break;
                 case R.id.tab_spec_main_basketball:
-                    changeTab(tabStrTopId[2]);
+                    changeTabTop(tabStrTopId[2]);
                     break;
                 case R.id.tab_spec_main_badminton:
-                    changeTab(tabStrTopId[3]);
+                    changeTabTop(tabStrTopId[3]);
                     break;
                 case R.id.tab_spec_main_tabletennis:
-                    changeTab(tabStrTopId[4]);
+                    changeTabTop(tabStrTopId[4]);
                     break;
                 case R.id.tab_spec_main_volleyball:
-                    changeTab(tabStrTopId[5]);
+                    changeTabTop(tabStrTopId[5]);
                     break;
                 case R.id.iv_main_portrait:
                     getPopupwindow();
@@ -365,7 +365,7 @@ public class Activity_main extends AppCompatActivity {
         map.get(tabStrId[3]).setSelectImage(R.drawable.message);
         for (int i = 0;i<6;i++){
             mapTop.get(tabStrTopId[i]).setNormalImage(R.drawable.underline11);
-            mapTop.get(tabStrTopId[i]).setSelectImage(R.drawable.underlinered);
+            mapTop.get(tabStrTopId[i]).setSelectImage(R.drawable.underlinegreen);
         }
     }
 
