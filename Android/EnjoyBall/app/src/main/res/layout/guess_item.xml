@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/tv_guess_title"
+        android:text="谁会获得胜利"
+        android:textSize="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_guess_item1"
+            android:layout_marginTop="10dp"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="7pm胜利"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="80dp" />
+
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/light"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/tv_guess_item2"
+            android:layout_marginTop="10dp"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="Orange胜利"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="80dp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_guess_rate1"
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"
+            android:text="70%"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_guess_rate2"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:textSize="20dp"
+            android:text="30%"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

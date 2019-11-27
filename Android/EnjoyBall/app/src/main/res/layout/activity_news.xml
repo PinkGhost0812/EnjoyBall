@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/rl_news_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--标题-->
+            <TextView
+                android:id="@+id/tv_news_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="排超天津女排首秀3-0河南 朱婷两局5分成功率56%"
+                android:textColor="#000000"
+                android:textSize="23dp"
+                android:textStyle="normal" />
+
+            <!--发布者头像、信息、关注按钮-->
+            <LinearLayout
+                android:id="@+id/ll_news_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_news_title"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/iv_news_headImg"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/pm" />
+
+                <!--名字和时间-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_news_authorName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="李烦烦"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tv_news_releaseTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:text="一秒钟前"
+                        android:textSize="16dp" />
+
+                    <Button
+                        android:id="@+id/btn_news_attention"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="15dp"
+                        android:background="#1c8ffa"
+                        android:text="关注" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <!--新闻内容-->
+            <TextView
+                android:id="@+id/tv_news_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_news_author"
+                android:padding="25dp"
+                android:text="@string/news_body"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+
+            <!--喜欢不喜欢-->
+            <RelativeLayout
+                android:id="@+id/rl_news_likeOrNot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_news_body"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_news_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/like" />
+
+                    <TextView
+                        android:id="@+id/tv_news_likeNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="30"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_news_dislike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="33dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/dislike" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="不喜欢"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <!--评论-->
+            <ListView
+                android:id="@+id/lv_news_comments"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_below="@+id/rl_news_likeOrNot"></ListView>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff">
+
+        <EditText
+            android:id="@+id/ed_news_commentContent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:hint="写评论" />
+
+        <ImageView
+            android:id="@+id/iv_news_releaseComment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/fly" />
+
+        <ImageView
+            android:id="@+id/iv_news_collect"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/collect" />
+
+        <ImageView
+            android:id="@+id/iv_news_remindWho"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/remindhe" />
+
+    </LinearLayout>
+
+</RelativeLayout>

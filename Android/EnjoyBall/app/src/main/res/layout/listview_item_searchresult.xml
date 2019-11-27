@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:id="@+id/iv_searchresult_head"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:id="@+id/tv_searchresult_name"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="邀请"
+        android:id="@+id/tv_searchresult_invite"
+        android:textColor="@android:color/holo_blue_bright"
+        android:layout_height="wrap_content" />
+</LinearLayout>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!--两个队伍和比分-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!--team1-->
+        <LinearLayout
+            android:id="@+id/ll_contest_team1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/im_contest_teamLogo1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/pm" />
+
+            <TextView
+                android:id="@+id/tv_contest_teamName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="7pm"
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <!--比分-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_toRightOf="@id/ll_contest_team1"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!--比分情况-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <!--比分1-->
+                <TextView
+                    android:id="@+id/tv_contest_teamScore1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:textSize="50dp"
+                    android:textStyle="bold" />
+
+                <!--闪电-->
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/light" />
+
+                <!--比分2-->
+                <TextView
+                    android:id="@+id/tv_contest_teamScore2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:textSize="50dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!--订阅比赛-->
+            <Button
+                android:id="@+id/btn_contest_subscription"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:background="#fef8f6"
+                android:text="订阅比赛" />
+
+        </LinearLayout>
+
+        <!--team2-->
+        <LinearLayout
+            android:id="@+id/ll_contest_team2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/im_contest_teamLogo2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/pm" />
+
+            <TextView
+                android:id="@+id/tv_contest_teamName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="7pm"
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <!--四个选项卡-->
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_contest_battleArray"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textSize="25dp"
+            android:text="阵容"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_contest_battleReport"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textSize="25dp"
+            android:text="战报"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_contest_comment"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textSize="25dp"
+            android:text="评论"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_contest_guessing"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textSize="25dp"
+            android:text="竞猜"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_contest_tabContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

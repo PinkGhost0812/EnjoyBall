@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#E6E3E3"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#55C855">
+
+        <ImageView
+            android:id="@+id/iv_forget_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/back"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="找回密码"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="30sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="+86"
+            android:layout_marginLeft="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:textSize="24dp"/>
+        <EditText
+            android:id="@+id/et_forget_phone"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:background="#FFF"
+            android:layout_marginRight="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:hint="用户名/邮箱/手机号" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="验证码"
+            android:layout_marginLeft="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:textSize="21dp"/>
+        <EditText
+            android:id="@+id/et_forget_code"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/bt_forget_code"
+            android:background="#FFF"
+            android:hint="请输入验证码" />
+        <Button
+            android:id="@+id/bt_forget_code"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="#55C855"
+            android:layout_marginRight="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="获取验证码"
+            android:textSize="15dp"
+            android:textColor="#FFF"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="密   码"
+            android:layout_marginLeft="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:textSize="24dp"/>
+        <EditText
+            android:id="@+id/et_forget_pwd"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:background="#FFF"
+            android:layout_marginRight="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:hint="请输入修改后的密码" />
+    </RelativeLayout>
+    <Button
+        android:id="@+id/bt_forget_pwd"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:background="#55C855"
+        android:layout_marginTop="30dp"
+        android:text="修改密码"
+        android:textSize="24dp"
+        android:textColor="#FFF"/>
+
+
+</LinearLayout>

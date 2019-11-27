@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/iv_battleArray_badminton_headImg1"
+            android:src="@drawable/pm"
+            android:layout_width="70dp"
+            android:layout_height="70dp" />
+
+        <TextView
+            android:id="@+id/tv_battleArray_badminton_name1"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="LFF"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_gravity="center"
+        android:src="@drawable/lightgreen"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="40dp" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_battleArray_badminton_headImg2"
+            android:src="@drawable/pm"
+            android:layout_width="70dp"
+            android:layout_height="70dp" />
+
+        <TextView
+            android:id="@+id/tv_battleArray_badminton_name2"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="LFF"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

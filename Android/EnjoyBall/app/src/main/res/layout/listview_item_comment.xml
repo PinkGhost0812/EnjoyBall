@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="110dp"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:textSize="18dp"
+            android:layout_gravity="center"
+            android:layout_width="350dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="17dp"
+            android:text="本赛季鲁能究竟能走多远，能否在足协杯上再创辉煌让我们拭目以待" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_marginLeft="17dp"
+            android:layout_gravity="center"
+            android:layout_width="330dp"
+            android:layout_height="40dp"
+            android:textSize="15dp"
+            android:text="【原文】鲁能与申花的足协杯决赛将于十二月举行" />
+
+    </LinearLayout>
+
+</LinearLayout>

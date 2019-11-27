@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bgfootball"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center">
+        <TextView
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="曼彻斯特城足球俱乐部"
+            android:textSize="20dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:alpha="0.7"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:background="@drawable/background_linearlayout"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="210dp"
+            android:layout_height="450dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textColor="#000000"
+                    android:text="队徽:"
+                    android:textSize="20dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/iv_team_detail_portrait"
+                    android:paddingLeft="40dp"
+                    android:textColor="#000000"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:src="@drawable/logoadd"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textColor="#000000"
+                    android:text="队名:"
+                    android:textSize="20dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_team_detail_name"
+                    android:textColor="#000000"
+                    android:textSize="20dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:gravity="right"
+                    android:text="曼彻斯特城足球"
+                    android:layout_height="wrap_content"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textColor="#000000"
+                    android:text="队长:"
+                    android:textSize="20dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_team_detail_captain"
+                    android:text="大卫席尔瓦"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:gravity="right"
+                    android:layout_height="match_parent"></TextView>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textColor="#000000"
+                    android:text="队员:"
+                    android:textSize="20dp"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" />
+
+                <ListView
+                    android:id="@+id/lv_team_detail_member"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></ListView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textColor="#000000"
+                    android:text="地区:"
+                    android:textSize="20dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_team_detail_address"
+                    android:textColor="#000000"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:text="山东济南"
+                    android:textSize="20dp"
+                    android:gravity="right"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textColor="#000000"
+                    android:text="成立时间:"
+                    android:textSize="20dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_team_detail_time"
+                    android:textColor="#000000"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="20dp"
+                    android:text="1998年"
+                    android:gravity="right"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textColor="#000000"
+                    android:text="口号:"
+                    android:textSize="20dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_team_detail_slogan"
+                    android:textColor="#000000"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:textSize="20dp"
+                    android:text="我们是冠军"
+                    android:gravity="right"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/btn_team_detail_out"
+                android:layout_marginTop="30dp"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                android:text="退出球队"
+                android:background="@drawable/shapebutton_1"
+                android:layout_width="150dp"
+                android:layout_height="50dp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
