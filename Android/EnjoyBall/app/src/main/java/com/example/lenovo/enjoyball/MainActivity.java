@@ -1,5 +1,6 @@
 package com.example.lenovo.enjoyball;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
@@ -21,8 +22,6 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     private ImageView ivMainPortrait=null;
-
-    private PopupWindow popupWindow =null;
 
     private class MyTabSpec {
         private ImageView imageView = null;
@@ -107,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //用于点击头像右侧弹窗，好像是设置home属性，我也不知道干什么的
-        this.getWindow().setFlags(0x80000000, 0x80000000);
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_main);
 
@@ -159,46 +156,15 @@ public class MainActivity extends AppCompatActivity {
                     changeTabTop(tabStrTopId[5]);
                     break;
                 case R.id.iv_main_portrait:
-                    getPopupwindow();
-                    popupWindow.showAtLocation(v, Gravity.LEFT,0,0);
+                    //跳转到个人中心页面
+                    Intent intent =new Intent();
+                    intent.setClass(Activity_main.this, PersonalcenterActivity.class);
+                    overridePendingTransition(R.anim.personalcenter_in, R.anim.personalcenter_out);
+                    startActivity(intent);
                     break;
 
             }
         }
-    }
-
-    //右侧弹窗：判断是否已经有弹窗
-    private void getPopupwindow() {
-
-        if (null!=popupWindow){
-            popupWindow.dismiss();
-            return;
-        }else {
-            initPopupWindow();
-        }
-    }
-
-    //右侧弹窗：创建弹窗
-    private void initPopupWindow() {
-        //获取自定义布局文件activity_pop_left.xml 布局文件
-        final View popipWindow_view = getLayoutInflater().inflate(R.layout.popwindow_personalcenter,null,false);
-        //创建Popupwindow 实例，200，LayoutParams.MATCH_PARENT 分别是宽高
-        popupWindow = new PopupWindow
-                (popipWindow_view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,true);
-        //设置动画效果
-        popupWindow.setAnimationStyle(R.style.pop_animation);
-        //点击其他地方消失
-        popipWindow_view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (popipWindow_view != null && popipWindow_view.isShown()) {
-                    popupWindow.dismiss();
-                    popupWindow = null;
-                }
-                return false;
-            }
-        });
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0));
     }
 
     // 根据Tab ID 切换Tab

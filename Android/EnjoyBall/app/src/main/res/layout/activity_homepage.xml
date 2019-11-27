@@ -53,7 +53,7 @@
                         android:id="@+id/tv_homepage_nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="用户名"
+                        android:text="未登录"
                         android:textColor="#ffffff"
                         android:textSize="15dp" />
 
@@ -159,9 +159,11 @@
     </LinearLayout>
 
     <FrameLayout
+        android:background="#ffffff"
+        android:alpha="0.5"
         android:id="@+id/fl_homepage_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true" />
+        android:layout_below="@id/ll_homepage_main"/>
 
 </RelativeLayout>

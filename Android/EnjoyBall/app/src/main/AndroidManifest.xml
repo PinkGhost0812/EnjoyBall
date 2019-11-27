@@ -27,6 +27,7 @@
         <activity android:name=".TeamCreateActivity" />
         <activity android:name=".PerinfoActivity" />
         <activity android:name=".TeamDetailActivity"></activity>
+        <activity android:name=".PersonalcenterActivity"></activity>
     </application>
 
 </manifest>
