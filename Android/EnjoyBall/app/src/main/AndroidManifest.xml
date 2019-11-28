@@ -12,7 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <activity android:name=".NewsDetailActivity">
+=======
+        <activity android:name=".MainActivity">
+>>>>>>> b12f88967f37059b9a6816ff59061668bf868fe7
 =======
         <activity android:name=".MainActivity">
 >>>>>>> b12f88967f37059b9a6816ff59061668bf868fe7
@@ -26,15 +30,21 @@
         <activity android:name=".FeedBackActivity" />
         <activity android:name=".CollectActivity" />
 <<<<<<< HEAD
+<<<<<<< HEAD
         <activity android:name=".TreatyballActivity"/>
         <activity android:name=".Activity_registered" />
         <activity android:name=".Activity_forget" />
         <activity android:name=".Activity_home" />
 =======
+=======
+>>>>>>> b12f88967f37059b9a6816ff59061668bf868fe7
         <activity android:name=".TreatyballActivity"></activity>
         <activity android:name=".RegisteredActivity" />
         <activity android:name=".ForgetActivity" />
         <activity android:name=".HomeActivity" />
+<<<<<<< HEAD
+>>>>>>> b12f88967f37059b9a6816ff59061668bf868fe7
+=======
 >>>>>>> b12f88967f37059b9a6816ff59061668bf868fe7
         <activity android:name=".TeamActivity" />
         <activity android:name=".HomepageActivity" />
@@ -45,6 +55,9 @@
 =======
         <activity android:name=".TeamDetailActivity"></activity>
         <activity android:name=".PersonalcenterActivity"></activity>
+<<<<<<< HEAD
+>>>>>>> b12f88967f37059b9a6816ff59061668bf868fe7
+=======
 >>>>>>> b12f88967f37059b9a6816ff59061668bf868fe7
     </application>
 
