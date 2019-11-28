@@ -2,23 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lenovo.enjoyball">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/bd"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity_main">
+        <activity android:name=".NewsDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--<activity android:name=".NewsDetailActivity"/>-->
         <activity android:name=".FeedBackActivity" />
         <activity android:name=".CollectActivity" />
-        <activity android:name=".TreatyballActivity"></activity>
+        <activity android:name=".TreatyballActivity"/>
         <activity android:name=".Activity_registered" />
         <activity android:name=".Activity_forget" />
         <activity android:name=".Activity_home" />
@@ -26,7 +29,7 @@
         <activity android:name=".HomepageActivity" />
         <activity android:name=".TeamCreateActivity" />
         <activity android:name=".PerinfoActivity" />
-        <activity android:name=".TeamDetailActivity"></activity>
+        <activity android:name=".TeamDetailActivity"/>
     </application>
 
 </manifest>

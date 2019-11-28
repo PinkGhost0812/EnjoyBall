@@ -155,6 +155,8 @@
     </ScrollView>
 
     <LinearLayout
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
@@ -168,23 +170,26 @@
             android:hint="写评论" />
 
         <ImageView
+            android:layout_gravity="center"
             android:id="@+id/iv_news_releaseComment"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="25dp"
             android:layout_weight="1"
             android:src="@drawable/fly" />
 
         <ImageView
+            android:layout_gravity="center"
             android:id="@+id/iv_news_collect"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="25dp"
             android:layout_weight="1"
             android:src="@drawable/collect" />
 
         <ImageView
+            android:layout_gravity="center"
             android:id="@+id/iv_news_remindWho"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="25dp"
             android:layout_weight="1"
             android:src="@drawable/remindhe" />
 

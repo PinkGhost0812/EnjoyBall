@@ -1,4 +1,4 @@
-package com.example.lenovo.enjoyball.entity;
+package com.example.lenovo.entity;
 
 public class UserFans {
     private Integer id;

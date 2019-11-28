@@ -1,17 +1,15 @@
-package com.example.lenovo.enjoyball.entity;
+package com.example.lenovo.entity;
 
 import java.util.Date;
 
 public class Comment {
     private Integer id;
-    private Integer home;
-    private Integer away;
-    private Date time;
-    private String place;
+    private Integer author;
     private Integer cla;
-    private Integer grade;
-    private Integer status;
-    private String result;
+    private String content;
+    private Integer likeNum;
+    private Date time;
+    private Integer belone;
 
     public Integer getId() {
         return id;
@@ -21,36 +19,12 @@ public class Comment {
         this.id = id;
     }
 
-    public Integer getHome() {
-        return home;
+    public Integer getAuthor() {
+        return author;
     }
 
-    public void setHome(Integer home) {
-        this.home = home;
-    }
-
-    public Integer getAway() {
-        return away;
-    }
-
-    public void setAway(Integer away) {
-        this.away = away;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
-
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
+    public void setAuthor(Integer author) {
+        this.author = author;
     }
 
     public Integer getCla() {
@@ -61,53 +35,58 @@ public class Comment {
         this.cla = cla;
     }
 
-    public Integer getGrade() {
-        return grade;
+    public String getContent() {
+        return content;
     }
 
-    public void setGrade(Integer grade) {
-        this.grade = grade;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getLikeNum() {
+        return likeNum;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
     }
 
-    public String getResult() {
-        return result;
+    public Date getTime() {
+        return time;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public Integer getBelone() {
+        return belone;
+    }
+
+    public void setBelone(Integer belone) {
+        this.belone = belone;
     }
 
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
-                ", home=" + home +
-                ", away=" + away +
-                ", time=" + time +
-                ", place='" + place + '\'' +
+                ", author=" + author +
                 ", cla=" + cla +
-                ", grade=" + grade +
-                ", status=" + status +
-                ", result='" + result + '\'' +
+                ", content='" + content + '\'' +
+                ", likeNum=" + likeNum +
+                ", time=" + time +
+                ", belone=" + belone +
                 '}';
     }
 
-    public Comment(Integer id, Integer home, Integer away, Date time, String place, Integer cla, Integer grade, Integer status, String result) {        this.id = id;
-        this.home = home;
-        this.away = away;
-        this.time = time;
-        this.place = place;
+    public Comment(Integer id, Integer author, Integer cla, String content, Integer likeNum, Date time, Integer belone) {
+        this.id = id;
+        this.author = author;
         this.cla = cla;
-        this.grade = grade;
-        this.status = status;
-        this.result = result;
+        this.content = content;
+        this.likeNum = likeNum;
+        this.time = time;
+        this.belone = belone;
     }
 }

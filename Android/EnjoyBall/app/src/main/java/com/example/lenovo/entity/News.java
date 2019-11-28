@@ -1,4 +1,4 @@
-package com.example.lenovo.enjoyball.entity;
+package com.example.lenovo.entity;
 
 import java.util.Date;
 
@@ -6,7 +6,7 @@ public class News {
     private Integer id;
     private Integer cla;
     private String title;
-    private String author;
+    private Integer author;
     private Date time;
     private String image;
     private String content;
@@ -38,11 +38,11 @@ public class News {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Integer getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Integer author) {
         this.author = author;
     }
 
@@ -94,7 +94,7 @@ public class News {
         this.game = game;
     }
 
-    public News(Integer id, Integer cla, String title, String author, Date time, String image, String content, Integer heat, Integer likeNum, Integer game) {
+    public News(Integer id, Integer cla, String title, Integer author, Date time, String image, String content, Integer heat, Integer likeNum, Integer game) {
         this.id = id;
         this.cla = cla;
         this.title = title;
