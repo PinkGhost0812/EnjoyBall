@@ -12,8 +12,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="#55C855"
+            android:layout_height="50dp"
+            android:background="#1afa29"
             android:orientation="horizontal">
 
             <ImageView
@@ -22,23 +22,24 @@
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/my" />
 
             <EditText
                 android:id="@+id/et_main_search"
                 android:layout_width="220dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/et_main_white"
                 android:gravity="center"
-                android:hint="国际足球" />
+                android:hint="国际足球"
+                android:textSize="16sp"  />
 
             <ImageView
                 android:id="@+id/iv_serch"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="25dp"
@@ -73,14 +74,14 @@
                         android:layout_marginTop="5dp"
                         android:text="全部"
                         android:textColor="#000"
-                        android:textSize="16dp" />
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/img_main_topall"
-                        android:layout_width="40dp"
-                        android:layout_height="10dp"
+                        android:layout_width="30dp"
+                        android:layout_height="6dp"
                         android:layout_marginBottom="5dp"
-                        android:layout_marginTop="10dp" />
+                        android:layout_marginTop="10dp"/>
 
                 </LinearLayout>
 
@@ -98,14 +99,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="足球"
+                        android:textSize="16sp"
                         android:textColor="#000"
-                        android:textSize="16dp" />
+                        android:text="足球" />
 
                     <ImageView
                         android:id="@+id/img_main_football"
-                        android:layout_width="40dp"
-                        android:layout_height="10dp"
+                        android:layout_width="30dp"
+                        android:layout_height="6dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="10dp" />
 
@@ -125,14 +126,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="篮球"
+                        android:textSize="16sp"
                         android:textColor="#000"
-                        android:textSize="16dp" />
+                        android:text="篮球" />
 
                     <ImageView
                         android:id="@+id/img_main_basketball"
-                        android:layout_width="40dp"
-                        android:layout_height="10dp"
+                        android:layout_width="30dp"
+                        android:layout_height="6dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="10dp" />
 
@@ -152,14 +153,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="羽毛球"
+                        android:textSize="16sp"
                         android:textColor="#000"
-                        android:textSize="16dp" />
+                        android:text="羽毛球" />
 
                     <ImageView
                         android:id="@+id/img_main_badminton"
-                        android:layout_width="40dp"
-                        android:layout_height="10dp"
+                        android:layout_width="30dp"
+                        android:layout_height="6dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="10dp" />
 
@@ -178,14 +179,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="乒乓球"
+                        android:textSize="16sp"
                         android:textColor="#000"
-                        android:textSize="16dp" />
+                        android:text="乒乓球" />
 
                     <ImageView
                         android:id="@+id/img_main_tabletennis"
-                        android:layout_width="40dp"
-                        android:layout_height="10dp"
+                        android:layout_width="30dp"
+                        android:layout_height="6dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="10dp" />
 
@@ -204,14 +205,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="排球"
+                        android:textSize="16sp"
                         android:textColor="#000"
-                        android:textSize="16dp" />
+                        android:text="排球" />
 
                     <ImageView
                         android:id="@+id/img_main_volleyball"
-                        android:layout_width="40dp"
-                        android:layout_height="10dp"
+                        android:layout_width="30dp"
+                        android:layout_height="6dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="10dp" />
 

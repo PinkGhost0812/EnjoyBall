@@ -6,37 +6,37 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class Activity_forget extends AppCompatActivity {
+public class RegisteredActivity extends AppCompatActivity {
 
-    private ForgetLiseners forgetLiseners;
+    private RegisteredLiseners forgetLiseners;
     private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forget);
+        setContentView(R.layout.activity_registered);
 
         findView();
         setListeners();
     }
 
     private void setListeners(){
-        forgetLiseners = new ForgetLiseners();
+        forgetLiseners = new RegisteredLiseners();
         ivBack.setOnClickListener(forgetLiseners);
     }
 
     private void findView(){
-        ivBack = findViewById(R.id.iv_forget_back);
+        ivBack = findViewById(R.id.iv_registered_back);
     }
 
-    public class ForgetLiseners implements View.OnClickListener{
+    public class RegisteredLiseners implements View.OnClickListener{
 
         @Override
         public void onClick(View v){
             switch (v.getId()){
-                case R.id.iv_forget_back:
+                case R.id.iv_registered_back:
                     Intent intent = new Intent();
-                    intent.setClass(Activity_forget.this,Activity_login.class);
+                    intent.setClass(RegisteredActivity.this,LoginActivity.class);
                     startActivity(intent);
             }
         }

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Activity_login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private LoginListeners loginListeners;
     private Button btLogin;
@@ -42,18 +42,18 @@ public class Activity_login extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.bt_login_lg:
                     Intent intent=new Intent();
-                    intent.setClass(Activity_login.this,Activity_main.class);
+                    intent.setClass(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
 
                     break;
                 case R.id.tv_login_forget:
                     Intent intent1=new Intent();
-                    intent1.setClass(Activity_login.this,Activity_forget.class);
+                    intent1.setClass(LoginActivity.this,ForgetActivity.class);
                     startActivity(intent1);
                     break;
                 case R.id.tv_login_registered:
                     Intent intent2=new Intent();
-                    intent2.setClass(Activity_login.this,Activity_registered.class);
+                    intent2.setClass(LoginActivity.this,RegisteredActivity.class);
                     startActivity(intent2);
                     break;
             }

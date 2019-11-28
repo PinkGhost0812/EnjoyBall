@@ -11,8 +11,8 @@
     </style>
 
     <style name="pop_animation" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/pop_personalcenter_in</item>
-        <item name="android:windowExitAnimation">@anim/pop_personalcenter_out</item>
+        <item name="android:windowEnterAnimation">@anim/personalcenter_in</item>
+        <item name="android:windowExitAnimation">@anim/personalcenter_out</item>
     </style>
 
 </resources>
