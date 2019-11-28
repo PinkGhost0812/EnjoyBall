@@ -3,6 +3,7 @@ package com.example.lenovo.enjoyball;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,8 +18,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_login);
         findView();
+
 
         setListeners();
     }
@@ -32,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void findView(){
         btLogin = findViewById(R.id.bt_login_lg);
-        tvRegistered = findViewById(R.id.tv_login_registered);
+        tvRegistered = findViewById(R.id.tv_login_register);
         tvForget = findViewById(R.id.tv_login_forget);
     }
 
@@ -43,17 +46,18 @@ public class LoginActivity extends AppCompatActivity {
                 case R.id.bt_login_lg:
                     Intent intent=new Intent();
                     intent.setClass(LoginActivity.this,MainActivity.class);
-                    startActivity(intent);
 
+                    startActivity(intent);
+                    finish();
                     break;
                 case R.id.tv_login_forget:
                     Intent intent1=new Intent();
                     intent1.setClass(LoginActivity.this,ForgetActivity.class);
                     startActivity(intent1);
                     break;
-                case R.id.tv_login_registered:
+                case R.id.tv_login_register:
                     Intent intent2=new Intent();
-                    intent2.setClass(LoginActivity.this,RegisteredActivity.class);
+                    intent2.setClass(LoginActivity.this,RegisterActivity.class);
                     startActivity(intent2);
                     break;
             }

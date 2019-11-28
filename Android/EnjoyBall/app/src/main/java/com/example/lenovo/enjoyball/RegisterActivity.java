@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class RegisteredActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     private RegisteredLiseners forgetLiseners;
     private ImageView ivBack;
@@ -14,7 +14,8 @@ public class RegisteredActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registered);
+        setTheme(R.style.nonetitle);
+        setContentView(R.layout.activity_register);
 
         findView();
         setListeners();
@@ -26,7 +27,7 @@ public class RegisteredActivity extends AppCompatActivity {
     }
 
     private void findView(){
-        ivBack = findViewById(R.id.iv_registered_back);
+        ivBack = findViewById(R.id.iv_register_back);
     }
 
     public class RegisteredLiseners implements View.OnClickListener{
@@ -34,9 +35,9 @@ public class RegisteredActivity extends AppCompatActivity {
         @Override
         public void onClick(View v){
             switch (v.getId()){
-                case R.id.iv_registered_back:
+                case R.id.iv_register_back:
                     Intent intent = new Intent();
-                    intent.setClass(RegisteredActivity.this,LoginActivity.class);
+                    intent.setClass(RegisterActivity.this,LoginActivity.class);
                     startActivity(intent);
             }
         }

@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void changeTabTop(String s) {
         // 1 切换Fragment
-        changeFragmentTop(s);
+       // changeFragmentTop(s);
 
         // 2 切换图标及字体颜色
         changeImageTop(s);

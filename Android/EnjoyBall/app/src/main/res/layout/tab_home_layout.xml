@@ -6,10 +6,12 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="110dp" />
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/roundmap"/>
 
     <ListView
-        android:id="@+id/lv_persons"
+        android:id="@+id/lv_home_news"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
