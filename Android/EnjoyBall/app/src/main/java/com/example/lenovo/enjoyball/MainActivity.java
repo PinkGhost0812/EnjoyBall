@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.iv_main_portrait:
                     //跳转到个人中心页面
                     Intent intent =new Intent();
-                    intent.setClass(Activity_main.this, PersonalcenterActivity.class);
+                    intent.setClass(MainActivity.this, PersonalcenterActivity.class);
                     overridePendingTransition(R.anim.personalcenter_in, R.anim.personalcenter_out);
                     startActivity(intent);
                     break;
