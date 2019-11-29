@@ -1,8 +1,9 @@
 package com.example.lenovo.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Comment {
+public class Comment implements Serializable {
     private Integer id;
     private Integer author;
     private Integer cla;

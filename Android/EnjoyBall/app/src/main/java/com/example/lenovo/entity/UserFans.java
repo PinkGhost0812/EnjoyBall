@@ -1,6 +1,8 @@
 package com.example.lenovo.entity;
 
-public class UserFans {
+import java.io.Serializable;
+
+public class UserFans implements Serializable {
     private Integer id;
     private Integer user_id;
     private Integer fans_id;

@@ -50,7 +50,7 @@ public class TreatyballActivity extends AppCompatActivity {
         TreatyballListviewAdapter myadapter = new TreatyballListviewAdapter(
                 this,
                 datasource,
-                R.layout.treatyball_item
+                R.layout.listview_item_treatyball
         );
         ListView listView = findViewById(R.id.lv_treatyball_match);
         listView.setAdapter(myadapter);

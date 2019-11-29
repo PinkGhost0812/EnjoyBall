@@ -1,6 +1,8 @@
 package com.example.lenovo.entity;
 
-public class Collection {
+import java.io.Serializable;
+
+public class Collection implements Serializable {
     private Integer id;
     private Integer newsId;
     private Integer userId;

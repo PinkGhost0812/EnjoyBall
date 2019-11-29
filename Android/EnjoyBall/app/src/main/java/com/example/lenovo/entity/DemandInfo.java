@@ -1,8 +1,12 @@
 package com.example.lenovo.entity;
+<<<<<<< Updated upstream
 
+=======
+import java.io.Serializable;
+>>>>>>> Stashed changes
 import java.util.Date;
 
-public class DemandInfo {
+public class DemandInfo implements Serializable {
     private Integer id;
     private Integer userId;
     private Date time;

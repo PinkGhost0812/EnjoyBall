@@ -1,8 +1,9 @@
 package com.example.lenovo.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Contest {
+public class Contest implements Serializable {
     private Integer id;
     private Integer home;
     private Integer away;

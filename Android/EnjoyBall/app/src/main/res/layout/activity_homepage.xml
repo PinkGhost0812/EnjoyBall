@@ -160,7 +160,7 @@
 
     <FrameLayout
         android:background="#ffffff"
-        android:alpha="0.5"
+        android:alpha="0.7"
         android:id="@+id/fl_homepage_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

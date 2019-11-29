@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.lenovo.entity.TeamDemand;
+import com.example.lenovo.entity.User;
+
 public class PersonalcenterActivity extends AppCompatActivity {
 
     private ImageView ivPersonalcenterPortrait;
@@ -34,6 +37,10 @@ public class PersonalcenterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_personalcenter);
+
+        TeamDemand teamDemand= (TeamDemand) getIntent().getSerializableExtra("team");
+
+        Log.e("test",teamDemand.getId().toString());
 
         findView();
 

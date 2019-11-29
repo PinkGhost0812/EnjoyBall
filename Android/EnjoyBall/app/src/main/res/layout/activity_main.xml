@@ -13,7 +13,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#1afa29"
+            android:background="#37E137"
             android:orientation="horizontal">
 
             <ImageView
@@ -247,8 +247,8 @@
 
                     <ImageView
                         android:id="@+id/img_main_home"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/home2" />
@@ -258,6 +258,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="首页"
+                        android:textSize="10dp"
                         android:textColor="#707070" />
 
                 </LinearLayout>
@@ -273,8 +274,8 @@
 
                     <ImageView
                         android:id="@+id/img_main_game"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/game2" />
@@ -284,6 +285,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="比赛"
+                        android:textSize="10dp"
                         android:textColor="#707070" />
 
                 </LinearLayout>
@@ -299,8 +301,8 @@
 
                     <ImageView
                         android:id="@+id/img_main_time"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/time2" />
@@ -310,6 +312,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="约球"
+                        android:textSize="10dp"
                         android:textColor="#707070" />
 
                 </LinearLayout>
@@ -325,8 +328,8 @@
 
                     <ImageView
                         android:id="@+id/img_main_message"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/message2" />
@@ -336,6 +339,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="消息"
+                        android:textSize="10dp"
                         android:textColor="#707070" />
 
                 </LinearLayout>

@@ -16,6 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.lenovo.entity.TeamDemand;
+import com.example.lenovo.entity.User;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -159,6 +162,11 @@ public class MainActivity extends AppCompatActivity {
                     //跳转到个人中心页面
                     Intent intent =new Intent();
                     intent.setClass(MainActivity.this, PersonalcenterActivity.class);
+<<<<<<< Updated upstream
+=======
+                    TeamDemand teamDemand=new TeamDemand(1,2,3,4);
+                    intent.putExtra("team",teamDemand);
+>>>>>>> Stashed changes
                     overridePendingTransition(R.anim.personalcenter_in, R.anim.personalcenter_out);
                     startActivity(intent);
                     break;

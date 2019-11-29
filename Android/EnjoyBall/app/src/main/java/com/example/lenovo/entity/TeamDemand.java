@@ -1,6 +1,8 @@
 package com.example.lenovo.entity;
 
-public class TeamDemand {
+import java.io.Serializable;
+
+public class TeamDemand implements Serializable{
     private Integer id;
     private Integer teamId;
     private Integer isHome;
