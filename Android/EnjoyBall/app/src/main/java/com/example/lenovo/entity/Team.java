@@ -1,9 +1,6 @@
 package com.example.lenovo.entity;
-<<<<<<< Updated upstream
 
-=======
 import java.io.Serializable;
->>>>>>> Stashed changes
 import java.util.Date;
 
 public class Team implements Serializable {
