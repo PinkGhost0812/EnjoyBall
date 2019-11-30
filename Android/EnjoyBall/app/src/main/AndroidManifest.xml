@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lenovo.enjoyball">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -11,23 +13,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name="com.example.lenovo.Activity.LoadActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".NewsDetailActivity"/>-->
-        <activity android:name=".MainActivity" />
-        <activity android:name=".FeedBackActivity" />
-        <activity android:name=".CollectActivity" />
-        <activity android:name=".TreatyballActivity"/>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".ForgetActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".TeamDetailActivity"/>
-        <activity android:name=".PersonalcenterActivity"/>
+        <!-- <activity android:name=".NewsDetailActivity"/> -->
+        <activity android:name="com.example.lenovo.Activity.MainActivity"/>
+        <activity android:name="com.example.lenovo.Activity.FeedBackActivity" />
+        <activity android:name="com.example.lenovo.Activity.CollectActivity" />
+        <activity android:name="com.example.lenovo.Activity.TreatyballActivity" />
+        <activity android:name="com.example.lenovo.Activity.RegisterActivity" />
+        <activity android:name="com.example.lenovo.Activity.ForgetActivity" />
+        <activity android:name="com.example.lenovo.Activity.HomeActivity" />
+        <activity android:name="com.example.lenovo.Activity.TeamDetailActivity" />
+        <activity android:name="com.example.lenovo.Activity.PersonalcenterActivity" />
+        <activity android:name="com.example.lenovo.Activity.HomepageActivity" />
+        <activity android:name="com.example.lenovo.Activity.PerinfoActivity" />
+        <activity android:name="com.example.lenovo.Activity.TeamActivity" />
     </application>
 
 </manifest>

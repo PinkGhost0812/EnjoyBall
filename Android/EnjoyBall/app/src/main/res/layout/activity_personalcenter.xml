@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#ffffff"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--个人区域-->
@@ -32,7 +33,7 @@
                 android:layout_marginTop="13dp"
                 android:layout_marginLeft="35dp"
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -46,18 +47,18 @@
                         android:id="@+id/tv_personalcenter_nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="派大汤"
+                        android:text="未登录"
                         android:textSize="25dp"
                         android:textColor="#ffffff"
                         android:layout_gravity="center"/>
 
                     <ImageView
                         android:id="@+id/iv_pc_vip"
-                        android:layout_marginTop="2dp"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="15dp"
                         android:src="@drawable/viptag"
-                        android:layout_marginLeft="20dp"/>
+                        android:layout_gravity="center"/>
 
                 </LinearLayout>
 
@@ -87,6 +88,7 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/tv_personalcenter_scores"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -94,7 +96,7 @@
                     android:textColor="#ffffff"/>
 
                 <ImageView
-                    android:id="@+id/iv_pc_zan"
+                    android:id="@+id/iv_personalcenter_scores"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/score"/>
@@ -109,6 +111,7 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/tv_personalcenter_commentNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -131,6 +134,7 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/tv_perinfo_followNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -153,6 +157,7 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/tv_perinfo_fansNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -181,6 +186,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:background="@drawable/ripple_click"
             android:id="@+id/ll_personalcenter_data"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -227,6 +233,7 @@
             android:layout_gravity="center"></View>
 
         <LinearLayout
+            android:background="@drawable/ripple_click"
             android:id="@+id/ll_personalcenter_team"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -271,6 +278,7 @@
             android:layout_gravity="center"></View>
 
         <LinearLayout
+            android:background="@drawable/ripple_click"
             android:id="@+id/ll_personalcenter_yueqiu"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -315,6 +323,7 @@
             android:layout_gravity="center"></View>
 
         <LinearLayout
+            android:background="@drawable/ripple_click"
             android:id="@+id/ll_personalcenter_collect"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -358,6 +367,7 @@
             android:layout_gravity="center"></View>
 
         <LinearLayout
+            android:background="@drawable/ripple_click"
             android:id="@+id/ll_personalcenter_vip"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -403,6 +413,7 @@
             android:layout_gravity="center"></View>
 
         <LinearLayout
+            android:background="@drawable/ripple_click"
             android:id="@+id/ll_personalcenter_feedback"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -448,6 +459,7 @@
             android:layout_gravity="center"></View>
 
         <LinearLayout
+            android:background="@drawable/ripple_click"
             android:id="@+id/ll_personalcenter_logout"
             android:layout_width="match_parent"
             android:layout_height="50dp"

@@ -98,5 +98,5 @@
         android:layout_height="match_parent"
         android:text="已完场"
         android:layout_gravity="center"
-        android:textSize="15sp"/>
+        android:textSize="13sp"/>
 </LinearLayout>

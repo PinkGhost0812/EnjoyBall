@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <TextView
+        android:id="@+id/tv_dialog_perinfo_man"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="男"
+        android:gravity="center"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_dialog_perinfo_woman"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="女"
+        android:gravity="center"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_dialog_perinfo_secret"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="保密"
+        android:gravity="center"
+        android:textSize="20dp"/>
+
+</LinearLayout>

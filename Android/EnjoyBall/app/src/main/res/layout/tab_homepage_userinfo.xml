@@ -7,6 +7,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:background="@drawable/ripple_click"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -40,6 +41,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
+        android:background="@drawable/ripple_click"
         android:gravity="center">
 
         <TextView
@@ -69,6 +71,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
+        android:background="@drawable/ripple_click"
         android:gravity="center">
 
         <TextView
@@ -98,6 +101,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
+        android:background="@drawable/ripple_click"
         android:gravity="center">
 
         <TextView
@@ -127,6 +131,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
+        android:background="@drawable/ripple_click"
         android:gravity="center">
 
         <TextView
@@ -156,6 +161,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
+        android:background="@drawable/ripple_click"
         android:gravity="center">
 
         <TextView
@@ -185,6 +191,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
+        android:background="@drawable/ripple_click"
         android:gravity="center">
 
         <TextView

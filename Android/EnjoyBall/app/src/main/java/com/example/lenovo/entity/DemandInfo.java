@@ -1,5 +1,8 @@
 package com.example.lenovo.entity;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 import java.io.Serializable;
 import java.util.Date;
 

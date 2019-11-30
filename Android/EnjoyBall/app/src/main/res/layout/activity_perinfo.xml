@@ -34,9 +34,10 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_perinfo_portrait"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -61,7 +62,7 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/tv_perinfo_portrait"
+                    android:id="@+id/iv_perinfo_portrait"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/addportrait" />
@@ -79,7 +80,7 @@
             android:id="@+id/ll_perinfo_nickname"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -129,7 +130,7 @@
             android:id="@+id/ll_perinfo_sex"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -179,7 +180,7 @@
             android:id="@+id/ll_perinfo_age"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -229,7 +230,7 @@
             android:id="@+id/ll_perinfo_city"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -279,7 +280,7 @@
             android:id="@+id/ll_perinfo_phone"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -329,7 +330,7 @@
             android:id="@+id/ll_perinfo_email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -379,7 +380,7 @@
             android:id="@+id/ll_perinfo_signature"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -430,7 +431,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -476,7 +477,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:gravity="center"
             android:text="保存"
             android:textSize="20dp" />
