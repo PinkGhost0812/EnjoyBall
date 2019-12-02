@@ -1,20 +1,14 @@
 package com.example.lenovo.entity;
 
-<<<<<<< Updated upstream
 import java.io.Serializable;
 
 public class Collection implements Serializable {
-    private Integer id;
-    private Integer newsId;
-    private Integer userId;
-=======
-public class Collection {
     private Integer collection_id;
     private Integer new_id;
     private Integer user_id;
->>>>>>> Stashed changes
 
-    public Collection(){}
+    public Collection() {
+    }
 
     public Integer getCollection_id() {
         return collection_id;

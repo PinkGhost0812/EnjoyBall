@@ -1,18 +1,12 @@
 package com.example.lenovo.entity;
 
-<<<<<<< Updated upstream
 import java.io.Serializable;
 
 public class TeamMember implements Serializable {
-    private Integer id;
-    private Integer teamId;
-    private Integer memberId;
-=======
-public class TeamMember {
+
     private Integer team_memberid;
     private Integer team_id;
     private Integer member_id;
->>>>>>> Stashed changes
 
     public TeamMember(){}
 

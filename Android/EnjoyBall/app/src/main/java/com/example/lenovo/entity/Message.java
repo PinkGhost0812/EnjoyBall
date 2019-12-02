@@ -1,23 +1,9 @@
 package com.example.lenovo.entity;
 
 import java.io.Serializable;
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 import java.util.Date;
-
-<<<<<<< Updated upstream
 public class Message implements Serializable {
-    private Integer id;
-    private Integer cla;
-    private Date time;
-    private Integer sender;
-    private Integer receiver;
-    private String content;
-    private String title;
-=======
-public class Message {
     private Integer message_id;
     private Integer message_class;
     private Date message_time;
@@ -25,7 +11,6 @@ public class Message {
     private Integer message_receiver;
     private String message_content;
     private String message_title;
->>>>>>> Stashed changes
 
     public Message(){}
 

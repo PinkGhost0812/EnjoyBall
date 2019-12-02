@@ -3,17 +3,8 @@ package com.example.lenovo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-<<<<<<< Updated upstream
 public class Comment implements Serializable {
-    private Integer id;
-    private Integer author;
-    private Integer cla;
-    private String content;
-    private Integer likeNum;
-    private Date time;
-    private Integer belone;
-=======
-public class Comment {
+
     private Integer comment_id;
     private Integer comment_author;
     private Integer comment_class;
@@ -21,7 +12,6 @@ public class Comment {
     private Integer comment_likenum;
     private Date comment_time;
     private Integer comment_belone;
->>>>>>> Stashed changes
 
     public Comment(){}
 

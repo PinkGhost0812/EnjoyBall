@@ -19,7 +19,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="排超天津女排首秀3-0河南 朱婷两局5分成功率56%"
                 android:textColor="#000000"
                 android:textSize="23dp"
                 android:textStyle="normal" />
@@ -50,7 +49,6 @@
                         android:id="@+id/tv_news_authorName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="李烦烦"
                         android:textSize="16dp" />
 
                     <TextView
@@ -58,7 +56,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:text="一秒钟前"
                         android:textSize="16dp" />
 
                     <Button
@@ -81,7 +78,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_news_author"
                 android:padding="25dp"
-                android:text="@string/news_body"
                 android:textColor="#000000"
                 android:textSize="20dp" />
 

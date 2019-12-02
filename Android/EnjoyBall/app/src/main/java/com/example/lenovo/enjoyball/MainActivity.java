@@ -16,6 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.lenovo.Activity.PersonalcenterActivity;
+import com.example.lenovo.Fragment.GameFragment;
+import com.example.lenovo.Fragment.HomeFragment;
+import com.example.lenovo.Fragment.MessageFragment;
+import com.example.lenovo.Fragment.TimeFragment;
 import com.example.lenovo.entity.TeamDemand;
 import com.example.lenovo.entity.User;
 
@@ -162,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                     //跳转到个人中心页面
                     Intent intent =new Intent();
                     intent.setClass(MainActivity.this, PersonalcenterActivity.class);
-                    TeamDemand teamDemand=new TeamDemand(1,2,3,4);
+                    TeamDemand teamDemand=new TeamDemand(1,2,3);
                     intent.putExtra("team",teamDemand);
                     overridePendingTransition(R.anim.personalcenter_in, R.anim.personalcenter_out);
                     startActivity(intent);

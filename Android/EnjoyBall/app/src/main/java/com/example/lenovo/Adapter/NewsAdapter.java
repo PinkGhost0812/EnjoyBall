@@ -30,8 +30,8 @@ public class NewsAdapter extends BaseAdapter {
     private TextView tvHeat;
 
     public NewsAdapter(Context context,
-                                     List<Map<String, Object>> dataSource,
-                                     int item_layout_id) {
+                       List<Map<String, Object>> dataSource,
+                       int item_layout_id) {
         this.context = context;
         this.dataSource = dataSource;
         this.item_layout_id = item_layout_id;
@@ -55,7 +55,7 @@ public class NewsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(null == convertView) {
+        if (null == convertView) {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(item_layout_id, null);
         }
@@ -63,8 +63,8 @@ public class NewsAdapter extends BaseAdapter {
         TextView tv_news = convertView.findViewById(R.id.tv_home_news);
         TextView tv_heat = convertView.findViewById(R.id.tv_home_heat);
 
-        Map<String,Object> map = dataSource.get(position);
-        iv_img.setImageResource((int)map.get("img"));
+        Map<String, Object> map = dataSource.get(position);
+        iv_img.setImageResource((int) map.get("img"));
         tv_news.setText(map.get("content").toString());
         tv_heat.setText(map.get("heat").toString());
         return convertView;

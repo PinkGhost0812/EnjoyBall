@@ -3,19 +3,8 @@ package com.example.lenovo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-<<<<<<< Updated upstream
 public class Contest implements Serializable {
-    private Integer id;
-    private Integer home;
-    private Integer away;
-    private Date time;
-    private String place;
-    private Integer cla;
-    private Integer grade;
-    private Integer status;
-    private String result;
-=======
-public class Contest {
+
     private Integer game_id;
     private Integer game_home;
     private Integer game_away;
@@ -25,7 +14,6 @@ public class Contest {
     private Integer game_grade;
     private Integer game_status;
     private String game_result;
->>>>>>> Stashed changes
 
     public Contest(){}
 

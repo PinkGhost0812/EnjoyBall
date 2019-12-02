@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.lenovo.Activity.LoadActivity">
+        <activity android:name="com.example.lenovo.Activity.NewsDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -11,12 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< Updated upstream:Android/EnjoyBall/app/src/main/java/com/example/lenovo/Adapter/NewsCommentAdapter.java
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
-=======
 import com.bumptech.glide.Glide;
->>>>>>> Stashed changes:Android/EnjoyBall/app/src/main/java/com/example/lenovo/enjoyball/NewsCommentAdapter.java
 import com.example.lenovo.entity.Comment;
 import com.example.lenovo.entity.User;
 import com.google.gson.Gson;
@@ -93,11 +90,7 @@ public class NewsCommentAdapter extends BaseAdapter {
         getAuthor(position);
         Log.e("datasource = " , dataSource.toString());
         //TODO:Author现在没信息拿不到，到时候记得改；   是一个空指针，可能是线程还没跑完，这个开始执行了
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         Glide.with(convertView).load(Info.BASE_URL + author.getUser_headportrait()).into(holder.iv_headImg);
         holder.tv_authorName.setText(author.getUser_nickname());
 //        holder.tv_authorName.setText("李烦烦");

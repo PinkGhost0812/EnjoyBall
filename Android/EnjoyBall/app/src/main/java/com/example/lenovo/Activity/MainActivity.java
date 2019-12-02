@@ -164,8 +164,7 @@ public class MainActivity extends AppCompatActivity {
                         if(endTime-startTime<500){
                             Toast.makeText(getApplicationContext(), "点的太快了噢~", Toast.LENGTH_LONG).show();
                         }else{
-                            User user=new User
-                                    (1,"2","3","4","5","6","7","8","9",10,11,12);
+                            User user=new User();
                             Intent intent =new Intent();
                             intent.putExtra("user",user);
                             intent.setClass(MainActivity.this, PersonalcenterActivity.class);

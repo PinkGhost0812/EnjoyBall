@@ -1,14 +1,9 @@
 package com.example.lenovo.entity;
 
-<<<<<<< Updated upstream
 import java.io.Serializable;
 
 public class UserFans implements Serializable {
-    private Integer id;
-=======
-public class UserFans {
     private Integer user_fansid;
->>>>>>> Stashed changes
     private Integer user_id;
     private Integer fans_id;
 

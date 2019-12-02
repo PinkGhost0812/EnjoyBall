@@ -15,6 +15,7 @@ public class User implements Serializable {
     private Integer user_score;
     private Integer user_likenum;
     private Integer user_vip;
+    private Integer user_age;
 
     public User(){}
 
@@ -33,10 +34,11 @@ public class User implements Serializable {
                 ", user_score=" + user_score +
                 ", user_likenum=" + user_likenum +
                 ", user_vip=" + user_vip +
+                ", user_age=" + user_age +
                 '}';
     }
 
-    public User(Integer user_id, String user_nickname, String user_password, String user_headportrait, String user_sex, String user_phonenumber, String user_address, String user_email, String user_signature, Integer user_score, Integer user_likenum, Integer user_vip) {
+    public User(Integer user_id, String user_nickname, String user_password, String user_headportrait, String user_sex, String user_phonenumber, String user_address, String user_email, String user_signature, Integer user_score, Integer user_likenum, Integer user_vip, Integer user_age) {
         this.user_id = user_id;
         this.user_nickname = user_nickname;
         this.user_password = user_password;
@@ -49,6 +51,15 @@ public class User implements Serializable {
         this.user_score = user_score;
         this.user_likenum = user_likenum;
         this.user_vip = user_vip;
+        this.user_age = user_age;
+    }
+
+    public Integer getUser_age() {
+        return user_age;
+    }
+
+    public void setUser_age(Integer user_age) {
+        this.user_age = user_age;
     }
 
     public Integer getUser_id() {

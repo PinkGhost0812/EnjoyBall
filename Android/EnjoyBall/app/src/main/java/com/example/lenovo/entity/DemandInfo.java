@@ -1,22 +1,10 @@
 package com.example.lenovo.entity;
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 import java.io.Serializable;
 import java.util.Date;
 
-<<<<<<< Updated upstream
 public class DemandInfo implements Serializable {
-    private Integer id;
-    private Integer userId;
-    private Date time;
-    private Integer cla;
-    private String place;
-    private Integer visibility;
-    private String description;
-=======
-public class DemandInfo {
+
     private Integer demand_id;
     private Integer demand_user;
     private Date demand_time;
@@ -27,11 +15,36 @@ public class DemandInfo {
     private Integer demand_num;
     private Integer demand_teama;
     private Integer demand_teamb;
->>>>>>> Stashed changes
+    private Integer demand_oom;
 
     public DemandInfo(){}
 
-    public DemandInfo(Integer demand_id, Integer demand_user, Date demand_time, Integer demand_class, String demand_place, Integer demand_visibility, String demand_description, Integer demand_num, Integer demand_teama, Integer demand_teamb) {
+    public Integer getDemand_oom() {
+        return demand_oom;
+    }
+
+    public void setDemand_oom(Integer demand_oom) {
+        this.demand_oom = demand_oom;
+    }
+
+    @Override
+    public String toString() {
+        return "DemandInfo{" +
+                "demand_id=" + demand_id +
+                ", demand_user=" + demand_user +
+                ", demand_time=" + demand_time +
+                ", demand_class=" + demand_class +
+                ", demand_place='" + demand_place + '\'' +
+                ", demand_visibility=" + demand_visibility +
+                ", demand_description='" + demand_description + '\'' +
+                ", demand_num=" + demand_num +
+                ", demand_teama=" + demand_teama +
+                ", demand_teamb=" + demand_teamb +
+                ", demand_oom=" + demand_oom +
+                '}';
+    }
+
+    public DemandInfo(Integer demand_id, Integer demand_user, Date demand_time, Integer demand_class, String demand_place, Integer demand_visibility, String demand_description, Integer demand_num, Integer demand_teama, Integer demand_teamb, Integer demand_oom) {
         this.demand_id = demand_id;
         this.demand_user = demand_user;
         this.demand_time = demand_time;
@@ -42,6 +55,7 @@ public class DemandInfo {
         this.demand_num = demand_num;
         this.demand_teama = demand_teama;
         this.demand_teamb = demand_teamb;
+        this.demand_oom = demand_oom;
     }
 
     public Integer getDemand_num() {
@@ -134,16 +148,4 @@ public class DemandInfo {
         this.demand_description = demand_description;
     }
 
-    @Override
-    public String toString() {
-        return "DemandInfo{" +
-                "demand_id=" + demand_id +
-                ", demand_user=" + demand_user +
-                ", demand_time=" + demand_time +
-                ", demand_class=" + demand_class +
-                ", demand_place='" + demand_place + '\'' +
-                ", demand_visibility=" + demand_visibility +
-                ", demand_description='" + demand_description + '\'' +
-                '}';
-    }
 }

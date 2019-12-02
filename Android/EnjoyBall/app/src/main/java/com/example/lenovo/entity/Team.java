@@ -3,19 +3,7 @@ package com.example.lenovo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-<<<<<<< Updated upstream
 public class Team implements Serializable {
-    private Integer id;
-    private String name;
-    private String region;
-    private Date time;
-    private String logo;
-    private String slogan;
-    private Integer score;
-    private Integer captain;
-    private Integer coach;
-=======
-public class Team {
     private Integer team_id;
     private String team_name;
     private String team_region;
@@ -25,9 +13,17 @@ public class Team {
     private Integer team_score;
     private Integer team_captain;
     private Integer team_state;
->>>>>>> Stashed changes
+    private Integer team_class;
 
     public Team(){}
+
+    public Integer getTeam_class() {
+        return team_class;
+    }
+
+    public void setTeam_class(Integer team_class) {
+        this.team_class = team_class;
+    }
 
     public Integer getTeam_id() {
         return team_id;
@@ -113,10 +109,11 @@ public class Team {
                 ", team_score=" + team_score +
                 ", team_captain=" + team_captain +
                 ", team_state=" + team_state +
+                ", team_class=" + team_class +
                 '}';
     }
 
-    public Team(Integer team_id, String team_name, String team_region, Date team_time, String team_logo, String team_slogan, Integer team_score, Integer team_captain, Integer team_state) {
+    public Team(Integer team_id, String team_name, String team_region, Date team_time, String team_logo, String team_slogan, Integer team_score, Integer team_captain, Integer team_state, Integer team_class) {
         this.team_id = team_id;
         this.team_name = team_name;
         this.team_region = team_region;
@@ -126,5 +123,6 @@ public class Team {
         this.team_score = team_score;
         this.team_captain = team_captain;
         this.team_state = team_state;
+        this.team_class = team_class;
     }
 }
