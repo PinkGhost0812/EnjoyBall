@@ -3,6 +3,7 @@ package com.example.lenovo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+<<<<<<< Updated upstream
 public class Team implements Serializable {
     private Integer id;
     private String name;
@@ -13,103 +14,117 @@ public class Team implements Serializable {
     private Integer score;
     private Integer captain;
     private Integer coach;
+=======
+public class Team {
+    private Integer team_id;
+    private String team_name;
+    private String team_region;
+    private Date team_time;
+    private String team_logo;
+    private String team_slogan;
+    private Integer team_score;
+    private Integer team_captain;
+    private Integer team_state;
+>>>>>>> Stashed changes
 
-    public Integer getId() {
-        return id;
+    public Team(){}
+
+    public Integer getTeam_id() {
+        return team_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTeam_id(Integer team_id) {
+        this.team_id = team_id;
     }
 
-    public String getName() {
-        return name;
+    public String getTeam_name() {
+        return team_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTeam_name(String team_name) {
+        this.team_name = team_name;
     }
 
-    public String getRegion() {
-        return region;
+    public String getTeam_region() {
+        return team_region;
     }
 
-    public void setRegion(String region) {
-        this.region = region;
+    public void setTeam_region(String team_region) {
+        this.team_region = team_region;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getTeam_time() {
+        return team_time;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setTeam_time(Date team_time) {
+        this.team_time = team_time;
     }
 
-    public String getLogo() {
-        return logo;
+    public String getTeam_logo() {
+        return team_logo;
     }
 
-    public void setLogo(String logo) {
-        this.logo = logo;
+    public void setTeam_logo(String team_logo) {
+        this.team_logo = team_logo;
     }
 
-    public String getSlogan() {
-        return slogan;
+    public String getTeam_slogan() {
+        return team_slogan;
     }
 
-    public void setSlogan(String slogan) {
-        this.slogan = slogan;
+    public void setTeam_slogan(String team_slogan) {
+        this.team_slogan = team_slogan;
     }
 
-    public Integer getScore() {
-        return score;
+    public Integer getTeam_score() {
+        return team_score;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
+    public void setTeam_score(Integer team_score) {
+        this.team_score = team_score;
     }
 
-    public Integer getCaptain() {
-        return captain;
+    public Integer getTeam_captain() {
+        return team_captain;
     }
 
-    public void setCaptain(Integer captain) {
-        this.captain = captain;
+    public void setTeam_captain(Integer team_captain) {
+        this.team_captain = team_captain;
     }
 
-    public Integer getCoach() {
-        return coach;
+    public Integer getTeam_state() {
+        return team_state;
     }
 
-    public void setCoach(Integer coach) {
-        this.coach = coach;
+    public void setTeam_state(Integer team_state) {
+        this.team_state = team_state;
     }
 
     @Override
     public String toString() {
         return "Team{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", region='" + region + '\'' +
-                ", time=" + time +
-                ", logo='" + logo + '\'' +
-                ", slogan='" + slogan + '\'' +
-                ", score=" + score +
-                ", captain=" + captain +
-                ", coach=" + coach +
+                "team_id=" + team_id +
+                ", team_name='" + team_name + '\'' +
+                ", team_region='" + team_region + '\'' +
+                ", team_time=" + team_time +
+                ", team_logo='" + team_logo + '\'' +
+                ", team_slogan='" + team_slogan + '\'' +
+                ", team_score=" + team_score +
+                ", team_captain=" + team_captain +
+                ", team_state=" + team_state +
                 '}';
     }
 
-    public Team(Integer id, String name, String region, Date time, String logo, String slogan, Integer score, Integer captain, Integer coach) {
-        this.id = id;
-        this.name = name;
-        this.region = region;
-        this.time = time;
-        this.logo = logo;
-        this.slogan = slogan;
-        this.score = score;
-        this.captain = captain;
-        this.coach = coach;
+    public Team(Integer team_id, String team_name, String team_region, Date team_time, String team_logo, String team_slogan, Integer team_score, Integer team_captain, Integer team_state) {
+        this.team_id = team_id;
+        this.team_name = team_name;
+        this.team_region = team_region;
+        this.team_time = team_time;
+        this.team_logo = team_logo;
+        this.team_slogan = team_slogan;
+        this.team_score = team_score;
+        this.team_captain = team_captain;
+        this.team_state = team_state;
     }
 }

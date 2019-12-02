@@ -4,9 +4,30 @@ import java.io.Serializable;
 
 public class TeamDemand implements Serializable{
     private Integer id;
-    private Integer teamId;
-    private Integer isHome;
-    private Integer member;
+    private Integer capacity;
+    private Integer quantity;
+
+    public TeamDemand(){}
+
+    public TeamDemand(Integer capacity, Integer quantity) {
+        this.capacity = capacity;
+        this.quantity = quantity;
+    }
+
+    public TeamDemand(Integer id, Integer capacity, Integer quantity) {
+        this.id = id;
+        this.capacity = capacity;
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "TeamDemand{" +
+                "id=" + id +
+                ", capacity=" + capacity +
+                ", quantity=" + quantity +
+                '}';
+    }
 
     public Integer getId() {
         return id;
@@ -16,44 +37,19 @@ public class TeamDemand implements Serializable{
         this.id = id;
     }
 
-    public Integer getTeamId() {
-        return teamId;
+    public Integer getCapacity() {
+        return capacity;
     }
 
-    public void setTeamId(Integer teamId) {
-        this.teamId = teamId;
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 
-    public Integer getIsHome() {
-        return isHome;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setIsHome(Integer isHome) {
-        this.isHome = isHome;
-    }
-
-    public Integer getMember() {
-        return member;
-    }
-
-    public void setMember(Integer member) {
-        this.member = member;
-    }
-
-    @Override
-    public String toString() {
-        return "TeamDemand{" +
-                "id=" + id +
-                ", teamId=" + teamId +
-                ", isHome=" + isHome +
-                ", member=" + member +
-                '}';
-    }
-
-    public TeamDemand(Integer id, Integer teamId, Integer isHome, Integer member) {
-        this.id = id;
-        this.teamId = teamId;
-        this.isHome = isHome;
-        this.member = member;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

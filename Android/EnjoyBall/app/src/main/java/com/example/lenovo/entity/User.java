@@ -16,6 +16,8 @@ public class User implements Serializable {
     private Integer user_likenum;
     private Integer user_vip;
 
+    public User(){}
+
     @Override
     public String toString() {
         return "User{" +

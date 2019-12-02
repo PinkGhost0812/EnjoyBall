@@ -1,47 +1,57 @@
 package com.example.lenovo.entity;
 
+<<<<<<< Updated upstream
 import java.io.Serializable;
 
 public class TeamMember implements Serializable {
     private Integer id;
     private Integer teamId;
     private Integer memberId;
+=======
+public class TeamMember {
+    private Integer team_memberid;
+    private Integer team_id;
+    private Integer member_id;
+>>>>>>> Stashed changes
+
+    public TeamMember(){}
+
+    public Integer getTeam_memberid() {
+        return team_memberid;
+    }
+
+    public void setTeam_memberid(Integer team_memberid) {
+        this.team_memberid = team_memberid;
+    }
+
+    public Integer getTeam_id() {
+        return team_id;
+    }
+
+    public void setTeam_id(Integer team_id) {
+        this.team_id = team_id;
+    }
+
+    public Integer getMember_id() {
+        return member_id;
+    }
+
+    public void setMember_id(Integer member_id) {
+        this.member_id = member_id;
+    }
 
     @Override
     public String toString() {
         return "TeamMember{" +
-                "id=" + id +
-                ", teamId=" + teamId +
-                ", memberId=" + memberId +
+                "team_memberid=" + team_memberid +
+                ", team_id=" + team_id +
+                ", member_id=" + member_id +
                 '}';
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(Integer teamId) {
-        this.teamId = teamId;
-    }
-
-    public Integer getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
-    }
-
-    public TeamMember(Integer id, Integer teamId, Integer memberId) {        this.id = id;
-        this.teamId = teamId;
-        this.memberId = memberId;
+    public TeamMember(Integer team_memberid, Integer team_id, Integer member_id) {
+        this.team_memberid = team_memberid;
+        this.team_id = team_id;
+        this.member_id = member_id;
     }
 }

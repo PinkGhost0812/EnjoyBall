@@ -146,7 +146,7 @@
             <ListView
                 android:id="@+id/lv_news_comments"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/rl_news_likeOrNot"></ListView>
 
 

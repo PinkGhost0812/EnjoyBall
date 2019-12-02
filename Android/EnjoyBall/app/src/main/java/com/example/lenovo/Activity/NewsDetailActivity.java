@@ -23,8 +23,13 @@ import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.*;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -53,16 +58,21 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
     private Handler handler;
     private int TextColorNormal;
     private int TextColorSelect;
+    private NewsCommentAdapter adapter;
+    private Gson gson;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_news);
+        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+//        EventBus.getDefault().register(this);
         getViews();
         //setContent();
 
         TextColorNormal = tv_likeNum.getCurrentTextColor();
+        TextColorSelect = ContextCompat.getColor(getApplicationContext(), android.R.color.holo_red_light);
         Log.e("color",TextColorNormal+"");
 
         handler = new Handler(){
@@ -70,10 +80,17 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what){
-                    case 1:
+                    case 1:   //更新新闻点赞的数字
                         int likeNum = Integer.parseInt(tv_likeNum.getText().toString());
                         tv_likeNum.setText(++likeNum + "");
                         tv_likeNum.setTextColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_red_light));
+                        break;
+
+                    case 2:   //获得了评论的全部内容，传给Adapter
+                        List<Comment> list = gson.fromJson((String)msg.obj,new TypeToken<List<Comment>>(){}.getType());
+                        Log.e("handleMessageDataSource",list.toString());
+                        adapter = new NewsCommentAdapter(getBaseContext(),list,R.layout.comment_item);
+                        lv_comment.setAdapter(adapter);
                         break;
                 }
             }
@@ -84,17 +101,52 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
 
         btn_attention.setOnClickListener(this);
         ll_like.setOnClickListener(this);
+        getComment();
     }
 
 
 
+    private void getComment(){
+        //TODO：这里的newsId
+        Request request = new Request.Builder().url(Info.BASE_URL + "information/newscomment?belone=" + 1).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("获取当前新闻的评论","失败了");
+                Looper.prepare();
+                Toast.makeText(getApplicationContext(), "服务器被炸了，小李正在修复呢", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Message msg = Message.obtain();
+                msg.what = 2;
+                msg.obj = response.body().string();
+                Log.e("comment列表的信息",(String)msg.obj);
+                handler.sendMessage(msg);
+            }
+        });
+    }
+
     private void setContent(){
+<<<<<<< Updated upstream:Android/EnjoyBall/app/src/main/java/com/example/lenovo/Activity/NewsDetailActivity.java
         tv_title.setText(news.getTitle());
         Glide.with(this).load(com.example.lenovo.enjoyball.Info.BASE_URL + "img/pm.png").into(iv_headImg);
         tv_authorName.setText(news.getAuthor());
         tv_releaseTime.setText(news.getTime()+"");
         tv_newsBody.setText(news.getContent());
         tv_likeNum.setText(news.getLikeNum());
+=======
+        tv_title.setText(news.getNews_title());
+        Glide.with(this).load(Info.BASE_URL + "img/pm.png").into(iv_headImg);
+        tv_authorName.setText(news.getNews_author());
+        tv_releaseTime.setText(news.getNews_time()+"");
+        tv_newsBody.setText(news.getNews_content());
+        tv_likeNum.setText(news.getNews_likenum());
+>>>>>>> Stashed changes:Android/EnjoyBall/app/src/main/java/com/example/lenovo/enjoyball/NewsDetailActivity.java
     }
 
     private void getViews(){
@@ -120,11 +172,19 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_news_attention:
+<<<<<<< Updated upstream:Android/EnjoyBall/app/src/main/java/com/example/lenovo/Activity/NewsDetailActivity.java
                 int authorId = news.getAuthor();
                 int userId = new com.example.lenovo.enjoyball.Info().getUser().getUser_id();
                 UserFans userFans = new UserFans(null,authorId,userId);
                 String info = new Gson().toJson(userFans);
                 Request request = new Request.Builder().url(com.example.lenovo.enjoyball.Info.BASE_URL + "user/attention?userFans=" + info).build();
+=======
+                int authorId = news.getNews_author();
+                int userId = new Info().getUser().getUser_id();
+                UserFans userFans = new UserFans(null,authorId,userId);
+                String info = new Gson().toJson(userFans);
+                Request request = new Request.Builder().url(Info.BASE_URL + "user/follow?userFans=" + info).build();
+>>>>>>> Stashed changes:Android/EnjoyBall/app/src/main/java/com/example/lenovo/enjoyball/NewsDetailActivity.java
                 Call call = okHttpClient.newCall(request);
                 call.enqueue(new Callback() {
                     @Override
@@ -176,5 +236,11 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
                     }
                 });
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

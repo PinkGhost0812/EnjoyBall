@@ -7,6 +7,7 @@ import java.io.Serializable;
 >>>>>>> Stashed changes
 import java.util.Date;
 
+<<<<<<< Updated upstream
 public class News implements Serializable {
     private Integer id;
     private Integer cla;
@@ -18,113 +19,128 @@ public class News implements Serializable {
     private Integer heat;
     private Integer likeNum;
     private Integer game;
+=======
+public class News {
+    private Integer news_id;
+    private Integer news_class;
+    private String news_title;
+    private Integer news_author;
+    private Date news_time;
+    private String news_image;
+    private String news_content;
+    private Integer news_heat;
+    private Integer news_likenum;
+    private Integer news_game;
+>>>>>>> Stashed changes
 
-    public Integer getId() {
-        return id;
+    public News(){}
+
+    public Integer getNews_id() {
+        return news_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setNews_id(Integer news_id) {
+        this.news_id = news_id;
     }
 
-    public Integer getCla() {
-        return cla;
+    public Integer getNews_class() {
+        return news_class;
     }
 
-    public void setCla(Integer cla) {
-        this.cla = cla;
+    public void setNews_class(Integer news_class) {
+        this.news_class = news_class;
     }
 
-    public String getTitle() {
-        return title;
+    public String getNews_title() {
+        return news_title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setNews_title(String news_title) {
+        this.news_title = news_title;
     }
 
-    public Integer getAuthor() {
-        return author;
+    public Integer getNews_author() {
+        return news_author;
     }
 
-    public void setAuthor(Integer author) {
-        this.author = author;
+    public void setNews_author(Integer news_author) {
+        this.news_author = news_author;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getNews_time() {
+        return news_time;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setNews_time(Date news_time) {
+        this.news_time = news_time;
     }
 
-    public String getImage() {
-        return image;
+    public String getNews_image() {
+        return news_image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setNews_image(String news_image) {
+        this.news_image = news_image;
     }
 
-    public String getContent() {
-        return content;
+    public String getNews_content() {
+        return news_content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setNews_content(String news_content) {
+        this.news_content = news_content;
     }
 
-    public Integer getHeat() {
-        return heat;
+    public Integer getNews_heat() {
+        return news_heat;
     }
 
-    public void setHeat(Integer heat) {
-        this.heat = heat;
+    public void setNews_heat(Integer news_heat) {
+        this.news_heat = news_heat;
     }
 
-    public Integer getLikeNum() {
-        return likeNum;
+    public Integer getNews_likenum() {
+        return news_likenum;
     }
 
-    public void setLikeNum(Integer likeNum) {
-        this.likeNum = likeNum;
+    public void setNews_likenum(Integer news_likenum) {
+        this.news_likenum = news_likenum;
     }
 
-    public Integer getGame() {
-        return game;
+    public Integer getNews_game() {
+        return news_game;
     }
 
-    public void setGame(Integer game) {
-        this.game = game;
-    }
-
-    public News(Integer id, Integer cla, String title, Integer author, Date time, String image, String content, Integer heat, Integer likeNum, Integer game) {
-        this.id = id;
-        this.cla = cla;
-        this.title = title;
-        this.author = author;
-        this.time = time;
-        this.image = image;
-        this.content = content;
-        this.heat = heat;
-        this.likeNum = likeNum;
-        this.game = game;
+    public void setNews_game(Integer news_game) {
+        this.news_game = news_game;
     }
 
     @Override
     public String toString() {
         return "News{" +
-                "id=" + id +
-                ", cla=" + cla +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", time=" + time +
-                ", image='" + image + '\'' +
-                ", content='" + content + '\'' +
-                ", heat=" + heat +
-                ", likeNum=" + likeNum +
-                ", game=" + game +
+                "news_id=" + news_id +
+                ", news_class=" + news_class +
+                ", news_title='" + news_title + '\'' +
+                ", news_author=" + news_author +
+                ", news_time=" + news_time +
+                ", news_image='" + news_image + '\'' +
+                ", news_content='" + news_content + '\'' +
+                ", news_heat=" + news_heat +
+                ", news_likenum=" + news_likenum +
+                ", news_game=" + news_game +
                 '}';
+    }
+
+    public News(Integer news_id, Integer news_class, String news_title, Integer news_author, Date news_time, String news_image, String news_content, Integer news_heat, Integer news_likenum, Integer news_game) {
+        this.news_id = news_id;
+        this.news_class = news_class;
+        this.news_title = news_title;
+        this.news_author = news_author;
+        this.news_time = news_time;
+        this.news_image = news_image;
+        this.news_content = news_content;
+        this.news_heat = news_heat;
+        this.news_likenum = news_likenum;
+        this.news_game = news_game;
     }
 }
