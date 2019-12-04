@@ -1,7 +1,10 @@
 package com.example.lenovo.entity;
 
 import java.io.Serializable;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 import java.util.Date;
 public class Message implements Serializable {
     private Integer message_id;

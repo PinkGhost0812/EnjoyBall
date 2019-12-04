@@ -1,164 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/bgteam"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="280dp"
-        android:layout_height="480dp"
-        android:alpha="0.5"
+        android:layout_height="530dp"
         android:layout_gravity="center"
-        android:gravity="center_horizontal"
+        android:alpha="0.5"
         android:background="@drawable/background_linearlayout"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
-        
+
         <LinearLayout
-            android:layout_marginTop="50dp"
             android:layout_width="210dp"
-            android:layout_height="330dp"
+            android:layout_height="380dp"
+            android:layout_marginTop="50dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:textColor="#000000"
-                    android:text="队徽:"
-                    android:textSize="20dp"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:text="队徽:"
+                    android:textColor="#000000"
+                    android:textSize="20dp" />
 
                 <ImageView
                     android:id="@+id/iv_team_create_logo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:paddingLeft="40dp"
-                    android:textColor="#000000"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:src="@drawable/logoadd"
-                    android:layout_height="match_parent" />
+                    android:textColor="#000000" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:textColor="#000000"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="运动项目:"
-                    android:textSize="20dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:textColor="#000000"
+                    android:textSize="20dp" />
 
-                <Spinner
-                    android:id="@+id/sp_team_create_kinds"
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent"></Spinner>
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/sp_team_create_fixture"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:entries="@array/fixture"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:textColor="#000000"
-                    android:text="球队名称:"
-                    android:textSize="20dp"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:text="球队名称:"
+                    android:textColor="#000000"
+                    android:textSize="20dp" />
 
                 <EditText
                     android:id="@+id/et_team_create_name"
-                    android:textSize="10dp"
-                    android:background="@drawable/shapeedit"
                     android:layout_width="100dp"
-                    android:layout_height="30dp"></EditText>
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shapeedit"
+                    android:textSize="15dp"></EditText>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:textColor="#000000"
-                    android:text="队员:"
-                    android:textSize="20dp"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:text="队员:"
+                    android:textColor="#000000"
+                    android:textSize="20dp" />
 
                 <ImageView
                     android:id="@+id/iv_team_create_member"
-                    android:paddingLeft="40dp"
-                    android:textColor="#000000"
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:paddingLeft="40dp"
                     android:src="@drawable/personadd"
-                    android:layout_height="match_parent" />
+                    android:textColor="#000000" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:textColor="#000000"
-                    android:text="地区:"
-                    android:textSize="20dp"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:text="地区:"
+                    android:textColor="#000000"
+                    android:textSize="20dp" />
 
                 <ImageView
                     android:id="@+id/iv_team_create_address"
-                    android:paddingLeft="40dp"
-                    android:textColor="#000000"
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:paddingLeft="40dp"
                     android:src="@drawable/addressadd"
-                    android:layout_height="match_parent" />
+                    android:textColor="#000000" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:textColor="#000000"
-                    android:text="口号:"
-                    android:textSize="20dp"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:text="口号:"
+                    android:textColor="#000000"
+                    android:textSize="20dp" />
 
                 <EditText
                     android:id="@+id/et_team_create_slogan"
-                    android:textSize="10dp"
-                    android:background="@drawable/shapeedit"
                     android:layout_width="100dp"
-                    android:layout_height="30dp"></EditText>
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shapeedit"
+                    android:textSize="15dp"></EditText>
 
             </LinearLayout>
 
@@ -166,13 +169,12 @@
 
         <Button
             android:id="@+id/btn_team_create_save"
-            android:layout_marginTop="20dp"
-            android:textColor="#ffffff"
-            android:textSize="20dp"
-            android:text="保存"
-            android:background="@drawable/shapebutton_1"
             android:layout_width="150dp"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:background="@drawable/shapebutton_1"
+            android:text="创建"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
 
     </LinearLayout>
 

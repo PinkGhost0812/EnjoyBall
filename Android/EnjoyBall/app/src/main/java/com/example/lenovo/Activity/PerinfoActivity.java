@@ -1,41 +1,44 @@
 package com.example.lenovo.Activity;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import java.io.File;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class PerinfoActivity extends AppCompatActivity {
@@ -74,6 +77,8 @@ public class PerinfoActivity extends AppCompatActivity {
 
     private BottomSheetDialog bottomSheetDialog;
 
+    private OkHttpClient okHttpClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +86,15 @@ public class PerinfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_perinfo);
         
         findView();
-        
+
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
+
+        Info info=new Info();
+
+        user=info.getUser();
+
         user= (User) getIntent().getSerializableExtra("user");
         
         setInfo();
@@ -102,6 +115,10 @@ public class PerinfoActivity extends AppCompatActivity {
                     break;
                 case R.id.ll_perinfo_nickname:
                     //点击用户名
+                    intent=new Intent();
+                    intent.putExtra("id",user.getUser_id());
+                    intent.setClass(PerinfoActivity.this,PerinfoNicknameActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.ll_perinfo_sex:
                     //点击性别
@@ -116,21 +133,82 @@ public class PerinfoActivity extends AppCompatActivity {
                     break;
                 case R.id.ll_perinfo_phone:
                     //点击手机号
+                    Toast.makeText
+                            (PerinfoActivity.this,"修改手机号功能开发人员正在加班研究，敬请期待凹~",Toast.LENGTH_LONG).show();
                     break;
                 case R.id.ll_perinfo_email:
                     //点击邮箱
+                    intent=new Intent();
+                    intent.setClass(PerinfoActivity.this,PerinfoEmailActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.ll_perinfo_signature:
                     //点击个性签名
+                    intent=new Intent();
+                    intent.setClass(PerinfoActivity.this,PerinfoSignatureActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.ll_perinfo_vip:
                     //点击vip
+                    Toast.makeText
+                            (PerinfoActivity.this,"开通会员功能开发人员正在加班研究，敬请期待凹~",Toast.LENGTH_LONG).show();
                     break;
                 case R.id.tv_perinfo_save:
                     //点击保存
+                    save();
                     break;
 
             }
+        }
+    }
+
+    private void save() {
+
+        okHttpClient = new OkHttpClient();
+        Gson gson = new GsonBuilder().create();
+        String userJson=gson.toJson(user);
+        Request request = new Request.Builder()
+                .url(Info.BASE_URL + "user/update?info=" + userJson)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                Toast.makeText(getApplicationContext(), "世界上最远的距离就是没网络凹~", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.body().string().equals("true")){
+                    Toast.makeText
+                            (PerinfoActivity.this,"更新成功凹~",Toast.LENGTH_SHORT);
+                }else{
+                    Toast.makeText
+                            (PerinfoActivity.this,"更新失败凹~",Toast.LENGTH_SHORT);
+                }
+            }
+        });
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void setMsgInfo(Message msg){
+        switch (msg.what){
+            case 4:
+                tvPerinfoNickname.setText(msg.obj.toString());
+                user.setUser_nickname(msg.obj.toString());
+                break;
+            case 5:
+                tvPerinfoEmail.setText(msg.obj.toString());
+                user.setUser_email(msg.obj.toString());
+                break;
+            case 6:
+                tvPerinfoSignature.setText(msg.obj.toString());
+                user.setUser_signature(msg.obj.toString());
+                break;
         }
     }
 
@@ -167,6 +245,7 @@ public class PerinfoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tvPerinfoAge.setText(perinfoAgeList.get(position)+"");
+                //user.setuserage.setText(perinfoAgeList.get(position)+"");
                 bottomSheetDialog.dismiss();
             }
         });
@@ -192,16 +271,19 @@ public class PerinfoActivity extends AppCompatActivity {
                 case R.id.tv_dialog_perinfo_man:
                     //点击男
                     tvPerinfoSex.setText(tvDialogPerinfoMan.getText());
+                    user.setUser_sex(tvDialogPerinfoMan.getText().toString());
                     bottomSheetDialog.dismiss();
                     break;
                 case R.id.tv_dialog_perinfo_woman:
                     //点击女
                     tvPerinfoSex.setText(tvDialogPerinfoWoman.getText());
+                    user.setUser_sex(tvDialogPerinfoWoman.getText().toString());
                     bottomSheetDialog.dismiss();
                     break;
                 case R.id.tv_dialog_perinfo_secret:
                     //点击保密
                     tvPerinfoSex.setText(tvDialogPerinfoSecret.getText());
+                    user.setUser_sex(tvDialogPerinfoSecret.getText().toString());
                     bottomSheetDialog.dismiss();
                     break;
             }
@@ -317,5 +399,12 @@ public class PerinfoActivity extends AppCompatActivity {
         llPerinfoSignature=findViewById(R.id.ll_perinfo_signature);
         llPerinfoVip=findViewById(R.id.ll_perinfo_vip);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

@@ -21,10 +21,12 @@
     </LinearLayout>
 
     <ListView
+        android:divider="@android:color/transparent"
+        android:dividerHeight="20dp"
         android:id="@+id/lv_team"
         android:layout_width="match_parent"
         android:layout_margin="30dp"
-        android:layout_height="450dp"></ListView>
+        android:layout_height="470dp"></ListView>
     
     <Button
         android:id="@+id/btn_team_create"

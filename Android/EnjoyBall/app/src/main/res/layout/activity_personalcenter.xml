@@ -134,7 +134,7 @@
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/tv_perinfo_followNum"
+                    android:id="@+id/tv_personalcenter_followNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -157,7 +157,7 @@
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/tv_perinfo_fansNum"
+                    android:id="@+id/tv_personalcneter_fansNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"

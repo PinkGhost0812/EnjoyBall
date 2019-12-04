@@ -13,4 +13,7 @@ public class Info {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public static final int MESSAGE_RECEIVE_SUCCESS=1;
+
 }

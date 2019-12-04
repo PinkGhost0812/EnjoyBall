@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView ivMainPortrait=null;
 
-    private long startTime;
+    private long startTime=1;
 
     private class MyTabSpec {
         private ImageView imageView = null;

@@ -57,7 +57,7 @@ public class HomepageFansAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.tvHomepageFansNickname = convertView.findViewById(R.id.tv_homepage_fans_nickname);
             viewHolder.tvHomepageFansSex = convertView.findViewById(R.id.tv_homepage_fans_sex);
-            viewHolder.tvHomepageFansAge = convertView.findViewById(R.id.tv_homepage_fans_age);
+            //viewHolder.tvHomepageFansAge = convertView.findViewById(R.id.tv_homepage_fans_age);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -65,7 +65,7 @@ public class HomepageFansAdapter extends BaseAdapter {
 
         viewHolder.tvHomepageFansNickname.setText(dataSource.get(position).get("nickname").toString());
         viewHolder.tvHomepageFansSex.setText(dataSource.get(position).get("sex").toString());
-        viewHolder.tvHomepageFansAge.setText(dataSource.get(position).get("age").toString());
+       // viewHolder.tvHomepageFansAge.setText(dataSource.get(position).get("age").toString());
 
         return convertView;
     }
