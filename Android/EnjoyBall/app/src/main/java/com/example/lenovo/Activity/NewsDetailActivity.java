@@ -231,11 +231,7 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
                 int userId = new Info().getUser().getUser_id();
                 UserFans userFans = new UserFans(null,authorId,userId);
                 String info = new Gson().toJson(userFans);
-<<<<<<< Updated upstream
                 Request request = new Request.Builder().url(Info.BASE_URL + "user/follow?userFans=" + info).build();
-=======
-                Request request = new Request.Builder().url(Info.BASE_URL + "user/attention?userFans=" + info).build();
->>>>>>> Stashed changes
                 Call call = okHttpClient.newCall(request);
                 call.enqueue(new Callback() {
                     @Override

@@ -74,7 +74,7 @@ public class HomepageCommentFragment extends Fragment {
 
         user=info.getUser();
 
-        user=new User(1,"2","3","4","5","6","7","8","9",10,11,12);
+        user=new User();
 
         findView();
 
@@ -107,7 +107,7 @@ public class HomepageCommentFragment extends Fragment {
         for (String comment : list.get(i).keySet()) {
             Map<String,Object> map = new HashMap<>();
             map.put("comments",comment);
-            map.put("newsTitle",list.get(i).get(comment).getTitle());
+            map.put("newsTitle",list.get(i).get(comment).getNews_title());
             dataSource.add(map);
             i++;
         }

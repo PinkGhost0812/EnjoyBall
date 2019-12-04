@@ -67,7 +67,7 @@ public class TeamActivity extends AppCompatActivity {
 
         user = info.getUser();
 
-        user=new User(1,"2","3","4","5","6","7","8","9",10,11,12);
+        user=new User();
 
         getTeam();
 
@@ -108,7 +108,7 @@ public class TeamActivity extends AppCompatActivity {
 
         for (User user : list.get(i).keySet()) {
             Map<String, Object> map = new HashMap<>();
-            map.put("names", list.get(i).get(user).getName());
+//            map.put("names", list.get(i).get(user).getName());
             map.put("captains", user.getUser_nickname());
             //map.put("memberNum",list.get(i).get(user).getMemberNum);
             dataSource.add(map);

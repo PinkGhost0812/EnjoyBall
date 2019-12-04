@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Team implements Serializable {
-<<<<<<< Updated upstream
     private Integer team_id;
     private String team_name;
     private String team_region;
@@ -15,18 +14,6 @@ public class Team implements Serializable {
     private Integer team_captain;
     private Integer team_state;
     private Integer team_class;
-=======
-
-    private Integer id;
-    private String name;
-    private String region;
-    private Date time;
-    private String logo;
-    private String slogan;
-    private Integer score;
-    private Integer captain;
-    private Integer coach;
->>>>>>> Stashed changes
 
     public Team(){}
 
