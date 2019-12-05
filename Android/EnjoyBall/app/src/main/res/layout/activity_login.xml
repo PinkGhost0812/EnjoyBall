@@ -34,19 +34,38 @@
         android:textSize="20dp"
         android:layout_marginTop="30dp"
         android:layout_gravity="center"
-        android:hint="用户名/邮箱/手机号"
-        android:paddingLeft="20dp"/>
+        android:hint="请输入手机号"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:paddingLeft="18dp"/>
 
-    <EditText
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:id="@+id/et_login_pwd"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:background="@drawable/editround_background_login"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:hint="登录密码" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:paddingLeft="20dp"
+            android:textSize="18dp"
+            android:id="@+id/et_login_pwd"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/editround_background_login"
+            android:layout_gravity="center"
+            android:hint="请输登录入密码"
+            android:inputType="textPassword"
+            android:maxLength="12"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" />
+
+        <ImageView
+            android:id="@+id/iv_login_eye"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/noteye"/>
+    </LinearLayout>
     <Button
         android:gravity="center"
         android:id="@+id/bt_login_lg"

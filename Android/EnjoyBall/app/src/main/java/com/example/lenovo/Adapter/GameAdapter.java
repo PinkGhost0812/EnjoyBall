@@ -8,29 +8,26 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
+import com.example.lenovo.entity.Contest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class GameAdapter extends BaseAdapter {
 
-    View view = null;
-
-    Map<String, Object> map = null;
-
-    private List<Map<String, Object>> dataSource = null;
+    private List<Contest> dataSource = null;
 
     private Context context = null;
 
     private int item_layout_id;
 
-    private ImageView ivId;
-    private TextView tvNews;
-    private TextView tvHeat;
 
     public GameAdapter(Context context,
-                       List<Map<String, Object>> dataSource,
+                       List<Contest> dataSource,
                        int item_layout_id) {
         this.context = context;
         this.dataSource = dataSource;
@@ -55,25 +52,37 @@ public class GameAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder = null;
         if(null == convertView) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(item_layout_id, null);
+            convertView = LayoutInflater.from(context).inflate(item_layout_id,null);
+            viewHolder = new ViewHolder();
+            viewHolder.tv_time = convertView.findViewById(R.id.tv_game_time);
+            viewHolder.tv_teamhome = convertView.findViewById(R.id.tv_game_team_home);
+            viewHolder.tv_teamaway = convertView.findViewById(R.id.tv_game_team_away);
+            viewHolder.tv_scorehome = convertView.findViewById(R.id.tv_game_score_home);
+            viewHolder.tv_scoreaway = convertView.findViewById(R.id.tv_game_score_away);
+            viewHolder.tv_state = convertView.findViewById(R.id.tv_game_state);
+            convertView.setTag(viewHolder);
+        }else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-
-        TextView tv_time = convertView.findViewById(R.id.tv_game_time);
-        TextView tv_team1 = convertView.findViewById(R.id.tv_game_team_home);
-        TextView tv_team2 = convertView.findViewById(R.id.tv_game_team_away);
-        TextView tv_score1 = convertView.findViewById(R.id.tv_game_score_home);
-        TextView tv_score2 = convertView.findViewById(R.id.tv_game_score_away);
-        TextView tv_state = convertView.findViewById(R.id.tv_game_state);
-
-        Map<String,Object> map = dataSource.get(position);
-        tv_time.setText(map.get("time").toString());
-        tv_team1.setText(map.get("team1").toString());
-        tv_team2.setText(map.get("team2").toString());
-        tv_score1.setText(map.get("score1").toString());
-        tv_score2.setText(map.get("score2").toString());
-        tv_state.setText(map.get("state").toString());
+        Contest contest = dataSource.get(position);
+//        Glide.with(context)
+//                .load(Info.BASE_URL+contest.get)
+        viewHolder.tv_time.setText(contest.getGame_time()+"");
+        viewHolder.tv_teamhome.setText(contest.getGame_home());
+        viewHolder.tv_teamaway.setText(contest.getGame_away());
+        viewHolder.tv_scorehome.setText(contest.getGame_grade());
+        viewHolder.tv_scoreaway.setText(contest.getGame_grade());
+        viewHolder.tv_state.setText(contest.getGame_status()+"");
         return convertView;
+    }
+    private class ViewHolder{
+        TextView tv_time;
+        TextView tv_teamhome;
+        TextView tv_teamaway;
+        TextView tv_scorehome;
+        TextView tv_scoreaway;
+        TextView tv_state;
     }
 }

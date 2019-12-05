@@ -63,9 +63,9 @@ public class HomepageFollowAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.tvHomepageFollowNickname.setText(dataSource.get(position).get("nicknames").toString());
-        viewHolder.tvHomepageFollowSex.setText(dataSource.get(position).get("sexs").toString());
-        viewHolder.tvHomepageFollowAge.setText(dataSource.get(position).get("ages").toString());
+        viewHolder.tvHomepageFollowNickname.setText(dataSource.get(position).get("nickname").toString());
+        viewHolder.tvHomepageFollowSex.setText(dataSource.get(position).get("sex").toString());
+        viewHolder.tvHomepageFollowAge.setText(dataSource.get(position).get("age").toString());
 
         return convertView;
     }

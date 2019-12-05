@@ -1,6 +1,5 @@
 package com.example.lenovo.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -71,11 +70,6 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_news);
-
-        Intent intent=getIntent();
-        String id=intent.getStringExtra("homepage_news_id");
-        Log.e("test",id.toString());
-
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         EventBus.getDefault().register(this);
         getViews();

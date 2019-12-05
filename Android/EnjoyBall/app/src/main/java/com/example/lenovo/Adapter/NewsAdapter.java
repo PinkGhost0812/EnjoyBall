@@ -1,6 +1,7 @@
 package com.example.lenovo.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,29 +9,29 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
+import com.example.lenovo.entity.News;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class NewsAdapter extends BaseAdapter {
 
-    View view = null;
+    //private List<Map<String,Object>> dataSource = null;
 
     Map<String, Object> map = null;
 
-    private List<Map<String, Object>> dataSource = null;
+    private List<News> dataSource = null;
 
     private Context context = null;
 
     private int item_layout_id;
 
-    private ImageView ivId;
-    private TextView tvNews;
-    private TextView tvHeat;
-
     public NewsAdapter(Context context,
-                       List<Map<String, Object>> dataSource,
+                       List<News> dataSource,
                        int item_layout_id) {
         this.context = context;
         this.dataSource = dataSource;
@@ -55,18 +56,28 @@ public class NewsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder = null;
         if (null == convertView) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(item_layout_id, null);
+            convertView = LayoutInflater.from(context).inflate(item_layout_id,null);
+            viewHolder = new ViewHolder();
+            viewHolder.iv_img = convertView.findViewById(R.id.iv_home_img);
+            viewHolder.tv_news = convertView.findViewById(R.id.tv_home_news);
+            viewHolder.tv_heat = convertView.findViewById(R.id.tv_home_heat);
+            convertView.setTag(viewHolder);
+        }else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        ImageView iv_img = convertView.findViewById(R.id.iv_home_img);
-        TextView tv_news = convertView.findViewById(R.id.tv_home_news);
-        TextView tv_heat = convertView.findViewById(R.id.tv_home_heat);
 
-        Map<String, Object> map = dataSource.get(position);
-        iv_img.setImageResource((int) map.get("img"));
-        tv_news.setText(map.get("content").toString());
-        tv_heat.setText(map.get("heat").toString());
+        Glide.with(convertView).load(Info.BASE_URL + dataSource.get(position).getNews_image()).into(viewHolder.iv_img);
+        viewHolder.tv_news.setText(dataSource.get(position).getNews_title());
+        viewHolder.tv_heat.setText(dataSource.get(position).getNews_heat()+"");
+
         return convertView;
+    }
+
+    private class ViewHolder{
+        ImageView iv_img;
+        TextView tv_news;
+        TextView tv_heat;
     }
 }

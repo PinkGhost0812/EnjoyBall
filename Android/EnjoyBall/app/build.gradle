@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+// 添加插件
+apply plugin: 'com.mob.sdk'
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -20,6 +22,14 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+}
+
+
+// 在MobSDK的扩展中注册SMSSDK的相关信息
+MobSDK {
+    appKey "2d49101064bab"
+    appSecret "0007bb2fba148ca2958b839682a2fc8b"
+    SMSSDK {}
 }
 
 dependencies {

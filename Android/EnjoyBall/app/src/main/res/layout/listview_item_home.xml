@@ -27,8 +27,11 @@
 
             <TextView
                 android:id="@+id/tv_home_news"
-                android:layout_width="220dp"
-                android:layout_height="65dp"
+                android:layout_width="wrap_content"
+                android:layout_height="62dp"
+                android:maxLines="2"
+                android:maxEms="20"
+                android:ellipsize="end"
                 android:text="欧洲冠军大逃亡:2连败 净胜球..."
                 android:textSize="18dp" />
 
@@ -48,6 +51,7 @@
                     android:id="@+id/tv_home_heat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:layout_gravity="center_vertical"
                     android:text="10563" />
             </LinearLayout>

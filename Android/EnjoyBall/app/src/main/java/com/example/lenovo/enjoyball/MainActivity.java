@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +31,8 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     private ImageView ivMainPortrait=null;
+    private int tabtop = 0;
+    private int tab = 0;
 
     private class MyTabSpec {
         private ImageView imageView = null;
@@ -37,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
         private int normalImage;
         private int selectImage;
         private Fragment fragment = null;
+        private int x;
+
+        public int getX() {
+            return x;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+        }
 
         private void setSelect(boolean b) {
             if (b){
@@ -124,9 +136,11 @@ public class MainActivity extends AppCompatActivity {
         setListener();
 
         // 3、设置默认显示的TabSpec
-        changeTab(tabStrId[0]);
-        changeTabTop(tabStrTopId[0]);
+        changeTab(tabStrId[0],tabtop);
+        changeImageTop(tabStrTopId[0]);
     }
+
+
 
     private class MyListener implements View.OnClickListener{
 
@@ -134,34 +148,45 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.tab_spec_main_home:
-                    changeTab(tabStrId[0]);
+                    tab = 0;
+                    changeTab(tabStrId[0],tabtop);
+                    Log.e("下一步",tabStrId[tab]+"");
                     break;
                 case R.id.tab_spec_main_game:
-                    changeTab(tabStrId[1]);
+                    tab =  1;
+                    changeTab(tabStrId[1],tabtop);
                     break;
                 case R.id.tab_spec_main_time:
-                    changeTab(tabStrId[2]);
+                    tab =  2;
+                    changeTab(tabStrId[2],tabtop);
                     break;
                 case R.id.tab_spec_main_message:
-                    changeTab(tabStrId[3]);
+                    tab =  3;
+                    changeTab(tabStrId[3],tabtop);
                     break;
                 case R.id.tab_spec_main_topall:
-                    changeTabTop(tabStrTopId[0]);
+                    tabtop =  0;
+                    changeTabTop(tabStrTopId[0],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_football:
-                    changeTabTop(tabStrTopId[1]);
+                    tabtop =  1;
+                    changeTabTop(tabStrTopId[1],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_basketball:
-                    changeTabTop(tabStrTopId[2]);
+                    tabtop =  2;
+                    changeTabTop(tabStrTopId[2],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_badminton:
-                    changeTabTop(tabStrTopId[3]);
+                    tabtop =  3;
+                    changeTabTop(tabStrTopId[3],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_tabletennis:
-                    changeTabTop(tabStrTopId[4]);
+                    tabtop =  4;
+                    changeTabTop(tabStrTopId[4],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_volleyball:
-                    changeTabTop(tabStrTopId[5]);
+                    tabtop =  5;
+                    changeTabTop(tabStrTopId[5],tab,tabtop);
                     break;
                 case R.id.iv_main_portrait:
                     //跳转到个人中心页面
@@ -178,23 +203,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 根据Tab ID 切换Tab
-    private void changeTab(String s) {
+    private void changeTab(String s,int i) {
         // 1 切换Fragment
-        changeFragment(s);
+        changeFragment(s,i);
 
         // 2 切换图标及字体颜色
         changeImage(s);
     }
-    private void changeTabTop(String s) {
+    private void changeTabTop(String s,int x,int y) {
         // 1 切换Fragment
-       // changeFragmentTop(s);
+        removeTop();
+        changeFragmentTop(x,y);
 
         // 2 切换图标及字体颜色
         changeImageTop(s);
     }
 
     // 根据Tab ID 切换 Tab显示的Fragment
-    private void changeFragment(String s) {
+    private void changeFragment(String s,int i) {
         Fragment fragment = map.get(s).getFragment();
 
         if(curFragment == fragment) return;
@@ -206,7 +232,11 @@ public class MainActivity extends AppCompatActivity {
             transaction.hide(curFragment);
 
         if(!fragment.isAdded()) {
-            transaction.add(R.id.tab_content, fragment);
+            Bundle bundle = new Bundle();
+            bundle.putInt("ball",i);
+            fragment.setArguments(bundle);
+            //transaction.add(R.id.tab_content, fragment);
+            transaction.replace(R.id.tab_content,fragment);
         }
         // 显示对应Fragment
         transaction.show(fragment);
@@ -215,24 +245,35 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void changeFragmentTop(String s) {
-        Fragment fragment = mapTop.get(s).getFragment();
-
-        if(curFragment == fragment) return;
+    private void removeTop(){
 
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
 
-        if(curFragment!=null)
-            transaction.hide(curFragment);
+        transaction.remove(curFragment);
+        transaction.show(curFragment);
+        transaction.commit();
+    }
+
+    private void changeFragmentTop(int x,int y) {
+        Fragment fragment = map.get(tabStrId[x]).getFragment();
+
+
+        FragmentTransaction transaction =
+                getSupportFragmentManager().beginTransaction();
+
 
         if(!fragment.isAdded()) {
-            transaction.add(R.id.tab_content, fragment);
+            Bundle bundle = new Bundle();
+            bundle.putInt("ball",y);
+            fragment.setArguments(bundle);
+            //transaction.add(R.id.tab_content, fragment);
+            transaction.replace(R.id.tab_content,fragment);
         }
         // 显示对应Fragment
         transaction.show(fragment);
-        curFragment = fragment;
 
+        curFragment = fragment;
         transaction.commit();
     }
 
@@ -319,12 +360,12 @@ public class MainActivity extends AppCompatActivity {
         map.get(tabStrId[3]).setFragment(new MessageFragment());
 
 
-        mapTop.get(tabStrTopId[0]).setFragment(new MessageFragment());
-        mapTop.get(tabStrTopId[1]).setFragment(new HomeFragment());
-        mapTop.get(tabStrTopId[2]).setFragment(new MessageFragment());
-        mapTop.get(tabStrTopId[3]).setFragment(new TimeFragment());
-        mapTop.get(tabStrTopId[4]).setFragment(new MessageFragment());
-        mapTop.get(tabStrTopId[5]).setFragment(new MessageFragment());
+        mapTop.get(tabStrTopId[0]).setX(0);
+        mapTop.get(tabStrTopId[1]).setX(1);
+        mapTop.get(tabStrTopId[2]).setX(2);
+        mapTop.get(tabStrTopId[3]).setX(3);
+        mapTop.get(tabStrTopId[4]).setX(4);
+        mapTop.get(tabStrTopId[5]).setX(5);
     }
 
     // 将图片资源放入map的MyTabSpec对象中

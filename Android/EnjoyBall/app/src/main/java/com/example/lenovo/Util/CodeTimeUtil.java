@@ -25,7 +25,7 @@ public class CodeTimeUtil extends CountDownTimer {
         tvCode.setTextColor(Color.parseColor("#0bad61"));
 
 
-        //富文本显示效果
+        //父文本显示效果
         SpannableString spannableString = new SpannableString(tvCode.getText().toString());  //获取按钮上的文字
         ForegroundColorSpan span = new ForegroundColorSpan(Color.parseColor("#0bad61"));
 

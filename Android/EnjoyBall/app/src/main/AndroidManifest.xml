@@ -4,17 +4,16 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/bd"
         android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.lenovo.Activity.LoadActivity">
+        <activity android:name="com.example.lenovo.Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +21,7 @@
             </intent-filter>
         </activity>
         <!-- <activity android:name=".NewsDetailActivity"/> -->
-        <activity android:name="com.example.lenovo.Activity.MainActivity" />
+        <activity android:name="com.example.lenovo.Activity.NewsDetailActivity"/>
         <activity android:name="com.example.lenovo.Activity.FeedBackActivity" />
         <activity android:name="com.example.lenovo.Activity.CollectActivity" />
         <activity android:name="com.example.lenovo.Activity.TreatyballActivity" />
@@ -33,12 +32,8 @@
         <activity android:name="com.example.lenovo.Activity.PersonalcenterActivity" />
         <activity android:name="com.example.lenovo.Activity.HomepageActivity" />
         <activity android:name="com.example.lenovo.Activity.PerinfoActivity" />
-        <activity android:name="com.example.lenovo.Activity.TeamCreateActivity" />
         <activity android:name="com.example.lenovo.Activity.TeamActivity" />
-        <activity android:name="com.example.lenovo.Activity.PerinfoNicknameActivity" />
-        <activity android:name="com.example.lenovo.Activity.PerinfoEmailActivity" />
-        <activity android:name="com.example.lenovo.Activity.PerinfoSignatureActivity"/>
-        <activity android:name="com.example.lenovo.Activity.NewsDetailActivity"/>
+        <activity android:name="com.example.lenovo.Activity.TeamCreateActivity"/>
     </application>
 
 </manifest>

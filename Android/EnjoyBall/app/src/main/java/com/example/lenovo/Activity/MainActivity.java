@@ -2,31 +2,56 @@ package com.example.lenovo.Activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lenovo.Fragment.GameFragment;
 import com.example.lenovo.Fragment.HomeFragment;
 import com.example.lenovo.Fragment.MessageFragment;
+import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.Fragment.TimeFragment;
+import com.example.lenovo.entity.Contest;
+import com.example.lenovo.entity.DemandInfo;
+import com.example.lenovo.entity.News;
 import com.example.lenovo.entity.User;
+import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private ImageView ivMainPortrait=null;
+    private int tabtop = 0;
+    private int tab = 0;
 
-    private long startTime=1;
+    private Contest contest;
+    private News news;
+    private DemandInfo demandInfo;
+    private long startTime;
+
 
     private class MyTabSpec {
         private ImageView imageView = null;
@@ -114,12 +139,15 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_main);
 
+
+
         initData();
 
         setListener();
 
-        changeTab(tabStrId[0]);
-        changeTabTop(tabStrTopId[0]);
+
+        changeTab(tabStrId[0],tabtop);
+        changeImageTop(tabStrTopId[0]);
     }
 
     private class MyListener implements View.OnClickListener{
@@ -128,34 +156,45 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.tab_spec_main_home:
-                    changeTab(tabStrId[0]);
+                    tab = 0;
+                    changeTab(tabStrId[0],tabtop);
+                    Log.e("下一步",tabStrId[tab]+"");
                     break;
                 case R.id.tab_spec_main_game:
-                    changeTab(tabStrId[1]);
+                    tab =  1;
+                    changeTab(tabStrId[1],tabtop);
                     break;
                 case R.id.tab_spec_main_time:
-                    changeTab(tabStrId[2]);
+                    tab =  2;
+                    changeTab(tabStrId[2],tabtop);
                     break;
                 case R.id.tab_spec_main_message:
-                    changeTab(tabStrId[3]);
+                    tab =  3;
+                    changeTab(tabStrId[3],tabtop);
                     break;
                 case R.id.tab_spec_main_topall:
-                    changeTabTop(tabStrTopId[0]);
+                    tabtop =  0;
+                    changeTabTop(tabStrTopId[0],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_football:
-                    changeTabTop(tabStrTopId[1]);
+                    tabtop =  1;
+                    changeTabTop(tabStrTopId[1],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_basketball:
-                    changeTabTop(tabStrTopId[2]);
+                    tabtop =  2;
+                    changeTabTop(tabStrTopId[2],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_badminton:
-                    changeTabTop(tabStrTopId[3]);
+                    tabtop =  3;
+                    changeTabTop(tabStrTopId[3],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_tabletennis:
-                    changeTabTop(tabStrTopId[4]);
+                    tabtop =  4;
+                    changeTabTop(tabStrTopId[4],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_volleyball:
-                    changeTabTop(tabStrTopId[5]);
+                    tabtop =  5;
+                    changeTabTop(tabStrTopId[5],tab,tabtop);
                     break;
                 case R.id.iv_main_portrait:
                     //跳转到个人中心页面
@@ -180,23 +219,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 根据Tab ID 切换Tab
-    private void changeTab(String s) {
+    private void changeTab(String s,int i) {
         // 1 切换Fragment
-        changeFragment(s);
+        changeFragment(s,i);
 
         // 2 切换图标及字体颜色
         changeImage(s);
     }
-    private void changeTabTop(String s) {
+    private void changeTabTop(String s,int x,int y) {
         // 1 切换Fragment
-       // changeFragmentTop(s);
-
+        //removeTop();
+        changeFragmentTop(x,y);
+        changeBall(x,y);
         // 2 切换图标及字体颜色
         changeImageTop(s);
     }
 
     // 根据Tab ID 切换 Tab显示的Fragment
-    private void changeFragment(String s) {
+    private void changeFragment(String s,int i) {
         Fragment fragment = map.get(s).getFragment();
 
         if(curFragment == fragment) return;
@@ -208,7 +248,11 @@ public class MainActivity extends AppCompatActivity {
             transaction.hide(curFragment);
 
         if(!fragment.isAdded()) {
-            transaction.add(R.id.tab_content, fragment);
+            Bundle bundle = new Bundle();
+            bundle.putInt("ball",i);
+            fragment.setArguments(bundle);
+            //transaction.add(R.id.tab_content, fragment);
+            transaction.replace(R.id.tab_content,fragment);
         }
         // 显示对应Fragment
         transaction.show(fragment);
@@ -217,24 +261,50 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void changeFragmentTop(String s) {
-        Fragment fragment = mapTop.get(s).getFragment();
+    private void changeBall(int i,int s){
 
-        if(curFragment == fragment) return;
+        Fragment fragment = map.get(tabStrId[i]).getFragment();
+        if(curFragment == fragment){
+            FragmentTransaction transaction =
+                    getSupportFragmentManager().beginTransaction();
+            Bundle bundle = new Bundle();
+            bundle.putInt("ball",s);
+            fragment.setArguments(bundle);
+            transaction.replace(R.id.tab_content,fragment);
+            transaction.commit();
+        }
+
+    }
+
+    private void removeTop(){
 
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
 
-        if(curFragment!=null)
-            transaction.hide(curFragment);
+        transaction.remove(curFragment);
+        transaction.show(curFragment);
+        transaction.commit();
+    }
 
-        if(!fragment.isAdded()) {
-            transaction.add(R.id.tab_content, fragment);
-        }
+    private void changeFragmentTop(int x,int y) {
+        Fragment fragment = map.get(tabStrId[x]).getFragment();
+
+
+        FragmentTransaction transaction =
+                getSupportFragmentManager().beginTransaction();
+
+
+        //if(!fragment.isAdded()) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("ball",y);
+            fragment.setArguments(bundle);
+            //transaction.add(R.id.tab_content, fragment);
+            transaction.replace(R.id.tab_content,fragment);
+        //}
         // 显示对应Fragment
-        transaction.show(fragment);
-        curFragment = fragment;
+        //transaction.show(fragment);
 
+        curFragment = fragment;
         transaction.commit();
     }
 
@@ -260,6 +330,8 @@ public class MainActivity extends AppCompatActivity {
 
     // 设置监听器
     private void setListener(){
+
+        //vpBanner = (ViewPager)findViewById(R.id.et_login_pwd);
 
         LinearLayout linearLayouttop1 = findViewById(R.id.tab_spec_main_topall);
         LinearLayout linearLayouttop2 = findViewById(R.id.tab_spec_main_football);
@@ -401,5 +473,6 @@ public class MainActivity extends AppCompatActivity {
         mapTop.get(tabStrTopId[5]).setImageView(ivVolleyball);
         mapTop.get(tabStrTopId[5]).setTextView(tvVolleyball);
     }
+
 
 }

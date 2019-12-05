@@ -1,6 +1,7 @@
 package com.example.lenovo.entity;
 
 import java.io.Serializable;
+
 import java.util.Date;
 public class Message implements Serializable {
     private Integer message_id;
@@ -71,7 +72,7 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Msg{" +
+        return "Message{" +
                 "message_id=" + message_id +
                 ", message_class=" + message_class +
                 ", message_time=" + message_time +

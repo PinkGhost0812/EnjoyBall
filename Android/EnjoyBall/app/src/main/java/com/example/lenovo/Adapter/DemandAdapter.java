@@ -9,15 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lenovo.enjoyball.R;
+import com.example.lenovo.entity.DemandInfo;
 
 import java.util.List;
-import java.util.Map;
 
 public class DemandAdapter extends BaseAdapter {
 
     View view = null;
 
-    private List<Map<String, Object>> dataSource = null;
+    private List<DemandInfo> dataSource = null;
 
     private Context context = null;
 
@@ -28,7 +28,7 @@ public class DemandAdapter extends BaseAdapter {
     private TextView tvHeat;
 
     public DemandAdapter(Context context,
-                       List<Map<String, Object>> dataSource,
+                       List<DemandInfo> dataSource,
                        int item_layout_id) {
         this.context = context;
         this.dataSource = dataSource;
@@ -53,18 +53,28 @@ public class DemandAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder = null;
         if(null == convertView) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(item_layout_id, null);
+            convertView = LayoutInflater.from(context).inflate(item_layout_id,null);
+            viewHolder = new ViewHolder();
+            viewHolder.tv_time = convertView.findViewById(R.id.tv_time_time);
+            viewHolder.tv_place = convertView.findViewById(R.id.tv_time_place);
+            viewHolder.tv_dp = convertView.findViewById(R.id.tv_time_dp);
+            convertView.setTag(viewHolder);
+        }else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        TextView tv_time = convertView.findViewById(R.id.tv_time_time);
-        TextView tv_place = convertView.findViewById(R.id.tv_time_place);
-        TextView tv_dp = convertView.findViewById(R.id.tv_time_dp);
 
-        Map<String,Object> map = dataSource.get(position);
-        tv_time.setText(map.get("time").toString());
-        tv_place.setText(map.get("place").toString());
-        tv_dp.setText(map.get("dp").toString());
+        DemandInfo demandInfo = dataSource.get(position);
+        viewHolder.tv_time.setText(demandInfo.getDemand_time()+"");
+        viewHolder.tv_place.setText(demandInfo.getDemand_place());
+        viewHolder.tv_dp.setText(demandInfo.getDemand_description()+"");
         return convertView;
+    }
+
+    private class ViewHolder{
+        TextView tv_time;
+        TextView tv_place;
+        TextView tv_dp;
     }
 }

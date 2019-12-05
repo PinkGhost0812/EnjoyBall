@@ -48,12 +48,14 @@
                 android:textSize="25dp" />
 
             <EditText
-                android:id="@+id/et_login_phone"
+                android:id="@+id/et_forget_phone"
                 android:layout_width="250dp"
                 android:layout_height="45dp"
                 android:background="@drawable/editround_background_login"
                 android:hint="手机号"
-                android:paddingLeft="20dp"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:paddingLeft="18dp"
                 android:textSize="20dp" />
 
         </LinearLayout>
@@ -73,20 +75,23 @@
                 android:textSize="23dp" />
 
             <EditText
-                android:id="@+id/et_login_code"
+                android:id="@+id/et_forget_code"
                 android:layout_width="150dp"
                 android:layout_height="45dp"
                 android:background="@drawable/editround_background_login"
                 android:hint="请输入验证码"
+                android:inputType="number"
                 android:paddingLeft="10dp"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
 
             <Button
+                android:id="@+id/btn_forget_code"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/shapebutton_getcode"
                 android:text="获取验证码"
+                android:textSize="12dp"
                 android:textColor="#ffffff" />
 
         </LinearLayout>
@@ -106,25 +111,35 @@
                 android:textSize="23dp" />
 
             <EditText
-                android:id="@+id/et_login_pwd"
-                android:layout_width="250dp"
+                android:id="@+id/et_forget_pwd"
+                android:layout_width="200dp"
                 android:layout_height="40dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/editround_background_login"
-                android:hint="密码"
+                android:hint="请输入修改后的密码"
+                android:inputType="textPassword"
+                android:maxLength="12"
+                android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:paddingLeft="20dp"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
+
+            <ImageView
+                android:id="@+id/iv_forget_eye"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/noteye"/>
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/bt_login_lg"
+            android:id="@+id/btn_forget_changecode"
             android:layout_width="280dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/shapebutton_login"
             android:gravity="center"
-            android:text="注册"
+            android:text="修改密码"
             android:textColor="#FFF"
             android:textSize="23dp" />
 

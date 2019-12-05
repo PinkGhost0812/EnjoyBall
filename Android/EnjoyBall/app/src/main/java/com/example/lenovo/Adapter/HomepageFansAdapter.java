@@ -63,9 +63,9 @@ public class HomepageFansAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.tvHomepageFansNickname.setText(dataSource.get(position).get("nicknames").toString());
-        viewHolder.tvHomepageFansSex.setText(dataSource.get(position).get("sexs").toString());
-        viewHolder.tvHomepageFansAge.setText(dataSource.get(position).get("ages").toString());
+        viewHolder.tvHomepageFansNickname.setText(dataSource.get(position).get("nickname").toString());
+        viewHolder.tvHomepageFansSex.setText(dataSource.get(position).get("sex").toString());
+        viewHolder.tvHomepageFansAge.setText(dataSource.get(position).get("age").toString());
 
         return convertView;
     }
