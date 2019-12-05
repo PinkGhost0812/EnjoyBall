@@ -21,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -69,7 +70,11 @@ public class HomepageFansFragment extends Fragment {
 
         user=info.getUser();
 
+<<<<<<< Updated upstream
         user=new User();
+=======
+        user=new User(1,"2","3","4","5","6","7","8","9",10,11,12,13);
+>>>>>>> Stashed changes
 
         findView();
 
@@ -79,7 +84,7 @@ public class HomepageFansFragment extends Fragment {
 
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setInfo(List<User> users) {
 
         initData(users);
@@ -96,9 +101,9 @@ public class HomepageFansFragment extends Fragment {
         dataSource = new ArrayList<>();
         for(int i=0;i<users.size();++i){
             Map<String,Object> map = new HashMap<>();
-            map.put("nickname",users.get(i).getUser_nickname());
-            map.put("sex",users.get(i).getUser_sex());
-            //map.put("age",ages[i]);
+            map.put("nicknames",users.get(i).getUser_nickname());
+            map.put("sexs",users.get(i).getUser_sex());
+            map.put("ages",users.get(i).getUser_age());
             dataSource.add(map);
         }
     }

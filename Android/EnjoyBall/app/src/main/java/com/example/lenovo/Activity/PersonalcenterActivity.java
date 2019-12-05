@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,14 +17,12 @@ import android.widget.Toast;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
-import com.example.lenovo.Util.*;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -179,7 +178,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
         tvPersonalcenterSignature.setText(user.getUser_signature());
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setHttpInfo(Message msg) {
 
         switch (msg.what){
@@ -280,7 +279,11 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
         info = new Info();
         user = info.getUser();
+<<<<<<< Updated upstream
         user = new User();
+=======
+        user = new User(1, "2", "3", "4", "5", "6", "7", "8", "9", 10, 11, 12,13);
+>>>>>>> Stashed changes
         user_id = user.getUser_id();
 
     }

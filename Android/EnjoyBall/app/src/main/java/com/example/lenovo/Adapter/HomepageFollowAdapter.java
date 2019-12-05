@@ -57,15 +57,15 @@ public class HomepageFollowAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.tvHomepageFollowNickname = convertView.findViewById(R.id.tv_homepage_follow_nickname);
             viewHolder.tvHomepageFollowSex = convertView.findViewById(R.id.tv_homepage_follow_sex);
-            //viewHolder.tvHomepageFollowAge = convertView.findViewById(R.id.tv_homepage_follow_age);
+            viewHolder.tvHomepageFollowAge = convertView.findViewById(R.id.tv_homepage_follow_age);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.tvHomepageFollowNickname.setText(dataSource.get(position).get("nickname").toString());
-        viewHolder.tvHomepageFollowSex.setText(dataSource.get(position).get("sex").toString());
-        //viewHolder.tvHomepageFollowAge.setText(dataSource.get(position).get("age").toString());
+        viewHolder.tvHomepageFollowNickname.setText(dataSource.get(position).get("nicknames").toString());
+        viewHolder.tvHomepageFollowSex.setText(dataSource.get(position).get("sexs").toString());
+        viewHolder.tvHomepageFollowAge.setText(dataSource.get(position).get("ages").toString());
 
         return convertView;
     }

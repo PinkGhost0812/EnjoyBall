@@ -1,8 +1,10 @@
 package com.example.lenovo.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,9 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.lenovo.Activity.NewsDetailActivity;
 import com.example.lenovo.Adapter.HomepageCommentAdapter;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
@@ -25,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -39,16 +44,16 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class HomepageCommentFragment extends Fragment {
+    public class HomepageCommentFragment extends Fragment {
 
-    private View getView;
+        private View getView;
 
-    private ListView lvHomepageComment;
+        private ListView lvHomepageComment;
 
-    private List<Map<String, Object>> dataSource = null;
-    private List<Map<String,News>> list=null;
+        private List<Map<String, Object>> dataSource = null;
+        private List<CommentAndNews> list;
 
-    private OkHttpClient okHttpClient;
+        private OkHttpClient okHttpClient;
 
     private int user_id;
 
@@ -60,7 +65,7 @@ public class HomepageCommentFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.tab_homepage_comment,container, false);
 
@@ -74,20 +79,40 @@ public class HomepageCommentFragment extends Fragment {
 
         user=info.getUser();
 
+<<<<<<< Updated upstream
         user=new User();
+=======
+        user=new User(1,"2","3","4","5","6","7","8","9",10,11,12,13);
+>>>>>>> Stashed changes
 
         findView();
 
         getComment();
 
+        lvHomepageComment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent();
+                intent.setClass(getContext(), NewsDetailActivity.class);
+                Log.e("test",list.toString());
+                Log.e("test",position+"");
+                Log.e("test",list.get(position).getNews().getNews_id().toString());
+
+                intent.putExtra("homepage_news_id",list.get(position).getNews().getNews_id().toString());
+                startActivity(intent);
+            }
+        });
+
         return view;
 
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setInfo(Message msg) {
 
-        initData(msg.list);
+        List<CommentAndNews> list= (List<CommentAndNews>) msg.obj;
+
+        initData(list);
 
         HomepageCommentAdapter adapter=new HomepageCommentAdapter
                 (getContext(),dataSource,R.layout.listview_item_comment);
@@ -96,20 +121,24 @@ public class HomepageCommentFragment extends Fragment {
 
     }
 
-    private void initData(List<Map<String,News>> list) {
-
-        Log.e("test12345",list.toString());
+    private void initData(List<CommentAndNews> list) {
 
         dataSource = new ArrayList<>();
 
+<<<<<<< Updated upstream
         int i=0;
 
         for (String comment : list.get(i).keySet()) {
             Map<String,Object> map = new HashMap<>();
             map.put("comments",comment);
             map.put("newsTitle",list.get(i).get(comment).getNews_title());
+=======
+        for (int i=0;i<list.size();i++){
+            Map<String,Object> map=new HashMap<>();
+            map.put("comments",list.get(i).getComment().getComment_content());
+            map.put("news",list.get(i).getNews().getNews_title());
+>>>>>>> Stashed changes
             dataSource.add(map);
-            i++;
         }
 
     }
@@ -117,7 +146,7 @@ public class HomepageCommentFragment extends Fragment {
     private void getComment() {
 
         okHttpClient=new OkHttpClient();
-        Request request = new Request.Builder()
+        final Request request = new Request.Builder()
                 .url(Info.BASE_URL + "information/findSaying?id="+1)
                 .build();
         Call call = okHttpClient.newCall(request);
@@ -132,12 +161,12 @@ public class HomepageCommentFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                String ans = response.body().string();
-                List<Map<String,News>> list = gson.fromJson(ans, new TypeToken<List<Map<String,News>>>(){}.getType());
+                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                Type type = new TypeToken<List<CommentAndNews>>(){}.getType();
+                list= gson.fromJson(response.body().string(), type);
                 Log.e("test",list.toString());
                 Message msg=new Message();
-                msg.list=list;
+                msg.obj=list;
                 EventBus.getDefault().post(msg);
             }
         });

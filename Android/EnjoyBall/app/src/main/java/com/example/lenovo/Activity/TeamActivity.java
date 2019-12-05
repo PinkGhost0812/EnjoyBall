@@ -67,7 +67,11 @@ public class TeamActivity extends AppCompatActivity {
 
         user = info.getUser();
 
+<<<<<<< Updated upstream
         user=new User();
+=======
+        user=new User(1,"2","3","4","5","6","7","8","9",10,11,12,13);
+>>>>>>> Stashed changes
 
         getTeam();
 
@@ -108,9 +112,13 @@ public class TeamActivity extends AppCompatActivity {
 
         for (User user : list.get(i).keySet()) {
             Map<String, Object> map = new HashMap<>();
+<<<<<<< Updated upstream
 //            map.put("names", list.get(i).get(user).getName());
+=======
+            map.put("names", list.get(i).get(user).getTeam_name());
+>>>>>>> Stashed changes
             map.put("captains", user.getUser_nickname());
-            //map.put("memberNum",list.get(i).get(user).getMemberNum);
+            //map.put("memberNums",list.get(i).get(user).getMemberNum);
             dataSource.add(map);
             i++;
         }
@@ -122,7 +130,7 @@ public class TeamActivity extends AppCompatActivity {
 
         okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Info.BASE_URL + "team/findByPerson?id=" + user.getUser_id())
+                .url(Info.BASE_URL + "team/findByPerson?id=" + 1)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {

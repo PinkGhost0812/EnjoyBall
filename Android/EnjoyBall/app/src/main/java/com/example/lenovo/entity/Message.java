@@ -71,7 +71,7 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "Msg{" +
                 "message_id=" + message_id +
                 ", message_class=" + message_class +
                 ", message_time=" + message_time +
