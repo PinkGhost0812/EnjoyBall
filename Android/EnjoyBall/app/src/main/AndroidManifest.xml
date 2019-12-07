@@ -12,15 +12,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.lenovo.Activity.MainActivity">
+        <activity android:name="com.example.lenovo.Activity.LoadActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- <activity android:name=".NewsDetailActivity"/> -->
+        <activity android:name="com.example.lenovo.Activity.MainActivity"/>
         <activity android:name="com.example.lenovo.Activity.NewsDetailActivity"/>
         <activity android:name="com.example.lenovo.Activity.FeedBackActivity" />
         <activity android:name="com.example.lenovo.Activity.CollectActivity" />
@@ -34,6 +35,9 @@
         <activity android:name="com.example.lenovo.Activity.PerinfoActivity" />
         <activity android:name="com.example.lenovo.Activity.TeamActivity" />
         <activity android:name="com.example.lenovo.Activity.TeamCreateActivity"/>
+        <activity android:name="com.example.lenovo.Activity.PerinfoSignatureActivity"/>
+        <activity android:name="com.example.lenovo.Activity.PerinfoEmailActivity"/>
+        <activity android:name="com.example.lenovo.Activity.PerinfoNicknameActivity"/>
     </application>
 
 </manifest>

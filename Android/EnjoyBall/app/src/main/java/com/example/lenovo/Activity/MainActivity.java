@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private Contest contest;
     private News news;
     private DemandInfo demandInfo;
-    private long startTime;
+    private long startTime=1;
 
 
     private class MyTabSpec {

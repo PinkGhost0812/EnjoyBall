@@ -90,6 +90,12 @@ public class HomepageActivity extends AppCompatActivity {
             changeTab(tabStrId[3]);
         }
 
+        btnFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 

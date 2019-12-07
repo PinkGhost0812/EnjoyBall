@@ -63,7 +63,7 @@ public class HomepageCommentAdapter extends BaseAdapter {
         }
 
         viewHolder.tvHomepageCommentText.setText(dataSource.get(position).get("comments").toString());
-        viewHolder.tvHomepageCommentOriginal.setText(dataSource.get(position).get("pages").toString());
+        viewHolder.tvHomepageCommentOriginal.setText(dataSource.get(position).get("news").toString());
 
         return convertView;
     }

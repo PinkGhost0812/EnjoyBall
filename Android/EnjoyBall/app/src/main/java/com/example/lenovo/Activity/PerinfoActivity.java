@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityCompat;
@@ -21,19 +23,34 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -74,6 +91,11 @@ public class PerinfoActivity extends AppCompatActivity {
 
     private BottomSheetDialog bottomSheetDialog;
 
+    private OkHttpClient okHttpClient;
+    private OkHttpClient okHttpClientHeadPortrait;
+
+    private String imgPath="0";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +103,10 @@ public class PerinfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_perinfo);
         
         findView();
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         
         user= (User) getIntent().getSerializableExtra("user");
         
@@ -102,6 +128,10 @@ public class PerinfoActivity extends AppCompatActivity {
                     break;
                 case R.id.ll_perinfo_nickname:
                     //点击用户名
+                    intent = new Intent();
+                    intent.putExtra("id", user.getUser_id());
+                    intent.setClass(PerinfoActivity.this, PerinfoNicknameActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.ll_perinfo_sex:
                     //点击性别
@@ -116,26 +146,35 @@ public class PerinfoActivity extends AppCompatActivity {
                     break;
                 case R.id.ll_perinfo_phone:
                     //点击手机号
+                    Toast.makeText
+                            (PerinfoActivity.this, "修改手机号功能开发人员正在加班研究，敬请期待凹~", Toast.LENGTH_LONG).show();
                     break;
                 case R.id.ll_perinfo_email:
                     //点击邮箱
+                    intent = new Intent();
+                    intent.setClass(PerinfoActivity.this, PerinfoEmailActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.ll_perinfo_signature:
                     //点击个性签名
+                    intent = new Intent();
+                    intent.setClass(PerinfoActivity.this, PerinfoSignatureActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.ll_perinfo_vip:
                     //点击vip
+                    Toast.makeText
+                            (PerinfoActivity.this, "开通会员功能开发人员正在加班研究，敬请期待凹~", Toast.LENGTH_LONG).show();
                     break;
                 case R.id.tv_perinfo_save:
                     //点击保存
+                    save();
                     break;
 
             }
         }
     }
 
-<<<<<<< Updated upstream
-=======
     private void save() {
 
         //更新用户基本信息
@@ -186,7 +225,7 @@ public class PerinfoActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(MediaType.parse("image/*"),
                 file);
         Request request = new Request.Builder()
-                .url(info.BASE_URL+"user/uploadImg?id="+1)
+                .url(Info.BASE_URL+"user/uploadImg?id="+1)
                 .post(body)
                 .build();
         Call call = okHttpClientHeadPortrait.newCall(request);
@@ -230,6 +269,7 @@ public class PerinfoActivity extends AppCompatActivity {
     public void setMsgInfo(Message msg) {
         switch (msg.what) {
             case 4:
+                Log.e("testnickname",msg.obj.toString());
                 tvPerinfoNickname.setText(msg.obj.toString());
                 user.setUser_nickname(msg.obj.toString());
                 break;
@@ -244,7 +284,6 @@ public class PerinfoActivity extends AppCompatActivity {
         }
     }
 
->>>>>>> Stashed changes
     private void showSexBottomSheetDialog() {
 
         bottomSheetDialog= new BottomSheetDialog(this);
@@ -303,16 +342,19 @@ public class PerinfoActivity extends AppCompatActivity {
                 case R.id.tv_dialog_perinfo_man:
                     //点击男
                     tvPerinfoSex.setText(tvDialogPerinfoMan.getText());
+                    user.setUser_sex(tvDialogPerinfoMan.getText().toString());
                     bottomSheetDialog.dismiss();
                     break;
                 case R.id.tv_dialog_perinfo_woman:
                     //点击女
                     tvPerinfoSex.setText(tvDialogPerinfoWoman.getText());
+                    user.setUser_sex(tvDialogPerinfoWoman.getText().toString());
                     bottomSheetDialog.dismiss();
                     break;
                 case R.id.tv_dialog_perinfo_secret:
                     //点击保密
                     tvPerinfoSex.setText(tvDialogPerinfoSecret.getText());
+                    user.setUser_sex(tvDialogPerinfoSecret.getText().toString());
                     bottomSheetDialog.dismiss();
                     break;
             }
@@ -345,26 +387,7 @@ public class PerinfoActivity extends AppCompatActivity {
                         .load(imgPath)
                         .apply(options)
                         .into(ivPerinfoPortrait);
-                //上传头像到服务器端
-//                File file = new File(imgPath);
-//                RequestBody body = RequestBody.create(MediaType.parse("image/*"),
-//                        file);
-//                Request request = new Request.Builder()
-//                        .url(Constant.BASE_URL+"UploadServlet")
-//                        .post(body)
-//                        .build();
-//                Call call = okHttpClient.newCall(request);
-//                call.enqueue(new Callback() {
-//                    @Override
-//                    public void onFailure(Call call, IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(Call call, Response response) throws IOException {
-//                        Log.e("上传头像",response.body().string());
-//                    }
-//                });
+                this.imgPath=imgPath;
             }
         }
     }
@@ -388,8 +411,6 @@ public class PerinfoActivity extends AppCompatActivity {
 
     private void setInfo() {
 
-<<<<<<< Updated upstream
-=======
         //todo:设置头像，先从本地拿取头像信息，如果没有再从服务器上拿
         RequestOptions options = new RequestOptions()
                 .circleCrop();
@@ -400,10 +421,9 @@ public class PerinfoActivity extends AppCompatActivity {
 
         Log.e("test,setinfoglideurl",this.getFilesDir()+"/HeadPortrait.jpg");
 
->>>>>>> Stashed changes
         tvPerinfoNickname.setText(user.getUser_nickname());
         tvPerinfoSex.setText(user.getUser_sex());
-        //tvPerinfoAge.setText(user.getUser_address());
+        tvPerinfoAge.setText(user.getUser_age().toString());
         tvPerinfoCity.setText(user.getUser_address());
         tvPerinfoPhone.setText(user.getUser_phonenumber());
         tvPerinfoEmail.setText(user.getUser_email());
@@ -442,4 +462,12 @@ public class PerinfoActivity extends AppCompatActivity {
         llPerinfoVip=findViewById(R.id.ll_perinfo_vip);
 
     }
+
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
 }

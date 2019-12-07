@@ -1,0 +1,9 @@
+<resources>
+    <string-array name="fixture">
+        <item>足球</item>
+        <item>篮球 </item>
+        <item>排球</item>
+        <item>羽毛球</item>
+        <item>乒乓球</item>
+    </string-array>
+</resources>

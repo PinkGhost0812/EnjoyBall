@@ -4,10 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Team implements Serializable {
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
     private Integer team_id;
     private String team_name;
     private String team_region;
