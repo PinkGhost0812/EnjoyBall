@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="type">
+        <item>足球</item>
+        <item>篮球</item>
+        <item>排球</item>
+        <item>羽毛球</item>
+        <item>乒乓球</item>
+    </string-array>
+    <string-array name="address">
+        <item>红馆</item>
+        <item>白馆</item>
+    </string-array>
+    <string-array name="num">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="visiblity">
+        <item>所有人可见</item>
+        <item>所有人不可见</item>
+        <item>我关注的可见</item>
+    </string-array>
+</resources>

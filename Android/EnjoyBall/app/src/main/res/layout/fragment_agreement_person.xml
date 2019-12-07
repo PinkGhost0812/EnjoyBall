@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:background="#98FB98"
     android:orientation="vertical">
-
+    <!--设置队伍信息-->
     <LinearLayout
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -28,8 +28,8 @@
                 android:id="@+id/sp_createagreement_type"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:entries="@array/type"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:entries="@array/type" />
         </LinearLayout>
 
         <LinearLayout
@@ -62,7 +62,6 @@
                 android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -78,8 +77,27 @@
                 android:id="@+id/sp_createagreement_address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:entries="@array/address"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:entries="@array/address" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="每队人数:" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/sp_createagreement_num"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/num" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,10 +115,9 @@
                 android:id="@+id/sp_createagreement_visiblity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:entries="@array/visiblity"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:entries="@array/visiblity" />
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,7 +134,7 @@
                 android:id="@+id/et_createagreement_say"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:background="@drawable/edittext_boder"
                 android:inputType="textMultiLine"
                 android:maxLines="5"
@@ -134,7 +151,7 @@
         android:layout_marginRight="40dp"
         android:layout_weight="4"
         android:orientation="vertical">
-
+        <!--队员信息列表-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -167,6 +184,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+            <!--底部按钮-->
 
             <Button
                 android:id="@+id/btn_createagreement_invite"

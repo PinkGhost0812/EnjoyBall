@@ -12,12 +12,13 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/head_girl"
-            android:id="@+id/iv_chat_head"/>
+            android:id="@+id/iv_agreement_head"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
+            android:id="@+id/tv_agreement_name"
             android:text="郑文涛"
             android:gravity="center"/>
 
