@@ -13,4 +13,12 @@ public class Info {
     public void setUser(User user) {
         this.user = user;
     }
+<<<<<<< Updated upstream
+=======
+
+    public static final int MESSAGE_RECEIVE_SUCCESS=1;
+
+    //当前用户头像存储地址
+    public static final String HEADPORTRAIT_URL= "/data/user/0/com.example.lenovo.enjoyball/files/HeadPortrait.jpg";
+>>>>>>> Stashed changes
 }

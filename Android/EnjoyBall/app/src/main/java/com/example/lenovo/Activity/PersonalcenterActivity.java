@@ -140,6 +140,20 @@ public class PersonalcenterActivity extends AppCompatActivity {
         }
     }
 
+<<<<<<< Updated upstream
+=======
+
+    private void getInfo() {
+
+        info = new Info();
+        user = info.getUser();
+        user = new User();
+        user = new User(1, "2", "3", "4", "5", "6", "7", "8", "9", 10, 11, 12,13);
+        user_id = user.getUser_id();
+
+    }
+
+>>>>>>> Stashed changes
     private void setListeners() {
 
         PersonalcenterListener personalcenterListener=new PersonalcenterListener();

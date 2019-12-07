@@ -36,6 +36,20 @@ public class HomepageFansFragment extends Fragment {
 
         getView=view;
 
+<<<<<<< Updated upstream
+=======
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
+
+        info=new Info();
+
+        user=info.getUser();
+
+        user=new User();
+        user=new User(1,"2","3","4","5","6","7","8","9",10,11,12,13);
+
+>>>>>>> Stashed changes
         findView();
 
         getConnect();
@@ -67,7 +81,36 @@ public class HomepageFansFragment extends Fragment {
         }
     }
 
+<<<<<<< Updated upstream
     private void getConnect() {
+=======
+    private void getFans() {
+
+        okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(Info.BASE_URL + "user/getfans?id=" + user.getUser_id())
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                Toast.makeText(getActivity().getApplicationContext(), "获取粉丝失败~", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new GsonBuilder()
+                        .create();
+                Type listType = new TypeToken<List<User>>(){}.getType();
+                userList = gson.fromJson(response.body().string(),listType);
+                EventBus.getDefault().post(userList);
+            }
+        });
+
+>>>>>>> Stashed changes
     }
 
     private void findView() {

@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Team implements Serializable {
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     private Integer team_id;
     private String team_name;
     private String team_region;
@@ -14,6 +18,15 @@ public class Team implements Serializable {
     private Integer team_captain;
     private Integer team_state;
     private Integer team_class;
+    private Integer team_number;
+
+    public Integer getTeam_number() {
+        return team_number;
+    }
+
+    public void setTeam_number(Integer team_number) {
+        this.team_number = team_number;
+    }
 
     public Team(){}
 

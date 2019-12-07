@@ -134,6 +134,117 @@ public class PerinfoActivity extends AppCompatActivity {
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    private void save() {
+
+        //更新用户基本信息
+        okHttpClient = new OkHttpClient();
+        Gson gson = new GsonBuilder().create();
+        String userJson=gson.toJson(user);
+        Request request = new Request.Builder()
+                .url(Info.BASE_URL + "user/update?info=" + userJson)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                Toast.makeText(getApplicationContext(), "世界上最远的距离就是没网络凹~", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Looper.prepare();
+                    if (response.body().string().equals("true")){
+                        Toast.makeText
+                                (PerinfoActivity.this,"更新成功凹~",Toast.LENGTH_SHORT);
+                    }else{
+                        Toast.makeText
+                                (PerinfoActivity.this,"更新失败凹~",Toast.LENGTH_SHORT);
+                    }
+                Looper.loop();
+            }
+        });
+
+        //更新头像信息
+        if (imgPath.equals("0")) {
+            Log.e("test", "未更新头像");
+        } else {
+            uploadHeadPortrait(imgPath);
+        }
+    }
+
+    private void uploadHeadPortrait(String imgPath) {
+
+        //上传到服务器
+        File file = new File(imgPath);
+        Log.e("test-upimgpath",imgPath);
+        okHttpClientHeadPortrait=new OkHttpClient();
+        RequestBody body = RequestBody.create(MediaType.parse("image/*"),
+                file);
+        Request request = new Request.Builder()
+                .url(info.BASE_URL+"user/uploadImg?id="+1)
+                .post(body)
+                .build();
+        Call call = okHttpClientHeadPortrait.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.e("test",response.body().string());
+            }
+        });
+
+        //将头像保存到本地
+        try {
+            String path=this.getFilesDir()+"/HeadPortrait.jpg";
+            Log.e("test",path);
+            File fileOutput=new File(path);
+            OutputStream outputStream=new FileOutputStream(fileOutput);
+            File fileInput=new File(imgPath);
+            InputStream inputStream=new FileInputStream(fileInput);
+            byte[] buf = new byte[1024];
+            int num=0;
+            while ((num=inputStream.read(buf))!=-1){
+                outputStream.write(buf,0,num);
+            }
+            outputStream.close();
+            inputStream.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void setMsgInfo(Message msg) {
+        switch (msg.what) {
+            case 4:
+                tvPerinfoNickname.setText(msg.obj.toString());
+                user.setUser_nickname(msg.obj.toString());
+                break;
+            case 5:
+                tvPerinfoEmail.setText(msg.obj.toString());
+                user.setUser_email(msg.obj.toString());
+                break;
+            case 6:
+                tvPerinfoSignature.setText(msg.obj.toString());
+                user.setUser_signature(msg.obj.toString());
+                break;
+        }
+    }
+
+>>>>>>> Stashed changes
     private void showSexBottomSheetDialog() {
 
         bottomSheetDialog= new BottomSheetDialog(this);
@@ -277,6 +388,19 @@ public class PerinfoActivity extends AppCompatActivity {
 
     private void setInfo() {
 
+<<<<<<< Updated upstream
+=======
+        //todo:设置头像，先从本地拿取头像信息，如果没有再从服务器上拿
+        RequestOptions options = new RequestOptions()
+                .circleCrop();
+        Glide.with(PerinfoActivity.this)
+                .load(this.getFilesDir()+"/HeadPortrait.jpg")
+                .apply(options)
+                .into(ivPerinfoPortrait);
+
+        Log.e("test,setinfoglideurl",this.getFilesDir()+"/HeadPortrait.jpg");
+
+>>>>>>> Stashed changes
         tvPerinfoNickname.setText(user.getUser_nickname());
         tvPerinfoSex.setText(user.getUser_sex());
         //tvPerinfoAge.setText(user.getUser_address());
