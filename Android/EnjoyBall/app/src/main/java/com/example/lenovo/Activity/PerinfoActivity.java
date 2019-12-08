@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
@@ -108,7 +109,7 @@ public class PerinfoActivity extends AppCompatActivity {
             EventBus.getDefault().register(this);
         }
         
-        user= (User) getIntent().getSerializableExtra("user");
+        user= ((Info)getApplicationContext()).getUser();
         
         setInfo();
         
@@ -189,7 +190,7 @@ public class PerinfoActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Looper.prepare();
-                Toast.makeText(getApplicationContext(), "世界上最远的距离就是没网络凹~", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "世界上最远的距离就是没网络o(╥﹏╥)o", Toast.LENGTH_SHORT).show();
                 Looper.loop();
                 e.printStackTrace();
             }
@@ -199,10 +200,13 @@ public class PerinfoActivity extends AppCompatActivity {
                 Looper.prepare();
                     if (response.body().string().equals("true")){
                         Toast.makeText
-                                (PerinfoActivity.this,"更新成功凹~",Toast.LENGTH_SHORT);
+                                (PerinfoActivity.this,"更新成功凹~",Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent();
+                        intent.setClass(PerinfoActivity.this,MainActivity.class);
+                        startActivity(intent);
                     }else{
                         Toast.makeText
-                                (PerinfoActivity.this,"更新失败凹~",Toast.LENGTH_SHORT);
+                                (PerinfoActivity.this,"更新失败凹~",Toast.LENGTH_SHORT).show();
                     }
                 Looper.loop();
             }
@@ -232,12 +236,25 @@ public class PerinfoActivity extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                Toast.makeText(getApplicationContext(), "世界上最远的距离就是没网络o(╥﹏╥)o", Toast.LENGTH_SHORT).show();
+                Looper.loop();
                 e.printStackTrace();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.e("test",response.body().string());
+                Looper.prepare();
+                    String data=response.body().string();
+                    if(data.equals("true")){
+                        Toast.makeText(PerinfoActivity.this,"更新信息成功~",Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent();
+                        intent.setClass(PerinfoActivity.this,MainActivity.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(PerinfoActivity.this,"更新信息失败~请重试",Toast.LENGTH_SHORT).show();
+                    }
+                Looper.loop();
             }
         });
 
@@ -413,6 +430,7 @@ public class PerinfoActivity extends AppCompatActivity {
 
         //todo:设置头像，先从本地拿取头像信息，如果没有再从服务器上拿
         RequestOptions options = new RequestOptions()
+                .signature(new ObjectKey(System.currentTimeMillis()))
                 .circleCrop();
         Glide.with(PerinfoActivity.this)
                 .load(this.getFilesDir()+"/HeadPortrait.jpg")

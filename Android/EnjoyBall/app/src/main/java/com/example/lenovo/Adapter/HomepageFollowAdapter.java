@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 
@@ -66,6 +68,7 @@ public class HomepageFollowAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(item_layout_id, null);
             viewHolder = new ViewHolder();
+            viewHolder.ivHomepageFollowPortrait=convertView.findViewById(R.id.iv_homepage_follow_portrait);
             viewHolder.tvHomepageFollowNickname = convertView.findViewById(R.id.tv_homepage_follow_nickname);
             viewHolder.tvHomepageFollowSex = convertView.findViewById(R.id.tv_homepage_follow_sex);
             viewHolder.tvHomepageFollowAge = convertView.findViewById(R.id.tv_homepage_follow_age);
@@ -75,6 +78,12 @@ public class HomepageFollowAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        RequestOptions options = new RequestOptions()
+                .circleCrop();
+        Glide.with(context)
+                .load(Info.BASE_URL+dataSource.get(position).get("portraits").toString())
+                .apply(options)
+                .into(viewHolder.ivHomepageFollowPortrait);
         viewHolder.tvHomepageFollowNickname.setText(dataSource.get(position).get("nicknames").toString());
         viewHolder.tvHomepageFollowSex.setText(dataSource.get(position).get("sexs").toString());
         viewHolder.tvHomepageFollowAge.setText(dataSource.get(position).get("ages").toString());
@@ -111,6 +120,7 @@ public class HomepageFollowAdapter extends BaseAdapter {
         public TextView tvHomepageFollowSex;
         public TextView tvHomepageFollowAge;
         public ImageView ivHomepageFollow;
+        public ImageView ivHomepageFollowPortrait;
     }
 
 

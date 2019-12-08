@@ -50,12 +50,13 @@
                         android:src="@drawable/portrait" />
 
                     <TextView
+                        android:layout_marginTop="5dp"
                         android:id="@+id/tv_homepage_nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="未登录"
                         android:textColor="#ffffff"
-                        android:textSize="15dp" />
+                        android:textSize="17dp" />
 
                 </LinearLayout>
 

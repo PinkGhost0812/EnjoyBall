@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -29,7 +30,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,9 +51,12 @@ public class TeamActivity extends AppCompatActivity {
     private ListView lvTeam;
 
     private List<Map<String, Object>> dataSource = null;
+
     private List<UserAndTeam> list = null;
 
     private User user;
+
+    private Team team;
 
     private OkHttpClient okHttpClient;
 
@@ -68,15 +74,22 @@ public class TeamActivity extends AppCompatActivity {
             EventBus.getDefault().register(this);
         }
 
-        info = new Info();
-
-        user = info.getUser();
-
-        user = new User();
-
-        user = new User(1, "2", "3", "4", "5", "6", "7", "8", "9", 10, 11, 12, 13);
+        user=((Info)getApplicationContext()).getUser();
 
         getTeam();
+
+        lvTeam.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent();
+                team=list.get(position).getTeam();
+                user=list.get(position).getUser();
+                intent.putExtra("team",team);
+                intent.putExtra("captain",user);
+                intent.setClass(TeamActivity.this,TeamDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Button button = findViewById(R.id.btn_team_create);
         button.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +133,7 @@ public class TeamActivity extends AppCompatActivity {
 
         okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Info.BASE_URL + "team/findByPerson?id=" + 1)
+                .url(Info.BASE_URL + "team/findByPerson?id=" + user.getUser_id())
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {

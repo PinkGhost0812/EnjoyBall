@@ -3,6 +3,7 @@ package com.example.lenovo.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -103,6 +104,7 @@ public class HomepageFansFragment extends Fragment {
         for(int i=0;i<userList.size();++i){
             Map<String,Object> map = new HashMap<>();
             Log.e("testnicknames",userList.get(i).getUser_nickname().toString());
+            map.put("portraits",userList.get(i).getUser_headportrait().toString());
             map.put("nicknames",userList.get(i).getUser_nickname().toString());
             map.put("sexs",userList.get(i).getUser_sex().toString());
             map.put("ages",userList.get(i).getUser_age().toString());
@@ -111,15 +113,17 @@ public class HomepageFansFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void setInfo(List<User> userList){
+    public void setInfo(Message msg){
 
-        initData(userList);
+        if (msg.what == 8){
 
-        HomepageFansAdapter adapter=new HomepageFansAdapter
-                (getContext(),dataSource,R.layout.listview_item_fans);
+            initData(userList);
 
-        lvHomepageFans.setAdapter(adapter);
+            HomepageFansAdapter adapter=new HomepageFansAdapter
+                    (getContext(),dataSource,R.layout.listview_item_fans);
 
+            lvHomepageFans.setAdapter(adapter);
+        }
     }
 
     private void getFans() {
@@ -151,8 +155,11 @@ public class HomepageFansFragment extends Fragment {
                             .create();
                     Type listType = new TypeToken<List<User>>(){}.getType();
                     userList = gson.fromJson(data,listType);
+                    Message msg=new Message();
+                    msg.obj=userList;
+                    msg.what=8;
                     Log.e("test",userList.toString());
-                    EventBus.getDefault().post(userList);
+                    EventBus.getDefault().post(msg);
                 }
 
             }

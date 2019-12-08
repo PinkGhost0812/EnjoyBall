@@ -14,6 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
@@ -56,15 +59,12 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
     private User user = null;
 
-    private int user_id;
     private int commentNum;
     private int followNum;
     private int fansNum;
     private int score;
 
     private OkHttpClient okHttpClient;
-
-    private Info info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +123,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
         okHttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                .url(Info.BASE_URL + "user/follownum?id=" + 1)
+                .url(Info.BASE_URL + "user/follownum?id=" + user.getUser_id())
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -150,7 +150,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
         okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Info.BASE_URL + "information/count?id=" + 1)
+                .url(Info.BASE_URL + "information/count?id=" + user.getUser_id())
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -177,6 +177,15 @@ public class PersonalcenterActivity extends AppCompatActivity {
         tvPersonalcenterNickname.setText(user.getUser_nickname());
         tvPersonalcenterSignature.setText(user.getUser_signature());
         tvPersonalcenterScores.setText(user.getUser_score().toString());
+
+        RequestOptions options = new RequestOptions()
+                .signature(new ObjectKey(System.currentTimeMillis()))
+                .circleCrop();
+        Glide.with(PersonalcenterActivity.this)
+                .load(Info.BASE_URL+user.getUser_headportrait())
+                .apply(options)
+                .into(ivPersonalcenterPortrait);
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
@@ -278,14 +287,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
     private void getInfo() {
 
-        info = new Info();
-        user = info.getUser();
-
-        user = new User();
-
-        user = new User(1, "2", "3", "4", "5", "6", "7", "8", "9", 10, 11, 12,13);
-
-        user_id = user.getUser_id();
+        user=((Info)getApplicationContext()).getUser();
 
     }
 

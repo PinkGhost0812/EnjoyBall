@@ -7,14 +7,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.lenovo.Fragment.HomepageCommentFragment;
 import com.example.lenovo.Fragment.HomepageFansFragment;
 import com.example.lenovo.Fragment.HomepageFollowFragment;
 import com.example.lenovo.Fragment.HomepageUserinfoFragment;
+import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
+import com.example.lenovo.entity.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,11 +34,19 @@ public class HomepageActivity extends AppCompatActivity {
     private TextView tvHomepageComment;
     private TextView tvHomepageFollow;
     private TextView tvHomepageFans;
+    private TextView tvHomepageNickname;
 
     private LinearLayout specHomepageInfo;
     private LinearLayout specHomepageComment;
     private LinearLayout specHomepageFollow;
     private LinearLayout specHomepageFans;
+
+    private ImageView ivHomepagePortrait;
+
+    private String homepagePortraitPath;
+
+    private User user;
+    private User visitUser;
 
     private class HomepageTabSpec {
         private TextView textView = null;
@@ -74,7 +89,12 @@ public class HomepageActivity extends AppCompatActivity {
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_homepage);
 
+        user=((Info)getApplicationContext()).getUser();
+        visitUser= (User) getIntent().getSerializableExtra("visitUser");
+
         findView();
+
+        setInfo();
 
         initData();
 
@@ -93,9 +113,31 @@ public class HomepageActivity extends AppCompatActivity {
         btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //不能关注自己
+                if (visitUser==null){
+                    Toast.makeText(HomepageActivity.this,"不能自己关注自己凹~",Toast.LENGTH_SHORT).show();
+                } else{
+                    //todo:对其他人关注
+                    Toast.makeText(HomepageActivity.this,"关注成功~",Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+    }
+
+    private void setInfo() {
+
+        homepagePortraitPath= Info.BASE_URL+user.getUser_headportrait();
+
+        RequestOptions options = new RequestOptions()
+                .signature(new ObjectKey(System.currentTimeMillis()))
+                .circleCrop();
+        Glide.with(HomepageActivity.this)
+                .load(homepagePortraitPath)
+                .apply(options)
+                .into(ivHomepagePortrait);
+
+        tvHomepageNickname.setText(user.getUser_nickname());
 
     }
 
@@ -203,11 +245,14 @@ public class HomepageActivity extends AppCompatActivity {
         tvHomepageComment=findViewById(R.id.tv_homepage_comment);
         tvHomepageFollow=findViewById(R.id.tv_homepage_follow);
         tvHomepageFans=findViewById(R.id.tv_homepage_fans);
+        tvHomepageNickname=findViewById(R.id.tv_homepage_nickname);
 
         specHomepageInfo=findViewById(R.id.spec_homepage_perinfo);
         specHomepageComment=findViewById(R.id.spec_homepage_comment);
         specHomepageFollow=findViewById(R.id.spec_homepage_follow);
         specHomepageFans=findViewById(R.id.spec_homepage_fans);
+
+        ivHomepagePortrait=findViewById(R.id.iv_homepage_portrait);
 
     }
 }

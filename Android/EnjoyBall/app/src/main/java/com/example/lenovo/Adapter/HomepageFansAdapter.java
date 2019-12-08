@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
@@ -73,20 +75,27 @@ public class HomepageFansAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(item_layout_id, null);
             viewHolder = new ViewHolder();
+            viewHolder.ivHomepageFansPortrait=convertView.findViewById(R.id.iv_homepage_fans_portrait);
             viewHolder.tvHomepageFansNickname = convertView.findViewById(R.id.tv_homepage_fans_nickname);
             viewHolder.tvHomepageFansSex = convertView.findViewById(R.id.tv_homepage_fans_sex);
             viewHolder.tvHomepageFansAge = convertView.findViewById(R.id.tv_homepage_fans_age);
-            viewHolder.ivHomepageFnasFollow=convertView.findViewById(R.id.iv_homepage_fans_follow);
+            viewHolder.ivHomepageFansFollow=convertView.findViewById(R.id.iv_homepage_fans_follow);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        RequestOptions options = new RequestOptions()
+                .circleCrop();
+        Glide.with(context)
+                .load(Info.BASE_URL+dataSource.get(position).get("portraits").toString())
+                .apply(options)
+                .into(viewHolder.ivHomepageFansPortrait);
         viewHolder.tvHomepageFansNickname.setText(dataSource.get(position).get("nicknames").toString());
         viewHolder.tvHomepageFansSex.setText(dataSource.get(position).get("sexs").toString());
         viewHolder.tvHomepageFansAge.setText(dataSource.get(position).get("ages").toString());
 
-        viewHolder.ivHomepageFnasFollow.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ivHomepageFansFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OkHttpClient okHttpClient = new OkHttpClient();
@@ -117,6 +126,7 @@ public class HomepageFansAdapter extends BaseAdapter {
         public TextView tvHomepageFansNickname;
         public TextView tvHomepageFansSex;
         public TextView tvHomepageFansAge;
-        public ImageView ivHomepageFnasFollow;
+        public ImageView ivHomepageFansFollow;
+        public ImageView ivHomepageFansPortrait;
     }
 }

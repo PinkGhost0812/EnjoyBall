@@ -107,14 +107,17 @@ public class HomepageCommentFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setInfo(Message msg) {
 
-        List<CommentAndNews> list = (List<CommentAndNews>) msg.obj;
+        if (msg.what==10){
 
-        initData(list);
+            List<CommentAndNews> list = (List<CommentAndNews>) msg.obj;
 
-        HomepageCommentAdapter adapter = new HomepageCommentAdapter
-                (getContext(), dataSource, R.layout.listview_item_comment);
+            initData(list);
 
-        lvHomepageComment.setAdapter(adapter);
+            HomepageCommentAdapter adapter = new HomepageCommentAdapter
+                    (getContext(), dataSource, R.layout.listview_item_comment);
+
+            lvHomepageComment.setAdapter(adapter);
+        }
 
     }
 
@@ -161,6 +164,7 @@ public class HomepageCommentFragment extends Fragment {
                     Log.e("test", list.get(1).getComment().getComment_content());
                     Message msg = new Message();
                     msg.obj = list;
+                    msg.what=10;
                     EventBus.getDefault().post(msg);
                 }
             }

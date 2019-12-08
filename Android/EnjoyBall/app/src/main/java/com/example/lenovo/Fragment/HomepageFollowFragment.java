@@ -3,6 +3,7 @@ package com.example.lenovo.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -96,14 +97,17 @@ public class HomepageFollowFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void setInfo(List<User> userList){
+    public void setInfo(Message msg){
 
-        initData(userList);
+        if (msg.what==9){
 
-        HomepageFollowAdapter adapter=new HomepageFollowAdapter
-                (getContext(),dataSource,R.layout.listview_item_follow);
+            initData(userList);
 
-        lvHomepageFollow.setAdapter(adapter);
+            HomepageFollowAdapter adapter=new HomepageFollowAdapter
+                    (getContext(),dataSource,R.layout.listview_item_follow);
+
+            lvHomepageFollow.setAdapter(adapter);
+        }
 
     }
 
@@ -114,6 +118,7 @@ public class HomepageFollowFragment extends Fragment {
         dataSource = new ArrayList<>();
         for(int i=0;i<userList.size();++i){
             Map<String,Object> map = new HashMap<>();
+            map.put("portraits",userList.get(i).getUser_headportrait());
             map.put("nicknames",userList.get(i).getUser_nickname());
             map.put("sexs",userList.get(i).getUser_sex());
             map.put("ages",userList.get(i).getUser_age());
@@ -149,7 +154,10 @@ public class HomepageFollowFragment extends Fragment {
                             .create();
                     Type listType = new TypeToken<List<User>>(){}.getType();
                     userList = gson.fromJson(data,listType);
-                    EventBus.getDefault().post(userList);
+                    Message msg=new Message();
+                    msg.what=9;
+                    msg.obj=userList;
+                    EventBus.getDefault().post(msg);
                 }
 
             }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
 
@@ -37,7 +38,7 @@ public class HomepageUserinfoFragment extends Fragment {
 
         findView();
 
-        user= (User) getActivity().getIntent().getSerializableExtra("user");
+        user= ((Info)getActivity().getApplicationContext()).getUser();
 
         setInfo();
 

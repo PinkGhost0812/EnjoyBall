@@ -33,7 +33,7 @@
                 android:maxEms="20"
                 android:ellipsize="end"
                 android:text="欧洲冠军大逃亡:2连败 净胜球..."
-                android:textSize="18dp" />
+                android:textSize="16dp" />
 
             <LinearLayout
                 android:gravity="right"
