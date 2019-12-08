@@ -7,7 +7,7 @@
     <ImageView
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="30dp"
-        android:id="@+id/iv_follow_portrait"
+        android:id="@+id/iv_homepage_follow_portrait"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/portrait" />

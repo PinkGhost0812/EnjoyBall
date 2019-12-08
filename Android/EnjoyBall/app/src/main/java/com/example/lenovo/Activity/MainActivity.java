@@ -21,6 +21,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.lenovo.Fragment.GameFragment;
 import com.example.lenovo.Fragment.HomeFragment;
 import com.example.lenovo.Fragment.MessageFragment;
@@ -39,18 +42,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView ivMainPortrait=null;
+    private ImageView ivMainPortrait;
     private int tabtop = 0;
     private int tab = 0;
 
     private Contest contest;
     private News news;
     private DemandInfo demandInfo;
-    private long startTime;
+    private long startTime=1;
+
+    private User curUser;
 
 
     private class MyTabSpec {
@@ -139,15 +145,24 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_main);
 
-
+        curUser=((Info)getApplicationContext()).getUser();
 
         initData();
 
         setListener();
 
-
         changeTab(tabStrId[0],tabtop);
+
         changeImageTop(tabStrTopId[0]);
+
+        RequestOptions options = new RequestOptions()
+                .signature(new ObjectKey(System.currentTimeMillis()))
+                .circleCrop();
+        Log.e("head",curUser.getUser_headportrait());
+        Glide.with(this)
+                .load(Info.BASE_URL+curUser.getUser_headportrait())
+                .apply(options)
+                .into(ivMainPortrait);
     }
 
     private class MyListener implements View.OnClickListener{

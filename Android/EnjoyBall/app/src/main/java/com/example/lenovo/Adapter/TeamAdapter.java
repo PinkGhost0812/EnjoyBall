@@ -7,10 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.lenovo.Activity.PerinfoActivity;
 import com.example.lenovo.Activity.TeamActivity;
 import com.example.lenovo.Activity.TeamDetailActivity;
+import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Team;
 
@@ -61,7 +66,8 @@ public class TeamAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.tvTeamName = convertView.findViewById(R.id.tv_team_name);
             viewHolder.tvTeamCaptain = convertView.findViewById(R.id.tv_team_captain);
-            viewHolder.tvTeamMemberNum=convertView.findViewById(R.id.tv_team_memberNum);
+            viewHolder.tvTeamMemberNum=convertView.findViewById(R.id.tv_team_num);
+            viewHolder.ivTeamLogo=convertView.findViewById(R.id.iv_team_logo);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -71,6 +77,13 @@ public class TeamAdapter extends BaseAdapter {
         viewHolder.tvTeamCaptain.setText(dataSource.get(position).get("captains").toString());
         viewHolder.tvTeamMemberNum.setText(dataSource.get(position).get("nums").toString());
 
+        RequestOptions options = new RequestOptions()
+                .circleCrop();
+        Glide.with(context)
+                .load(Info.BASE_URL+dataSource.get(position).get("logos").toString())
+                .apply(options)
+                .into(viewHolder.ivTeamLogo);
+
         return convertView;
     }
 
@@ -78,6 +91,7 @@ public class TeamAdapter extends BaseAdapter {
         public TextView tvTeamName;
         public TextView tvTeamCaptain;
         public TextView tvTeamMemberNum;
+        public ImageView ivTeamLogo;
     }
 
 }
