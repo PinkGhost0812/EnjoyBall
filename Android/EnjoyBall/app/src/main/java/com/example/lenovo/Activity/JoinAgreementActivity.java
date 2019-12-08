@@ -24,6 +24,7 @@ import com.example.lenovo.entity.DemandInfo;
 import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,6 +33,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,10 +57,10 @@ public class JoinAgreementActivity extends AppCompatActivity {
     private  Team team = null;
     private DemandInfo demandInfo;
     private String url = Info.BASE_URL;
-    private static int POST_DEMANDINFO = 1;
-    private static int POST_LEADER = 2;
-    private static  int POST_GETTEAMB=3;
-    private static int INITDATASOURCE=4;
+    private final static int POST_DEMANDINFO = 1;
+    private final static int POST_LEADER = 2;
+    private final static  int POST_GETTEAMB=3;
+    private final static int INITDATASOURCE=4;
     private OkHttpClient okHttpClient = null;
 
 
@@ -71,7 +73,8 @@ public class JoinAgreementActivity extends AppCompatActivity {
         final Intent intent = getIntent();
         String demandId = intent.getStringExtra("id");
         getView();
-        getDemandInfo(demandId);
+        getDemandInfo("1");
+        /*--------------------------点击item加入或查看对方信息------------------------*/
         gv_joinagreement.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -119,9 +122,11 @@ public class JoinAgreementActivity extends AppCompatActivity {
 
             }
         });
+        /*----------------------------------结束-------------------------------------*/
 
 
     }
+    //获取队长为当前用户的队伍信息
     private void getTeams() {
          Team myTeam = null;
         int id = 0;
@@ -155,7 +160,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
     //获取约球信息
     private void getDemandInfo(final String demandId) {
         Request request = new Request.Builder()
-                .url(url + "appoint/findById?id=" + demandId)
+                .url(url + "appointment/findById?id=" + demandId)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -169,7 +174,9 @@ public class JoinAgreementActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String jsonInfo = response.body().string();
-                demandInfo = new Gson().fromJson(jsonInfo, DemandInfo.class);
+                Log.e("约球信息",jsonInfo);
+                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                demandInfo = gson.fromJson(jsonInfo, DemandInfo.class);
                 Message message = new Message();
                 message.what = POST_DEMANDINFO;
                 message.obj = demandInfo;
@@ -205,7 +212,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
         });
     }
     //根据约球信息查找对阵双方
-    private void getTeam(final DemandInfo info,String teamName){
+    private void getTeam(final DemandInfo info, final String teamName){
         int id = 0;
         int offset = 0;
         if (teamName.equals("a")){
@@ -218,10 +225,9 @@ public class JoinAgreementActivity extends AppCompatActivity {
         Request.Builder builder = new Request.Builder();
         Request request = null;
         if (info.getDemand_oom()==0){
-            datasource = new ArrayList<>(info.getDemand_num()*2);
             request = builder.url(url+"user/findByDTeamId?id="+id).build();
         }else if(info.getDemand_oom()==1) {
-            datasource = new ArrayList<Map<String,Object>>(2);
+
             request = builder.url(url+"user/findById?id="+info.getDemand_teama()).build();
         }
         Call call = okHttpClient.newCall(request);
@@ -236,31 +242,28 @@ public class JoinAgreementActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String json = response.body().string();
                 if (info.getDemand_oom()==0){
-                    datasource = new ArrayList<Map<String,Object>>(info.getDemand_num());
                     Type type = new TypeToken<List<User>>(){}.getType();
                     List<User> users = new Gson().fromJson(json,type);
+
                     for (int i = 0; i <users.size();i++){
-                        ImageView imageView = null;
-                        Glide.with(JoinAgreementActivity.this)
-                                .load(users.get(i).getUser_headportrait())
-                                .into(imageView);
-                        Drawable drawable = imageView.getDrawable();
+                        Log.e(teamName+"查到的队员",users.get(i).getUser_nickname());
                         Map map = new HashMap<String,Object>();
                         map.put("name",users.get(i).getUser_nickname());
-                        map.put("head",drawable);
+                        map.put("head",users.get(i).getUser_headportrait());
                         map.put("object",users.get(i));
                         //保证同一队的队员在同一列，A队在左边,B队在右边
-                        datasource.add(i*2+ finalOffset,map);
-                        Message message = new Message();
-                        if (finalOffset==0){
-                            message.what = POST_GETTEAMB;
-                            message.obj = info;
-                        }else if (finalOffset==1){
-                            message.what = INITDATASOURCE;
-                        }
-                        EventBus.getDefault().post(message);
+                        datasource.add(i*2-finalOffset,map);
 
                     }
+
+                    Message message = new Message();
+                    if (finalOffset==0){
+                        message.what = POST_GETTEAMB;
+                        message.obj = info;
+                    }else if (finalOffset==1){
+                        message.what = INITDATASOURCE;
+                    }
+                    EventBus.getDefault().post(message);
 
 
 
@@ -299,38 +302,46 @@ public class JoinAgreementActivity extends AppCompatActivity {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setView(Message message) {
         switch (message.what) {
-            case 1:
-                DemandInfo info = (DemandInfo) message.obj;
-                tv_time.setText(info.getDemand_time().toString());
-                tv_message.setText(info.getDemand_description());
-                tv_address.setText(info.getDemand_place());
+            case POST_DEMANDINFO:
+                demandInfo = (DemandInfo) message.obj;
+                datasource = new ArrayList<Map<String, Object>>();
+                for(int i = 0; i <demandInfo.getDemand_num()*2;i++) {
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    datasource.add(map);
+                }
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+                tv_time.setText(simpleDateFormat.format(demandInfo.getDemand_time()));
+                tv_message.setText(demandInfo.getDemand_description());
+                tv_address.setText(demandInfo.getDemand_place());
                 String[] types = getResources().getStringArray(R.array.type);
-                tv_type.setText(types[info.getDemand_class()]);
-                getLeader(info.getDemand_user());
-                getTeam(info,"a");
+                tv_type.setText(types[demandInfo.getDemand_class()]);
+                getLeader(demandInfo.getDemand_user());
+                getTeam(demandInfo,"a");
 
                 break;
-            case 2:
+            case POST_LEADER:
                 User user = (User)message.obj;
                 tv_leader.setText(user.getUser_nickname());
                 break;
-            case 3:
+            case POST_GETTEAMB:
                 DemandInfo info1 = (DemandInfo)message.obj;
                 getTeam(info1,"b");
                 break;
-            case 4:
+            case INITDATASOURCE:
                 Map<String,Object> map = new HashMap<String, Object>();
                 map.put("name","虚位以待");
                 map.put("head",getResources().getDrawable(R.drawable.head_girl));
                 map.put("obj",null);
+                map.put("status",0);
                 for (int i = 0 ; i<datasource.size();i++){
-                    if (datasource.get(i)==null){
+                    if (datasource.get(i).size()==0){
                         datasource.add(i,map);
                     }
                 }
+                Log.e("数据源",datasource.toString());
                 adapter = new AgreementAdapter(datasource, R.layout.listview_item_agreement, this);
                 gv_joinagreement.setAdapter(adapter);
         }
