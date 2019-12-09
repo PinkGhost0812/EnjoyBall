@@ -1,4 +1,4 @@
-package com.example.lenovo.enjoyball;
+package com.example.lenovo.Activity;
 
 import android.content.Intent;
 import android.os.Looper;
@@ -11,6 +11,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lenovo.Adapter.InviteAdapter;
+import com.example.lenovo.enjoyball.Info;
+import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;
 import com.google.gson.Gson;

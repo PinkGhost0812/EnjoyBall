@@ -1,4 +1,4 @@
-package com.example.lenovo.enjoyball;
+package com.example.lenovo.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.lenovo.enjoyball.GlideApp;
+import com.example.lenovo.enjoyball.Info;
+import com.example.lenovo.enjoyball.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,8 +75,9 @@ public class AgreementAdapter extends BaseAdapter{
            viewHolder.iv_head.setImageDrawable((Drawable) datasource.get(position).get("head"));
 
        }else {
+           Log.e("图片路径",Info.BASE_URL+datasource.get(position).get("head"));
              GlideApp.with(mContext)
-                     .load(datasource.get(position).get("head").toString())
+                     .load(Info.BASE_URL+datasource.get(position).get("head").toString())
                      .circleCrop()
                      .error(mContext.getResources().getDrawable(R.drawable.basketball))
                    .into(viewHolder.iv_head);

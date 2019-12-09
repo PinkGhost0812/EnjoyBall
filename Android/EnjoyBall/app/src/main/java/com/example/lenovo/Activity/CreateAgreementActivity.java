@@ -1,4 +1,4 @@
-package com.example.lenovo.enjoyball;
+package com.example.lenovo.Activity;
 
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
+
+import com.example.lenovo.Fragment.CreatePersonAgreementFragment;
+import com.example.lenovo.Fragment.CreateTeamAgreementFragment;
+import com.example.lenovo.enjoyball.R;
 
 import java.util.HashMap;
 import java.util.Map;
