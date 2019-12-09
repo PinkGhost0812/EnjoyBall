@@ -1,4 +1,4 @@
-package com.example.lenovo.enjoyball;
+package com.example.lenovo.Fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -31,6 +31,10 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.lenovo.Activity.ManageMessageActivity;
+import com.example.lenovo.Adapter.AgreementAdapter;
+import com.example.lenovo.enjoyball.Info;
+import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.DemandInfo;
 import com.example.lenovo.entity.User;
 import com.google.gson.Gson;
@@ -373,7 +377,7 @@ public class CreatePersonAgreementFragment extends Fragment {
     //获取当前登陆的用户的信息
     private User getUser() {
         /*User user = getContext().getApplicationContext().getUser();*/
-        User user = new User(1, "李烦烦", "990812", "img/pm.png", "男", "18103106427", "505", "631530326@qq.com", "我是你爹", 500, 600, 1);
+        User user = new User(1, "李烦烦", "990812", "img/pm.png", "男", "18103106427", "505", "631530326@qq.com", "我是你爹", 500, 600, 1,18,"111");
         return user;
     }
 }

@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -57,8 +58,6 @@ public class HomepageCommentFragment extends Fragment {
 
     List<Map<String, Object>> mapList = null;
 
-    private Info info;
-
     private User user = null;
 
     private Handler handler;
@@ -69,21 +68,13 @@ public class HomepageCommentFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.tab_homepage_comment, container, false);
 
-        getView=view;
-
-        getView = view;
-
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
 
-        info = new Info();
+        user = (User) getActivity().getIntent().getSerializableExtra("user");
 
-        user = info.getUser();
-
-        user = new User();
-
-        user = new User(1, "2", "3", "4", "5", "6", "7", "8", "9", 10, 11, 12, 13);
+        getView = view;
 
         findView();
 
@@ -94,8 +85,8 @@ public class HomepageCommentFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(), NewsDetailActivity.class);
-
-                intent.putExtra("homepage_news_id", list.get(position).getNews().getNews_id().toString());
+                Log.e("test", list.get(position).getNews().getNews_id().toString());
+                intent.putExtra("homepage_comment_news_id", list.get(position).getNews().getNews_id().toString());
                 startActivity(intent);
             }
         });
@@ -107,7 +98,7 @@ public class HomepageCommentFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setInfo(Message msg) {
 
-        if (msg.what==10){
+        if (msg.what == 10) {
 
             List<CommentAndNews> list = (List<CommentAndNews>) msg.obj;
 
@@ -123,7 +114,7 @@ public class HomepageCommentFragment extends Fragment {
 
     private void initData(List<CommentAndNews> list) {
 
-        dataSource=new ArrayList<>();
+        dataSource = new ArrayList<>();
 
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> map = new HashMap<>();
@@ -137,8 +128,9 @@ public class HomepageCommentFragment extends Fragment {
     private void getComment() {
 
         okHttpClient = new OkHttpClient();
+        Log.e("test", user.getUser_id().toString());
         final Request request = new Request.Builder()
-                .url(Info.BASE_URL + "information/findSaying?id=" + 1)
+                .url(Info.BASE_URL + "information/findSaying?id=" + user.getUser_id())
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -153,18 +145,19 @@ public class HomepageCommentFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
 
-                String data=response.body().string();
+                String data = response.body().string();
 
-                if (data.equals("false")){
+                if (data.equals("false")) {
                     Toast.makeText(getActivity().getApplicationContext(), "用户无评论~", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                    Type type = new TypeToken<List<CommentAndNews>>() {}.getType();
+                    Type type = new TypeToken<List<CommentAndNews>>() {
+                    }.getType();
                     list = gson.fromJson(data, type);
                     Log.e("test", list.get(1).getComment().getComment_content());
                     Message msg = new Message();
                     msg.obj = list;
-                    msg.what=10;
+                    msg.what = 10;
                     EventBus.getDefault().post(msg);
                 }
             }
@@ -178,9 +171,9 @@ public class HomepageCommentFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
+
         super.onDestroy();
     }
 }

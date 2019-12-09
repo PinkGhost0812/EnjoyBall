@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
         if (phone.length() == 11 && pwd.length() != 0) {
 //            User user = new User(null,null,pwd,null,null,phone,null,null,null,null,null,null);
 //            String info = new Gson().toJson(user);
-            Request request = new Request.Builder().url(com.example.lenovo.enjoyball.Info.BASE_URL + "user/findByPhoneNumber?phone=" + phone).build();
+            Request request = new Request.Builder().url(Info.BASE_URL + "user/findByPhoneNumber?phone=" + phone).build();
             Call call = okHttpClient.newCall(request);
             call.enqueue(new Callback() {
 
@@ -169,15 +169,10 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                             Log.e("用户",u.toString());
 
-
-                            /*20191208之前
-                                Info info=new Info();
-                                info.setUser(u);
-                                intent.putExtra("user",u);
-                             */
                             ((Info)getApplication()).setUser(u);
 
                             Intent intent=new Intent();
+                            intent.putExtra("user",u);
                             intent.setClass(LoginActivity.this,MainActivity.class);
                             startActivity(intent);
                             finish();

@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private DemandInfo demandInfo;
     private long startTime=1;
 
-    private User curUser;
+    private User user;
 
 
     private class MyTabSpec {
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_main);
 
-        curUser=((Info)getApplicationContext()).getUser();
+        user=((Info)getApplicationContext()).getUser();
 
         initData();
 
@@ -158,9 +158,10 @@ public class MainActivity extends AppCompatActivity {
         RequestOptions options = new RequestOptions()
                 .signature(new ObjectKey(System.currentTimeMillis()))
                 .circleCrop();
-        Log.e("head",curUser.getUser_headportrait());
+
+        Log.e("test",user.getUser_id().toString());
         Glide.with(this)
-                .load(Info.BASE_URL+curUser.getUser_headportrait())
+                .load(Info.BASE_URL+user.getUser_headportrait())
                 .apply(options)
                 .into(ivMainPortrait);
     }
@@ -218,9 +219,7 @@ public class MainActivity extends AppCompatActivity {
                         if(endTime-startTime<500){
                             Toast.makeText(getApplicationContext(), "点的太快了噢~", Toast.LENGTH_LONG).show();
                         }else{
-                            User user=new User();
                             Intent intent =new Intent();
-                            intent.putExtra("user",user);
                             intent.setClass(MainActivity.this, PersonalcenterActivity.class);
                             overridePendingTransition(R.anim.personalcenter_in, R.anim.personalcenter_out);
                             startActivity(intent);

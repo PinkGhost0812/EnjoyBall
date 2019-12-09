@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.lenovo.Activity.HomepageActivity;
 import com.example.lenovo.Adapter.HomepageFansAdapter;
+import com.example.lenovo.Adapter.HomepageFollowAdapter;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
@@ -66,19 +67,13 @@ public class HomepageFansFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.tab_homepage_fans,container, false);
 
-        getView=view;
-
-        if(!EventBus.getDefault().isRegistered(this)){
+        if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
 
-        info=new Info();
+        getView=view;
 
-        user=info.getUser();
-
-        user=new User();
-
-        user=new User(1,"2","3","4","5","6","7","8","9",10,11,12,13);
+        user= (User) getActivity().getIntent().getSerializableExtra("user");
 
         findView();
 
@@ -115,7 +110,7 @@ public class HomepageFansFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setInfo(Message msg){
 
-        if (msg.what == 8){
+        if (msg.what==8){
 
             initData(userList);
 
@@ -124,11 +119,13 @@ public class HomepageFansFragment extends Fragment {
 
             lvHomepageFans.setAdapter(adapter);
         }
+
     }
 
     private void getFans() {
 
         okHttpClient = new OkHttpClient();
+        Log.e("test",user.getUser_id().toString());
         Request request = new Request.Builder()
                 .url(Info.BASE_URL + "user/getfans?id=" + user.getUser_id())
                 .build();
@@ -172,9 +169,9 @@ public class HomepageFansFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
+
 }

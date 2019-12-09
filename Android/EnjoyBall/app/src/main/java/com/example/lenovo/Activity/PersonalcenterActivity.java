@@ -78,7 +78,9 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
         findView();
 
-        getInfo();
+        user=((Info)getApplicationContext()).getUser();
+
+        Log.e("test personaler email",user.getUser_email().toString());
 
         setInfo();
 
@@ -96,7 +98,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
         okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Info.BASE_URL + "user/fans?id=" + 1)
+                .url(Info.BASE_URL + "user/fans?id=" + user.getUser_id())
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -282,13 +284,6 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
             }
         }
-    }
-
-
-    private void getInfo() {
-
-        user=((Info)getApplicationContext()).getUser();
-
     }
 
     private void setListeners() {

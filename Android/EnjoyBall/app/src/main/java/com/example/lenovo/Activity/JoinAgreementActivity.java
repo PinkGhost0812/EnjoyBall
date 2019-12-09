@@ -1,4 +1,4 @@
-package com.example.lenovo.enjoyball;
+package com.example.lenovo.Activity;
 
 import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
@@ -20,6 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.lenovo.Activity.TeamDetailActivity;
+import com.example.lenovo.Adapter.AgreementAdapter;
+import com.example.lenovo.enjoyball.Info;
+import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.DemandInfo;
 import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;
@@ -251,10 +255,12 @@ public class JoinAgreementActivity extends AppCompatActivity {
                         map.put("name",users.get(i).getUser_nickname());
                         map.put("head",users.get(i).getUser_headportrait());
                         map.put("object",users.get(i));
+                        map.put("status","1");
                         //保证同一队的队员在同一列，A队在左边,B队在右边
-                        datasource.add(i*2-finalOffset,map);
+                        datasource.set(i*2+finalOffset,map);
 
                     }
+                    Log.e("当前数据源",datasource.toString());
 
                     Message message = new Message();
                     if (finalOffset==0){
@@ -338,10 +344,9 @@ public class JoinAgreementActivity extends AppCompatActivity {
                 map.put("status",0);
                 for (int i = 0 ; i<datasource.size();i++){
                     if (datasource.get(i).size()==0){
-                        datasource.add(i,map);
+                        datasource.set(i,map);
                     }
                 }
-                Log.e("数据源",datasource.toString());
                 adapter = new AgreementAdapter(datasource, R.layout.listview_item_agreement, this);
                 gv_joinagreement.setAdapter(adapter);
         }

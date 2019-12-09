@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-
-<<<<<<< HEAD
-<base-config cleartextTrafficPermitted="true"/>
+    <base-config cleartextTrafficPermitted="true" />
 </network-security-config>
-=======
-    <base-config cleartextTrafficPermitted="true"/>
-</network-security-config>
->>>>>>> cda2f6905142ecac8a741368c738394cb56364cc

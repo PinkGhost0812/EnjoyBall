@@ -1,8 +1,11 @@
-package com.example.lenovo.enjoyball;
+package com.example.lenovo.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
+
+import com.example.lenovo.Adapter.MessageAdapter;
+import com.example.lenovo.enjoyball.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

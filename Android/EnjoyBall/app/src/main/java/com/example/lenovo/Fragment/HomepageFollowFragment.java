@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +52,6 @@ public class HomepageFollowFragment extends Fragment {
 
     List<Map<String, Object>> mapList = null;
 
-    private Info info;
-
     private User user;
 
     private OkHttpClient okHttpClient;
@@ -65,18 +64,13 @@ public class HomepageFollowFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.tab_homepage_follow,container, false);
 
-        getView=view;
-
-        if(!EventBus.getDefault().isRegistered(this)){
+        if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
 
-        info=new Info();
+        getView=view;
 
-        user=info.getUser();
-
-        user=new User();
-        user=new User(1,"2","3","4","5","6","7","8","9",10,11,12,13);
+        user= (User) getActivity().getIntent().getSerializableExtra("user");
 
         findView();
 
@@ -129,6 +123,7 @@ public class HomepageFollowFragment extends Fragment {
     private void getFollow() {
 
         okHttpClient = new OkHttpClient();
+        Log.e("test",user.getUser_id().toString());
         Request request = new Request.Builder()
                 .url(Info.BASE_URL + "user/getfollow?id=" + user.getUser_id())
                 .build();
@@ -171,9 +166,10 @@ public class HomepageFollowFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
+
         super.onDestroy();
     }
+
 }

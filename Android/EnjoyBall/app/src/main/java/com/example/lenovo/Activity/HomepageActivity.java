@@ -1,6 +1,7 @@
 package com.example.lenovo.Activity;
 
 import android.graphics.Color;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import com.example.lenovo.Fragment.HomepageUserinfoFragment;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -89,10 +92,9 @@ public class HomepageActivity extends AppCompatActivity {
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_homepage);
 
-        user=((Info)getApplicationContext()).getUser();
-        visitUser= (User) getIntent().getSerializableExtra("visitUser");
-
         findView();
+
+        user= (User) getIntent().getSerializableExtra("user");
 
         setInfo();
 
@@ -109,19 +111,19 @@ public class HomepageActivity extends AppCompatActivity {
         }else if (getIntent().getStringExtra("tag")!=null&&getIntent().getStringExtra("tag").equals("fans")){
             changeTab(tabStrId[3]);
         }
-
-        btnFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //不能关注自己
-                if (visitUser==null){
-                    Toast.makeText(HomepageActivity.this,"不能自己关注自己凹~",Toast.LENGTH_SHORT).show();
-                } else{
-                    //todo:对其他人关注
-                    Toast.makeText(HomepageActivity.this,"关注成功~",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//
+//        btnFollow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //不能关注自己
+//                if (visitUser==null){
+//                    Toast.makeText(HomepageActivity.this,"不能自己关注自己凹~",Toast.LENGTH_SHORT).show();
+//                } else{
+//                    //todo:对其他人关注
+//                    Toast.makeText(HomepageActivity.this,"关注成功~",Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
     }
 
@@ -255,4 +257,12 @@ public class HomepageActivity extends AppCompatActivity {
         ivHomepagePortrait=findViewById(R.id.iv_homepage_portrait);
 
     }
+
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
 }

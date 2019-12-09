@@ -16,8 +16,7 @@ public class User implements Serializable {
     private Integer user_likenum;
     private Integer user_vip;
     private Integer user_age;
-
-    public User(){}
+    private String user_jpushid;
 
     @Override
     public String toString() {
@@ -35,10 +34,11 @@ public class User implements Serializable {
                 ", user_likenum=" + user_likenum +
                 ", user_vip=" + user_vip +
                 ", user_age=" + user_age +
+                ", user_jpushid='" + user_jpushid + '\'' +
                 '}';
     }
 
-    public User(Integer user_id, String user_nickname, String user_password, String user_headportrait, String user_sex, String user_phonenumber, String user_address, String user_email, String user_signature, Integer user_score, Integer user_likenum, Integer user_vip, Integer user_age) {
+    public User(Integer user_id, String user_nickname, String user_password, String user_headportrait, String user_sex, String user_phonenumber, String user_address, String user_email, String user_signature, Integer user_score, Integer user_likenum, Integer user_vip, Integer user_age, String user_jpushid) {
         this.user_id = user_id;
         this.user_nickname = user_nickname;
         this.user_password = user_password;
@@ -52,7 +52,19 @@ public class User implements Serializable {
         this.user_likenum = user_likenum;
         this.user_vip = user_vip;
         this.user_age = user_age;
+        this.user_jpushid = user_jpushid;
     }
+
+    public String getUser_jpushid() {
+        return user_jpushid;
+    }
+
+    public void setUser_jpushid(String user_jpushid) {
+        this.user_jpushid = user_jpushid;
+    }
+
+    public User(){}
+
 
     public Integer getUser_age() {
         return user_age;
