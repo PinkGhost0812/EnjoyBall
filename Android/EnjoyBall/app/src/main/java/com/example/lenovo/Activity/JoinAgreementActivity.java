@@ -1,21 +1,15 @@
 package com.example.lenovo.Activity;
 
-import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,7 +75,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
         /*--------------------------点击item加入或查看对方信息------------------------*/
         gv_joinagreement.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 if (demandInfo.getDemand_oom()==0){
                     if (datasource.get(i).get("object")==null){
                         android.app.AlertDialog.Builder adBuilder = new android.app.AlertDialog.Builder(JoinAgreementActivity.this);
@@ -91,7 +85,8 @@ public class JoinAgreementActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.e("create？", "true");
-                                sendToServer();
+                                sendToServer(i);
+
                             }
                         });
                         adBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -104,15 +99,15 @@ public class JoinAgreementActivity extends AppCompatActivity {
                         alertDialog.show();
                     }else{
                         User user = (User)datasource.get(i).get("object");
-                        Intent intent1 = new Intent();
-                        intent.putExtra("id",user.getUser_id());
+                        Intent intent1 = new Intent(JoinAgreementActivity.this,HomeActivity.class);
+                        intent1.putExtra("visitUser",user);
                         startActivity(intent1);
                     }
                 }else if (demandInfo.getDemand_oom()==1){
                     if (datasource.get(i).get("object")==null){
                         getTeams();
                         if (team!=null){
-                            sendToServer();
+                            sendToServer(i);
                         }else {
                             Toast.makeText(JoinAgreementActivity.this,"您没有该类型队伍，无法参加",Toast.LENGTH_SHORT);
                         }
@@ -158,8 +153,40 @@ public class JoinAgreementActivity extends AppCompatActivity {
 
     }
 
-    private void sendToServer() {
+    private void sendToServer(int position) {
+        int userId = getUser().getUser_id();
+        int teamId = 0;
+        if (position%2==0){
+            teamId = demandInfo.getDemand_teama();
+        }else {
+            teamId = demandInfo.getDemand_teamb();
+        }
+        Request request = new Request.Builder()
+                .url(url+"appointment/apply?userId="+userId+"&&teamId="+teamId)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                Toast.makeText(JoinAgreementActivity.this,"服务器连接失败",Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                Looper.prepare();
+                if (result.equals("true")) {
+                    Toast.makeText(JoinAgreementActivity.this, "申请成功", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(JoinAgreementActivity.this, "申请成功", Toast.LENGTH_SHORT).show();
+                }
+                Looper.loop();
+            }
+        });
     }
+
 
     //获取约球信息
     private void getDemandInfo(final String demandId) {
@@ -275,17 +302,12 @@ public class JoinAgreementActivity extends AppCompatActivity {
 
 
                 }else if (info.getDemand_oom()==1){
-                    datasource = new ArrayList<Map<String,Object>>(2);
                     Team team = new Gson().fromJson(json,Team.class);
-                    ImageView imageView = null;
-                    Glide.with(JoinAgreementActivity.this)
-                            .load(team.getTeam_logo())
-                            .into(imageView);
-                    Drawable drawable = imageView.getDrawable();
                     Map<String,Object> map = new HashMap<String,Object>();
                     map.put("name",team.getTeam_name());
-                    map.put("head",drawable);
+                    map.put("head",team.getTeam_logo());
                     map.put("object",team);
+                    map.put("status",1);
                     datasource.add(0,map);
 
 
@@ -352,6 +374,11 @@ public class JoinAgreementActivity extends AppCompatActivity {
         }
 
 
+    }
+    private User getUser() {
+        /*User user = getContext().getApplicationContext().getUser();*/
+        User user = new User(1, "李烦烦", "990812", "img/pm.png", "男", "18103106427", "505", "631530326@qq.com", "我是你爹", 500, 600, 1,18);
+        return user;
     }
 
 }

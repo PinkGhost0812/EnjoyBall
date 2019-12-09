@@ -296,6 +296,7 @@ public class CreateTeamAgreementFragment extends Fragment {
         info.setDemand_class(type);
         info.setDemand_teama(selectedTeam.getTeam_id());
         info.setDemand_oom(oom);
+        info.setDemand_num(1);
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
