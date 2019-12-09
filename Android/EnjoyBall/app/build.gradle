@@ -3,6 +3,11 @@ apply plugin: 'com.android.application'
 // 添加插件
 apply plugin: 'com.mob.sdk'
 android {
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.lenovo.enjoyball"

@@ -4,8 +4,17 @@ import android.app.Application;
 
 import com.example.lenovo.entity.*;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class Info extends Application{
     public static final String BASE_URL = "http://10.7.88.233:8080/EnjoyBallServer/";
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+    }
 
     //当前登录的用户的信息
     private User user;
