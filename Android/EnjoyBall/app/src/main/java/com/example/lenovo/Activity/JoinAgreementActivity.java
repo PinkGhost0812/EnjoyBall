@@ -377,7 +377,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
     }
     private User getUser() {
         /*User user = getContext().getApplicationContext().getUser();*/
-        User user = new User(1, "李烦烦", "990812", "img/pm.png", "男", "18103106427", "505", "631530326@qq.com", "我是你爹", 500, 600, 1,18);
+        User user = new User(1, "李烦烦", "990812", "img/pm.png", "男", "18103106427", "505", "631530326@qq.com", "我是你爹", 500, 600, 1,18,null);
         return user;
     }
 
