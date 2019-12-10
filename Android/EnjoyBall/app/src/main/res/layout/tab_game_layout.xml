@@ -6,15 +6,23 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:background="#F8F8FF">
 
         <TextView
+            android:id="@+id/tv_game_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2019-11-06 星期三"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:textSize="16sp" />
+        <android.support.v7.widget.ActionMenuView
+            android:id="@+id/mv_game_menu"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </RelativeLayout>
 
     <ListView

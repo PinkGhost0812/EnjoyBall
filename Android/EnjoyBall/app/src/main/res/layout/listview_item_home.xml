@@ -31,9 +31,8 @@
                 android:layout_height="62dp"
                 android:maxLines="2"
                 android:maxEms="20"
-                android:ellipsize="end"
                 android:text="欧洲冠军大逃亡:2连败 净胜球..."
-                android:textSize="16dp" />
+                android:textSize="18dp" />
 
             <LinearLayout
                 android:gravity="right"

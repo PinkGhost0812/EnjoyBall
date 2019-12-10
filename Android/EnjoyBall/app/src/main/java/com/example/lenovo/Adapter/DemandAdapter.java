@@ -8,9 +8,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.DemandInfo;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class DemandAdapter extends BaseAdapter {
@@ -22,14 +25,13 @@ public class DemandAdapter extends BaseAdapter {
     private Context context = null;
 
     private int item_layout_id;
+    private int[] ball = {R.drawable.football,R.drawable.basketball,R.drawable.badminton,R.drawable.tabletennis,R.drawable.volleyball};
+    private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd  HH:mm");
 
-    private ImageView ivId;
-    private TextView tvNews;
-    private TextView tvHeat;
 
     public DemandAdapter(Context context,
-                       List<DemandInfo> dataSource,
-                       int item_layout_id) {
+                         List<DemandInfo> dataSource,
+                         int item_layout_id) {
         this.context = context;
         this.dataSource = dataSource;
         this.item_layout_id = item_layout_id;
@@ -57,6 +59,7 @@ public class DemandAdapter extends BaseAdapter {
         if(null == convertView) {
             convertView = LayoutInflater.from(context).inflate(item_layout_id,null);
             viewHolder = new ViewHolder();
+            viewHolder.iv_img = convertView.findViewById(R.id.iv_time_img);
             viewHolder.tv_time = convertView.findViewById(R.id.tv_time_time);
             viewHolder.tv_place = convertView.findViewById(R.id.tv_time_place);
             viewHolder.tv_dp = convertView.findViewById(R.id.tv_time_dp);
@@ -65,14 +68,16 @@ public class DemandAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        DemandInfo demandInfo = dataSource.get(position);
-        viewHolder.tv_time.setText(demandInfo.getDemand_time()+"");
-        viewHolder.tv_place.setText(demandInfo.getDemand_place());
-        viewHolder.tv_dp.setText(demandInfo.getDemand_description()+"");
+        //DemandInfo demandInfo = dataSource.get(position);
+        viewHolder.iv_img.setImageResource(ball[dataSource.get(position).getDemand_class()]);
+        viewHolder.tv_time.setText(sf.format(dataSource.get(position).getDemand_time()));
+        viewHolder.tv_place.setText(dataSource.get(position).getDemand_place()+"");
+        viewHolder.tv_dp.setText(dataSource.get(position).getDemand_description()+"");
         return convertView;
     }
 
     private class ViewHolder{
+        ImageView iv_img;
         TextView tv_time;
         TextView tv_place;
         TextView tv_dp;

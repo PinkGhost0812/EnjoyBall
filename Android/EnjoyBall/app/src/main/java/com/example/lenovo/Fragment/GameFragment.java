@@ -7,10 +7,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lenovo.Adapter.GameAdapter;
 import com.example.lenovo.enjoyball.Info;
@@ -18,6 +23,7 @@ import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Contest;
 import com.example.lenovo.entity.News;
 import com.example.lenovo.entity.Team;
+import com.example.lenovo.entity.TeamAndContest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -28,12 +34,13 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.smssdk.gui.util.Const;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -42,31 +49,55 @@ import okhttp3.Response;
 
 public class GameFragment extends Fragment {
 
-    private List<Contest> gameList = null;
+    private TextView tvDate;
+    private List<TeamAndContest> gameList = null;
     private OkHttpClient okHttpClient;
     private ListView listView;
     private Call call;
+    private String[] sql = {"select * from game_info where game_class = 1","select * from game_info where game_class = 2","select * from game_info where game_class = 3","select * from game_info where game_class = 4"
+            ,"select * from game_info where game_class = 5"};
 
-    private List<Contest> dataSource = null;
+
+    private List<TeamAndContest> dataSource = null;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         View view =  inflater.inflate(R.layout.tab_game_layout,
                 container, false);
         return view;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void setContent(List<Contest> list){
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        getActivity().getMenuInflater().inflate(R.menu.game_menu,menu);
+    }
 
-        initData(list);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_game_my:
+                Toast.makeText(getContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.item_game_school:
+                Toast.makeText(getContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void setContent(List<TeamAndContest> list){
+
+        initDate(list);
 
         GameAdapter adapter = new GameAdapter(
                 getContext(),
                 dataSource,
-                R.layout.listview_item_home
+                R.layout.listview_item_game
         );
 
         listView.setAdapter(adapter);
@@ -77,7 +108,10 @@ public class GameFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //initData();
 
-        ListView listView = getActivity().findViewById(R.id.lv_game_game);
+        tvDate = getActivity().findViewById(R.id.tv_game_date);
+        tvDate.setText(getTime()+"");
+
+        listView = getActivity().findViewById(R.id.lv_game_game);
 
         if(!EventBus.getDefault().isRegistered(this)){
             EventBus.getDefault().register(this);
@@ -93,7 +127,7 @@ public class GameFragment extends Fragment {
             call = okHttpClient.newCall(request);
 
         }else {
-            Request request = new Request.Builder().url(Info.BASE_URL + "contest/find?sql="+x).build();
+            Request request = new Request.Builder().url(Info.BASE_URL + "contest/find?sql="+sql[x-1]).build();
             call = okHttpClient.newCall(request);
             Log.e("x = ", x+"");
         }
@@ -108,7 +142,7 @@ public class GameFragment extends Fragment {
                 String n = response.body().string();
                 Log.e("contest = ", n);
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                Type listType = new TypeToken<List<Contest>>(){}.getType();
+                Type listType = new TypeToken<List<TeamAndContest>>(){}.getType();
                 //newsList = new ArrayList<>();
                 gameList = gson.fromJson(n,listType);
                 // Log.e("标题22",n);
@@ -122,7 +156,7 @@ public class GameFragment extends Fragment {
                 Log.e("详情","success");
 
                 Intent intent = new Intent();
-                intent.putExtra("id",dataSource.get(position).getGame_id());
+                intent.putExtra("id",dataSource.get(position).getContest().getGame_id());
                 intent.setClass(getActivity(), Team.class);
                 startActivity(intent);
 
@@ -131,7 +165,13 @@ public class GameFragment extends Fragment {
 
     }
 
-    private void initData(List<Contest>gameList){
+    private static String getTime(){
+        SimpleDateFormat fromatter = new SimpleDateFormat("yyyy-MM-dd EEEE");
+        Date time = new Date(System.currentTimeMillis());
+        return fromatter.format(time);
+    }
+
+    private void initDate(List<TeamAndContest> gameList){
         dataSource = new ArrayList<>();
         for (int i=0;i<gameList.size();++i){
             dataSource.add(gameList.get(i));

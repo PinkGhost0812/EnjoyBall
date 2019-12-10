@@ -69,7 +69,10 @@ public class NewsAdapter extends BaseAdapter {
         }
 
         Glide.with(convertView).load(Info.BASE_URL + dataSource.get(position).getNews_image()).into(viewHolder.iv_img);
-        viewHolder.tv_news.setText(dataSource.get(position).getNews_title());
+        if (dataSource.get(position).getNews_title().length()>15)
+            viewHolder.tv_news.setText(dataSource.get(position).getNews_title().substring(0,15)+"...");
+        else
+            viewHolder.tv_news.setText(dataSource.get(position).getNews_title());
         viewHolder.tv_heat.setText(dataSource.get(position).getNews_heat()+"");
 
         return convertView;

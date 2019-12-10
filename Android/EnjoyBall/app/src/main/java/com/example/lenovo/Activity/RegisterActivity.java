@@ -219,6 +219,10 @@ public class RegisterActivity extends AppCompatActivity implements Handler.Callb
         if (x==1){
             phone = etRegisterPhone.getText().toString();
             pwd = etRegisterPwd.getText().toString();
+//            JPushInterface.setDebugMode(true);
+//            JPushInterface.init(this);
+//            String r = JPushInterface.getRegisterationID(this);
+//            Log.e("1099","id"+r);
 
             //手机号密码规则
             if (phone.length() == 11 && pwd.length() != 0) {

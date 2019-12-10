@@ -46,6 +46,8 @@ public class TimeFragment extends Fragment {
     private OkHttpClient okHttpClient;
     private ListView listView;
     private Call call;
+    private String[] sql = {"select * from demand_info where demand_class = 0","select * from demand_info where demand_class = 1","select * from demand_info where demand_class = 2",
+            "select * from demand_info where demand_class = 3","select * from demand_info where demand_class = 4"};
 
     @Nullable
     @Override
@@ -65,7 +67,7 @@ public class TimeFragment extends Fragment {
         DemandAdapter adapter = new DemandAdapter(
                 getContext(),
                 dataSource,
-                R.layout.listview_item_home
+                R.layout.listview_item_demand
         );
 
         listView.setAdapter(adapter);
@@ -76,7 +78,7 @@ public class TimeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //initData();
-        ListView listView = getActivity().findViewById(R.id.lv_time_demand);
+        listView = getActivity().findViewById(R.id.lv_time_demand);
 
         if(!EventBus.getDefault().isRegistered(this)){
             EventBus.getDefault().register(this);
@@ -91,7 +93,7 @@ public class TimeFragment extends Fragment {
             Request request = new Request.Builder().url(Info.BASE_URL + "appointment/list").build();
             call = okHttpClient.newCall(request);
         }else {
-            Request request = new Request.Builder().url(Info.BASE_URL + "appointment/find?sql="+x).build();
+            Request request = new Request.Builder().url(Info.BASE_URL + "appointment/find?sql="+sql[x-1]).build();
             call = okHttpClient.newCall(request);
             Log.e("x = ", x+"");
         }

@@ -48,6 +48,7 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
 
     private ImageView ivMainPortrait;
+    private LinearLayout ll_top;
     private int tabtop = 0;
     private int tab = 0;
 
@@ -173,19 +174,23 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.tab_spec_main_home:
                     tab = 0;
+                    ll_top.setVisibility(View.VISIBLE);
                     changeTab(tabStrId[0],tabtop);
                     Log.e("下一步",tabStrId[tab]+"");
                     break;
                 case R.id.tab_spec_main_game:
                     tab =  1;
+                    ll_top.setVisibility(View.VISIBLE);
                     changeTab(tabStrId[1],tabtop);
                     break;
                 case R.id.tab_spec_main_time:
                     tab =  2;
+                    ll_top.setVisibility(View.VISIBLE);
                     changeTab(tabStrId[2],tabtop);
                     break;
                 case R.id.tab_spec_main_message:
                     tab =  3;
+                    ll_top.setVisibility(View.GONE);
                     changeTab(tabStrId[3],tabtop);
                     break;
                 case R.id.tab_spec_main_topall:
@@ -347,6 +352,7 @@ public class MainActivity extends AppCompatActivity {
 
         //vpBanner = (ViewPager)findViewById(R.id.et_login_pwd);
 
+        ll_top = findViewById(R.id.ll_top);
         LinearLayout linearLayouttop1 = findViewById(R.id.tab_spec_main_topall);
         LinearLayout linearLayouttop2 = findViewById(R.id.tab_spec_main_football);
         LinearLayout linearLayouttop3 = findViewById(R.id.tab_spec_main_basketball);

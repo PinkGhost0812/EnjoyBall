@@ -26,6 +26,7 @@ import java.util.TimerTask;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import cn.smssdk.OnSendMessageHandler;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -47,9 +48,13 @@ public class ForgetActivity extends AppCompatActivity {
     private Handler handler;
     private String phone;
     private CodeTimeUtil codeTimeUtil;
-    private int eye;
-
+    private int eye = 0;
+    private int num = 0;
+    private boolean go = false;
     private OkHttpClient okHttpClient;
+    private String pwd;
+    private OnSendMessageHandler onSendMessageHandler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,13 @@ public class ForgetActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
+            }
+        };
+
+        onSendMessageHandler = new OnSendMessageHandler() {
+            @Override
+            public boolean onSendMessage(String s, String s1) {
+                return false;
             }
         };
 
@@ -104,42 +116,16 @@ public class ForgetActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 case R.id.btn_forget_code:
-
-                    phone = etForgetPhone.getText().toString();
-                    Log.e("找回密码",phone+"");
-
-                    //手机号密码规则
-                    if (phone.length() == 11 && phone!="") {
-                        final Request request = new Request.Builder().url(com.example.lenovo.enjoyball.Info.BASE_URL + "user/findByPhoneNumber?phone=" + phone).build();
-                        Call call = okHttpClient.newCall(request);
-                        call.enqueue(new Callback() {
-
-                            @Override
-                            public void onFailure(Call call, IOException e) {
-                                Looper.prepare();
-                                Toast.makeText(getApplicationContext(), "手机号未注册", Toast.LENGTH_SHORT).show();
-                                Looper.loop();
-                                e.printStackTrace();
-                            }
-
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                Looper.prepare();
-                                regist();
-                                SMSSDK.getVerificationCode("86",phone);
-                                Looper.loop();
-                            }
-                        });
+                    regist();//调用验证短信发送的回调接口
+                    //判断是否为null或“”
+                    if (TextUtils.isEmpty(etForgetPhone.getText().toString())) {
+                        Toast.makeText(ForgetActivity.this, "请输入合法的手机号", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ForgetActivity.this, "手机号格式错误", Toast.LENGTH_LONG).show();
+                        if (onSendMessageHandler.onSendMessage("86",etForgetPhone.getText().toString()))
+                            Toast.makeText(ForgetActivity.this, "请您输入合法的手机号", Toast.LENGTH_SHORT).show();
+                        else
+                            SMSSDK.getVerificationCode("86", etForgetPhone.getText().toString());
                     }
-//                    regist();//调用注册短信发送的回调接口
-//                    //判断是否为null或“”
-//                    if (TextUtils.isEmpty(etForgetPhone.getText().toString())) {
-//                        Toast.makeText(ForgetActivity.this, "请输入合法的手机号", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        SMSSDK.getVerificationCode("86", etForgetPhone.getText().toString());
-//                    }
                     break;
                 case R.id.btn_forget_changecode:
                     if (TextUtils.isEmpty(etForgetPhone.getText().toString()) || etForgetPhone.getText().toString().length()!=11){
@@ -153,6 +139,8 @@ public class ForgetActivity extends AppCompatActivity {
                             } else {
                                 regist();
                                 SMSSDK.submitVerificationCode("86", etForgetPhone.getText().toString(), etForgetCode.getText().toString());
+                                if (go)
+                                    forgrt(num);
                             }
                         }
                     }
@@ -184,20 +172,8 @@ public class ForgetActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(ForgetActivity.this, "修改密码成功，即将返回登录界面", Toast.LENGTH_SHORT).show();
-                                new Thread(){
-                                    @Override
-                                    public void run() {
-                                        try{
-                                            Thread.sleep(2000);
-                                            Message message=new Message();
-                                            message.what=0;
-                                            handler.sendMessage(message);
-                                        }catch (InterruptedException e){
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }.start();
+                                num = 1;
+                                go = true;
                             }
                         });
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
@@ -226,9 +202,63 @@ public class ForgetActivity extends AppCompatActivity {
             }
         };
         SMSSDK.registerEventHandler(eh);
-
-
     }
 
+    public void forgrt(int x){
+        if (x==1){
+            phone = etForgetPhone.getText().toString().trim();
+            pwd = etForgetPwd.getText().toString().trim();
+//            JPushInterface.setDebugMode(true);
+//            JPushInterface.init(this);
+//            String r = JPushInterface.getRegisterationID(this);
+//            Log.e("1099","id"+r);
+
+            //手机号密码规则
+            if (phone.length() == 11 && pwd.length() != 0) {
+                final Request request = new Request.Builder().url(com.example.lenovo.enjoyball.Info.BASE_URL +"user/updatePwd?phone="+phone+"&pwd="+pwd).build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Looper.prepare();
+                        Toast.makeText(getApplicationContext(), "服务器出错了，请稍后重试", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        Looper.prepare();
+                        String x = response.body().string();
+                        Log.e("注册",x);
+                        if (x.equals("true")){
+                            Toast.makeText(ForgetActivity.this, "修改密码成功，即将返回登录界面", Toast.LENGTH_SHORT).show();
+                            new Thread(){
+                                @Override
+                                public void run() {
+                                    try{
+                                        Thread.sleep(2000);
+                                        Message message=new Message();
+                                        message.what=0;
+                                        handler.sendMessage(message);
+                                    }catch (InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }.start();
+
+                        }else {
+                            Toast.makeText(ForgetActivity.this, "修改密码失败", Toast.LENGTH_SHORT).show();
+                        }
+
+                        Looper.loop();
+
+                    }
+                });
+            }
+            num=0;
+        }
+    }
 
 }
