@@ -50,7 +50,6 @@ public class HomepageActivity extends AppCompatActivity {
     private String homepagePortraitPath;
 
     private User user;
-    private User visitUser;
 
     private class HomepageTabSpec {
         private TextView textView = null;

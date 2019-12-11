@@ -80,8 +80,6 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
         user=((Info)getApplicationContext()).getUser();
 
-        Log.e("test personaler email",user.getUser_email().toString());
-
         setInfo();
 
         getCommentNum();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="85dp"
     android:orientation="horizontal"
     android:alpha="0.7"
@@ -21,7 +22,8 @@
 
     <LinearLayout
         android:layout_marginLeft="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="9"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:orientation="vertical">
@@ -95,6 +97,19 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_team_setting"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:gravity="center">
 
+        <ImageView
+            android:src="@drawable/setting"
+            android:id="@+id/iv_team_setting"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
 
 </LinearLayout>

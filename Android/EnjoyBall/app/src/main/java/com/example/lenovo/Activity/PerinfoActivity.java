@@ -229,7 +229,7 @@ public class PerinfoActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(MediaType.parse("image/*"),
                 file);
         Request request = new Request.Builder()
-                .url(Info.BASE_URL+"user/uploadImg?id="+1)
+                .url(Info.BASE_URL+"user/uploadImg?id="+user.getUser_id())
                 .post(body)
                 .build();
         Call call = okHttpClientHeadPortrait.newCall(request);

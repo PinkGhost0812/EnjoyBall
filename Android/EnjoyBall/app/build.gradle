@@ -29,7 +29,6 @@ android {
     }
 }
 
-
 // 在MobSDK的扩展中注册SMSSDK的相关信息
 MobSDK {
     appKey "2d49101064bab"

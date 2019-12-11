@@ -84,7 +84,8 @@ public class HomepageFansFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent();
                 intent.setClass(getContext(), HomepageActivity.class);
-                intent.putExtra("user_id",user.getUser_id().toString());
+                user=userList.get(position);
+                intent.putExtra("user",user);
                 startActivity(intent);
             }
         });
@@ -134,7 +135,7 @@ public class HomepageFansFragment extends Fragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 Looper.prepare();
-                Toast.makeText(getActivity().getApplicationContext(), "获取粉丝列表失败~", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "获取粉丝列表失败~", Toast.LENGTH_SHORT).show();
                 Looper.loop();
                 e.printStackTrace();
             }
@@ -145,7 +146,7 @@ public class HomepageFansFragment extends Fragment {
                 String data=response.body().string();
 
                 if (data.equals("false")){
-                    Toast.makeText(getActivity().getApplicationContext(), "用户无粉丝~", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "用户无粉丝~", Toast.LENGTH_SHORT).show();
                 }else{
 
                     Gson gson = new GsonBuilder()

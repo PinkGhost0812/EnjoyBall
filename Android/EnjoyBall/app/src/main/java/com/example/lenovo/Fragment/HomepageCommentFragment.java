@@ -137,7 +137,7 @@ public class HomepageCommentFragment extends Fragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 Looper.prepare();
-                Toast.makeText(getActivity().getApplicationContext(), "获取评论列表失败~", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "获取评论列表失败~", Toast.LENGTH_SHORT).show();
                 Looper.loop();
                 e.printStackTrace();
             }
@@ -148,7 +148,7 @@ public class HomepageCommentFragment extends Fragment {
                 String data = response.body().string();
 
                 if (data.equals("false")) {
-                    Toast.makeText(getActivity().getApplicationContext(), "用户无评论~", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "用户无评论~", Toast.LENGTH_SHORT).show();
                 } else {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                     Type type = new TypeToken<List<CommentAndNews>>() {

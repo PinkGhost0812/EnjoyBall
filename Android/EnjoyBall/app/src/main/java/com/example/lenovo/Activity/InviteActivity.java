@@ -147,6 +147,7 @@ public class InviteActivity extends AppCompatActivity {
         tv_invite = findViewById(R.id.tv_invite_search);
         lv_invite = findViewById(R.id.lv_invite);
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setView(String message){
         adapter = new InviteAdapter(datasource,R.layout.listview_item_searchresult,this,table);

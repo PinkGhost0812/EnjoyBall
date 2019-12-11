@@ -7,9 +7,9 @@
     <ImageView
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="30dp"
-        android:id="@+id/iv_follow_portrait"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:id="@+id/iv_team_manage_member_logo"
+        android:layout_width="40dp"
+        android:layout_height="60dp"
         android:src="@drawable/portrait" />
 
     <LinearLayout
@@ -25,6 +25,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_team_manage_member_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="瓜迪奥拉"
@@ -36,9 +37,17 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_team_manage_member_sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="性别"/>
+
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:id="@+id/tv_team_manage_member_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="年龄"/>
 
             </LinearLayout>
 
@@ -47,9 +56,10 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/iv_team_manage_member_delete"
         android:layout_gravity="center_vertical"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="60dp"
         android:src="@drawable/unfollow"/>
 
 </LinearLayout>

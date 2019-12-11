@@ -2,6 +2,7 @@ package com.example.lenovo.Activity;
 
 import android.content.Intent;
 import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,13 +55,14 @@ public class TeamActivity extends AppCompatActivity {
 
     private List<UserAndTeam> list = null;
 
-    private User user;
+    private User captain;
+    private User curUser;
 
     private Team team;
 
     private OkHttpClient okHttpClient;
 
-    private Info info;
+    private List<User> userList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,47 +72,91 @@ public class TeamActivity extends AppCompatActivity {
 
         findView();
 
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
+        EventBus.getDefault().register(this);
 
-        user=((Info)getApplicationContext()).getUser();
+        curUser = ((Info) getApplicationContext()).getUser();
 
         getTeam();
 
         lvTeam.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent();
-                team=list.get(position).getTeam();
-                user=list.get(position).getUser();
-                intent.putExtra("team",team);
-                intent.putExtra("captain",user);
-                intent.setClass(TeamActivity.this,TeamDetailActivity.class);
+
+                team = list.get(position).getTeam();
+                captain = list.get(position).getUser();
+
+                getTeamDetailInfo();
+
+                Intent intent = new Intent();
+                intent.putExtra("team", team);
+                intent.putExtra("captain", captain);
+                intent.setClass(TeamActivity.this, TeamDetailActivity.class);
+
                 startActivity(intent);
+
             }
         });
 
-        Button button = findViewById(R.id.btn_team_create);
-        button.setOnClickListener(new View.OnClickListener() {
+        btnTeamCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent=new Intent();
-               intent.setClass(TeamActivity.this,TeamCreateActivity.class);
-               startActivity(intent);
+                Intent intent = new Intent();
+                intent.setClass(TeamActivity.this, TeamCreateActivity.class);
+                startActivity(intent);
             }
         });
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void setInfo(List<UserAndTeam> list) {
+    private void getTeamDetailInfo() {
 
-        initData(list);
+        okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(Info.BASE_URL + "team/findMember?id=" + team.getTeam_id())
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                Toast.makeText(TeamActivity.this, "获取队伍详细信息失败~", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+                e.printStackTrace();
+            }
 
-        TeamAdapter adapter = new TeamAdapter
-                (getApplicationContext(), dataSource, R.layout.listview_item_team);
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
 
-        lvTeam.setAdapter(adapter);
+                String data = response.body().string();
+                Gson gson = new GsonBuilder().create();
+                Type listType = new TypeToken<List<User>>() {
+                }.getType();
+                userList = gson.fromJson(data, listType);
+                Message msg = new Message();
+                msg.obj = userList;
+                msg.what = 20;
+                Log.e("test", userList.toString());
+                EventBus.getDefault().postSticky(msg);
+            }
+        });
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void setTeamInfo(Message msg) {
+        Log.e("caonima", "caonima");
+
+        if (msg.what == 11) {
+
+            list = (List<UserAndTeam>) msg.obj;
+
+            initData(list);
+
+            TeamAdapter adapter = new TeamAdapter
+                    (this, dataSource, R.layout.listview_item_team);
+
+            lvTeam.setAdapter(adapter);
+        }
+
 
     }
 
@@ -118,12 +164,18 @@ public class TeamActivity extends AppCompatActivity {
 
         dataSource = new ArrayList<>();
 
+        Log.e("test 111", list.size() + "");
+        Log.e("test 222", list.get(0).getUser().getUser_nickname());
+
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> map = new HashMap<>();
-            map.put("logos",list.get(i).getTeam().getTeam_logo());
+            map.put("logos", list.get(i).getTeam().getTeam_logo());
             map.put("names", list.get(i).getTeam().getTeam_name());
             map.put("captains", list.get(i).getUser().getUser_nickname());
+            map.put("captainsId", list.get(i).getUser().getUser_id());
             map.put("nums", list.get(i).getTeam().getTeam_number());
+            map.put("teams", list.get(i).getTeam());
+            Log.e("test teamstring",list.get(i).getTeam().toString());
             dataSource.add(map);
         }
 
@@ -133,7 +185,7 @@ public class TeamActivity extends AppCompatActivity {
 
         okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Info.BASE_URL + "team/findByPerson?id=" + user.getUser_id())
+                .url(Info.BASE_URL + "team/findByPerson?id=" + curUser.getUser_id())
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -152,10 +204,13 @@ public class TeamActivity extends AppCompatActivity {
                     Toast.makeText(TeamActivity.this, "您还没有加入队伍凹~", Toast.LENGTH_SHORT).show();
                 } else {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                    Type listType = new TypeToken<List<UserAndTeam>>() {
-                    }.getType();
+                    Type listType = new TypeToken<List<UserAndTeam>>() {}.getType();
                     list = gson.fromJson(data, listType);
-                    EventBus.getDefault().post(list);
+                    Log.e("test captains", list.get(0).getUser().getUser_id().toString());
+                    Message msg = new Message();
+                    msg.what = 11;
+                    msg.obj = list;
+                    EventBus.getDefault().post(msg);
                 }
             }
         });
@@ -170,9 +225,10 @@ public class TeamActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
+
 }

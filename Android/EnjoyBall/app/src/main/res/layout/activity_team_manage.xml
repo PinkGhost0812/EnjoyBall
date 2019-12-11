@@ -9,21 +9,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#EBE8E8">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/back"
-            android:layout_gravity="center"
-            android:layout_marginLeft="30dp"/>
+        android:background="#EBE8E8"
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="球队管理"
             android:textSize="20dp"
-            android:layout_marginLeft="100dp"
             android:layout_gravity="center"/>
 
     </LinearLayout>
@@ -34,9 +27,10 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_team_manage_logo"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -55,7 +49,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_team_manage_logo"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -77,9 +70,10 @@
             android:background="#C3C1C1"></View>
 
         <LinearLayout
+            android:id="@+id/ll_team_manage_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -98,14 +92,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_team_manage_name"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/tv_perinfo_nickname"
+                    android:id="@+id/tv_team_manage_name"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:gravity="right"
@@ -127,9 +120,10 @@
             android:background="#C3C1C1"></View>
 
         <LinearLayout
+            android:id="@+id/ll_team_manage_captain"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -148,7 +142,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_team_manage_captain"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
@@ -178,9 +171,10 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_team_manage_member"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -199,7 +193,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_team_manage_member"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
@@ -228,9 +221,10 @@
             android:background="#C3C1C1"></View>
 
         <LinearLayout
+            android:id="@+id/ll_team_manage_slogan"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
+            android:background="@drawable/ripple_click"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -249,7 +243,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_team_manage_slogan"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
@@ -275,11 +268,11 @@
 
 
         <TextView
-            android:id="@+id/btn_team_manage_save"
+            android:id="@+id/tv_team_manage_save"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="50dp"
-            android:background="#ffffff"
+            android:layout_marginTop="150dp"
+            android:background="@drawable/ripple_click"
             android:gravity="center"
             android:text="保存"
             android:textSize="20dp" />
