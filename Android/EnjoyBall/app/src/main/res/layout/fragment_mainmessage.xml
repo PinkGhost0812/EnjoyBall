@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
-    android:layout_marginLeft="40dp"
-    android:layout_marginRight="40dp"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <!--选择消息类型-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:gravity="center"
+        android:background="#37E137"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_weight="2">
         <!--通知消息-->
         <LinearLayout
-            android:gravity="center"
+            android:gravity="left"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:background="@drawable/linerlayout_border"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp">
+            android:id="@+id/ll_mainmessage_notification"
+            android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/message_notification"/>
             <TextView
                 android:layout_marginLeft="10dp"
@@ -29,20 +30,20 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:id="@+id/tv_mainMessage_notify"
+                android:textSize="20dp"
                 android:text="通知消息"/>
 
         </LinearLayout>
         <!--管理消息-->
         <LinearLayout
-            android:gravity="center"
+            android:gravity="right"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:background="@drawable/linerlayout_border"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp">
+            android:id="@+id/ll_mainmessage_manage"
+            android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/message_manager"/>
             <TextView
                 android:layout_marginLeft="10dp"
@@ -50,7 +51,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:id="@+id/tv_mainMessage_manager"
-                android:text="通知消息"/>
+                android:textSize="20dp"
+                android:text="管理消息"/>
 
         </LinearLayout>
     </LinearLayout>

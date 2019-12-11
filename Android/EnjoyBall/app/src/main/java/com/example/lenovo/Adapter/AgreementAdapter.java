@@ -89,28 +89,4 @@ public class AgreementAdapter extends BaseAdapter{
         public TextView tv_name;
         public ImageView iv_head;
     }
-    private class getImg extends AsyncTask<String, Integer, Bitmap> {
-
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-            try {
-
-                URL url = new URL(strings[0]);
-                URLConnection connection = url.openConnection();
-                InputStream is = connection.getInputStream();
-                bitmap = BitmapFactory.decodeStream(is);
-                return bitmap;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-        }
-    }
 }

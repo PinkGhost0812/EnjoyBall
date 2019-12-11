@@ -1,42 +1,96 @@
 package com.example.lenovo.Activity;
 
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.example.lenovo.Adapter.MessageAdapter;
+import com.example.lenovo.Adapter.ManageMessageAdapter;
+import com.example.lenovo.Util.ApplyUtil;
+import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
+import com.example.lenovo.entity.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ManageMessageActivity extends AppCompatActivity {
-    private ListView lv_message = null;
-    private MessageAdapter adapter;
-    private List<Map<String,Object>> datasource = new ArrayList<Map<String,Object>>();
+    private ListView lv_manage = null;
+    private List<ApplyUtil> messages = null;
+    private OkHttpClient okHttpClient = new OkHttpClient();
+    private  String url = Info.BASE_URL;
+    private ManageMessageAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message_notification);
+        if (!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
+        setContentView(R.layout.activity_message_manage);
         getView();
-        initData();
-        adapter = new MessageAdapter(datasource,R.layout.listview_item_message_notification,this);
-        lv_message.setAdapter(adapter);
+        getMessages();
     }
+//获取消息
+    private void getMessages() {
+        //int id =((Info)getApplicationContext()).getUser().getUser_id();
+        Request request = new Request.Builder()
+                .url(url+"appointment/messageList?id="+1)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                Toast.makeText(ManageMessageActivity.this,"网络连接失败",Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
 
-    private void initData() {
-        Map<String,Object> map1 = new HashMap<String, Object>();
-        Map<String,Object> map2 = new HashMap<String, Object>();
-        map1.put("content","郑文涛申请加入你的约球队伍");
-        map1.put("head",getResources().getDrawable(R.drawable.head_girl));
-        map1.put("time","2019/10/11");
-        datasource.add(map1);
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String messagesJson = response.body().string();
+                Log.e("json",messagesJson);
+                Type type = new TypeToken<List<ApplyUtil>>(){}.getType();
+
+                if (!messagesJson.equals("false")){
+                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                    messages = gson.fromJson(messagesJson,type);
+                    Log.e("收到的消息",messages.toString());
+                    EventBus.getDefault().post("OK");
+                }
+
+            }
+        });
+
+
     }
 
     private void getView() {
-        lv_message = findViewById(R.id.lv_message_notification);
+        lv_manage = findViewById(R.id.lv_message_manage);
+
+
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void setView(String message){
+        if (message.equals("OK")){
+            adapter = new ManageMessageAdapter(messages,this);
+            lv_manage.setAdapter(adapter);
+        }
     }
 }

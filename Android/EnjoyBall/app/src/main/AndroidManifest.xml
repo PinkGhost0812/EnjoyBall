@@ -26,15 +26,20 @@
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
+<<<<<<< Updated upstream
         <activity android:name="com.example.lenovo.Activity.LoginActivity">
         <!--<activity android:name="com.example.lenovo.Activity.MainActivity">-->
+=======
+       <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity">-->
+            <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity">
+>>>>>>> Stashed changes
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name="com.example.lenovo.Activity.JoinAgreementActivity"/>-->
+       <!-- <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity"/>-->
         <activity android:name="com.example.lenovo.Activity.MainActivity"/>
         <activity android:name="com.example.lenovo.Activity.CreateAgreementActivity"/>
         <activity android:name="com.example.lenovo.Activity.NewsDetailActivity"/>
@@ -53,7 +58,12 @@
         <activity android:name="com.example.lenovo.Activity.PerinfoSignatureActivity"/>
         <activity android:name="com.example.lenovo.Activity.PerinfoEmailActivity"/>
         <activity android:name="com.example.lenovo.Activity.PerinfoNicknameActivity"/>
+<<<<<<< Updated upstream
         <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity"/>
+=======
+        <activity android:name="com.example.lenovo.Activity.NotifyMessageActivity"/>
+        <activity android:name="com.example.lenovo.Activity.ManageMessageActivity"/>
+>>>>>>> Stashed changes
 
         <activity
             android:name="cn.jpush.android.ui.PushActivity"

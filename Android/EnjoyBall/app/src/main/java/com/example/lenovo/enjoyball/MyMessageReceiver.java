@@ -3,6 +3,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.lenovo.Activity.ManageMessageActivity;
+
 import cn.jpush.android.api.CustomMessage;
 import cn.jpush.android.api.NotificationMessage;
 import cn.jpush.android.service.JPushMessageReceiver;
@@ -21,9 +23,10 @@ public class MyMessageReceiver extends JPushMessageReceiver {
     public void onNotifyMessageOpened(Context context, NotificationMessage notificationMessage) {
         super.onNotifyMessageOpened(context, notificationMessage);
         //点击通知时回调：启动固定界面
-        Intent intent = new Intent(context,MainActivity.class);
-        intent.putExtra("extras",notificationMessage.notificationExtras);
+        Log.e("状态1","打开页面");
+        Intent intent = new Intent(context, ManageMessageActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Log.e("状态2","打开页面");
         context.startActivity(intent);
     }
 

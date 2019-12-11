@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.lenovo.Activity.TeamDetailActivity;
 import com.example.lenovo.Adapter.AgreementAdapter;
+import com.example.lenovo.Util.ApplyInfo;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.DemandInfo;
@@ -71,7 +72,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
         final Intent intent = getIntent();
         String demandId = intent.getStringExtra("id");
         getView();
-        getDemandInfo("1");
+        getDemandInfo(demandId);
         /*--------------------------点击item加入或查看对方信息------------------------*/
         gv_joinagreement.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -99,8 +100,9 @@ public class JoinAgreementActivity extends AppCompatActivity {
                         alertDialog.show();
                     }else{
                         User user = (User)datasource.get(i).get("object");
-                        Intent intent1 = new Intent(JoinAgreementActivity.this,HomeActivity.class);
-                        intent1.putExtra("visitUser",user);
+                        Log.e("uesr",user.toString());
+                        Intent intent1 = new Intent(JoinAgreementActivity.this,HomepageActivity.class);
+                        intent1.putExtra("user",user);
                         startActivity(intent1);
                     }
                 }else if (demandInfo.getDemand_oom()==1){
@@ -161,8 +163,16 @@ public class JoinAgreementActivity extends AppCompatActivity {
         }else {
             teamId = demandInfo.getDemand_teamb();
         }
+        ApplyInfo applyInfo = new ApplyInfo();
+        applyInfo.setDemandId(demandInfo.getDemand_id());
+        applyInfo.setHandle(0);
+        applyInfo.setIsInvite(1);
+        applyInfo.setReceiver(demandInfo.getDemand_user());
+        applyInfo.setSender(getUser().getUser_id());
+        applyInfo.setTeamId(teamId);
+
         Request request = new Request.Builder()
-                .url(url+"appointment/apply?userId="+userId+"&&teamId="+teamId)
+                .url(url+"appointment/applyToLeader?info="+new Gson().toJson(applyInfo))
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -180,7 +190,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
                 if (result.equals("true")) {
                     Toast.makeText(JoinAgreementActivity.this, "申请成功", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(JoinAgreementActivity.this, "申请成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JoinAgreementActivity.this, result, Toast.LENGTH_SHORT).show();
                 }
                 Looper.loop();
             }
@@ -206,7 +216,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String jsonInfo = response.body().string();
                 Log.e("约球信息",jsonInfo);
-                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                Gson gson = new GsonBuilder().setDateFormat("YYYY-MM-DD hh:mm:ss").create();
                 demandInfo = gson.fromJson(jsonInfo, DemandInfo.class);
                 Message message = new Message();
                 message.what = POST_DEMANDINFO;
@@ -376,8 +386,14 @@ public class JoinAgreementActivity extends AppCompatActivity {
 
     }
     private User getUser() {
+<<<<<<< Updated upstream
         /*User user = getContext().getApplicationContext().getUser();*/
         User user = new User(1, "李烦烦", "990812", "img/pm.png", "男", "18103106427", "505", "631530326@qq.com", "我是你爹", 500, 600, 1,18,null);
+=======
+        Info info = (Info)getApplication();
+        User user = info.getUser();
+
+>>>>>>> Stashed changes
         return user;
     }
 
