@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import cn.jpush.android.api.JPushInterface;
 import cn.smssdk.EventHandler;
 import cn.smssdk.OnSendMessageHandler;
 import cn.smssdk.SMSSDK;

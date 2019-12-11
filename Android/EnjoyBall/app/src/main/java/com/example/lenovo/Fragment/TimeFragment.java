@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.lenovo.Activity.CreateAgreementActivity;
+import com.example.lenovo.Activity.JoinAgreementActivity;
 import com.example.lenovo.Activity.NewsDetailActivity;
 import com.example.lenovo.Adapter.DemandAdapter;
 import com.example.lenovo.enjoyball.Info;
@@ -46,6 +49,8 @@ public class TimeFragment extends Fragment {
     private OkHttpClient okHttpClient;
     private ListView listView;
     private Call call;
+    private boolean isGetData = false;
+    private FloatingActionButton fabAdd;
     private String[] sql = {"select * from demand_info where demand_class = 0","select * from demand_info where demand_class = 1","select * from demand_info where demand_class = 2",
             "select * from demand_info where demand_class = 3","select * from demand_info where demand_class = 4"};
 
@@ -75,9 +80,8 @@ public class TimeFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        //initData();
+    public void onResume() {
+        super.onResume();
         listView = getActivity().findViewById(R.id.lv_time_demand);
 
         if(!EventBus.getDefault().isRegistered(this)){
@@ -117,14 +121,15 @@ public class TimeFragment extends Fragment {
             }
         });
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("详情","success");
+                Log.e("详情","success"+dataSource.get(position).getDemand_id()+"");
 
                 Intent intent = new Intent();
                 intent.putExtra("id",dataSource.get(position).getDemand_id());
-                intent.setClass(getActivity(), NewsDetailActivity.class);
+                intent.setClass(getActivity(), JoinAgreementActivity.class);
                 startActivity(intent);
 
             }
@@ -137,6 +142,23 @@ public class TimeFragment extends Fragment {
             dataSource.add(list.get(i));
 
         }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //initData();
+
+        fabAdd = getActivity().findViewById(R.id.fab_demand_add);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("新建约球","555");
+                Intent intents = new Intent();
+                intents.setClass(getActivity(), CreateAgreementActivity.class);
+                startActivity(intents);
+            }
+        });
     }
 
     @Override

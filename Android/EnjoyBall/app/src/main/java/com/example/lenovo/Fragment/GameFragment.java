@@ -54,8 +54,8 @@ public class GameFragment extends Fragment {
     private OkHttpClient okHttpClient;
     private ListView listView;
     private Call call;
-    private String[] sql = {"select * from game_info where game_class = 1","select * from game_info where game_class = 2","select * from game_info where game_class = 3","select * from game_info where game_class = 4"
-            ,"select * from game_info where game_class = 5"};
+    private String[] sql = {"select * from game_info where game_class = 0","select * from game_info where game_class = 1","select * from game_info where game_class = 2","select * from game_info where game_class = 3"
+            ,"select * from game_info where game_class = 4"};
 
 
     private List<TeamAndContest> dataSource = null;
@@ -64,30 +64,30 @@ public class GameFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
         View view =  inflater.inflate(R.layout.tab_game_layout,
                 container, false);
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        getActivity().getMenuInflater().inflate(R.menu.game_menu,menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item_game_my:
-                Toast.makeText(getContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.item_game_school:
-                Toast.makeText(getContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        super.onCreateOptionsMenu(menu, inflater);
+//        getActivity().getMenuInflater().inflate(R.menu.game_menu,menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.item_game_my:
+//                Toast.makeText(getContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.item_game_school:
+//                Toast.makeText(getContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setContent(List<TeamAndContest> list){
@@ -103,11 +103,10 @@ public class GameFragment extends Fragment {
         listView.setAdapter(adapter);
 
     }
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        //initData();
 
+    @Override
+    public void onResume() {
+        super.onResume();
         tvDate = getActivity().findViewById(R.id.tv_game_date);
         tvDate.setText(getTime()+"");
 
@@ -127,7 +126,8 @@ public class GameFragment extends Fragment {
             call = okHttpClient.newCall(request);
 
         }else {
-            Request request = new Request.Builder().url(Info.BASE_URL + "contest/find?sql="+sql[x-1]).build();
+            x=x-1;
+            Request request = new Request.Builder().url(Info.BASE_URL + "contest/find?sql="+x).build();
             call = okHttpClient.newCall(request);
             Log.e("x = ", x+"");
         }
@@ -165,6 +165,14 @@ public class GameFragment extends Fragment {
 
     }
 
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        //initData();
+//
+//
+//    }
+
     private static String getTime(){
         SimpleDateFormat fromatter = new SimpleDateFormat("yyyy-MM-dd EEEE");
         Date time = new Date(System.currentTimeMillis());
@@ -175,7 +183,7 @@ public class GameFragment extends Fragment {
         dataSource = new ArrayList<>();
         for (int i=0;i<gameList.size();++i){
             dataSource.add(gameList.get(i));
-            Log.e("test",dataSource.toString());
+            Log.e("test",dataSource.get(i).getTeamMap().toString());
         }
     }
 

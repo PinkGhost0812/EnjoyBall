@@ -90,11 +90,8 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-//        lvHome = getActivity().findViewById(R.id.lv_home_news);
-//        lvHome.setAdapter(new SimpleAdapter(this,dataSource,R.layout.listview_item_home,));
-
+    public void onResume() {
+        super.onResume();
         listView = getActivity().findViewById(R.id.lv_home_news);
 
         if(!EventBus.getDefault().isRegistered(this)){
@@ -111,7 +108,8 @@ public class HomeFragment extends Fragment {
             call = okHttpClient.newCall(request);
 
         }else {
-            Request request = new Request.Builder().url(Info.BASE_URL + "news/list").build();
+            x=x-1;
+            Request request = new Request.Builder().url(Info.BASE_URL + "news/findByCls?cls=" +x).build();
             call = okHttpClient.newCall(request);
             Log.e("x = ", x+"");
 
@@ -149,6 +147,15 @@ public class HomeFragment extends Fragment {
         });
 
     }
+
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+////        lvHome = getActivity().findViewById(R.id.lv_home_news);
+////        lvHome.setAdapter(new SimpleAdapter(this,dataSource,R.layout.listview_item_home,));
+//
+//
+//    }
 
 
     private void initData(List<News> newsList) {

@@ -36,6 +36,7 @@
         </activity>
         <!--<activity android:name="com.example.lenovo.Activity.JoinAgreementActivity"/>-->
         <activity android:name="com.example.lenovo.Activity.MainActivity"/>
+        <activity android:name="com.example.lenovo.Activity.CreateAgreementActivity"/>
         <activity android:name="com.example.lenovo.Activity.NewsDetailActivity"/>
         <activity android:name="com.example.lenovo.Activity.FeedBackActivity" />
         <activity android:name="com.example.lenovo.Activity.CollectActivity" />
@@ -52,6 +53,7 @@
         <activity android:name="com.example.lenovo.Activity.PerinfoSignatureActivity"/>
         <activity android:name="com.example.lenovo.Activity.PerinfoEmailActivity"/>
         <activity android:name="com.example.lenovo.Activity.PerinfoNicknameActivity"/>
+        <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity"/>
 
         <activity
             android:name="cn.jpush.android.ui.PushActivity"

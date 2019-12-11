@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout ll_top;
     private int tabtop = 0;
     private int tab = 0;
-
+    private int refresh = 0;
     private Contest contest;
     private News news;
     private DemandInfo demandInfo;
@@ -249,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
         // 1 切换Fragment
         //removeTop();
         changeFragmentTop(x,y);
-        changeBall(x,y);
+        //changeBall(x,y);
         // 2 切换图标及字体颜色
         changeImageTop(s);
     }
@@ -270,8 +272,8 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putInt("ball",i);
             fragment.setArguments(bundle);
-            //transaction.add(R.id.tab_content, fragment);
             transaction.replace(R.id.tab_content,fragment);
+            refresh = 0;
         }
         // 显示对应Fragment
         transaction.show(fragment);
@@ -280,51 +282,20 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void changeBall(int i,int s){
-
-        Fragment fragment = map.get(tabStrId[i]).getFragment();
-        if(curFragment == fragment){
-            FragmentTransaction transaction =
-                    getSupportFragmentManager().beginTransaction();
-            Bundle bundle = new Bundle();
-            bundle.putInt("ball",s);
-            fragment.setArguments(bundle);
-            transaction.replace(R.id.tab_content,fragment);
-            transaction.commit();
-        }
-
-    }
-
-    private void removeTop(){
-
-        FragmentTransaction transaction =
-                getSupportFragmentManager().beginTransaction();
-
-        transaction.remove(curFragment);
-        transaction.show(curFragment);
-        transaction.commit();
-    }
-
     private void changeFragmentTop(int x,int y) {
         Fragment fragment = map.get(tabStrId[x]).getFragment();
-
-
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
 
-
-        //if(!fragment.isAdded()) {
-            Bundle bundle = new Bundle();
-            bundle.putInt("ball",y);
-            fragment.setArguments(bundle);
-            //transaction.add(R.id.tab_content, fragment);
-            transaction.replace(R.id.tab_content,fragment);
-        //}
+        Bundle bundle = new Bundle();
+        bundle.putInt("ball",y);
+        fragment.setArguments(bundle);
+        transaction.replace(R.id.tab_content,fragment);
         // 显示对应Fragment
-        //transaction.show(fragment);
-
+        transaction.show(fragment);
         curFragment = fragment;
         transaction.commit();
+        fragment.onResume();
     }
 
     // 根据Tab ID 切换 Tab显示的图片及字体颜色
@@ -493,6 +464,5 @@ public class MainActivity extends AppCompatActivity {
         mapTop.get(tabStrTopId[5]).setImageView(ivVolleyball);
         mapTop.get(tabStrTopId[5]).setTextView(tvVolleyball);
     }
-
 
 }
