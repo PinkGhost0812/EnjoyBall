@@ -1,7 +1,7 @@
 package com.example.lenovo.Adapter;
 
 import android.content.Context;
-import android.os.Looper;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +9,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.lenovo.Util.AuthorAndComment;
+import com.example.lenovo.enjoyball.GlideApp;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
-import com.bumptech.glide.Glide;
-import com.example.lenovo.entity.Comment;
 import com.example.lenovo.entity.User;
 import com.google.gson.Gson;
 
@@ -23,6 +22,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import okhttp3.Call;
@@ -34,13 +35,14 @@ import okhttp3.Response;
 public class NewsCommentAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Comment> dataSource;
+    private List<AuthorAndComment> dataSource;
     private int itemView;
     private OkHttpClient okHttpClient;
-    private User author;
+    private User author = null;
+    private DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 
-    public NewsCommentAdapter(Context context, List<Comment> dataSource, int itemView) {
+    public NewsCommentAdapter(Context context, List<AuthorAndComment> dataSource, int itemView) {
         this.context = context;
         this.dataSource = dataSource;
         this.itemView = itemView;
@@ -48,12 +50,12 @@ public class NewsCommentAdapter extends BaseAdapter {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void handleMessage(String event){
+    public void handleMessage(String event) {
         String[] cache = event.split("-");
-        if(cache[0].equals("NewsCommentFindUser")){
-            author = new Gson().fromJson(cache[1],User.class);
+        if (cache[0].equals("NewsCommentFindUser")) {
+            author = new Gson().fromJson(cache[1], User.class);
         }
-        Log.e("author = ",author.toString());
+        Log.e("author = ", author.toString());
     }
 
     @Override
@@ -68,66 +70,64 @@ public class NewsCommentAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return dataSource.get(position).getComment_id();
+        return dataSource.get(position).getComment().getComment_id();
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        if(convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.comment_item,null);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.comment_item, null);
             holder = new ViewHolder();
             holder.iv_headImg = convertView.findViewById(R.id.iv_comment_headImg);
             holder.tv_authorName = convertView.findViewById(R.id.tv_comment_authorName);
             holder.tv_commentContent = convertView.findViewById(R.id.tv_comment_content);
             holder.tv_releaseTime = convertView.findViewById(R.id.tv_comment_releaseTime);
             holder.tv_commentLikeNum = convertView.findViewById(R.id.tv_comment_likeNum);
+            holder.iv_likeImg = convertView.findViewById(R.id.iv_comment_likeImg);
 
             convertView.setTag(holder);
-        }else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        getAuthor(position);
-        Log.e("datasource = " , dataSource.toString());
-        //TODO:Author现在没信息拿不到，到时候记得改；   是一个空指针，可能是线程还没跑完，这个开始执行了
 
-        Glide.with(convertView).load(Info.BASE_URL + author.getUser_headportrait()).into(holder.iv_headImg);
-        holder.tv_authorName.setText(author.getUser_nickname());
+        GlideApp.with(convertView).load(Info.BASE_URL + dataSource.get(position).getAuthor().getUser_headportrait()).circleCrop().into(holder.iv_headImg);
+        holder.tv_authorName.setText(dataSource.get(position).getAuthor().getUser_nickname());
 //        holder.tv_authorName.setText("李烦烦");
-        holder.tv_commentContent.setText(dataSource.get(position).getComment_content());
-        holder.tv_releaseTime.setText(dataSource.get(position).getComment_time().toString());
-        holder.tv_commentLikeNum.setText(dataSource.get(position).getComment_likenum() + "1");
+        holder.tv_commentContent.setText(dataSource.get(position).getComment().getComment_content());
+        holder.tv_releaseTime.setText(df.format(dataSource.get(position).getComment().getComment_time()));
+        holder.tv_commentLikeNum.setText(dataSource.get(position).getComment().getComment_likenum() + " ");
+
+        final ViewHolder finalHolder = holder;
+        holder.iv_likeImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalHolder.tv_commentLikeNum.setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light));
+                finalHolder.tv_commentLikeNum.setText(dataSource.get(position).getComment().getComment_likenum()+1+"");
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request request = new Request.Builder().url(Info.BASE_URL + "information/likeComment?id=" + dataSource.get(position).getComment().getComment_id()).build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+                    }
+                });
+            }
+        });
+
+
         return convertView;
     }
 
-
-
-    public void getAuthor(int position){
-        okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder().url(Info.BASE_URL + "user/find?id=" + dataSource.get(position).getComment_author()).build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Looper.prepare();
-                Toast.makeText(context, "服务器被炸了，小李正在修复呢", Toast.LENGTH_SHORT).show();
-                Looper.loop();
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String ans = response.body().string();
-//                EventBus.getDefault().post("NewsCommentFindUser-" + ans);
-                author = new Gson().fromJson(ans,User.class);
-//                Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-                Log.e("author = ",author.toString());
-            }
-        });
-    }
-
-    static class ViewHolder{
+    static class ViewHolder {
         ImageView iv_headImg;
+        ImageView iv_likeImg;
         TextView tv_authorName;
         TextView tv_commentContent;
         TextView tv_releaseTime;

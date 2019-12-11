@@ -6,6 +6,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/sv_news_top"
         android:scrollbars="none">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -126,6 +127,7 @@
                         android:src="@drawable/dislike" />
 
                     <TextView
+                        android:id="@+id/tv_news_dislike"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_marginLeft="10dp"
@@ -135,20 +137,40 @@
 
                 </LinearLayout>
 
-
             </RelativeLayout>
 
-            <!--评论-->
-            <ListView
-                android:id="@+id/lv_news_comments"
+            <com.example.lenovo.enjoyball.LinearLayoutForListView
+                android:id="@+id/llflv_news_comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rl_news_likeOrNot"></ListView>
+                android:orientation="vertical"
+                android:layout_below="@+id/rl_news_likeOrNot"/>
 
+            <LinearLayout
+                android:layout_below="@id/llflv_news_comments"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
 
         </RelativeLayout>
 
     </ScrollView>
+
+
+    <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+        <!--android:id="@+id/srl_news_lv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<ListView-->
+            <!--android:id="@+id/lv_news_comments"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/sv_news_top"/>-->
+
+    <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
+
+
+
 
     <LinearLayout
         android:focusableInTouchMode="true"
@@ -179,7 +201,7 @@
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_weight="1"
-            android:src="@drawable/collect" />
+            android:src="@drawable/col" />
 
         <ImageView
             android:layout_gravity="center"
