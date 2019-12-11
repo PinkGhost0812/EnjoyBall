@@ -95,7 +95,7 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
         EventBus.getDefault().register(this);
         getViews();
         getNews();//拿到访问的新闻
-        getUser();//拿到当前的用户，暂时，以后知己APPlicationutil里面拿
+        //getUser();//拿到当前的用户，暂时，以后知己APPlicationutil里面拿
 
 
 //        getCollectType();
@@ -311,7 +311,8 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
 
     private void getCommentAndAuthor() {
         //TODO：这里的newsId
-        Request request = new Request.Builder().url(Info.BASE_URL + "information/getCommentAndAuthor?id=" + 1).build();
+        String id = getIntent().getStringExtra("id");
+        Request request = new Request.Builder().url(Info.BASE_URL + "information/getCommentAndAuthor?id=" + Integer.parseInt(id)).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -336,7 +337,7 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
     private void getNews(){
         String id = getIntent().getStringExtra("id");
         //TODO:拿到ID然后查找新闻
-        Request request = new Request.Builder().url(Info.BASE_URL + "news/findById?id=" + 1).build();
+        Request request = new Request.Builder().url(Info.BASE_URL + "news/findById?id=" + Integer.parseInt(id)).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -418,26 +419,26 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
         iv_remind = findViewById(R.id.iv_news_remindWho);
     }
 
-    private void getUser(){
-        Request request = new Request.Builder().url(Info.BASE_URL + "user/findByPhoneNumber?phone=18103106427").build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Looper.prepare();
-                Toast.makeText(getApplicationContext(), "获取用户信息失败", Toast.LENGTH_SHORT).show();
-                Looper.loop();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Message msg = Message.obtain();
-                msg.what = 5;
-                msg.obj = response.body().string();
-                handler.sendMessage(msg);
-            }
-        });
-    }
+//    private void getUser(){
+//        Request request = new Request.Builder().url(Info.BASE_URL + "user/findByPhoneNumber?phone=18103106427").build();
+//        Call call = okHttpClient.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                Looper.prepare();
+//                Toast.makeText(getApplicationContext(), "获取用户信息失败", Toast.LENGTH_SHORT).show();
+//                Looper.loop();
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                Message msg = Message.obtain();
+//                msg.what = 5;
+//                msg.obj = response.body().string();
+//                handler.sendMessage(msg);
+//            }
+//        });
+//    }
 
     @Override
     public void onClick(View v) {

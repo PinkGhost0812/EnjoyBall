@@ -21,7 +21,10 @@ public class Info extends Application{
         JPushInterface.init(this);
         String registrationId = JPushInterface.getRegistrationID(this);
         Log.e("1099", "run:--------->registrationId： "+registrationId );
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     }
 
     //当前登录的用户的信息
