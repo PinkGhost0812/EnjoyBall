@@ -1,38 +1,68 @@
 package com.example.lenovo.enjoyball;
 
+
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.lenovo.Activity.PersonalcenterActivity;
 import com.example.lenovo.Fragment.GameFragment;
 import com.example.lenovo.Fragment.HomeFragment;
 import com.example.lenovo.Fragment.MessageFragment;
+import com.example.lenovo.enjoyball.Info;
+import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.Fragment.TimeFragment;
-import com.example.lenovo.entity.TeamDemand;
+import com.example.lenovo.entity.Contest;
+import com.example.lenovo.entity.DemandInfo;
+import com.example.lenovo.entity.News;
 import com.example.lenovo.entity.User;
+import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView ivMainPortrait=null;
+    private ImageView ivMainPortrait;
+    private LinearLayout ll_top;
     private int tabtop = 0;
     private int tab = 0;
+    private int refresh = 0;
+    private Contest contest;
+    private News news;
+    private DemandInfo demandInfo;
+    private long startTime=1;
+
+    private User user;
+
 
     private class MyTabSpec {
         private ImageView imageView = null;
@@ -40,15 +70,6 @@ public class MainActivity extends AppCompatActivity {
         private int normalImage;
         private int selectImage;
         private Fragment fragment = null;
-        private int x;
-
-        public int getX() {
-            return x;
-        }
-
-        public void setX(int x) {
-            this.x = x;
-        }
 
         private void setSelect(boolean b) {
             if (b){
@@ -119,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Map<String,MyTabSpec> map = new HashMap<>();
     private Map<String,MyTabSpec> mapTop = new HashMap<>();
-    private String[] tabStrTopId = {"全部","足球","篮球","羽毛球","乒乓球","排球"};
+    private String[] tabStrTopId = {"全部","足球","篮球","排球","羽毛球","乒乓球"};
     private String[] tabStrId = {"首页","比赛","约球","消息"};
     private Fragment curFragment = null;
 
@@ -129,18 +150,26 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_main);
 
-        // 1、初始化，初始化MyTabSpec对象
+        user=((Info)getApplicationContext()).getUser();
+
         initData();
 
-        // 2、设置监听器，在监听器中完成切换
         setListener();
 
-        // 3、设置默认显示的TabSpec
         changeTab(tabStrId[0],tabtop);
+
         changeImageTop(tabStrTopId[0]);
+
+        RequestOptions options = new RequestOptions()
+                .signature(new ObjectKey(System.currentTimeMillis()))
+                .circleCrop();
+
+        Log.e("test",user.getUser_id().toString());
+        Glide.with(this)
+                .load(Info.BASE_URL+user.getUser_headportrait())
+                .apply(options)
+                .into(ivMainPortrait);
     }
-
-
 
     private class MyListener implements View.OnClickListener{
 
@@ -149,19 +178,23 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.tab_spec_main_home:
                     tab = 0;
+                    ll_top.setVisibility(View.VISIBLE);
                     changeTab(tabStrId[0],tabtop);
                     Log.e("下一步",tabStrId[tab]+"");
                     break;
                 case R.id.tab_spec_main_game:
                     tab =  1;
+                    ll_top.setVisibility(View.VISIBLE);
                     changeTab(tabStrId[1],tabtop);
                     break;
                 case R.id.tab_spec_main_time:
                     tab =  2;
+                    ll_top.setVisibility(View.VISIBLE);
                     changeTab(tabStrId[2],tabtop);
                     break;
                 case R.id.tab_spec_main_message:
                     tab =  3;
+                    ll_top.setVisibility(View.GONE);
                     changeTab(tabStrId[3],tabtop);
                     break;
                 case R.id.tab_spec_main_topall:
@@ -176,26 +209,35 @@ public class MainActivity extends AppCompatActivity {
                     tabtop =  2;
                     changeTabTop(tabStrTopId[2],tab,tabtop);
                     break;
-                case R.id.tab_spec_main_badminton:
+                case R.id.tab_spec_main_volleyball:
                     tabtop =  3;
-                    changeTabTop(tabStrTopId[3],tab,tabtop);
+                    Log.e("球类",tabStrTopId[tabtop]);
+                    //changeTabTop(tabStrTopId[3],tab,tabtop);
                     break;
-                case R.id.tab_spec_main_tabletennis:
+                case R.id.tab_spec_main_badminton:
                     tabtop =  4;
+                    Log.e("球类",tabStrTopId[tabtop]);
                     changeTabTop(tabStrTopId[4],tab,tabtop);
                     break;
-                case R.id.tab_spec_main_volleyball:
+                case R.id.tab_spec_main_tabletennis:
                     tabtop =  5;
+                    Log.e("球类",tabStrTopId[tabtop]);
                     changeTabTop(tabStrTopId[5],tab,tabtop);
                     break;
                 case R.id.iv_main_portrait:
                     //跳转到个人中心页面
-                    Intent intent =new Intent();
-                    intent.setClass(MainActivity.this, PersonalcenterActivity.class);
-                    TeamDemand teamDemand=new TeamDemand(1,2,3);
-                    intent.putExtra("team",teamDemand);
-                    overridePendingTransition(R.anim.personalcenter_in, R.anim.personalcenter_out);
-                    startActivity(intent);
+                    if(startTime!=0){
+                        long endTime = System.currentTimeMillis();
+                        if(endTime-startTime<500){
+                            Toast.makeText(getApplicationContext(), "点的太快了噢~", Toast.LENGTH_LONG).show();
+                        }else{
+                            Intent intent =new Intent();
+                            intent.setClass(MainActivity.this, PersonalcenterActivity.class);
+                            overridePendingTransition(R.anim.personalcenter_in, R.anim.personalcenter_out);
+                            startActivity(intent);
+                        }
+                    }
+                    startTime = System.currentTimeMillis();
                     break;
 
             }
@@ -212,9 +254,9 @@ public class MainActivity extends AppCompatActivity {
     }
     private void changeTabTop(String s,int x,int y) {
         // 1 切换Fragment
-        removeTop();
+        //removeTop();
         changeFragmentTop(x,y);
-
+        //changeBall(x,y);
         // 2 切换图标及字体颜色
         changeImageTop(s);
     }
@@ -222,8 +264,7 @@ public class MainActivity extends AppCompatActivity {
     // 根据Tab ID 切换 Tab显示的Fragment
     private void changeFragment(String s,int i) {
         Fragment fragment = map.get(s).getFragment();
-
-        if(curFragment == fragment) return;
+       if(curFragment == fragment) return;
 
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
@@ -235,46 +276,30 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putInt("ball",i);
             fragment.setArguments(bundle);
-            //transaction.add(R.id.tab_content, fragment);
             transaction.replace(R.id.tab_content,fragment);
+            refresh = 0;
         }
         // 显示对应Fragment
         transaction.show(fragment);
         curFragment = fragment;
 
-        transaction.commit();
-    }
-
-    private void removeTop(){
-
-        FragmentTransaction transaction =
-                getSupportFragmentManager().beginTransaction();
-
-        transaction.remove(curFragment);
-        transaction.show(curFragment);
         transaction.commit();
     }
 
     private void changeFragmentTop(int x,int y) {
         Fragment fragment = map.get(tabStrId[x]).getFragment();
-
-
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
 
-
-        if(!fragment.isAdded()) {
-            Bundle bundle = new Bundle();
-            bundle.putInt("ball",y);
-            fragment.setArguments(bundle);
-            //transaction.add(R.id.tab_content, fragment);
-            transaction.replace(R.id.tab_content,fragment);
-        }
+        Bundle bundle = new Bundle();
+        bundle.putInt("ball",y);
+        fragment.setArguments(bundle);
+        transaction.replace(R.id.tab_content,fragment);
         // 显示对应Fragment
         transaction.show(fragment);
-
         curFragment = fragment;
         transaction.commit();
+        fragment.onResume();
     }
 
     // 根据Tab ID 切换 Tab显示的图片及字体颜色
@@ -300,12 +325,15 @@ public class MainActivity extends AppCompatActivity {
     // 设置监听器
     private void setListener(){
 
+        //vpBanner = (ViewPager)findViewById(R.id.et_login_pwd);
+
+        ll_top = findViewById(R.id.ll_top);
         LinearLayout linearLayouttop1 = findViewById(R.id.tab_spec_main_topall);
         LinearLayout linearLayouttop2 = findViewById(R.id.tab_spec_main_football);
         LinearLayout linearLayouttop3 = findViewById(R.id.tab_spec_main_basketball);
-        LinearLayout linearLayouttop4 = findViewById(R.id.tab_spec_main_badminton);
-        LinearLayout linearLayouttop5 = findViewById(R.id.tab_spec_main_tabletennis);
-        LinearLayout linearLayouttop6 = findViewById(R.id.tab_spec_main_volleyball);
+        LinearLayout linearLayouttop4 = findViewById(R.id.tab_spec_main_volleyball);
+        LinearLayout linearLayouttop5 = findViewById(R.id.tab_spec_main_badminton);
+        LinearLayout linearLayouttop6 = findViewById(R.id.tab_spec_main_tabletennis);
         LinearLayout linearLayout1 = findViewById(R.id.tab_spec_main_home);
         LinearLayout linearLayout2 = findViewById(R.id.tab_spec_main_game);
         LinearLayout linearLayout3 = findViewById(R.id.tab_spec_main_time);
@@ -359,13 +387,6 @@ public class MainActivity extends AppCompatActivity {
         map.get(tabStrId[2]).setFragment(new TimeFragment());
         map.get(tabStrId[3]).setFragment(new MessageFragment());
 
-
-        mapTop.get(tabStrTopId[0]).setX(0);
-        mapTop.get(tabStrTopId[1]).setX(1);
-        mapTop.get(tabStrTopId[2]).setX(2);
-        mapTop.get(tabStrTopId[3]).setX(3);
-        mapTop.get(tabStrTopId[4]).setX(4);
-        mapTop.get(tabStrTopId[5]).setX(5);
     }
 
     // 将图片资源放入map的MyTabSpec对象中
@@ -431,14 +452,16 @@ public class MainActivity extends AppCompatActivity {
         mapTop.get(tabStrTopId[2]).setImageView(ivBasketball);
         mapTop.get(tabStrTopId[2]).setTextView(tvBasketbal);
 
-        mapTop.get(tabStrTopId[3]).setImageView(ivBadminton);
-        mapTop.get(tabStrTopId[3]).setTextView(tvBadminton);
+        mapTop.get(tabStrTopId[3]).setImageView(ivVolleyball);
+        mapTop.get(tabStrTopId[3]).setTextView(tvVolleyball);
 
-        mapTop.get(tabStrTopId[4]).setImageView(ivTabletennis);
-        mapTop.get(tabStrTopId[4]).setTextView(tvTabletennis);
+        mapTop.get(tabStrTopId[4]).setImageView(ivBadminton);
+        mapTop.get(tabStrTopId[4]).setTextView(tvBadminton);
 
-        mapTop.get(tabStrTopId[5]).setImageView(ivVolleyball);
-        mapTop.get(tabStrTopId[5]).setTextView(tvVolleyball);
+        mapTop.get(tabStrTopId[5]).setImageView(ivTabletennis);
+        mapTop.get(tabStrTopId[5]).setTextView(tvTabletennis);
+
     }
 
 }
+

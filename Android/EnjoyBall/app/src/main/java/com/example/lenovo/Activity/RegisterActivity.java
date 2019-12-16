@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 
 import com.example.lenovo.Util.CodeTimeUtil;
+import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
 import com.google.gson.Gson;
@@ -220,14 +221,10 @@ public class RegisterActivity extends AppCompatActivity implements Handler.Callb
         if (x==1){
             phone = etRegisterPhone.getText().toString();
             pwd = etRegisterPwd.getText().toString();
-//            JPushInterface.setDebugMode(true);
-//            JPushInterface.init(this);
-//            String r = JPushInterface.getRegisterationID(this);
-//            Log.e("1099","id"+r);
 
             //手机号密码规则
             if (phone.length() == 11 && pwd.length() != 0) {
-                User user = new User(null,null,pwd,null,null,phone,null,null,null,null,null,null,null,null);
+                User user = new User(null,null,pwd,null,null,phone,null,null,null,null,null,null,null,Info.registrationId);
                 String info = new Gson().toJson(user);
                 final Request request = new Request.Builder().url(com.example.lenovo.enjoyball.Info.BASE_URL + "user/register?info=" + info).build();
                 Call call = okHttpClient.newCall(request);

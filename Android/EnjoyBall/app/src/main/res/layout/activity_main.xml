@@ -10,47 +10,49 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!-- 选项卡按钮所在布局 -->
         <LinearLayout
             android:id="@+id/ll_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="#37E137"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/iv_main_portrait"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
                     android:src="@drawable/my" />
 
-                <EditText
-                    android:id="@+id/et_main_search"
-                    android:layout_width="220dp"
-                    android:layout_height="30dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/et_main_white"
-                    android:gravity="center"
-                    android:hint="十院联赛"
-                    android:textSize="16sp"  />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:gravity="center">
+                    <EditText
+                        android:id="@+id/et_main_search"
+                        android:layout_width="220dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/et_main_white"
+                        android:gravity="center"
+                        android:hint="十院联赛"
+                        android:textSize="16sp"  />
+                </LinearLayout>
+
 
                 <ImageView
                     android:id="@+id/iv_serch"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="25dp"
+                    android:layout_weight="1"
                     android:src="@drawable/serch" />
-            </RelativeLayout>
+            </LinearLayout>
+            <!--选项卡所在布局-->
             <LinearLayout
                 android:id="@+id/tab_widget"
                 android:layout_width="match_parent"
@@ -140,6 +142,34 @@
 
                 </LinearLayout>
 
+
+                <!-- 排球 -->
+                <LinearLayout
+                    android:id="@+id/tab_spec_main_volleyball"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_main_volleyball"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textSize="16sp"
+                        android:textColor="#000"
+                        android:text="排球" />
+
+                    <ImageView
+                        android:id="@+id/img_main_volleyball"
+                        android:layout_width="30dp"
+                        android:layout_height="6dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="10dp" />
+
+                </LinearLayout>
+
                 <!-- 羽毛球 -->
                 <LinearLayout
                     android:id="@+id/tab_spec_main_badminton"
@@ -186,32 +216,6 @@
 
                     <ImageView
                         android:id="@+id/img_main_tabletennis"
-                        android:layout_width="30dp"
-                        android:layout_height="6dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="10dp" />
-
-                </LinearLayout>
-                <!-- 排球 -->
-                <LinearLayout
-                    android:id="@+id/tab_spec_main_volleyball"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_main_volleyball"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:textSize="16sp"
-                        android:textColor="#000"
-                        android:text="排球" />
-
-                    <ImageView
-                        android:id="@+id/img_main_volleyball"
                         android:layout_width="30dp"
                         android:layout_height="6dp"
                         android:layout_marginBottom="5dp"

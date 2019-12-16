@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Map<String,MyTabSpec> map = new HashMap<>();
     private Map<String,MyTabSpec> mapTop = new HashMap<>();
-    private String[] tabStrTopId = {"全部","足球","篮球","羽毛球","乒乓球","排球"};
+    private String[] tabStrTopId = {"全部","足球","篮球","排球","羽毛球","乒乓球"};
     private String[] tabStrId = {"首页","比赛","约球","消息"};
     private Fragment curFragment = null;
 
@@ -383,13 +383,6 @@ public class MainActivity extends AppCompatActivity {
         map.get(tabStrId[2]).setFragment(new TimeFragment());
         map.get(tabStrId[3]).setFragment(new MessageFragment());
 
-
-        mapTop.get(tabStrTopId[0]).setFragment(new MessageFragment());
-        mapTop.get(tabStrTopId[1]).setFragment(new HomeFragment());
-        mapTop.get(tabStrTopId[2]).setFragment(new MessageFragment());
-        mapTop.get(tabStrTopId[3]).setFragment(new TimeFragment());
-        mapTop.get(tabStrTopId[4]).setFragment(new MessageFragment());
-        mapTop.get(tabStrTopId[5]).setFragment(new MessageFragment());
     }
 
     // 将图片资源放入map的MyTabSpec对象中
@@ -455,14 +448,15 @@ public class MainActivity extends AppCompatActivity {
         mapTop.get(tabStrTopId[2]).setImageView(ivBasketball);
         mapTop.get(tabStrTopId[2]).setTextView(tvBasketbal);
 
-        mapTop.get(tabStrTopId[3]).setImageView(ivBadminton);
-        mapTop.get(tabStrTopId[3]).setTextView(tvBadminton);
+        mapTop.get(tabStrTopId[3]).setImageView(ivVolleyball);
+        mapTop.get(tabStrTopId[3]).setTextView(tvVolleyball);
 
-        mapTop.get(tabStrTopId[4]).setImageView(ivTabletennis);
-        mapTop.get(tabStrTopId[4]).setTextView(tvTabletennis);
+        mapTop.get(tabStrTopId[4]).setImageView(ivBadminton);
+        mapTop.get(tabStrTopId[4]).setTextView(tvBadminton);
 
-        mapTop.get(tabStrTopId[5]).setImageView(ivVolleyball);
-        mapTop.get(tabStrTopId[5]).setTextView(tvVolleyball);
+        mapTop.get(tabStrTopId[5]).setImageView(ivTabletennis);
+        mapTop.get(tabStrTopId[5]).setTextView(tvTabletennis);
+
     }
 
 }

@@ -1,18 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-
-    <ImageView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/sr_home_refresh"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/roundmap"/>
+        android:layout_height="match_parent"
+        app:srlEnableFooterFollowWhenLoadFinished="true"
+        app:srlEnableScrollContentWhenLoaded="true">
+        <com.scwang.smartrefresh.layout.header.BezierRadarHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
-    <ListView
-        android:id="@+id/lv_home_news"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <com.youth.banner.Banner
+                    android:id="@+id/bn_home_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    tools:ignore="MissingConstraints">
+
+                </com.youth.banner.Banner>
+
+
+
+                <com.example.lenovo.Util.UnScrollListView
+                    android:id="@+id/lv_home_news"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </com.example.lenovo.Util.UnScrollListView>
+            </LinearLayout>
+
+        </ScrollView>
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="FixedBehind"/>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

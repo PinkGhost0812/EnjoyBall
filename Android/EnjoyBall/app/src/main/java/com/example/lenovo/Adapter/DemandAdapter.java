@@ -25,7 +25,7 @@ public class DemandAdapter extends BaseAdapter {
     private Context context = null;
 
     private int item_layout_id;
-    private int[] ball = {R.drawable.football,R.drawable.basketball,R.drawable.badminton,R.drawable.tabletennis,R.drawable.volleyball};
+    private int[] ball = {R.drawable.football,R.drawable.basketball,R.drawable.volleyball,R.drawable.badminton,R.drawable.tabletennis};
     private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd  HH:mm");
 
 

@@ -139,8 +139,8 @@ public class ForgetActivity extends AppCompatActivity {
                             } else {
                                 regist();
                                 SMSSDK.submitVerificationCode("86", etForgetPhone.getText().toString(), etForgetCode.getText().toString());
-                                if (go)
-                                    forgrt(num);
+//                                if (go)
+                                    //forgrt(num);
                             }
                         }
                     }
@@ -173,7 +173,8 @@ public class ForgetActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 num = 1;
-                                go = true;
+                                forgrt(num);
+                                return ;
                             }
                         });
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
@@ -193,7 +194,8 @@ public class ForgetActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(ForgetActivity.this, "操作失败，请重新获取验证码", Toast.LENGTH_SHORT).show();
+                            if (num!=1)
+                                Toast.makeText(ForgetActivity.this, "操作失败，请重新获取验证码", Toast.LENGTH_SHORT).show();
                         }
                     });
                     ((Throwable) data).printStackTrace();
