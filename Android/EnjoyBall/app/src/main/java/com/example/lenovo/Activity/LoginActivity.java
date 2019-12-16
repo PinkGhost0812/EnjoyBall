@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private String phone;
     private String pwd;
     private int eye = 0;
+    private User u;
     private OkHttpClient okHttpClient;
 
     private Handler handler;
@@ -163,19 +164,42 @@ public class LoginActivity extends AppCompatActivity {
                         flush();
                         Looper.loop();
                     }else {
-                        User u = new Gson().fromJson(userJsonStr,User.class);
+                        u = new Gson().fromJson(userJsonStr,User.class);
                         if (u.getUser_password().equals(pwd)) {
                             Looper.prepare();
-                            Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                            Log.e("用户",u.toString());
+                            OkHttpClient okHttpClient1 = new OkHttpClient();
+                            Request request = new Request.Builder().url(Info.BASE_URL + "user/updateJpush?phone=" + phone + "&jpushId="+Info.registrationId).build();
+                            Call call1 = okHttpClient1.newCall(request);
+                            call1.enqueue(new Callback() {
+                                @Override
+                                public void onFailure(Call call, IOException e) {
+                                    Looper.prepare();
+                                    Toast.makeText(getApplicationContext(), "登录失败了，请稍后重试", Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                    e.printStackTrace();
+                                }
 
-                            ((Info)getApplication()).setUser(u);
+                                @Override
+                                public void onResponse(Call call, Response response) throws IOException {
+                                    Looper.prepare();
+                                    String user = response.body().string();
+                                    if (user.equals("true")){
+                                        u.setUser_jpushid(Info.registrationId);
+                                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                        Log.e("用户",u.toString());
 
-                            Intent intent=new Intent();
-                            intent.putExtra("user",u);
-                            intent.setClass(LoginActivity.this,MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                                        ((Info)getApplication()).setUser(u);
+
+                                        Intent intent=new Intent();
+                                        intent.putExtra("user",u);
+                                        intent.setClass(LoginActivity.this,MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    Looper.loop();
+                                }
+                            });
+
 
 
                             Looper.loop();

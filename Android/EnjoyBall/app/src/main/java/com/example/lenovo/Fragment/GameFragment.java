@@ -113,6 +113,7 @@ public class GameFragment extends Fragment {
                 listView.setAdapter(adapter);
                 break;
             case "page":
+
                 break;
         }
 
@@ -159,7 +160,7 @@ public class GameFragment extends Fragment {
                 //newsList = new ArrayList<>();
                 gameList = gson.fromJson(n,listType);
                 // Log.e("标题22",n);
-                EventBus.getDefault().post(gameList);
+                EventBus.getDefault().post("game");
             }
         });
 

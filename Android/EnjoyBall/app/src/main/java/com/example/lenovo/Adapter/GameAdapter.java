@@ -2,6 +2,7 @@ package com.example.lenovo.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +80,7 @@ public class GameAdapter extends BaseAdapter {
 
         viewHolder.tv_time.setText(sf.format(dataSource.get(position).getContest().getGame_time())+" "+dataSource.get(position).getContest().getGame_result()+"");
         try {
-            viewHolder.tv_teamhome.setText(dataSource.get(position).getTeamMap().get("nameA"));
+            viewHolder.tv_teamhome.setText(dataSource.get(position).getTeamMap().get("nameA").toString());
             viewHolder.tv_teamaway.setText(dataSource.get(position).getTeamMap().get("nameB").toString());
             viewHolder.tv_scorehome.setText(dataSource.get(position).getContest().getGame_result().substring(0,1));
             viewHolder.tv_scoreaway.setText(dataSource.get(position).getContest().getGame_result().substring(2));
