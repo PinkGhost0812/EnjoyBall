@@ -63,7 +63,7 @@ public class TeamDetailActivity extends AppCompatActivity {
     private User user;
 
     private List<User> userList;
-    private ArrayList<String> list=new ArrayList<>();
+    private ArrayList<String> list = new ArrayList<>();
 
     private OkHttpClient okHttpClient;
 
@@ -82,12 +82,11 @@ public class TeamDetailActivity extends AppCompatActivity {
         captain = (User) getIntent().getSerializableExtra("captain");
         user = ((Info) getApplicationContext()).getUser();
 
-
         findView();
 
         setInfo();
 
-        if (user.getUser_id()==captain.getUser_id()){
+        if (user.getUser_id().equals(captain.getUser_id())) {
             btnTeamDetailDissolve.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -110,7 +109,7 @@ public class TeamDetailActivity extends AppCompatActivity {
                     alertDialog.show();
                 }
             });
-        }else{
+        } else {
             btnTeamDetailDissolve.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -120,7 +119,7 @@ public class TeamDetailActivity extends AppCompatActivity {
                     adBuilder.setPositiveButton("狠心确认", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dissolveTeam();
+                            quitTeam();
                         }
                     });
                     adBuilder.setNegativeButton("我再想想", new DialogInterface.OnClickListener() {
@@ -136,6 +135,34 @@ public class TeamDetailActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void quitTeam() {
+
+        okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(Info.BASE_URL + "team/out?userId=" + user.getUser_id() + "&teamId=" + team.getTeam_id())
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                Toast.makeText(TeamDetailActivity.this, "网络走丢咯~~", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String data = response.body().string();
+
+                Message msg = new Message();
+                msg.what = 76;
+                msg.obj = data;
+                EventBus.getDefault().postSticky(msg);
+            }
+        });
 
     }
 
@@ -150,7 +177,7 @@ public class TeamDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Looper.prepare();
-                Toast.makeText(TeamDetailActivity.this, "网络走丢咯，快把他找回来~~", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TeamDetailActivity.this, "网络走丢咯~~", Toast.LENGTH_SHORT).show();
                 Looper.loop();
                 e.printStackTrace();
             }
@@ -158,14 +185,12 @@ public class TeamDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String data = response.body().string();
-                if (data.equals("true")) {
-                    Toast.makeText(TeamDetailActivity.this, "解散球队成功~", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent();
-                    intent.setClass(TeamDetailActivity.this, MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(TeamDetailActivity.this, "解散球队失败~", Toast.LENGTH_SHORT).show();
-                }
+
+                Message msg = new Message();
+                msg.what = 77;
+                msg.obj = data;
+                EventBus.getDefault().postSticky(msg);
+
             }
         });
 
@@ -187,21 +212,44 @@ public class TeamDetailActivity extends AppCompatActivity {
                 .apply(options)
                 .into(ivTeamDetailLogo);
 
-        Log.e("test DetailMemberList",list.toString());
+        Log.e("test DetailMemberList", list.toString());
 
         TeamDetailAdapter membersAdapter =
-                new TeamDetailAdapter(this,list ,R.layout.listview_item_team_detail );
+                new TeamDetailAdapter(this, list, R.layout.listview_item_team_detail);
 
         lvTeamDetailMember.setAdapter(membersAdapter);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void initMsgData(Message msg) {
 
-        if (msg.what==20){
-            userList= (List<User>) msg.obj;
+        if (msg.what == 20) {
+            userList = (List<User>) msg.obj;
             for (int i = 0; i < userList.size(); i++) {
                 list.add(userList.get(i).getUser_nickname());
+            }
+        } else if (msg.what == 77) {
+            String data = (String) msg.obj;
+            if (data.equals("true")) {
+                Toast.makeText(TeamDetailActivity.this, "解散球队成功~", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(TeamDetailActivity.this, MainActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(TeamDetailActivity.this, "解散球队失败~", Toast.LENGTH_SHORT).show();
+            }
+        } else if (msg.what == 76) {
+            String data = (String) msg.obj;
+
+            if (msg.obj.equals("true")) {
+
+                Toast.makeText(TeamDetailActivity.this, "退出球队成功~", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(TeamDetailActivity.this, MainActivity.class);
+                startActivity(intent);
+
+            } else {
+                Toast.makeText(TeamDetailActivity.this, "退出球队失败~", Toast.LENGTH_SHORT).show();
             }
         }
 

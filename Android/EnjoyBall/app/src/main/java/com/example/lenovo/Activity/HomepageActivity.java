@@ -1,6 +1,7 @@
 package com.example.lenovo.Activity;
 
 import android.graphics.Color;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -24,11 +25,26 @@ import com.example.lenovo.Fragment.HomepageUserinfoFragment;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
+import com.example.lenovo.entity.UserFans;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class HomepageActivity extends AppCompatActivity {
 
@@ -50,6 +66,11 @@ public class HomepageActivity extends AppCompatActivity {
     private String homepagePortraitPath;
 
     private User user;
+    private User curUser;
+
+    private OkHttpClient okHttpClient;
+
+    private List<User> userList;
 
     private class HomepageTabSpec {
         private TextView textView = null;
@@ -83,7 +104,7 @@ public class HomepageActivity extends AppCompatActivity {
     }
 
     private Map<String, HomepageTabSpec> map = new HashMap<>();
-    private String[] tabStrId = {"信息", "评论", "关注","粉丝"};
+    private String[] tabStrId = {"信息", "评论", "关注", "粉丝"};
     private Fragment curFragment = null;
 
     @Override
@@ -92,9 +113,14 @@ public class HomepageActivity extends AppCompatActivity {
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_homepage);
 
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         findView();
 
-        user= (User) getIntent().getSerializableExtra("user");
+        user = (User) getIntent().getSerializableExtra("user");
+        curUser = ((Info) getApplicationContext()).getUser();
 
         setInfo();
 
@@ -102,33 +128,83 @@ public class HomepageActivity extends AppCompatActivity {
 
         setListeners();
 
+        //judgeIsFollow();
+
         changeTab(tabStrId[0]);
 
-        if (getIntent().getStringExtra("tag")!=null&&getIntent().getStringExtra("tag").equals("comment")){
+        if (getIntent().getStringExtra("tag") != null && getIntent().getStringExtra("tag").equals("comment")) {
             changeTab(tabStrId[1]);
-        }else if (getIntent().getStringExtra("tag")!=null&&getIntent().getStringExtra("tag").equals("follow")){
+        } else if (getIntent().getStringExtra("tag") != null && getIntent().getStringExtra("tag").equals("follow")) {
             changeTab(tabStrId[2]);
-        }else if (getIntent().getStringExtra("tag")!=null&&getIntent().getStringExtra("tag").equals("fans")){
+        } else if (getIntent().getStringExtra("tag") != null && getIntent().getStringExtra("tag").equals("fans")) {
             changeTab(tabStrId[3]);
         }
-//
-//        btnFollow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //不能关注自己
-//                if (visitUser==null){
-//                    Toast.makeText(HomepageActivity.this,"不能自己关注自己凹~",Toast.LENGTH_SHORT).show();
-//                } else{
-//                    //todo:对其他人关注
-//                    Toast.makeText(HomepageActivity.this,"关注成功~",Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+
+        btnFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //不能关注自己
+                if (user.getUser_id().equals(curUser.getUser_id())) {
+                    Log.e("test user 1", user.getUser_nickname());
+                    Log.e("test curuser 1", curUser.getUser_nickname());
+                    Log.e("test user 1", user.getUser_id() + "");
+                    Log.e("test curuser 1", curUser.getUser_id() + "");
+                    Toast.makeText(HomepageActivity.this, "不能自己关注自己凹~", Toast.LENGTH_SHORT).show();
+                    btnFollow.setText("√ 关注");
+                } else {
+                    Log.e("test user 2", user.getUser_nickname());
+                    Log.e("test curuser 2", curUser.getUser_nickname());
+                    Log.e("test user 2", user.getUser_id() + "");
+                    Log.e("test curuser 2", curUser.getUser_id() + "");
+                    follow();
+                }
+            }
+        });
+
+    }
+
+    private void follow() {
+
+        okHttpClient = new OkHttpClient();
+        Log.e("test", user.getUser_id() + "");
+        UserFans userFans = new UserFans();
+        userFans.setFans_id(curUser.getUser_id());
+        userFans.setUser_id(user.getUser_id());
+        Gson gson = new GsonBuilder().create();
+        String jsonStr = gson.toJson(userFans);
+        Request request = new Request.Builder()
+                .url(Info.BASE_URL + "user/follow?userFans=" + jsonStr)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                Toast.makeText(HomepageActivity.this, "获取关注列表失败~", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String data = response.body().string();
+
+                Log.e("test is follow", data);
+                Message msg = new Message();
+                msg.what = 22;
+                msg.obj = data;
+
+                EventBus.getDefault().post(msg);
+
+            }
+        });
 
     }
 
     private void setInfo() {
-        homepagePortraitPath= Info.BASE_URL+user.getUser_headportrait();
+
+        homepagePortraitPath = Info.BASE_URL + user.getUser_headportrait();
 
         RequestOptions options = new RequestOptions()
                 .signature(new ObjectKey(System.currentTimeMillis()))
@@ -143,7 +219,7 @@ public class HomepageActivity extends AppCompatActivity {
     }
 
     private void changeTab(String s) {
-        
+
         changeFragment(s);
 
         changeText(s);
@@ -181,14 +257,13 @@ public class HomepageActivity extends AppCompatActivity {
 
     private void setListeners() {
 
-        HomepageListener homepageListener=new HomepageListener();
+        HomepageListener homepageListener = new HomepageListener();
         specHomepageInfo.setOnClickListener(homepageListener);
         specHomepageComment.setOnClickListener(homepageListener);
         specHomepageFollow.setOnClickListener(homepageListener);
         specHomepageFans.setOnClickListener(homepageListener);
 
     }
-
 
     private class HomepageListener implements View.OnClickListener {
 
@@ -211,7 +286,6 @@ public class HomepageActivity extends AppCompatActivity {
         }
     }
 
-
     private void setFragment() {
 
         map.get(tabStrId[0]).setFragment(new HomepageUserinfoFragment());
@@ -220,7 +294,6 @@ public class HomepageActivity extends AppCompatActivity {
         map.get(tabStrId[3]).setFragment(new HomepageFansFragment());
 
     }
-
 
     private void initData() {
 
@@ -240,20 +313,20 @@ public class HomepageActivity extends AppCompatActivity {
 
     private void findView() {
 
-        btnFollow=findViewById(R.id.btn_homepage_follow);
+        btnFollow = findViewById(R.id.btn_homepage_follow);
 
-        tvHomepagePerinfo=findViewById(R.id.tv_homepage_perinfo);
-        tvHomepageComment=findViewById(R.id.tv_homepage_comment);
-        tvHomepageFollow=findViewById(R.id.tv_homepage_follow);
-        tvHomepageFans=findViewById(R.id.tv_homepage_fans);
-        tvHomepageNickname=findViewById(R.id.tv_homepage_nickname);
+        tvHomepagePerinfo = findViewById(R.id.tv_homepage_perinfo);
+        tvHomepageComment = findViewById(R.id.tv_homepage_comment);
+        tvHomepageFollow = findViewById(R.id.tv_homepage_follow);
+        tvHomepageFans = findViewById(R.id.tv_homepage_fans);
+        tvHomepageNickname = findViewById(R.id.tv_homepage_nickname);
 
-        specHomepageInfo=findViewById(R.id.spec_homepage_perinfo);
-        specHomepageComment=findViewById(R.id.spec_homepage_comment);
-        specHomepageFollow=findViewById(R.id.spec_homepage_follow);
-        specHomepageFans=findViewById(R.id.spec_homepage_fans);
+        specHomepageInfo = findViewById(R.id.spec_homepage_perinfo);
+        specHomepageComment = findViewById(R.id.spec_homepage_comment);
+        specHomepageFollow = findViewById(R.id.spec_homepage_follow);
+        specHomepageFans = findViewById(R.id.spec_homepage_fans);
 
-        ivHomepagePortrait=findViewById(R.id.iv_homepage_portrait);
+        ivHomepagePortrait = findViewById(R.id.iv_homepage_portrait);
 
     }
 
@@ -262,6 +335,69 @@ public class HomepageActivity extends AppCompatActivity {
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+
+//    private void judgeIsFollow() {
+//
+//        //如果已经关注了这个人，则显示√ 关注
+//        //获得当前用户的所有关注的用户
+//        okHttpClient = new OkHttpClient();
+//        Log.e("test", user.getUser_id().toString());
+//        Request request = new Request.Builder()
+//                .url(Info.BASE_URL + "user/getfollow?id=" + user.getUser_id())
+//                .build();
+//        Call call = okHttpClient.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                Looper.prepare();
+//                Toast.makeText(HomepageActivity.this, "获取关注列表失败~", Toast.LENGTH_SHORT).show();
+//                Looper.loop();
+//                e.printStackTrace();
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//
+//                String data = response.body().string();
+//
+//                Log.e("test follow", data);
+//
+//                if (data.equals("false")) {
+//                    //Toast.makeText(getActivity(), "用户无关注~", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Gson gson = new GsonBuilder()
+//                            .create();
+//                    Type listType = new TypeToken<List<User>>() {
+//                    }.getType();
+//                    userList = gson.fromJson(data, listType);
+//                    Message msg = new Message();
+//                    msg.what = 22;
+//                    msg.obj = userList;
+//                    EventBus.getDefault().post(msg);
+//                }
+//
+//            }
+//        });
+//    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void changeButton(Message msg) {
+
+        if (msg.what == 22) {
+            if (msg.obj.equals("true")) {
+                Log.e("test success", "success");
+                Toast.makeText(getApplication(), "关注成功~", Toast.LENGTH_SHORT).show();
+                btnFollow.setText("√ 关注");
+            } else {
+                Log.e("test fail", "fali");
+                Toast.makeText(getApplication(), "您已经过关注该用户了哦", Toast.LENGTH_SHORT).show();
+                btnFollow.setText("√ 关注");
+            }
+
+        }
+
     }
 
 }

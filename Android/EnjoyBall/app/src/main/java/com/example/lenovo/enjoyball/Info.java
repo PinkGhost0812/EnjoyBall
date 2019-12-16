@@ -8,11 +8,8 @@ import com.example.lenovo.entity.*;
 import cn.jpush.android.api.JPushInterface;
 
 public class Info extends Application{
-    public static final String BASE_URL = "http://10.7.88.233:8080/EnjoyBallServer/";
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
+    public static final String BASE_URL = "http://10.7.88.233:8080/EnjoyBallServer/";
 
     @Override
     public void onCreate() {
@@ -21,10 +18,6 @@ public class Info extends Application{
         JPushInterface.init(this);
         String registrationId = JPushInterface.getRegistrationID(this);
         Log.e("1099", "run:--------->registrationId： "+registrationId );
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     }
 
     //当前登录的用户的信息

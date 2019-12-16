@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Team;
@@ -91,6 +92,7 @@ public class TeamManageActivity extends AppCompatActivity {
     private void setInfo() {
 
         RequestOptions options = new RequestOptions()
+                .signature(new ObjectKey(System.currentTimeMillis()))
                 .circleCrop();
         Glide.with(TeamManageActivity.this)
                 .load(Info.BASE_URL+team.getTeam_logo())

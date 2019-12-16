@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.lenovo.Activity.PerinfoActivity;
 import com.example.lenovo.Activity.TeamActivity;
 import com.example.lenovo.Activity.TeamDetailActivity;
@@ -88,7 +89,9 @@ public class TeamAdapter extends BaseAdapter {
         viewHolder.tvTeamMemberNum.setText(dataSource.get(position).get("nums").toString());
 
         RequestOptions options = new RequestOptions()
+                .signature(new ObjectKey(System.currentTimeMillis()))
                 .circleCrop();
+
         Glide.with(context)
                 .load(Info.BASE_URL + dataSource.get(position).get("logos").toString())
                 .apply(options)

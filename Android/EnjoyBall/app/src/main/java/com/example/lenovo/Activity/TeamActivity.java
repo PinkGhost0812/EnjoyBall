@@ -148,13 +148,12 @@ public class TeamActivity extends AppCompatActivity {
         if (msg.what == 11) {
 
             list = (List<UserAndTeam>) msg.obj;
-
             initData(list);
-
             TeamAdapter adapter = new TeamAdapter
                     (this, dataSource, R.layout.listview_item_team);
-
             lvTeam.setAdapter(adapter);
+        }else if(msg.what==45){
+            Toast.makeText(TeamActivity.this,"您还没有加入球队凹~",Toast.LENGTH_SHORT).show();
         }
 
 
@@ -201,7 +200,9 @@ public class TeamActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String data = response.body().string();
                 if (data.equals("false")) {
-                    Toast.makeText(TeamActivity.this, "您还没有加入队伍凹~", Toast.LENGTH_SHORT).show();
+                    Message msg=new Message();
+                    msg.what=45;
+                    EventBus.getDefault().post(msg);
                 } else {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                     Type listType = new TypeToken<List<UserAndTeam>>() {}.getType();

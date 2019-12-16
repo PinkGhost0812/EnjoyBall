@@ -1,6 +1,7 @@
 package com.example.lenovo.Activity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +47,8 @@ public class TeamManageMemberActivity extends AppCompatActivity {
 
     private ListView lvTeamManageMember;
 
+    private ImageView ivTeamManageMemberAdd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +64,18 @@ public class TeamManageMemberActivity extends AppCompatActivity {
         getTeamMember();
 
         lvTeamManageMember = findViewById(R.id.lv_team_manage_member);
+        ivTeamManageMemberAdd=findViewById(R.id.iv_team_manage_memberAdd);
+
+        ivTeamManageMemberAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("test" ,"111");
+                Intent intent=new Intent();
+                intent.setClass(TeamManageMemberActivity.this,TeamManageInviteActivity.class);
+                intent.putExtra("team",team);
+                startActivity(intent);
+            }
+        });
 
         lvTeamManageMember.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lenovo.Adapter.InviteAdapter;
+import com.example.lenovo.Adapter.TeamManageInviteAdapter;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Team;
@@ -52,6 +53,8 @@ public class TeamManageInviteActivity extends AppCompatActivity {
 
     private List<User> userList;
 
+    private Team team;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +67,12 @@ public class TeamManageInviteActivity extends AppCompatActivity {
 
         findView();
 
+        team= (Team) getIntent().getSerializableExtra("team");
+
         tvTeamManageSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 data = etTeamManageInvite.getText().toString();
 
                 getUserList();
@@ -79,7 +85,7 @@ public class TeamManageInviteActivity extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Info.BASE_URL + "user/findByPhoneNumber?phone=" + data)
+                .url(Info.BASE_URL + "user/findManyUser?phone=" + data)
                 .build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
@@ -97,11 +103,15 @@ public class TeamManageInviteActivity extends AppCompatActivity {
                 String jsonStr = response.body().string();
 
                 if (jsonStr.equals(false)) {
-                    Toast.makeText(TeamManageInviteActivity.this, "该手机号未注册凹~", Toast.LENGTH_SHORT);
+
+                    Message msg=new Message();
+                    msg.what=58;
+                    EventBus.getDefault().post(msg);
+
                 } else {
+
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                    Type listType = new TypeToken<List<User>>() {
-                    }.getType();
+                    Type listType = new TypeToken<List<User>>() {}.getType();
                     userList = gson.fromJson(jsonStr, listType);
                     Log.e("查到的用户信息", userList.toString());
 
@@ -121,11 +131,13 @@ public class TeamManageInviteActivity extends AppCompatActivity {
         if (msg.what == 27) {
 
             List<User> lists = (List<User>) msg.obj;
-
             initData(lists);
+            TeamManageInviteAdapter adapter =
+                    new TeamManageInviteAdapter(datasource, R.layout.listview_item_team_manage_member_invite, this);
+            lvTeamManageInviteUser.setAdapter(adapter);
 
-            //TeamManageInviteAdapter adapter = new TeamManageInviteAdapter(datasource, R.layout.listview_item_searchresult, this);
-
+        }else if (msg.what==58){
+            Toast.makeText(TeamManageInviteActivity.this, "该手机号未注册凹~", Toast.LENGTH_SHORT);
         }
 
     }
@@ -135,6 +147,7 @@ public class TeamManageInviteActivity extends AppCompatActivity {
         for (int i = 0; i < userList.size(); i++) {
 
             Map map = new HashMap<String, Object>();
+            map.put("teams",team.getTeam_id());
             map.put("names", userList.get(i).getUser_nickname().toString());
             map.put("heads", userList.get(i).getUser_headportrait().toString());
             map.put("objects", userList.get(i));

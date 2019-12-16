@@ -59,11 +59,6 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
     private User user = null;
 
-    private int commentNum;
-    private int followNum;
-    private int fansNum;
-    private int score;
-
     private OkHttpClient okHttpClient;
 
     @Override
