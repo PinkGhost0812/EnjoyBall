@@ -1,11 +1,15 @@
 package com.example.lenovo.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,12 +22,14 @@ import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +49,9 @@ public class InviteActivity extends AppCompatActivity {
     private String url = Info.BASE_URL;
     private InviteAdapter adapter;
     private String table = null;
+    private final static int INITDATA = 1;
+    private final static int SAVEUSER = 2;
+    private final static int SAVETEAM = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +62,8 @@ public class InviteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_agreeement_invite);
         Intent intent = getIntent();
         table = intent.getStringExtra("table");
-        Log.e("table",table);
         String hint = intent.getStringExtra("hint");
+        Log.e("hint",hint);
         getView();
         et_search.setHint(hint);
         InviteAdapter adapter = new InviteAdapter(datasource, R.layout.listview_item_searchresult, this,table);
@@ -66,14 +75,24 @@ public class InviteActivity extends AppCompatActivity {
                 String info = new String();
                 if (object != null) {
                     info = object.toString();
+                    sendToServer(table, info);
                 }
-                sendToServer(table, info);
+            }
+        });
+        lv_invite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent1= new Intent(InviteActivity.this,HomepageActivity.class);
+                User user = (User) datasource.get(position).get("object");
+                intent1.putExtra("user",user);
+                startActivity(intent1);
             }
         });
     }
 
     /*向服务器发送请求*/
     private void sendToServer(final String table, final String info) {
+        datasource.clear();
         String rUrl = url;
         if (table.equals("user")) {
             rUrl = url + "user/findByPhoneNumber?phone=" + info;
@@ -98,7 +117,8 @@ public class InviteActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String jsonStr = response.body().string();
 
-                if (jsonStr.equals(false)) {
+                if (jsonStr.equals("false")) {
+                    Log.e("json",jsonStr);
                     return;
                 }
                 if (table.equals("user")) {
@@ -123,7 +143,9 @@ public class InviteActivity extends AppCompatActivity {
                     datasource.add(map);
 
                 }
-                EventBus.getDefault().post("OK");
+                Message message = new Message();
+                message.what = INITDATA;
+                EventBus.getDefault().post(message);
             }
         });
 
@@ -149,9 +171,17 @@ public class InviteActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void setView(String message){
-        adapter = new InviteAdapter(datasource,R.layout.listview_item_searchresult,this,table);
-        lv_invite.setAdapter(adapter);
+    public void setView(Message message){
+       switch (message.what){
+           case INITDATA:
+               adapter = new InviteAdapter(datasource,R.layout.listview_item_searchresult,this,table);
+               lv_invite.setAdapter(adapter);
+       }
+    }
+    private User getUser() {
+        Info info = (Info)getApplication();
+        User user = info.getUser();
+        return user;
     }
 
 

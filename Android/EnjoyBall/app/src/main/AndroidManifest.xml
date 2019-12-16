@@ -26,19 +26,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< Updated upstream
 
         <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity"> -->
         <activity android:name="com.example.lenovo.Activity.LoginActivity">
         <!--<activity android:name="com.example.lenovo.Activity.MainActivity">-->
        <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity">-->
 
+=======
+        <!--<activity android:name="com.example.lenovo.Activity.JoinAgreementActivity">-->
+        <activity android:name="com.example.lenovo.Activity.LoginActivity">
+        <!--<activity android:name="com.example.lenovo.Activity.CreateAgreementActivity">-->
+        <!--<activity android:name="com.example.lenovo.Activity.InviteActivity">-->
+        <!--<activity android:name="com.example.lenovo.Activity.ShowAgreementActivity">-->
+>>>>>>> Stashed changes
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< Updated upstream
         <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity"/>
+=======
+>>>>>>> Stashed changes
         <activity android:name="com.example.lenovo.Activity.MainActivity"/>
         <activity android:name="com.example.lenovo.Activity.CreateAgreementActivity"/>
         <activity android:name="com.example.lenovo.Activity.NewsDetailActivity"/>
@@ -57,11 +68,19 @@
         <activity android:name="com.example.lenovo.Activity.PerinfoSignatureActivity"/>
         <activity android:name="com.example.lenovo.Activity.PerinfoEmailActivity"/>
         <activity android:name="com.example.lenovo.Activity.PerinfoNicknameActivity"/>
+<<<<<<< Updated upstream
         <activity android:name="com.example.lenovo.Activity.NotifyMessageActivity"/>
         <activity android:name="com.example.lenovo.Activity.ManageMessageActivity"/>
         <activity android:name="com.example.lenovo.Activity.TeamManageActivity" />
         <activity android:name="com.example.lenovo.Activity.TeamManageNameActivity" />
         <activity android:name="com.example.lenovo.Activity.TeamManageSloganActivity" />
+=======
+        <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity"/>
+        <activity android:name="com.example.lenovo.Activity.NotifyMessageActivity"/>
+        <activity android:name="com.example.lenovo.Activity.ManageMessageActivity"/>
+        <activity android:name="com.example.lenovo.Activity.InviteActivity"/>
+        <activity android:name="com.example.lenovo.Activity.ShowAgreementActivity"/>
+>>>>>>> Stashed changes
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"

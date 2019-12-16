@@ -145,8 +145,8 @@ public class CreateTeamAgreementFragment extends Fragment {
 
     //获取当前登陆的用户的信息
     private User getUser() {
-        /*User user = getContext().getApplicationContext().getUser();*/
-        User user = new User(1, "李烦烦", "990812", "img/pm.png", "男", "18103106427", "505", "631530326@qq.com", "我是你爹", 500, 600, 1,18,"111");
+        Info info = (Info)getActivity().getApplication();
+        User user = info.getUser();
         return user;
     }
 
@@ -186,9 +186,6 @@ public class CreateTeamAgreementFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Log.e("create？", "true");
-                            SharedPreferences sharedPreferences = getContext().getSharedPreferences(getUser().getUser_id()+"", Context.MODE_PRIVATE);
-                            String usersStr = sharedPreferences.getString("users","");
-                            Log.e("被邀请的id",usersStr);
                             sendToServer();
                         }
                     });
@@ -206,7 +203,7 @@ public class CreateTeamAgreementFragment extends Fragment {
                     Intent intent = new Intent(getContext(), InviteActivity.class);
                     intent.putExtra("table", "team");
                     intent.putExtra("hint", "请输入队伍名");
-                    startActivity(intent);
+                    getContext().startActivity(intent);
                     break;
                 //选择日期
                 case R.id.tv_getData:
@@ -287,10 +284,13 @@ public class CreateTeamAgreementFragment extends Fragment {
 
     //向服务器发送请求
     private void sendToServer() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("invited", Context.MODE_PRIVATE);
+        String idList = sharedPreferences.getString("team","");
         DemandInfo info = new DemandInfo();
         info.setDemand_user(getUser().getUser_id());
         info.setDemand_description(description);
         info.setDemand_visibility(visiblity);
+        info.setDemand_num(1);
         info.setDemand_place(address);
         info.setDemand_time(time);
         info.setDemand_class(type);
@@ -300,7 +300,7 @@ public class CreateTeamAgreementFragment extends Fragment {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(url + "appointment/addFormalAppointment?info=" + gson.toJson(info))
+                .url(url + "appointment/addAppointmentWithInvite?demandInfo=" + gson.toJson(info)+"&&idList="+idList)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -371,6 +371,7 @@ public class CreateTeamAgreementFragment extends Fragment {
 
     //查询队长为当前用户的队伍信息
     private void getTeams() {
+
         Log.e("url", url + "team/findByIdCls?id=" + getUser().getUser_id() + "&cls=" + type);
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder().url(url + "team/findByIdCls?id=" + getUser().getUser_id() + "&cls=" + type).build();
@@ -418,26 +419,26 @@ public class CreateTeamAgreementFragment extends Fragment {
         }else if (message.what==NETERROR){
             Toast.makeText(getContext(), "无法连接到服务器", Toast.LENGTH_SHORT).show();
             initData(null);
-        }else if (message.what==SAVEUSER){
+        }else if (message.what == SAVETEAM){
             SharedPreferences sharedPreferences = getContext().getSharedPreferences(getUser().getUser_id()+"", Context.MODE_PRIVATE);
-            String usersStr = sharedPreferences.getString("users","");
-            if (usersStr!=null&&usersStr.length()>0){
+            String teamsStr = sharedPreferences.getString("teams","");
+            if (teamsStr!=null&&teamsStr.length()>0){
                 Type usersType = new TypeToken<List<String>>(){}.getType();
-                List<String> users = new Gson().fromJson(usersStr,usersType);
+                List<String> users = new Gson().fromJson(teamsStr,usersType);
                 String invitedUser = message.obj.toString();
                 users.add(invitedUser);
-                usersStr = new Gson().toJson(users);
+                teamsStr = new Gson().toJson(users);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("users",usersStr);
+                editor.putString("teams",teamsStr);
 
 
             }else {
                 List<String> users = new ArrayList<String>();
                 String invitedUser = message.obj.toString();
                 users.add(invitedUser);
-                usersStr = new Gson().toJson(users);
+                teamsStr = new Gson().toJson(users);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("users",usersStr);
+                editor.putString("users",teamsStr);
 
             }
 
@@ -450,9 +451,11 @@ public class CreateTeamAgreementFragment extends Fragment {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences(getUser().getUser_id()+"",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("invited",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("users","");
+        editor.putString("user", "");
+        editor.putString("team","");
+        editor.apply();
         super.onDestroy();
     }
 

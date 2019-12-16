@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,9 +71,10 @@ public class JoinAgreementActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         okHttpClient = new OkHttpClient();
         final Intent intent = getIntent();
-        String demandId = intent.getStringExtra("id");
+        int demandId = intent.getIntExtra("id",0);
+        //Log.e("id",demandId);
         getView();
-        getDemandInfo(demandId);
+        getDemandInfo(34);
         /*--------------------------点击item加入或查看对方信息------------------------*/
         gv_joinagreement.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -109,14 +111,32 @@ public class JoinAgreementActivity extends AppCompatActivity {
                     if (datasource.get(i).get("object")==null){
                         getTeams();
                         if (team!=null){
-                            sendToServer(i);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(JoinAgreementActivity.this);
+                            builder.setTitle("确认加入");
+                            builder.setMessage("确认申请"+team.getTeam_name()+"加入队伍约战吗");
+                            builder.setPositiveButton("加入", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Log.e("create？", "true");
+                                    sendToServer(i);
+
+                                }
+                            });
+                            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Log.e("create?", "false");
+                                }
+                            });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
                         }else {
                             Toast.makeText(JoinAgreementActivity.this,"您没有该类型队伍，无法参加",Toast.LENGTH_SHORT);
                         }
 
                     }else {
                         Intent intent1 = new Intent(JoinAgreementActivity.this,TeamDetailActivity.class);
-                        intent1.putExtra("id",demandInfo.getDemand_teamb());
+                        intent1.putExtra("name",(Team)datasource.get(0).get("object"));
                         startActivity(intent1);
                     }
                 }
@@ -129,12 +149,10 @@ public class JoinAgreementActivity extends AppCompatActivity {
     }
     //获取队长为当前用户的队伍信息
     private void getTeams() {
-         Team myTeam = null;
-        int id = 0;
+        int id = 7;
         //int id = getApplication().getUser().getUser_id();
-        url = url+"team/findByIdCls?id="+id+"&cls="+demandInfo.getDemand_class();
         OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder().url(url).build();
+        Request request = new Request.Builder().url(url+"team/findByIdCls?id="+id+"&cls="+demandInfo.getDemand_class()).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -145,8 +163,12 @@ public class JoinAgreementActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String teamJson = response.body().string();
+                Log.e("myTeam",teamJson);
                 if (!teamJson.equals("false")){
-                    team = new Gson().fromJson(teamJson,Team.class);
+                    Gson gson = new GsonBuilder()
+                            .setDateFormat("YYYY-MM-DD HH:MM")
+                            .create();
+                    team = gson.fromJson(teamJson,Team.class);
                 }
 
 
@@ -156,20 +178,31 @@ public class JoinAgreementActivity extends AppCompatActivity {
     }
 
     private void sendToServer(int position) {
-        int userId = getUser().getUser_id();
+       ApplyInfo applyInfo = new ApplyInfo();
         int teamId = 0;
-        if (position%2==0){
-            teamId = demandInfo.getDemand_teama();
-        }else {
-            teamId = demandInfo.getDemand_teamb();
-        }
-        ApplyInfo applyInfo = new ApplyInfo();
-        applyInfo.setDemandId(demandInfo.getDemand_id());
-        applyInfo.setHandle(0);
-        applyInfo.setIsInvite(1);
-        applyInfo.setReceiver(demandInfo.getDemand_user());
-        applyInfo.setSender(getUser().getUser_id());
-        applyInfo.setTeamId(teamId);
+        int userId = 7;
+       if (demandInfo.getDemand_oom()==0){
+           if (position%2==0){
+               teamId = demandInfo.getDemand_teama();
+           }else {
+               teamId = demandInfo.getDemand_teamb();
+           }
+           applyInfo.setDemandId(demandInfo.getDemand_id());
+           applyInfo.setHandle(0);
+           applyInfo.setIsInvite(1);
+           applyInfo.setReceiver(demandInfo.getDemand_user());
+           applyInfo.setSender(getUser().getUser_id());
+           applyInfo.setTeamId(teamId);
+       }else {
+           teamId = team.getTeam_id();
+           applyInfo.setDemandId(demandInfo.getDemand_id());
+           applyInfo.setHandle(0);
+           applyInfo.setIsInvite(1);
+           applyInfo.setReceiver(demandInfo.getDemand_user());
+           applyInfo.setSender(userId);
+           applyInfo.setTeamId(teamId);
+
+       }
 
         Request request = new Request.Builder()
                 .url(url+"appointment/applyToLeader?info="+new Gson().toJson(applyInfo))
@@ -199,7 +232,8 @@ public class JoinAgreementActivity extends AppCompatActivity {
 
 
     //获取约球信息
-    private void getDemandInfo(final String demandId) {
+    private void getDemandInfo(final int demandId) {
+        Log.e("url",url + "appointment/findById?id=" + demandId);
         Request request = new Request.Builder()
                 .url(url + "appointment/findById?id=" + demandId)
                 .build();
@@ -269,7 +303,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
             request = builder.url(url+"user/findByDTeamId?id="+id).build();
         }else if(info.getDemand_oom()==1) {
 
-            request = builder.url(url+"user/findById?id="+info.getDemand_teama()).build();
+            request = builder.url(url+"team/findById?id="+info.getDemand_teama()).build();
         }
         Call call = okHttpClient.newCall(request);
         final int finalOffset = offset;
@@ -312,13 +346,20 @@ public class JoinAgreementActivity extends AppCompatActivity {
 
 
                 }else if (info.getDemand_oom()==1){
-                    Team team = new Gson().fromJson(json,Team.class);
+                    Log.e("json",json);
+                    Gson gson = new GsonBuilder().setDateFormat("YYYY-MM-DD HH:MM:SS")
+                            .create();
+                    Team team = gson.fromJson(json,Team.class);
                     Map<String,Object> map = new HashMap<String,Object>();
                     map.put("name",team.getTeam_name());
                     map.put("head",team.getTeam_logo());
                     map.put("object",team);
                     map.put("status",1);
-                    datasource.add(0,map);
+                    datasource.set(0,map);
+                    Message message = new Message();
+                    message.what = INITDATASOURCE;
+                    EventBus.getDefault().post(message);
+
 
 
 
@@ -346,7 +387,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
             case POST_DEMANDINFO:
                 demandInfo = (DemandInfo) message.obj;
                 datasource = new ArrayList<Map<String, Object>>();
-                for(int i = 0; i <demandInfo.getDemand_num()*2;i++) {
+                for(int i = 0; i <demandInfo.getDemand_num();i++) {
                     Map<String, Object> map = new HashMap<String, Object>();
                     datasource.add(map);
                 }
@@ -386,6 +427,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
 
     }
     private User getUser() {
+<<<<<<< Updated upstream
 
         User user=((Info)getApplicationContext()).getUser();
 //        User user = new User(1, "李烦烦", "990812", "img/pm.png", "男", "18103106427", "505", "631530326@qq.com", "我是你爹", 500, 600, 1,18,null);
@@ -394,6 +436,10 @@ public class JoinAgreementActivity extends AppCompatActivity {
 //        User user = info.getUser();
 //
 //>>>>>>> Stashed changes
+=======
+        Info info = (Info)getApplication();
+        User user = info.getUser();
+>>>>>>> Stashed changes
         return user;
     }
 

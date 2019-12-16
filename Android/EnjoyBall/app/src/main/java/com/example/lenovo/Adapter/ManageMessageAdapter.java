@@ -17,10 +17,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.lenovo.Activity.HomepageActivity;
+import com.example.lenovo.Activity.TeamDetailActivity;
 import com.example.lenovo.Util.ApplyUtil;
 import com.example.lenovo.enjoyball.GlideApp;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
+import com.example.lenovo.entity.Team;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -36,6 +40,7 @@ import okhttp3.Response;
 public class ManageMessageAdapter extends BaseAdapter {
     private List<ApplyUtil> datasource = null;
     private Context context = null;
+    private Team team;
 
     public ManageMessageAdapter(List<ApplyUtil> datasource, Context context) {
         this.datasource = datasource;
@@ -68,8 +73,8 @@ public class ManageMessageAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
-        if (convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.listview_item_message_manage,null);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.listview_item_message_manage, null);
             viewHolder = new ViewHolder();
             viewHolder.tv_sender = convertView.findViewById(R.id.tv_message_sender);
             viewHolder.iv_head = convertView.findViewById(R.id.iv_message_deal_head);
@@ -79,34 +84,46 @@ public class ManageMessageAdapter extends BaseAdapter {
             viewHolder.tv_disagree = convertView.findViewById(R.id.tv_message_disagree);
             viewHolder.tv_team = convertView.findViewById(R.id.tv_message_team);
             convertView.setTag(viewHolder);
-        }else {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
 
         }
-        String [] places = context.getResources().getStringArray(R.array.address);
+        String[] places = context.getResources().getStringArray(R.array.address);
         viewHolder.tv_sender.setText(datasource.get(position).getUser().getUser_nickname());
         viewHolder.tv_place.setText(datasource.get(position).getDemand().getDemand_place());
         GlideApp.with(context)
-                .load(Info.BASE_URL+datasource.get(position).getUser().getUser_headportrait())
+                .load(Info.BASE_URL + datasource.get(position).getUser().getUser_headportrait())
                 .circleCrop()
                 .into(viewHolder.iv_head);
-        if (datasource.get(position).getApplyInfo().getIsInvite()==0){
+        if (datasource.get(position).getApplyInfo().getIsInvite() == 0) {
             viewHolder.tv_form.setText("邀请你加入在");
-        }else {
+        } else {
             viewHolder.tv_form.setText("申请加入在");
         }
         String team = new String();
-        if (datasource.get(position).getApplyInfo().getTeamId()==datasource.get(position).getDemand().getDemand_teama()){
-            team = "a队";
-        }else {
-            team = "b队";
+        if (datasource.get(position).getDemand().getDemand_oom() == 0) {
+            if (datasource.get(position).getApplyInfo().getTeamId() == datasource.get(position).getDemand().getDemand_teama()) {
+                team = "的个人约球a队";
+            } else {
+                team = "的个人约球b队";
+            }
+        } else {
+            team = "的组队约球";
         }
-        viewHolder.tv_team.setText(viewHolder.tv_team.getText().toString()+team);
+        viewHolder.tv_team.setText(team);
         viewHolder.iv_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,HomepageActivity.class);
-                intent.putExtra("user",datasource.get(position).getUser());
+                Intent intent = null;
+                if (datasource.get(position).getDemand().getDemand_oom() == 0) {
+                    intent = new Intent(context, HomepageActivity.class);
+                    intent.putExtra("user", datasource.get(position).getUser());
+                } else {
+                    intent = new Intent(context, TeamDetailActivity.class);
+                    int type = datasource.get(position).getDemand().getDemand_class();
+                    int id = datasource.get(position).getApplyInfo().getSender();
+                    intent.putExtra("team", getTeam(type, id));
+                }
                 context.startActivity(intent);
             }
         });
@@ -114,19 +131,19 @@ public class ManageMessageAdapter extends BaseAdapter {
         viewHolder.tv_agree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                if (((TextView)v).getText().toString().equals("同意")&& finalViewHolder.status==0){
+                if (((TextView) v).getText().toString().equals("同意") && finalViewHolder.status == 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle("确认")
                             .setMessage("确认同意吗?")
                             .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    ((TextView)v).setText("已同意");
-                                    finalViewHolder.status=1;
-                                    sendToServer("agree",datasource.get(position));
+                                    ((TextView) v).setText("已同意");
+                                    finalViewHolder.status = 1;
+                                    sendToServer("agree", datasource.get(position));
                                 }
                             })
-                            .setNegativeButton("取消",null);
+                            .setNegativeButton("取消", null);
                     AlertDialog adAgree = builder.create();
                     adAgree.show();
                 }
@@ -135,19 +152,19 @@ public class ManageMessageAdapter extends BaseAdapter {
         viewHolder.tv_disagree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                if (((TextView)v).getText().toString().equals("拒绝")&&finalViewHolder.status==0){
+                if (((TextView) v).getText().toString().equals("拒绝") && finalViewHolder.status == 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle("确认")
                             .setMessage("确认拒绝吗?")
                             .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    ((TextView)v).setText("已拒绝");
+                                    ((TextView) v).setText("已拒绝");
                                     finalViewHolder.status = 1;
-                                    sendToServer("disagree",datasource.get(position));
+                                    sendToServer("disagree", datasource.get(position));
                                 }
                             })
-                            .setNegativeButton("取消",null);
+                            .setNegativeButton("取消", null);
                     AlertDialog adDisagree = builder.create();
                     adDisagree.show();
                 }
@@ -158,32 +175,63 @@ public class ManageMessageAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void sendToServer(String message,ApplyUtil applyUtil) {
-        String url = Info.BASE_URL;
-        int userId = 0;
-        int teamId = 0;
-        int applyId = 0;
+    private Team getTeam(int type, int id) {
         OkHttpClient okHttpClient = new OkHttpClient();
-        if (message.equals("agree")){
-             userId = applyUtil.getApplyInfo().getReceiver();
-             teamId = applyUtil.getApplyInfo().getTeamId();
-             applyId = applyUtil.getApplyInfo().getId();
-        }
         Request request = new Request.Builder()
-                .url(url+"appointment/apply?userId="+userId+"&teamId="+teamId+"&&applyId="+applyId)
+                .url(Info.BASE_URL + "/team/findByIdCls?id=" + id + "cls=" + type)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String teamJson = response.body().string();
+                if (!teamJson.equals("false")) {
+                    Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd hh:mm").create();
+                     team = gson.fromJson(teamJson, Team.class);
+                }
+            }
+        });
+        return team;
+    }
+
+    private void sendToServer(String message, ApplyUtil applyUtil) {
+        String url = Info.BASE_URL;
+        int userId = 0;
+        int teamId = 0;
+        int applyId = 0;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = null;
+
+        if (message.equals("agree")) {
+            userId = applyUtil.getApplyInfo().getReceiver();
+            teamId = applyUtil.getApplyInfo().getTeamId();
+            applyId = applyUtil.getApplyInfo().getId();
+            request = new Request.Builder()
+                    .url(url + "appointment/apply?userId=" + userId + "&teamId=" + teamId + "&&applyId=" + applyId)
+                    .build();
+        } else {
+            applyId = applyUtil.getApplyInfo().getId();
+            request = new Request.Builder()
+                    .url(url + "appointment/refuse?id=" + applyId)
+                    .build();
+        }
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
                 Looper.prepare();
-                Toast.makeText(context,"断开连接",Toast.LENGTH_SHORT);
+                Toast.makeText(context, "断开连接", Toast.LENGTH_SHORT);
                 Looper.loop();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.e("result",response.body().string());
+                Log.e("result", response.body().string());
             }
         });
 
@@ -196,8 +244,8 @@ public class ManageMessageAdapter extends BaseAdapter {
         public TextView tv_form;
         public TextView tv_place;
         public TextView tv_agree;
-        public  TextView tv_disagree;
-        public  TextView tv_team;
+        public TextView tv_disagree;
+        public TextView tv_team;
         public int status = 0;
     }
 }

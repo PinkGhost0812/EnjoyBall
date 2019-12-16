@@ -1,8 +1,10 @@
 package com.example.lenovo.Fragment;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -31,6 +33,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.lenovo.Activity.InviteActivity;
 import com.example.lenovo.Activity.ManageMessageActivity;
 import com.example.lenovo.Adapter.AgreementAdapter;
 import com.example.lenovo.enjoyball.Info;
@@ -71,7 +74,7 @@ public class CreatePersonAgreementFragment extends Fragment {
     private Button btn_OK = null;
     private AgreementAdapter adapter;
     private List<Map<String, Object>> datasource = new ArrayList<Map<String, Object>>();
-    private String url = Info.BASE_URL + "appointment/add";
+    private String url = Info.BASE_URL;
     private int type = -1;
     private Date time = null;
     private String address = null;
@@ -233,6 +236,8 @@ public class CreatePersonAgreementFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             //向服务器发送信息
                             sendToServer();
+                            SharedPreferences sharedPreferences = getContext().getSharedPreferences(getUser().getUser_id()+"", Context.MODE_PRIVATE);
+
                         }
                     });
                     adBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -245,10 +250,10 @@ public class CreatePersonAgreementFragment extends Fragment {
                     alertDialog.show();
                     break;
                 case R.id.btn_createagreement_invite:
-                    Intent intent = new Intent(getActivity(), ManageMessageActivity.class);
+                    Intent intent = new Intent(getActivity(), InviteActivity.class);
                     intent.putExtra("table", "user");
                     intent.putExtra("hint", "请输入用户的手机号码");
-                    startActivity(intent);
+                    getContext().startActivity(intent);
                     break;
                 case R.id.tv_getData:
                     Log.e("获取时间","日期");
@@ -344,8 +349,10 @@ public class CreatePersonAgreementFragment extends Fragment {
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
         OkHttpClient client = new OkHttpClient();
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("invited",Context.MODE_PRIVATE);
+        String invited = sharedPreferences.getString("user", "");
         final Request request = new Request.Builder()
-                .url(url + "?info=" + gson.toJson(info))
+                .url(url + "appointment/addAppointmentWithInvite?demandInfo=" + gson.toJson(info)+"&&idList="+invited)
                 .build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
@@ -376,8 +383,18 @@ public class CreatePersonAgreementFragment extends Fragment {
 
     //获取当前登陆的用户的信息
     private User getUser() {
-        /*User user = getContext().getApplicationContext().getUser();*/
-        User user = new User(1, "李烦烦", "990812", "img/pm.png", "男", "18103106427", "505", "631530326@qq.com", "我是你爹", 500, 600, 1,18,"111");
+        Info info = (Info)getActivity().getApplication();
+        User user = info.getUser();
         return user;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("invited",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("user", "");
+        editor.putString("team","");
+        editor.apply();
     }
 }

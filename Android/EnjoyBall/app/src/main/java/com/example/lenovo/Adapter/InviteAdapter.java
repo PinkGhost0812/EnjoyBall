@@ -1,8 +1,10 @@
 package com.example.lenovo.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +17,13 @@ import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +39,7 @@ public class InviteAdapter extends BaseAdapter {
         this.itemResId = itemResId;
         this.mContext = mContext;
         this.table = table;
+        Log.e("table",table);
     }
     @Override
     public int getCount() {
@@ -58,6 +65,14 @@ public class InviteAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         InviteAdapter.ViewHolder viewHolder = null;
+        int id = 0;
+        if (table.equals("user")){
+            User user = (User) datasource.get(position).get("object");
+             id = user.getUser_id();
+        }else {
+            Team team = (Team)datasource.get(position).get("object");
+             id = team.getTeam_id();
+        }
         if (convertView == null){
             convertView = LayoutInflater.from(mContext).inflate(itemResId,null);
             viewHolder = new InviteAdapter.ViewHolder();
@@ -69,20 +84,34 @@ public class InviteAdapter extends BaseAdapter {
             viewHolder = (InviteAdapter.ViewHolder) convertView.getTag();
         }
         viewHolder.tv_name.setText(datasource.get(position).get("name").toString());
+        final int finalId = id;
         viewHolder.tv_invite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Message message = new Message();
-                message.what = SAVEUSER;
-                if (table.equals("user")){
-                    User user = (User)datasource.get(position).get("object");
-                    message.obj = user.getUser_id();
+                Log.e("状态","点击邀请");
+                SharedPreferences sharedPreferences = mContext.getSharedPreferences("invited",Context.MODE_PRIVATE);
+                String invited = sharedPreferences.getString(table, "");
+                Log.e("被邀请id列表",invited+".");
+                if (invited!=null&&invited.length()>0){
+                    Type type = new TypeToken<List<String>>() {
+                    }.getType();
+                    List<Integer> idList = new Gson().fromJson(invited, type);
+                    if (!idList.contains(finalId)){
+                        idList.add(finalId);
+                    }
+                    invited = new Gson().toJson(idList);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(table, invited);
+                    editor.apply();
                 }else {
-                    Team team = (Team) datasource.get(position).get("object");
-                    message.obj = team.getTeam_id();
+                    Log.e("被邀请id",finalId+"");
+                    List<Integer> idList = new ArrayList<Integer>();
+                    idList.add(finalId);
+                    invited = new Gson().toJson(idList);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(table, invited);
+                    editor.apply();
                 }
-                EventBus.getDefault().post(message);
-
 
             }
         });
@@ -93,6 +122,11 @@ public class InviteAdapter extends BaseAdapter {
 
 
         return convertView;
+    }
+    private User getUser() {
+        Info info = (Info)mContext.getApplicationContext();
+        User user = info.getUser();
+        return user;
     }
     private class ViewHolder{
         private TextView tv_name;

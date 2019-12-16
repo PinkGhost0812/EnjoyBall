@@ -1,9 +1,12 @@
 package com.example.lenovo.Activity;
 
+import android.content.Intent;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -46,12 +49,23 @@ public class ManageMessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message_manage);
         getView();
         getMessages();
+        lv_manage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int demandId = messages.get(position).getDemand().getDemand_id();
+                Log.e("id",demandId+"");
+                Intent intent = new Intent(ManageMessageActivity.this,ShowAgreementActivity.class);
+                intent.putExtra("id",demandId);
+                startActivity(intent);
+
+            }
+        });
     }
 //获取消息
     private void getMessages() {
-        //int id =((Info)getApplicationContext()).getUser().getUser_id();
+        int id =((Info)getApplicationContext()).getUser().getUser_id();
         Request request = new Request.Builder()
-                .url(url+"appointment/messageList?id="+1)
+                .url(url+"appointment/messageList?id="+id)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
