@@ -143,7 +143,6 @@ public class TeamActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setTeamInfo(Message msg) {
-        Log.e("caonima", "caonima");
 
         if (msg.what == 11) {
 
@@ -152,8 +151,8 @@ public class TeamActivity extends AppCompatActivity {
             TeamAdapter adapter = new TeamAdapter
                     (this, dataSource, R.layout.listview_item_team);
             lvTeam.setAdapter(adapter);
-        }else if(msg.what==45){
-            Toast.makeText(TeamActivity.this,"您还没有加入球队凹~",Toast.LENGTH_SHORT).show();
+        } else if (msg.what == 45) {
+            Toast.makeText(TeamActivity.this, "您还没有加入球队凹~", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -174,7 +173,7 @@ public class TeamActivity extends AppCompatActivity {
             map.put("captainsId", list.get(i).getUser().getUser_id());
             map.put("nums", list.get(i).getTeam().getTeam_number());
             map.put("teams", list.get(i).getTeam());
-            Log.e("test teamstring",list.get(i).getTeam().toString());
+            Log.e("test teamstring", list.get(i).getTeam().toString());
             dataSource.add(map);
         }
 
@@ -200,12 +199,13 @@ public class TeamActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String data = response.body().string();
                 if (data.equals("false")) {
-                    Message msg=new Message();
-                    msg.what=45;
+                    Message msg = new Message();
+                    msg.what = 45;
                     EventBus.getDefault().post(msg);
                 } else {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                    Type listType = new TypeToken<List<UserAndTeam>>() {}.getType();
+                    Type listType = new TypeToken<List<UserAndTeam>>() {
+                    }.getType();
                     list = gson.fromJson(data, listType);
                     Log.e("test captains", list.get(0).getUser().getUser_id().toString());
                     Message msg = new Message();

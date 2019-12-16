@@ -5,6 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:id="@+id/aaa"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:orientation="horizontal"
@@ -32,12 +33,11 @@
         android:layout_height="0dp"
         android:layout_weight="10"></ListView>
 
-    <ImageView
+    <Button
         android:id="@+id/iv_team_manage_memberAdd"
         android:layout_gravity="center"
-        android:src="@drawable/addportrait"
+        android:background="@drawable/addportrait"
         android:layout_width="70dp"
-        android:layout_height="0dp"
-        android:layout_weight="3"/>
+        android:layout_height="70dp" />
 
 </LinearLayout>

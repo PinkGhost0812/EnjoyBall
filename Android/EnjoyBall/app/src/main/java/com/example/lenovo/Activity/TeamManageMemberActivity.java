@@ -9,13 +9,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.lenovo.Adapter.TeamDetailAdapter;
 import com.example.lenovo.Adapter.TeamManageMemberAdapter;
 import com.example.lenovo.enjoyball.Info;
+import com.example.lenovo.enjoyball.MainActivity;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;
@@ -47,7 +50,7 @@ public class TeamManageMemberActivity extends AppCompatActivity {
 
     private ListView lvTeamManageMember;
 
-    private ImageView ivTeamManageMemberAdd;
+    private TeamManageMemberAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +67,22 @@ public class TeamManageMemberActivity extends AppCompatActivity {
         getTeamMember();
 
         lvTeamManageMember = findViewById(R.id.lv_team_manage_member);
-        ivTeamManageMemberAdd=findViewById(R.id.iv_team_manage_memberAdd);
+        Button ivTeamManageMemberAdd = findViewById(R.id.iv_team_manage_memberAdd);
+        LinearLayout aaa = findViewById(R.id.aaa);
+        aaa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("test", "777");
+            }
+        });
 
         ivTeamManageMemberAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("test" ,"111");
-                Intent intent=new Intent();
-                intent.setClass(TeamManageMemberActivity.this,TeamManageInviteActivity.class);
-                intent.putExtra("team",team);
+                Log.e("test", "111");
+                Intent intent = new Intent();
+                intent.setClass(TeamManageMemberActivity.this, TeamManageInviteActivity.class);
+                intent.putExtra("team", team);
                 startActivity(intent);
             }
         });
@@ -80,11 +90,11 @@ public class TeamManageMemberActivity extends AppCompatActivity {
         lvTeamManageMember.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent();
+                Intent intent = new Intent();
                 intent.setClass(TeamManageMemberActivity.this, HomepageActivity.class);
-                intent.putExtra("user",userList.get(position));
+                intent.putExtra("user", userList.get(position));
                 startActivity(intent);
-                Log.e("test",userList.get(position).toString());
+                Log.e("test", userList.get(position).toString());
             }
         });
 
@@ -123,26 +133,31 @@ public class TeamManageMemberActivity extends AppCompatActivity {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED,sticky = true)
-    public void setMemberInfo(Message msg){
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED, sticky = true)
+    public void setMemberInfo(Message msg) {
 
-        if (msg.what==19){
+        if (msg.what == 19) {
 
-            Log.e("test userlist 19",userList.toString());
-
-            TeamManageMemberAdapter adapter =
-                    new TeamManageMemberAdapter(this, userList, R.layout.listview_item_member);
+            adapter =
+                    new TeamManageMemberAdapter(this, userList, R.layout.listview_item_member, team.getTeam_id());
 
             lvTeamManageMember.setAdapter(adapter);
-
-            ImageView ivTeamManageMemberAdd=findViewById(R.id.iv_team_manage_memberAdd);
-            ivTeamManageMemberAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         }
+        Log.e("test", "4444");
+
+        if (msg.what == 40) {
+            Log.e("test msg obj",msg.obj.toString());
+            int positon=Integer.parseInt(msg.obj.toString());
+            userList.remove(positon);
+            adapter.notifyDataSetChanged();
+        }
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void alarmInfo(android.os.Message msg) {
+
+
     }
 
     @Override

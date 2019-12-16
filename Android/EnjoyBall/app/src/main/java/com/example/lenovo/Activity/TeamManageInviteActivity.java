@@ -67,15 +67,20 @@ public class TeamManageInviteActivity extends AppCompatActivity {
 
         findView();
 
-        team= (Team) getIntent().getSerializableExtra("team");
+        team = (Team) getIntent().getSerializableExtra("team");
 
         tvTeamManageSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                datasource.clear();
+
+                Log.e("test", "5555");
+
                 data = etTeamManageInvite.getText().toString();
 
                 getUserList();
+
             }
         });
 
@@ -92,7 +97,7 @@ public class TeamManageInviteActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Looper.prepare();
-                Toast.makeText(TeamManageInviteActivity.this, "网络连接失败", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TeamManageInviteActivity.this, "网络连接失败", Toast.LENGTH_SHORT).show();
                 Looper.loop();
 
             }
@@ -102,16 +107,16 @@ public class TeamManageInviteActivity extends AppCompatActivity {
 
                 String jsonStr = response.body().string();
 
-                if (jsonStr.equals(false)) {
+                Log.e("test", "6666");
 
-                    Message msg=new Message();
-                    msg.what=58;
+                if (jsonStr.equals("false")){
+                    Message msg = new Message();
+                    msg.what = 58;
                     EventBus.getDefault().post(msg);
-
-                } else {
-
+                }else{
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                    Type listType = new TypeToken<List<User>>() {}.getType();
+                    Type listType = new TypeToken<List<User>>() {
+                    }.getType();
                     userList = gson.fromJson(jsonStr, listType);
                     Log.e("查到的用户信息", userList.toString());
 
@@ -121,6 +126,9 @@ public class TeamManageInviteActivity extends AppCompatActivity {
 
                     EventBus.getDefault().post(msg);
                 }
+
+
+//                }
             }
 
         });
@@ -130,24 +138,30 @@ public class TeamManageInviteActivity extends AppCompatActivity {
     public void setAdapter(Message msg) {
         if (msg.what == 27) {
 
+            Log.e("test","8888");
             List<User> lists = (List<User>) msg.obj;
             initData(lists);
             TeamManageInviteAdapter adapter =
                     new TeamManageInviteAdapter(datasource, R.layout.listview_item_team_manage_member_invite, this);
             lvTeamManageInviteUser.setAdapter(adapter);
+            Log.e("test","9999");
 
-        }else if (msg.what==58){
-            Toast.makeText(TeamManageInviteActivity.this, "该手机号未注册凹~", Toast.LENGTH_SHORT);
+        } else if (msg.what == 58) {
+            Toast.makeText(TeamManageInviteActivity.this, "该手机号未注册凹~", Toast.LENGTH_SHORT).show();
+        }else if (msg.what==47){
+            Toast.makeText(TeamManageInviteActivity.this, "邀请已发送~", Toast.LENGTH_SHORT).show();
         }
 
     }
 
     private void initData(List<User> userList) {
 
+        Log.e("test","0000");
+
         for (int i = 0; i < userList.size(); i++) {
 
             Map map = new HashMap<String, Object>();
-            map.put("teams",team.getTeam_id());
+            map.put("teams", team);
             map.put("names", userList.get(i).getUser_nickname().toString());
             map.put("heads", userList.get(i).getUser_headportrait().toString());
             map.put("objects", userList.get(i));

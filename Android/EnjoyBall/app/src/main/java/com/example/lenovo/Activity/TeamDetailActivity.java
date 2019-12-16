@@ -67,6 +67,9 @@ public class TeamDetailActivity extends AppCompatActivity {
 
     private OkHttpClient okHttpClient;
 
+    private int isMember;
+    private int captainId;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +82,27 @@ public class TeamDetailActivity extends AppCompatActivity {
         }
 
         team = (Team) getIntent().getSerializableExtra("team");
-        captain = (User) getIntent().getSerializableExtra("captain");
+        if (getIntent().getSerializableExtra("captain")!=null){
+            captain = (User) getIntent().getSerializableExtra("captain");
+        }else {
+            getCaptain();
+        }
         user = ((Info) getApplicationContext()).getUser();
+
+        //是不是本球队队员在查看球队详细信息
+        for (int i=0;i<userList.size();i++){
+            if (user.getUser_id().equals(userList.get(i).getUser_id())){
+                isMember=1;
+                break;
+            }else{
+                continue;
+            }
+        }
+
+        if (isMember!=1){
+            btnTeamDetailDissolve.setVisibility(View.GONE);
+        }
+
 
         findView();
 
@@ -134,6 +156,40 @@ public class TeamDetailActivity extends AppCompatActivity {
             });
         }
 
+
+    }
+
+    private void getCaptain() {
+
+        captainId=team.getTeam_captain();
+        okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(Info.BASE_URL + "user/find?id=" + captainId)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                Toast.makeText(TeamDetailActivity.this, "网络走丢咯~~", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String data = response.body().string();
+
+                Gson gson = new GsonBuilder().create();
+                captain = gson.fromJson(data,User.class);
+
+                Message msg = new Message();
+                msg.what = 66;
+                msg.obj = captain.getUser_nickname();
+                EventBus.getDefault().postSticky(msg);
+
+            }
+        });
 
     }
 
@@ -241,7 +297,7 @@ public class TeamDetailActivity extends AppCompatActivity {
         } else if (msg.what == 76) {
             String data = (String) msg.obj;
 
-            if (msg.obj.equals("true")) {
+            if (data.equals("true")) {
 
                 Toast.makeText(TeamDetailActivity.this, "退出球队成功~", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
@@ -251,7 +307,16 @@ public class TeamDetailActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(TeamDetailActivity.this, "退出球队失败~", Toast.LENGTH_SHORT).show();
             }
+        }else if(msg.what==66){
+            String data=(String)msg.obj;
+            setCaptainName(data);
         }
+
+    }
+
+    private void setCaptainName(String data) {
+
+        tvTeamDetailCaptain.setText(data);
 
     }
 

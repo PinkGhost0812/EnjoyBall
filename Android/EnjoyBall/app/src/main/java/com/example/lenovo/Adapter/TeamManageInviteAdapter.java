@@ -1,6 +1,7 @@
 package com.example.lenovo.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.lenovo.enjoyball.Info;
+import com.example.lenovo.enjoyball.MainActivity;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;
@@ -72,18 +74,18 @@ public class TeamManageInviteAdapter extends BaseAdapter {
         ViewHolder viewHolder = null;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(itemResId, null);
-            viewHolder = new TeamManageInviteAdapter.ViewHolder();
+            viewHolder = new ViewHolder();
             viewHolder.tvTeamManageMemberInviteUserNickname = convertView.findViewById(R.id.tv_team_manage_member_invite_user_nickname);
             viewHolder.tvTeamManageMemberInviteUserInvite = convertView.findViewById(R.id.tv_team_manage_member_invite_user_invite);
             viewHolder.ivTeamManageMemberInviteUserPortrait = convertView.findViewById(R.id.iv_team_manage_member_invite_user_portrait);
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (TeamManageInviteAdapter.ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.tvTeamManageMemberInviteUserNickname.setText(datasource.get(position).get("name").toString());
-        final User userInvited= (User) datasource.get(position).get("objects");
-        final Team team=(Team)datasource.get(position).get("teams");
+        viewHolder.tvTeamManageMemberInviteUserNickname.setText(datasource.get(position).get("names").toString());
+        final User userInvited = (User) datasource.get(position).get("objects");
+        final Team team = (Team) datasource.get(position).get("teams");
 
         viewHolder.tvTeamManageMemberInviteUserInvite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +93,7 @@ public class TeamManageInviteAdapter extends BaseAdapter {
 
                 OkHttpClient okHttpClient = new OkHttpClient();
                 Request request = new Request.Builder()
-                        .url(Info.BASE_URL + "team/invite?teamId="+team.getTeam_id()+"&userId=" + userInvited.getUser_id())
+                        .url(Info.BASE_URL + "team/invite?teamId=" + team.getTeam_id() + "&userId=" + userInvited.getUser_id())
                         .build();
                 Call call = okHttpClient.newCall(request);
                 call.enqueue(new Callback() {
@@ -104,7 +106,9 @@ public class TeamManageInviteAdapter extends BaseAdapter {
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        Log.e("test invite",response.body().string());
+                        android.os.Message msg = new android.os.Message();
+                        msg.what = 47;
+                        EventBus.getDefault().post(msg);
                     }
                 });
 
