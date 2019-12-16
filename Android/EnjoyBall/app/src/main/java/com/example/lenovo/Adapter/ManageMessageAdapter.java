@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,8 @@ import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Team;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -119,12 +122,10 @@ public class ManageMessageAdapter extends BaseAdapter {
                     intent = new Intent(context, HomepageActivity.class);
                     intent.putExtra("user", datasource.get(position).getUser());
                 } else {
-                    intent = new Intent(context, TeamDetailActivity.class);
                     int type = datasource.get(position).getDemand().getDemand_class();
                     int id = datasource.get(position).getApplyInfo().getSender();
-                    intent.putExtra("team", getTeam(type, id));
+                    getTeam(type,id);
                 }
-                context.startActivity(intent);
             }
         });
         final ViewHolder finalViewHolder = viewHolder;
@@ -178,7 +179,7 @@ public class ManageMessageAdapter extends BaseAdapter {
     private Team getTeam(int type, int id) {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Info.BASE_URL + "/team/findByIdCls?id=" + id + "cls=" + type)
+                .url(Info.BASE_URL + "team/findByIdCls?id=" + id + "&&cls=" + type)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -190,9 +191,16 @@ public class ManageMessageAdapter extends BaseAdapter {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String teamJson = response.body().string();
+                Log.e("test teamJsom", teamJson);
                 if (!teamJson.equals("false")) {
-                    Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd hh:mm").create();
-                     team = gson.fromJson(teamJson, Team.class);
+                    Log.e("test teamJsom 111",teamJson);
+                    Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd hh:mm:ss").create();
+                    team = gson.fromJson(teamJson, Team.class);
+                    Log.e("test teamString",team.toString());
+                    Message msg=new Message();
+                    msg.what=86;
+                    msg.obj=team;
+                    EventBus.getDefault().post(msg);
                 }
             }
         });

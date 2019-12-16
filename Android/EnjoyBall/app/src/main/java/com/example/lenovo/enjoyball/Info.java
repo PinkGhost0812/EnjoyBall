@@ -8,27 +8,9 @@ import com.example.lenovo.entity.*;
 import cn.jpush.android.api.JPushInterface;
 
 public class Info extends Application{
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 
     public static final String BASE_URL = "http://10.7.88.10:8080/EnjoyBallServer/";
     public static String registrationId ;
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
-    public static final String BASE_URL = "http://10.7.88.10:8080/EnjoyBallServer/";
->>>>>>> Stashed changes
-=======
-
->>>>>>> Stashed changes
-=======
-
-    public static final String BASE_URL = "http://10.7.88.10:8080/EnjoyBallServer/";
->>>>>>> Stashed changes
 
     @Override
     public void onCreate() {

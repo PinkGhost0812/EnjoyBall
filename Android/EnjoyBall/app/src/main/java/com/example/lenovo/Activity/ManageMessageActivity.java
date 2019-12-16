@@ -2,6 +2,7 @@ package com.example.lenovo.Activity;
 
 import android.content.Intent;
 import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.example.lenovo.Adapter.ManageMessageAdapter;
 import com.example.lenovo.Util.ApplyUtil;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
+import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -46,6 +48,7 @@ public class ManageMessageActivity extends AppCompatActivity {
         if (!EventBus.getDefault().isRegistered(this)){
             EventBus.getDefault().register(this);
         }
+        setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_message_manage);
         getView();
         getMessages();
@@ -105,6 +108,18 @@ public class ManageMessageActivity extends AppCompatActivity {
         if (message.equals("OK")){
             adapter = new ManageMessageAdapter(messages,this);
             lv_manage.setAdapter(adapter);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void visitTeam(Message msg){
+        if (msg.what==86){
+            Team team= (Team) msg.obj;
+            Log.e("test visitteam",team.toString());
+            Intent intent=new Intent();
+            intent.setClass(this,TeamVisitDetailActivity.class);
+            intent.putExtra("team",team);
+            startActivity(intent);
         }
     }
 }
