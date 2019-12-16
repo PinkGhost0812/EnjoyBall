@@ -1,6 +1,8 @@
 package com.example.lenovo.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Message;
@@ -89,29 +91,41 @@ public class InviteAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Log.e("状态","点击邀请");
-                SharedPreferences sharedPreferences = mContext.getSharedPreferences("invited",Context.MODE_PRIVATE);
-                String invited = sharedPreferences.getString(table, "");
-                Log.e("被邀请id列表",invited+".");
-                if (invited!=null&&invited.length()>0){
-                    Type type = new TypeToken<List<String>>() {
-                    }.getType();
-                    List<Integer> idList = new Gson().fromJson(invited, type);
-                    if (!idList.contains(finalId)){
-                        idList.add(finalId);
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setTitle("确认邀请");
+                builder.setMessage("确认邀请吗");
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences sharedPreferences = mContext.getSharedPreferences("invited",Context.MODE_PRIVATE);
+                        String invited = sharedPreferences.getString(table, "");
+                        Log.e("被邀请id列表",invited+".");
+                        if (invited!=null&&invited.length()>0){
+                            Type type = new TypeToken<List<String>>() {
+                            }.getType();
+                            List<Integer> idList = new Gson().fromJson(invited, type);
+                            if (!idList.contains(finalId)){
+                                idList.add(finalId);
+                            }
+                            invited = new Gson().toJson(idList);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(table, invited);
+                            editor.apply();
+                        }else {
+                            Log.e("被邀请id",finalId+"");
+                            List<Integer> idList = new ArrayList<Integer>();
+                            idList.add(finalId);
+                            invited = new Gson().toJson(idList);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(table, invited);
+                            editor.apply();
+                        }
                     }
-                    invited = new Gson().toJson(idList);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(table, invited);
-                    editor.apply();
-                }else {
-                    Log.e("被邀请id",finalId+"");
-                    List<Integer> idList = new ArrayList<Integer>();
-                    idList.add(finalId);
-                    invited = new Gson().toJson(idList);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(table, invited);
-                    editor.apply();
-                }
+                });
+                builder.setNegativeButton("取消",null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
 
             }
         });

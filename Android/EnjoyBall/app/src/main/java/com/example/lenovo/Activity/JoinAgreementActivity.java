@@ -429,7 +429,10 @@ public class JoinAgreementActivity extends AppCompatActivity {
     private User getUser() {
 
         User user=((Info)getApplicationContext()).getUser();
+<<<<<<< Updated upstream
         Info info = (Info)getApplication();
+=======
+>>>>>>> Stashed changes
         return user;
     }
 

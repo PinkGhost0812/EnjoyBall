@@ -9,8 +9,15 @@ import cn.jpush.android.api.JPushInterface;
 
 public class Info extends Application{
 
+<<<<<<< Updated upstream
     public static final String BASE_URL = "http://10.7.88.10:8080/EnjoyBallServer/";
     public static String registrationId ;
+=======
+
+    public static final String BASE_URL = "http://10.7.88.10:8080/EnjoyBallServer/";
+    public static String registrationId ;
+
+>>>>>>> Stashed changes
 
     @Override
     public void onCreate() {

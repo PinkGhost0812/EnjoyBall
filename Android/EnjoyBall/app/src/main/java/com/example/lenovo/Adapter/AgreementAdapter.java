@@ -75,9 +75,8 @@ public class AgreementAdapter extends BaseAdapter{
            viewHolder.iv_head.setImageDrawable((Drawable) datasource.get(position).get("head"));
 
        }else {
-           Log.e("图片路径",Info.BASE_URL+datasource.get(position).get("head"));
              GlideApp.with(mContext)
-                     .load(Info.BASE_URL+datasource.get(position).get("head").toString())
+                     .load(datasource.get(position).get("head").toString())
                      .circleCrop()
                      .error(mContext.getResources().getDrawable(R.drawable.basketball))
                    .into(viewHolder.iv_head);
