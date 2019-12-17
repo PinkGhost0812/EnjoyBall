@@ -67,6 +67,7 @@ public class ManageMessageActivity extends AppCompatActivity {
 //获取消息
     private void getMessages() {
         int id =((Info)getApplicationContext()).getUser().getUser_id();
+        Log.e("test curid",id+"");
         Request request = new Request.Builder()
                 .url(url+"appointment/messageList?id="+id)
                 .build();
@@ -91,7 +92,6 @@ public class ManageMessageActivity extends AppCompatActivity {
                     Log.e("收到的消息",messages.toString());
                     EventBus.getDefault().post("OK");
                 }
-
             }
         });
 

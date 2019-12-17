@@ -129,13 +129,13 @@ public class TeamCreateActivity extends AppCompatActivity {
 
         team.setTeam_name(etTeamCreateName.getText().toString());
         team.setTeam_slogan(etTeamCreateSlogan.getText().toString());
+        team.setTeam_captain(((Info)getApplicationContext()).getUser().getUser_id());
         team.setTeam_time(curDate);
 
         if (imgPath.equals("0")||team.getTeam_name().equals("")||team.getTeam_name()==null){
             Toast.makeText(this,"请完善必要信息哦~",Toast.LENGTH_SHORT).show();
         }else{
             uploadInfo(team);
-            uploadLogo(imgPath);
         }
 
     }
@@ -161,12 +161,16 @@ public class TeamCreateActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Looper.prepare();
-                if (response.body().string().equals("true")){
+                String data=response.body().string();
+                if (data.equals("false")){
+                    Toast.makeText(TeamCreateActivity.this,"创建失败~",Toast.LENGTH_SHORT);
+                }else {
+                    uploadLogo(imgPath,data);
                     Toast.makeText
                             (TeamCreateActivity.this,"创建成功~",Toast.LENGTH_SHORT);
-                }else{
-                    Toast.makeText
-                            (TeamCreateActivity.this,"创建失败~",Toast.LENGTH_SHORT);
+                    Intent intent=new Intent();
+                    intent.setClass(TeamCreateActivity.this,MainActivity.class);
+                    startActivity(intent);
                 }
                 Looper.loop();
             }
@@ -174,7 +178,7 @@ public class TeamCreateActivity extends AppCompatActivity {
 
     }
 
-    private void uploadLogo(String imgPath) {
+    private void uploadLogo(String imgPath,String data) {
 
         File file = new File(imgPath);
         Log.e("test-upimgpath",imgPath);
@@ -182,7 +186,7 @@ public class TeamCreateActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(MediaType.parse("image/*"),
                 file);
         Request request = new Request.Builder()
-                .url(Info.BASE_URL+"team/uploadImg?id="+1)
+                .url(Info.BASE_URL+"team/uploadImg?id="+data)
                 .post(body)
                 .build();
         Call call = okHttpClientLogo.newCall(request);

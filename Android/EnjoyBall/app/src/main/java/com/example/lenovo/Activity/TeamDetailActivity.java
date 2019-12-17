@@ -50,6 +50,7 @@ public class TeamDetailActivity extends AppCompatActivity {
     private TextView tvTeamDetailAddress;
     private TextView tvTeamDetailTime;
     private TextView tvTeamDetailSlogan;
+    private TextView tvTeamDetailType;
 
     private ImageView ivTeamDetailLogo;
 
@@ -204,6 +205,23 @@ public class TeamDetailActivity extends AppCompatActivity {
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         tvTeamDetailTime.setText(sf.format(team.getTeam_time()));
         tvTeamDetailSlogan.setText(team.getTeam_slogan());
+        switch (team.getTeam_class()){
+            case 0:
+                tvTeamDetailType.setText("足球");
+                break;
+            case 1:
+                tvTeamDetailType.setText("篮球");
+                break;
+            case 2:
+                tvTeamDetailType.setText("排球");
+                break;
+            case 3:
+                tvTeamDetailType.setText("羽毛球");
+                break;
+            case 4:
+                tvTeamDetailType.setText("乒乓球");
+                break;
+        }
 
         RequestOptions options = new RequestOptions()
                 .signature(new ObjectKey(System.currentTimeMillis()))
@@ -272,6 +290,7 @@ public class TeamDetailActivity extends AppCompatActivity {
         tvTeamDetailAddress = findViewById(R.id.tv_team_detail_address);
         tvTeamDetailTime = findViewById(R.id.tv_team_detail_time);
         tvTeamDetailSlogan = findViewById(R.id.tv_team_detail_slogan);
+        tvTeamDetailType=findViewById(R.id.tv_team_detail_type);
 
         ivTeamDetailLogo = findViewById(R.id.iv_team_detail_logo);
 

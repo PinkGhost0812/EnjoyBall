@@ -48,8 +48,6 @@ public class ManageMessageAdapter extends BaseAdapter {
     public ManageMessageAdapter(List<ApplyUtil> datasource, Context context) {
         this.datasource = datasource;
         this.context = context;
-
-
     }
 
     @Override
