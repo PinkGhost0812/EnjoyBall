@@ -70,7 +70,6 @@ public class DemandAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        //DemandInfo demandInfo = dataSource.get(position);
         viewHolder.iv_img.setImageResource(ball[dataSource.get(position).getDemand_class()]);
         viewHolder.tv_time.setText(sf.format(dataSource.get(position).getDemand_time()));
         viewHolder.tv_place.setText(dataSource.get(position).getDemand_place()+"");

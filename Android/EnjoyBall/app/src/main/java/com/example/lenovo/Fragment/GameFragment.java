@@ -118,7 +118,6 @@ public class GameFragment extends Fragment {
                 //结束加载更多的动画
                 refreshLayout.finishLoadMore();
                 break;
-            case "102":
 
         }
 
@@ -135,7 +134,6 @@ public class GameFragment extends Fragment {
             EventBus.getDefault().register(this);
         }
         x = (int)getArguments().get("ball");
-        Log.e("收到",x+"");
         int y = x-1;
         page = 1;
         okHttpClient =new OkHttpClient();
@@ -148,7 +146,6 @@ public class GameFragment extends Fragment {
         }else {
             Request request = new Request.Builder().url(Info.BASE_URL + "contest/find?cls="+y+"&page="+page).build();
             call = okHttpClient.newCall(request);
-            Log.e("x = ", x+"");
         }
         call.enqueue(new Callback() {
             @Override
@@ -162,9 +159,7 @@ public class GameFragment extends Fragment {
                 Log.e("contest = ", n);
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                 Type listType = new TypeToken<List<TeamAndContest>>(){}.getType();
-                //newsList = new ArrayList<>();
                 gameList = gson.fromJson(n,listType);
-                // Log.e("标题22",n);
                 EventBus.getDefault().post("game");
             }
         });
@@ -172,8 +167,6 @@ public class GameFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("详情","success");
-
                 Intent intent = new Intent();
                 intent.putExtra("id",dataSource.get(position).getContest().getGame_id());
                 intent.setClass(getActivity(), Team.class);
@@ -237,7 +230,6 @@ public class GameFragment extends Fragment {
             }else {
                 Request request = new Request.Builder().url(Info.BASE_URL + "contest/find?cls="+y+"&page="+page).build();
                 call = srokHttpClient.newCall(request);
-                Log.e("x = ", x+"");
             }
             call.enqueue(new Callback() {
                 @Override
@@ -248,12 +240,9 @@ public class GameFragment extends Fragment {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String n = response.body().string();
-                    Log.e("contest = ", n);
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                     Type listType = new TypeToken<List<TeamAndContest>>(){}.getType();
-                    //newsList = new ArrayList<>();
                     gameList = gson.fromJson(n,listType);
-                    // Log.e("标题22",n);
                     EventBus.getDefault().post("page");
                 }
             });
@@ -271,7 +260,6 @@ public class GameFragment extends Fragment {
         dataSource = new ArrayList<>();
         for (int i=0;i<gameList.size();++i){
             dataSource.add(gameList.get(i));
-            Log.e("test",dataSource.get(i).getTeamMap().toString());
         }
     }
 

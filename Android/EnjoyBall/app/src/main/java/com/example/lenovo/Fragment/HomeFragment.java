@@ -59,7 +59,6 @@ import okhttp3.Response;
 public class HomeFragment extends Fragment {
 
     private List<News> dataSource = null;
-    //private List<Map<String,Object>> dataSource = null;
     private OkHttpClient okHttpClient;
     private OkHttpClient okHttpClientBan;
     private OkHttpClient srokHttpClient;
@@ -82,10 +81,6 @@ public class HomeFragment extends Fragment {
         View view =  inflater.inflate(R.layout.tab_home_layout,
                 container, false);
 
-//        int x = 0;
-//        x = (int)getArguments().get("ball");
-//        Log.e("收到",x+"");
-
 
         return view;
     }
@@ -106,7 +101,6 @@ public class HomeFragment extends Fragment {
                 break;
             case "ban":
                 createBan(banList);
-                Log.e("banlist",banList.toString());
                 break;
             case "page":
                 initPage(newsList);
@@ -133,7 +127,6 @@ public class HomeFragment extends Fragment {
         page = 1;
         okHttpClient =new OkHttpClient();
         newsList = new ArrayList<>();
-        //initData();
         if (x==0){
             Request request = new Request.Builder().url(Info.BASE_URL + "news/newsPage?page="+page).build();
             call = okHttpClient.newCall(request);
@@ -141,7 +134,6 @@ public class HomeFragment extends Fragment {
         }else {
             Request request = new Request.Builder().url(Info.BASE_URL + "news/newsPageByClass?page=" +page+"&cls="+y).build();
             call = okHttpClient.newCall(request);
-            Log.e("x = ", x+"");
 
         }
         call.enqueue(new Callback() {
@@ -153,12 +145,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String n = response.body().string();
-                Log.e("news = ", n);
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                 Type listType = new TypeToken<List<News>>(){}.getType();
-                //newsList = new ArrayList<>();
                 newsList = gson.fromJson(n,listType);
-                // Log.e("标题22",n);
                 EventBus.getDefault().post("news");
             }
         });
@@ -166,7 +155,6 @@ public class HomeFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("详情",dataSource.get(position).getNews_id()+"");
 
                 Intent intent = new Intent();
                 intent.putExtra("id",dataSource.get(position).getNews_id()+"");
@@ -226,7 +214,6 @@ public class HomeFragment extends Fragment {
             }else {
                 Request request = new Request.Builder().url(Info.BASE_URL + "news/newsPageByClass?page=" +page+"&cls="+y).build();
                 call = srokHttpClient.newCall(request);
-                Log.e("x = ", x+"");
 
             }
             call.enqueue(new Callback() {
@@ -238,12 +225,9 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String n = response.body().string();
-                    Log.e("news = ", n);
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                     Type listType = new TypeToken<List<News>>(){}.getType();
-                    //newsList = new ArrayList<>();
                     newsList = gson.fromJson(n,listType);
-                    // Log.e("标题22",n);
                     EventBus.getDefault().post("page");
                 }
             });
@@ -270,13 +254,10 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String ban = response.body().string();
-                Log.e("ban = ", ban);
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                 Type listType = new TypeToken<List<News>>(){}.getType();
                 banList = gson.fromJson(ban,listType);
 
-                Log.e("轮播图",banList.toString());
-                // Log.e("标题22",n);
                 EventBus.getDefault().post("ban");
             }
         });
@@ -284,8 +265,6 @@ public class HomeFragment extends Fragment {
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Log.e("详情",dataSource.get(position).getNews_id()+"");
-
                 Intent intent = new Intent();
                 intent.putExtra("id",dataSource.get(position).getNews_id()+"");
                 intent.setClass(getActivity(), NewsDetailActivity.class);
@@ -300,7 +279,6 @@ public class HomeFragment extends Fragment {
         ArrayList<String> imgs = new ArrayList<>();
         for (int i=0;i<list.size();++i){
             imgs.add(Info.BASE_URL+list.get(i).getNews_image());
-            Log.e("图片地址",imgs.get(i));
             title.add(list.get(i).getNews_title());
         }
 //        ArrayList<Integer> imgs = new ArrayList<>();
@@ -335,7 +313,6 @@ public class HomeFragment extends Fragment {
         dataSource = new ArrayList<>();
         for(int i=0;i<newsList.size();++i){
             dataSource.add(newsList.get(i));
-            Log.e("test",dataSource.toString());
         }
     }
 

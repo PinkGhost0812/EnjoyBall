@@ -84,33 +84,23 @@ public class GameAdapter extends BaseAdapter {
         //viewHolder.tv_time.setText(sf.format(dataSource.get(position).getContest().getGame_time())+" "+dataSource.get(position).getContest().getGame_result()+"");
         viewHolder.tv_time.setText(sf.format(dataSource.get(position).getContest().getGame_time())+"");
         String[] result = dataSource.get(position).getContest().getGame_result().split("-");
-        Log.e("比分",result[0]+"");
 
         try {
             viewHolder.tv_teamhome.setText(dataSource.get(position).getTeamMap().get("nameA").toString());
             viewHolder.tv_teamaway.setText(dataSource.get(position).getTeamMap().get("nameB").toString());
             viewHolder.tv_scorehome.setText(result[0]+"");
             viewHolder.tv_scoreaway.setText(result[1]+"");
-//            viewHolder.tv_scorehome.setText(dataSource.get(position).getContest().getGame_result().substring(0,1));
-//            viewHolder.tv_scoreaway.setText(dataSource.get(position).getContest().getGame_result().substring(2));
             viewHolder.tv_state.setText(status[dataSource.get(position).getContest().getGame_status()-1]+"");
             if (dataSource.get(position).getTeamMap().get("imgA").toString()!=null)
                 Glide.with(convertView).load(Info.BASE_URL + dataSource.get(position).getTeamMap().get("imgA").toString()).into(viewHolder.iv_imghome);
             if (dataSource.get(position).getTeamMap().get("imgB").toString()!=null)
                 Glide.with(convertView).load(Info.BASE_URL + dataSource.get(position).getTeamMap().get("imgB").toString()).into(viewHolder.iv_imgaway);
-            if (dataSource.get(position).getContest().getGame_status()!=2){
-                Log.e(position+"",dataSource.get(position).getContest().getGame_status().toString());
-//                viewHolder.tv_state.setTextColor(ContextCompat.getColor(context,android.R.color.background_dark));
+            if (dataSource.get(position).getContest().getGame_status()!=2)
                 viewHolder.tv_state.setTextColor(
                         Color.parseColor("#000000"));
-//                EventBus.getDefault().post("102");
-            }
-            else{
-                Log.e("test 222",dataSource.get(position).getContest().getGame_status().toString());
+            else
                 viewHolder.tv_state.setTextColor(
                         Color.parseColor("#1afa29"));
-//                EventBus.getDefault().post("103");
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }

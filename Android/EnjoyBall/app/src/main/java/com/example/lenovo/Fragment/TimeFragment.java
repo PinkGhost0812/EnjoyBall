@@ -113,7 +113,6 @@ public class TimeFragment extends Fragment {
             EventBus.getDefault().register(this);
         }
         x = (int)getArguments().get("ball");
-        Log.e("收到",x+"");
         int y = x-1;
         page = 1;
         okHttpClient =new OkHttpClient();
@@ -125,7 +124,6 @@ public class TimeFragment extends Fragment {
         }else {
             Request request = new Request.Builder().url(Info.BASE_URL + "appointment/findByClass?page="+page+"&cls="+y).build();
             call = okHttpClient.newCall(request);
-            Log.e("x = ", x+"");
         }
 
         call.enqueue(new Callback() {
@@ -137,12 +135,9 @@ public class TimeFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String n = response.body().string();
-                Log.e("appointment = ", n);
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                 Type listType = new TypeToken<List<DemandInfo>>(){}.getType();
-                //newsList = new ArrayList<>();
                 demandInfoList = gson.fromJson(n,listType);
-                // Log.e("标题22",n);
                 EventBus.getDefault().post("first");
             }
         });
@@ -152,7 +147,6 @@ public class TimeFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("详情","success"+dataSource.get(position).getDemand_id()+"");
 
                 Intent intent = new Intent();
                 intent.putExtra("id",dataSource.get(position).getDemand_id());
@@ -209,7 +203,6 @@ public class TimeFragment extends Fragment {
             }else {
                 Request request = new Request.Builder().url(Info.BASE_URL + "appointment/findByClass?page="+page+"&cls="+y).build();
                 call = srokHttpClient.newCall(request);
-                Log.e("x = ", x+"");
             }
 
             call.enqueue(new Callback() {
@@ -221,12 +214,9 @@ public class TimeFragment extends Fragment {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String n = response.body().string();
-                    Log.e("appointment = ", n);
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                     Type listType = new TypeToken<List<DemandInfo>>(){}.getType();
-                    //newsList = new ArrayList<>();
                     demandInfoList = gson.fromJson(n,listType);
-                    // Log.e("标题22",n);
                     EventBus.getDefault().post("page");
                 }
             });
@@ -258,7 +248,6 @@ public class TimeFragment extends Fragment {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("新建约球","555");
                 Intent intents = new Intent();
                 intents.setClass(getActivity(), CreateAgreementActivity.class);
                 startActivity(intents);

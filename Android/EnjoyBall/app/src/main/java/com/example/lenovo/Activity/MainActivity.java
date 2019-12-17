@@ -167,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
                 .signature(new ObjectKey(System.currentTimeMillis()))
                 .circleCrop();
 
-        Log.e("test",user.getUser_id().toString());
         Glide.with(this)
                 .load(Info.BASE_URL+user.getUser_headportrait())
                 .apply(options)
@@ -183,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
                     tab = 0;
                     ll_top.setVisibility(View.VISIBLE);
                     changeTab(tabStrId[0],tabtop);
-                    Log.e("下一步",tabStrId[tab]+"");
                     break;
                 case R.id.tab_spec_main_game:
                     tab =  1;
@@ -214,17 +212,14 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.tab_spec_main_volleyball:
                     tabtop =  3;
-                    Log.e("球类",tabStrTopId[tabtop]);
                     changeTabTop(tabStrTopId[3],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_badminton:
                     tabtop =  4;
-                    Log.e("球类",tabStrTopId[tabtop]);
                     changeTabTop(tabStrTopId[4],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_tabletennis:
                     tabtop =  5;
-                    Log.e("球类",tabStrTopId[tabtop]);
                     changeTabTop(tabStrTopId[5],tab,tabtop);
                     break;
                 case R.id.iv_main_portrait:
