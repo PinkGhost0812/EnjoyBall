@@ -239,9 +239,7 @@ public class SearchActivity extends Activity {
                                 Log.e("news = ", n);
                                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                                 Type listType = new TypeToken<List<News>>(){}.getType();
-                                //newsList = new ArrayList<>();
                                 newsList = gson.fromJson(n,listType);
-                                // Log.e("标题22",n);
                                 EventBus.getDefault().post("news");
                             }
                         });
@@ -297,7 +295,6 @@ public class SearchActivity extends Activity {
 
         // 2 设置选中的Tab的图片和字体颜色
         mapTop.get(s).setSelectTop(true);
-        Log.e("ture","111");
     }
 
     public void getNums(){
@@ -390,12 +387,9 @@ public class SearchActivity extends Activity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         String n = response.body().string();
-                        Log.e("news = ", n);
                         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                         Type listType = new TypeToken<List<News>>(){}.getType();
-                        //newsList = new ArrayList<>();
                         pageList = gson.fromJson(n,listType);
-                        // Log.e("标题22",n);
                         EventBus.getDefault().post("page");
                     }
                 });
@@ -439,7 +433,6 @@ public class SearchActivity extends Activity {
         if (id == 0){
             for(int i=0;i<newsList.size();++i){
                 dataSource.add(newsList.get(i));
-                Log.e("test",dataSource.toString());
             }
         }else {
             id--;
@@ -453,14 +446,13 @@ public class SearchActivity extends Activity {
     private void initPage(List<News> list, int id){
         if (id == 0){
             for(int i=0;i<list.size();++i){
-                dataSource.add(dataSource.size() - 1, list.get(i));
-                Log.e("test",dataSource.toString());
+                dataSource.add(dataSource.size(), list.get(i));
             }
         }else {
             id--;
             for(int i=0;i<list.size();++i)
                 if (list.get(i).getNews_class()==id)
-                    dataSource.add(dataSource.size() - 1, list.get(i));
+                    dataSource.add(dataSource.size(), list.get(i));
         }
     }
 
