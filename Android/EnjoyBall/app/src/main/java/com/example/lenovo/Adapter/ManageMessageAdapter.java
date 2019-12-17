@@ -124,12 +124,7 @@ public class ManageMessageAdapter extends BaseAdapter {
                 } else {
                     int type = datasource.get(position).getDemand().getDemand_class();
                     int id = datasource.get(position).getApplyInfo().getSender();
-<<<<<<< Updated upstream
                     getTeam(type,id);
-=======
-
-                    intent.putExtra("team", getTeam(type, id));
->>>>>>> Stashed changes
                 }
             }
         });
@@ -198,20 +193,12 @@ public class ManageMessageAdapter extends BaseAdapter {
                 String teamJson = response.body().string();
                 Log.e("test teamJsom", teamJson);
                 if (!teamJson.equals("false")) {
-<<<<<<< Updated upstream
-                    Log.e("test teamJsom 111",teamJson);
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd hh:mm:ss").create();
                     team = gson.fromJson(teamJson, Team.class);
-                    Log.e("test teamString",team.toString());
                     Message msg=new Message();
                     msg.what=86;
                     msg.obj=team;
                     EventBus.getDefault().post(msg);
-=======
-                    Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd hh:mm:ss").create();
-                     team = gson.fromJson(teamJson, Team.class);
-                     Log.e("team",team.toString());
->>>>>>> Stashed changes
                 }
             }
         });

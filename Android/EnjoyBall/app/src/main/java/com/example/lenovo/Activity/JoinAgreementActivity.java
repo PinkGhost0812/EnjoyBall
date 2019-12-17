@@ -67,6 +67,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_joinagreement);
         EventBus.getDefault().register(this);
         okHttpClient = new OkHttpClient();
@@ -74,7 +75,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
         int demandId = intent.getIntExtra("id",0);
         //Log.e("id",demandId);
         getView();
-        getDemandInfo(34);
+        getDemandInfo(demandId);
         /*--------------------------点击item加入或查看对方信息------------------------*/
         gv_joinagreement.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -131,12 +132,12 @@ public class JoinAgreementActivity extends AppCompatActivity {
                             AlertDialog alertDialog = builder.create();
                             alertDialog.show();
                         }else {
-                            Toast.makeText(JoinAgreementActivity.this,"您没有该类型队伍，无法参加",Toast.LENGTH_SHORT);
+                            Toast.makeText(JoinAgreementActivity.this,"您没有该类型队伍，无法参加",Toast.LENGTH_SHORT).show();
                         }
 
                     }else {
-                        Intent intent1 = new Intent(JoinAgreementActivity.this,TeamDetailActivity.class);
-                        intent1.putExtra("name",(Team)datasource.get(0).get("object"));
+                        Intent intent1 = new Intent(JoinAgreementActivity.this,TeamVisitDetailActivity.class);
+                        intent1.putExtra("team",(Team)datasource.get(0).get("object"));
                         startActivity(intent1);
                     }
                 }
@@ -324,7 +325,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
                         Log.e(teamName+"查到的队员",users.get(i).getUser_nickname());
                         Map map = new HashMap<String,Object>();
                         map.put("name",users.get(i).getUser_nickname());
-                        map.put("head",users.get(i).getUser_headportrait());
+                        map.put("head",Info.BASE_URL+users.get(i).getUser_headportrait());
                         map.put("object",users.get(i));
                         map.put("status","1");
                         //保证同一队的队员在同一列，A队在左边,B队在右边
@@ -352,7 +353,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
                     Team team = gson.fromJson(json,Team.class);
                     Map<String,Object> map = new HashMap<String,Object>();
                     map.put("name",team.getTeam_name());
-                    map.put("head",team.getTeam_logo());
+                    map.put("head",Info.BASE_URL + team.getTeam_logo());
                     map.put("object",team);
                     map.put("status",1);
                     datasource.set(0,map);
@@ -429,10 +430,6 @@ public class JoinAgreementActivity extends AppCompatActivity {
     private User getUser() {
 
         User user=((Info)getApplicationContext()).getUser();
-<<<<<<< Updated upstream
-        Info info = (Info)getApplication();
-=======
->>>>>>> Stashed changes
         return user;
     }
 

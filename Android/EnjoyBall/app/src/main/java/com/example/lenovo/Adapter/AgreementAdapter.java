@@ -78,7 +78,7 @@ public class AgreementAdapter extends BaseAdapter{
              GlideApp.with(mContext)
                      .load(datasource.get(position).get("head").toString())
                      .circleCrop()
-                     .error(mContext.getResources().getDrawable(R.drawable.basketball))
+                     .error(mContext.getResources().getDrawable(R.drawable.member))
                    .into(viewHolder.iv_head);
        }
 
