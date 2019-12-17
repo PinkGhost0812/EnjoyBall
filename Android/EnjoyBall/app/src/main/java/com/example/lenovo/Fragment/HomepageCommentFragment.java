@@ -84,9 +84,8 @@ public class HomepageCommentFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.setClass(getContext(), NewsDetailActivity.class);
-                Log.e("test", list.get(position).getNews().getNews_id().toString());
-                intent.putExtra("homepage_comment_news_id", list.get(position).getNews().getNews_id().toString());
+                intent.putExtra("id",list.get(position).getNews().getNews_id()+"");
+                intent.setClass(getActivity(), NewsDetailActivity.class);
                 startActivity(intent);
             }
         });

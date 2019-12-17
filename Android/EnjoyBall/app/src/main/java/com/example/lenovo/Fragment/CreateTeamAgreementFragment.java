@@ -175,7 +175,7 @@ public class CreateTeamAgreementFragment extends Fragment {
                     }
                     Object object = et_say.getText();
                     if (object == null) {
-                        description = new String();
+                        description = "come on";
                     } else {
                         description = object.toString();
                     }
@@ -300,7 +300,7 @@ public class CreateTeamAgreementFragment extends Fragment {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(url + "appointment/addAppointmentWithInvite?demandInfo=" + gson.toJson(info)+"&&idList="+idList)
+                .url(url + "appointment/addAppointmentTeam?demandInfo=" + gson.toJson(info)+"&&idList="+idList)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {

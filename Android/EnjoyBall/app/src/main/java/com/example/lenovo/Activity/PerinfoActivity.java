@@ -95,29 +95,29 @@ public class PerinfoActivity extends AppCompatActivity {
     private OkHttpClient okHttpClient;
     private OkHttpClient okHttpClientHeadPortrait;
 
-    private String imgPath="0";
+    private String imgPath = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_perinfo);
-        
+
         findView();
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-        
-        user= ((Info)getApplicationContext()).getUser();
-        
+
+        user = ((Info) getApplicationContext()).getUser();
+
         setInfo();
-        
+
         setListeners();
-        
+
     }
 
-    private class PerinfoListener implements View.OnClickListener{
+    private class PerinfoListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -181,7 +181,7 @@ public class PerinfoActivity extends AppCompatActivity {
         //更新用户基本信息
         okHttpClient = new OkHttpClient();
         Gson gson = new GsonBuilder().create();
-        String userJson=gson.toJson(user);
+        String userJson = gson.toJson(user);
         Request request = new Request.Builder()
                 .url(Info.BASE_URL + "user/update?info=" + userJson)
                 .build();
@@ -198,16 +198,16 @@ public class PerinfoActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Looper.prepare();
-                    if (response.body().string().equals("true")){
-                        Toast.makeText
-                                (PerinfoActivity.this,"更新成功凹~",Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent();
-                        intent.setClass(PerinfoActivity.this,MainActivity.class);
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText
-                                (PerinfoActivity.this,"更新失败凹~",Toast.LENGTH_SHORT).show();
-                    }
+                if (response.body().string().equals("true")) {
+                    Toast.makeText
+                            (PerinfoActivity.this, "更新成功凹~", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setClass(PerinfoActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText
+                            (PerinfoActivity.this, "更新失败凹~", Toast.LENGTH_SHORT).show();
+                }
                 Looper.loop();
             }
         });
@@ -224,12 +224,12 @@ public class PerinfoActivity extends AppCompatActivity {
 
         //上传到服务器
         File file = new File(imgPath);
-        Log.e("test-upimgpath",imgPath);
-        okHttpClientHeadPortrait=new OkHttpClient();
+        Log.e("test-upimgpath", imgPath);
+        okHttpClientHeadPortrait = new OkHttpClient();
         RequestBody body = RequestBody.create(MediaType.parse("image/*"),
                 file);
         Request request = new Request.Builder()
-                .url(Info.BASE_URL+"user/uploadImg?id="+user.getUser_id())
+                .url(Info.BASE_URL + "user/uploadImg?id=" + user.getUser_id())
                 .post(body)
                 .build();
         Call call = okHttpClientHeadPortrait.newCall(request);
@@ -245,31 +245,31 @@ public class PerinfoActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Looper.prepare();
-                    String data=response.body().string();
-                    if(data.equals("true")){
-                        Toast.makeText(PerinfoActivity.this,"更新信息成功~",Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent();
-                        intent.setClass(PerinfoActivity.this,MainActivity.class);
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText(PerinfoActivity.this,"更新信息失败~请重试",Toast.LENGTH_SHORT).show();
-                    }
+                String data = response.body().string();
+                if (data.equals("true")) {
+                    Toast.makeText(PerinfoActivity.this, "更新信息成功~", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setClass(PerinfoActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(PerinfoActivity.this, "更新信息失败~请重试", Toast.LENGTH_SHORT).show();
+                }
                 Looper.loop();
             }
         });
 
         //将头像保存到本地
         try {
-            String path=this.getFilesDir()+"/HeadPortrait.jpg";
-            Log.e("test",path);
-            File fileOutput=new File(path);
-            OutputStream outputStream=new FileOutputStream(fileOutput);
-            File fileInput=new File(imgPath);
-            InputStream inputStream=new FileInputStream(fileInput);
+            String path = this.getFilesDir() + "/HeadPortrait.jpg";
+            Log.e("test", path);
+            File fileOutput = new File(path);
+            OutputStream outputStream = new FileOutputStream(fileOutput);
+            File fileInput = new File(imgPath);
+            InputStream inputStream = new FileInputStream(fileInput);
             byte[] buf = new byte[1024];
-            int num=0;
-            while ((num=inputStream.read(buf))!=-1){
-                outputStream.write(buf,0,num);
+            int num = 0;
+            while ((num = inputStream.read(buf)) != -1) {
+                outputStream.write(buf, 0, num);
             }
             outputStream.close();
             inputStream.close();
@@ -286,7 +286,7 @@ public class PerinfoActivity extends AppCompatActivity {
     public void setMsgInfo(Message msg) {
         switch (msg.what) {
             case 4:
-                Log.e("testnickname",msg.obj.toString());
+                Log.e("testnickname", msg.obj.toString());
                 tvPerinfoNickname.setText(msg.obj.toString());
                 user.setUser_nickname(msg.obj.toString());
                 break;
@@ -303,13 +303,13 @@ public class PerinfoActivity extends AppCompatActivity {
 
     private void showSexBottomSheetDialog() {
 
-        bottomSheetDialog= new BottomSheetDialog(this);
+        bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setCancelable(true);
         bottomSheetDialog.setContentView(R.layout.dialog_perinfo_sex);
 
-        tvDialogPerinfoMan=bottomSheetDialog.findViewById(R.id.tv_dialog_perinfo_man);
-        tvDialogPerinfoWoman=bottomSheetDialog.findViewById(R.id.tv_dialog_perinfo_woman);
-        tvDialogPerinfoSecret=bottomSheetDialog.findViewById(R.id.tv_dialog_perinfo_secret);
+        tvDialogPerinfoMan = bottomSheetDialog.findViewById(R.id.tv_dialog_perinfo_man);
+        tvDialogPerinfoWoman = bottomSheetDialog.findViewById(R.id.tv_dialog_perinfo_woman);
+        tvDialogPerinfoSecret = bottomSheetDialog.findViewById(R.id.tv_dialog_perinfo_secret);
 
         bottomSheetDialog.show();
 
@@ -319,21 +319,21 @@ public class PerinfoActivity extends AppCompatActivity {
 
     private void showAgeBottomSheetDialog() {
 
-        bottomSheetDialog= new BottomSheetDialog(this);
+        bottomSheetDialog = new BottomSheetDialog(this);
 
         bottomSheetDialog.setCancelable(true);
         bottomSheetDialog.setContentView(R.layout.dialog_perinfo_age);
 
-        lvDialogPerinfoAge=bottomSheetDialog.findViewById(R.id.lv_dialog_perinfo_age);
+        lvDialogPerinfoAge = bottomSheetDialog.findViewById(R.id.lv_dialog_perinfo_age);
 
-        ArrayAdapter<String> agesAdapter =new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,perinfoAgeList);
+        ArrayAdapter<String> agesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, perinfoAgeList);
 
         lvDialogPerinfoAge.setAdapter(agesAdapter);
 
         lvDialogPerinfoAge.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tvPerinfoAge.setText(perinfoAgeList.get(position)+"");
+                tvPerinfoAge.setText(perinfoAgeList.get(position) + "");
                 bottomSheetDialog.dismiss();
             }
         });
@@ -344,7 +344,7 @@ public class PerinfoActivity extends AppCompatActivity {
 
     private void setDialogListeners() {
 
-        PerinfoDialogListener perinfoDialogListener=new PerinfoDialogListener();
+        PerinfoDialogListener perinfoDialogListener = new PerinfoDialogListener();
 
         tvDialogPerinfoMan.setOnClickListener(perinfoDialogListener);
         tvDialogPerinfoWoman.setOnClickListener(perinfoDialogListener);
@@ -352,7 +352,7 @@ public class PerinfoActivity extends AppCompatActivity {
 
     }
 
-    private class PerinfoDialogListener implements View.OnClickListener{
+    private class PerinfoDialogListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -381,22 +381,22 @@ public class PerinfoActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 100){
+        if (requestCode == 100) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_PICK);
             intent.setType("image/*");
-            startActivityForResult(intent,200);
+            startActivityForResult(intent, 200);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 200 && resultCode == RESULT_OK){
+        if (requestCode == 200 && resultCode == RESULT_OK) {
             Uri uri = data.getData();
-            Cursor cursor = getContentResolver().query(uri,null,null,
-                    null,null);
-            if (cursor.moveToFirst()){
+            Cursor cursor = getContentResolver().query(uri, null, null,
+                    null, null);
+            if (cursor.moveToFirst()) {
                 String imgPath = cursor.getString(cursor.getColumnIndex("_data"));
                 RequestOptions options = new RequestOptions()
                         .circleCrop();
@@ -404,14 +404,14 @@ public class PerinfoActivity extends AppCompatActivity {
                         .load(imgPath)
                         .apply(options)
                         .into(ivPerinfoPortrait);
-                this.imgPath=imgPath;
+                this.imgPath = imgPath;
             }
         }
     }
 
     private void setListeners() {
 
-        PerinfoListener perinfoListener=new PerinfoListener();
+        PerinfoListener perinfoListener = new PerinfoListener();
 
         llPerinfoPortrait.setOnClickListener(perinfoListener);
         llPerinfoNickname.setOnClickListener(perinfoListener);
@@ -429,16 +429,29 @@ public class PerinfoActivity extends AppCompatActivity {
     private void setInfo() {
 
         //todo:设置头像，先从本地拿取头像信息，如果没有再从服务器上拿
+//        RequestOptions options = new RequestOptions()
+//                .signature(new ObjectKey(System.currentTimeMillis()))
+//                .circleCrop();
+//        Glide.with(PerinfoActivity.this)
+//                .load(this.getFilesDir()+"/HeadPortrait.jpg")
+//                .apply(options)
+//                .into(ivPerinfoPortrait);
+
         RequestOptions options = new RequestOptions()
                 .signature(new ObjectKey(System.currentTimeMillis()))
                 .circleCrop();
         Glide.with(PerinfoActivity.this)
-                .load(this.getFilesDir()+"/HeadPortrait.jpg")
+                .load(Info.BASE_URL+user.getUser_headportrait())
                 .apply(options)
                 .into(ivPerinfoPortrait);
 
+<<<<<<< HEAD
         Log.e("test,setinfoglideurl",this.getFilesDir()+"/HeadPortrait.jpg");
         Log.e("user",user.toString());
+=======
+        Log.e("test,setinfoglideurl", this.getFilesDir() + "/HeadPortrait.jpg");
+
+>>>>>>> f0662de151f70c0a92901e8a667bd848160b15b1
         tvPerinfoNickname.setText(user.getUser_nickname());
         tvPerinfoSex.setText(user.getUser_sex());
         tvPerinfoAge.setText(user.getUser_age().toString());
@@ -458,26 +471,26 @@ public class PerinfoActivity extends AppCompatActivity {
 
     private void findView() {
 
-        ivPerinfoPortrait=findViewById(R.id.iv_perinfo_portrait);
+        ivPerinfoPortrait = findViewById(R.id.iv_perinfo_portrait);
 
-        tvPerinfoNickname=findViewById(R.id.tv_perinfo_nickname);
-        tvPerinfoSex=findViewById(R.id.tv_perinfo_sex);
-        tvPerinfoAge=findViewById(R.id.tv_perinfo_age);
-        tvPerinfoCity=findViewById(R.id.tv_perinfo_city);
-        tvPerinfoPhone=findViewById(R.id.tv_perinfo_phone);
-        tvPerinfoEmail=findViewById(R.id.tv_perinfo_email);
-        tvPerinfoSignature=findViewById(R.id.tv_perinfo__signature);
-        tvPerinfoSave=findViewById(R.id.tv_perinfo_save);
+        tvPerinfoNickname = findViewById(R.id.tv_perinfo_nickname);
+        tvPerinfoSex = findViewById(R.id.tv_perinfo_sex);
+        tvPerinfoAge = findViewById(R.id.tv_perinfo_age);
+        tvPerinfoCity = findViewById(R.id.tv_perinfo_city);
+        tvPerinfoPhone = findViewById(R.id.tv_perinfo_phone);
+        tvPerinfoEmail = findViewById(R.id.tv_perinfo_email);
+        tvPerinfoSignature = findViewById(R.id.tv_perinfo__signature);
+        tvPerinfoSave = findViewById(R.id.tv_perinfo_save);
 
-        llPerinfoPortrait=findViewById(R.id.ll_perinfo_portrait);
-        llPerinfoNickname=findViewById(R.id.ll_perinfo_nickname);
-        llPerinfoSex=findViewById(R.id.ll_perinfo_sex);
-        llPerinfoAge=findViewById(R.id.ll_perinfo_age);
-        llPerinfoCity=findViewById(R.id.ll_perinfo_city);
-        llPerinfoPhone=findViewById(R.id.ll_perinfo_phone);
-        llPerinfoEmail=findViewById(R.id.ll_perinfo_email);
-        llPerinfoSignature=findViewById(R.id.ll_perinfo_signature);
-        llPerinfoVip=findViewById(R.id.ll_perinfo_vip);
+        llPerinfoPortrait = findViewById(R.id.ll_perinfo_portrait);
+        llPerinfoNickname = findViewById(R.id.ll_perinfo_nickname);
+        llPerinfoSex = findViewById(R.id.ll_perinfo_sex);
+        llPerinfoAge = findViewById(R.id.ll_perinfo_age);
+        llPerinfoCity = findViewById(R.id.ll_perinfo_city);
+        llPerinfoPhone = findViewById(R.id.ll_perinfo_phone);
+        llPerinfoEmail = findViewById(R.id.ll_perinfo_email);
+        llPerinfoSignature = findViewById(R.id.ll_perinfo_signature);
+        llPerinfoVip = findViewById(R.id.ll_perinfo_vip);
 
     }
 

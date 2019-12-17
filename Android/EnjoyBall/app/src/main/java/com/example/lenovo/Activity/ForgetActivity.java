@@ -50,6 +50,7 @@ public class ForgetActivity extends AppCompatActivity {
     private CodeTimeUtil codeTimeUtil;
     private int eye = 0;
     private int num = 0;
+    private int tx = 0;
     private boolean go = false;
     private OkHttpClient okHttpClient;
     private String pwd;
@@ -67,10 +68,15 @@ public class ForgetActivity extends AppCompatActivity {
         handler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
-                if (msg.what==0){
-                    Intent intent=new Intent(ForgetActivity.this,LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                switch (msg.what){
+                    case 0:
+//                        Intent intent=new Intent(ForgetActivity.this,LoginActivity.class);
+//                        startActivity(intent);
+                        ForgetActivity.this.finish();
+                        break;
+//                    case 1:
+//                        forgrt(num);
+//                        break;
                 }
             }
         };
@@ -116,6 +122,7 @@ public class ForgetActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 case R.id.btn_forget_code:
+                    tx=0;
                     regist();//调用验证短信发送的回调接口
                     //判断是否为null或“”
                     if (TextUtils.isEmpty(etForgetPhone.getText().toString())) {
@@ -137,10 +144,11 @@ public class ForgetActivity extends AppCompatActivity {
                             if (TextUtils.isEmpty(etForgetPwd.getText().toString())) {
                                 Toast.makeText(ForgetActivity.this, "密码不能为空", Toast.LENGTH_SHORT).show();
                             } else {
+                                num = 1;
                                 regist();
                                 SMSSDK.submitVerificationCode("86", etForgetPhone.getText().toString(), etForgetCode.getText().toString());
 //                                if (go)
-                                    //forgrt(num);
+//                                  forgrt(num);
                             }
                         }
                     }
@@ -172,9 +180,7 @@ public class ForgetActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                num = 1;
                                 forgrt(num);
-                                return ;
                             }
                         });
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
@@ -194,8 +200,10 @@ public class ForgetActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (num!=1)
+                            if (tx==0){
+                                tx=1;
                                 Toast.makeText(ForgetActivity.this, "操作失败，请重新获取验证码", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                     ((Throwable) data).printStackTrace();
@@ -233,7 +241,7 @@ public class ForgetActivity extends AppCompatActivity {
                     public void onResponse(Call call, Response response) throws IOException {
                         Looper.prepare();
                         String x = response.body().string();
-                        Log.e("注册",x);
+                        Log.e("改密码",x);
                         if (x.equals("true")){
                             Toast.makeText(ForgetActivity.this, "修改密码成功，即将返回登录界面", Toast.LENGTH_SHORT).show();
                             new Thread(){

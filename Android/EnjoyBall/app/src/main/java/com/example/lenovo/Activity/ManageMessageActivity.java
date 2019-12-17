@@ -67,6 +67,7 @@ public class ManageMessageActivity extends AppCompatActivity {
 //获取消息
     private void getMessages() {
         int id =((Info)getApplicationContext()).getUser().getUser_id();
+        Log.e("test curid",id+"");
         Request request = new Request.Builder()
                 .url(url+"appointment/messageList?id="+id)
                 .build();
@@ -82,7 +83,7 @@ public class ManageMessageActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String messagesJson = response.body().string();
-                Log.e("json",messagesJson);
+                Log.e("json",messagesJson+".");
                 Type type = new TypeToken<List<ApplyUtil>>(){}.getType();
 
                 if (!messagesJson.equals("false")){
@@ -91,7 +92,6 @@ public class ManageMessageActivity extends AppCompatActivity {
                     Log.e("收到的消息",messages.toString());
                     EventBus.getDefault().post("OK");
                 }
-
             }
         });
 
@@ -106,6 +106,7 @@ public class ManageMessageActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setView(String message){
         if (message.equals("OK")){
+            Log.e("消息",messages.toString());
             adapter = new ManageMessageAdapter(messages,this);
             lv_manage.setAdapter(adapter);
         }

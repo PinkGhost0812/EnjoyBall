@@ -73,7 +73,7 @@ public class InviteAdapter extends BaseAdapter {
              id = user.getUser_id();
         }else {
             Team team = (Team)datasource.get(position).get("object");
-             id = team.getTeam_id();
+             id = team.getTeam_captain();
         }
         if (convertView == null){
             convertView = LayoutInflater.from(mContext).inflate(itemResId,null);

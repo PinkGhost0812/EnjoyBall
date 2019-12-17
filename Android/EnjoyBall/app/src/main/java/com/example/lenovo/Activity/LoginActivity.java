@@ -157,7 +157,6 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String userJsonStr = response.body().string();
-                    Log.e("获取",userJsonStr);
                     if (userJsonStr.equals( "false")){
                         Looper.prepare();
                         Toast.makeText(getApplicationContext(), "手机号未注册", Toast.LENGTH_SHORT).show();
@@ -186,7 +185,6 @@ public class LoginActivity extends AppCompatActivity {
                                     if (user.equals("true")){
                                         u.setUser_jpushid(Info.registrationId);
                                         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                                        Log.e("用户",u.toString());
 
                                         ((Info)getApplication()).setUser(u);
 

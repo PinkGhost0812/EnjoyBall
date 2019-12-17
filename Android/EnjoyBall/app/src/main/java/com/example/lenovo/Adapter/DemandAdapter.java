@@ -26,6 +26,7 @@ public class DemandAdapter extends BaseAdapter {
 
     private int item_layout_id;
     private int[] ball = {R.drawable.football,R.drawable.basketball,R.drawable.volleyball,R.drawable.badminton,R.drawable.tabletennis};
+    private String[] type = {"个人约球","队伍约球"};
     private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd  HH:mm");
 
 
@@ -63,16 +64,17 @@ public class DemandAdapter extends BaseAdapter {
             viewHolder.tv_time = convertView.findViewById(R.id.tv_time_time);
             viewHolder.tv_place = convertView.findViewById(R.id.tv_time_place);
             viewHolder.tv_dp = convertView.findViewById(R.id.tv_time_dp);
+            viewHolder.tv_type = convertView.findViewById(R.id.tv_time_type);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        //DemandInfo demandInfo = dataSource.get(position);
         viewHolder.iv_img.setImageResource(ball[dataSource.get(position).getDemand_class()]);
         viewHolder.tv_time.setText(sf.format(dataSource.get(position).getDemand_time()));
         viewHolder.tv_place.setText(dataSource.get(position).getDemand_place()+"");
         viewHolder.tv_dp.setText(dataSource.get(position).getDemand_description()+"");
+        viewHolder.tv_type.setText(type[dataSource.get(position).getDemand_oom()]);
         return convertView;
     }
 
@@ -81,5 +83,6 @@ public class DemandAdapter extends BaseAdapter {
         TextView tv_time;
         TextView tv_place;
         TextView tv_dp;
+        TextView tv_type;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.lenovo.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Looper;
 import android.os.Message;
@@ -71,8 +72,58 @@ public class TeamVisitDetailActivity extends AppCompatActivity {
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_team_detail);
 
+        user=((Info)getApplicationContext()).getUser();
+
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
+        }
+
+        if (getIntent().getStringExtra("invite").equals("invite")){
+            android.app.AlertDialog.Builder adBuilder = new android.app.AlertDialog.Builder(TeamVisitDetailActivity.this);
+            adBuilder.setTitle("加 入？");
+            adBuilder.setMessage("球队邀请你加入？");
+            adBuilder.setPositiveButton("我已准备好", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    okHttpClient = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            .url(Info.BASE_URL + "team/inviteOk?teamId="+team.getTeam_id()+"&userId=" + user.getUser_id())
+                            .build();
+                    Call call = okHttpClient.newCall(request);
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            Looper.prepare();
+                            Toast.makeText(TeamVisitDetailActivity.this, "获取队伍详细信息失败~", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                            e.printStackTrace();
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            Looper.prepare();
+                            String data = response.body().string();
+                            if (data.equals("true")){
+                                Toast.makeText(TeamVisitDetailActivity.this,"加入成功~",Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent();
+                                intent.setClass(TeamVisitDetailActivity.this,MainActivity.class);
+                                startActivity(intent);
+                                Looper.loop();
+                            }else{
+                                Toast.makeText(TeamVisitDetailActivity.this,"加入失败~",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            });
+            adBuilder.setNegativeButton("我再想想", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            android.app.AlertDialog alertDialog = adBuilder.create();
+            alertDialog.show();
         }
 
         findView();

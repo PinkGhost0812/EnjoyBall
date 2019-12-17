@@ -58,6 +58,8 @@ public class HomepageFollowFragment extends Fragment {
 
     private List<User> userList;
 
+    private HomepageFollowAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -98,15 +100,21 @@ public class HomepageFollowFragment extends Fragment {
 
             initData(userList);
 
-            HomepageFollowAdapter adapter=new HomepageFollowAdapter
+            adapter=new HomepageFollowAdapter
                     (getContext(),dataSource,R.layout.listview_item_follow);
 
             lvHomepageFollow.setAdapter(adapter);
+        }else if (msg.what==100){
+
+            dataSource.remove(Integer.parseInt(msg.obj.toString()));
+            adapter.notifyDataSetChanged();
+            Toast.makeText(getContext(),"取关成功~",Toast.LENGTH_SHORT).show();
+
+        }else if (msg.what==101){
+            Toast.makeText(getContext(),"取关失败~",Toast.LENGTH_SHORT).show();
         }
 
     }
-
-
 
     private void initData(List<User> userList) {
 
@@ -117,6 +125,7 @@ public class HomepageFollowFragment extends Fragment {
             map.put("nicknames",userList.get(i).getUser_nickname());
             map.put("sexs",userList.get(i).getUser_sex());
             map.put("ages",userList.get(i).getUser_age());
+            map.put("ids",userList.get(i).getUser_id());
             dataSource.add(map);
         }
     }
