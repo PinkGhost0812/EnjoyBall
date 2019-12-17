@@ -12,8 +12,17 @@ public class Comment implements Serializable {
     private Integer comment_likenum;
     private Date comment_time;
     private Integer comment_belone;
+    private Integer comment_contest;
 
     public Comment(){}
+
+    public Integer getComment_contest() {
+        return comment_contest;
+    }
+
+    public void setComment_contest(Integer comment_contest) {
+        this.comment_contest = comment_contest;
+    }
 
     public Integer getComment_id() {
         return comment_id;
@@ -78,13 +87,14 @@ public class Comment implements Serializable {
                 ", comment_author=" + comment_author +
                 ", comment_class=" + comment_class +
                 ", comment_content='" + comment_content + '\'' +
-                ", comment_likeNum=" + comment_likenum +
+                ", comment_likenum=" + comment_likenum +
                 ", comment_time=" + comment_time +
                 ", comment_belone=" + comment_belone +
+                ", comment_contest=" + comment_contest +
                 '}';
     }
 
-    public Comment(Integer comment_id, Integer comment_author, Integer comment_class, String comment_content, Integer comment_likenum, Date comment_time, Integer comment_belone) {
+    public Comment(Integer comment_id, Integer comment_author, Integer comment_class, String comment_content, Integer comment_likenum, Date comment_time, Integer comment_belone, Integer comment_contest) {
         this.comment_id = comment_id;
         this.comment_author = comment_author;
         this.comment_class = comment_class;
@@ -92,5 +102,6 @@ public class Comment implements Serializable {
         this.comment_likenum = comment_likenum;
         this.comment_time = comment_time;
         this.comment_belone = comment_belone;
+        this.comment_contest = comment_contest;
     }
 }

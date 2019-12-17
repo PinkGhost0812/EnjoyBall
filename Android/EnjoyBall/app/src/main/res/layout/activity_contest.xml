@@ -152,14 +152,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/tv_contest_guessing"
-            android:padding="10dp"
-            android:textColor="#000000"
-            android:textSize="25dp"
-            android:text="竞猜"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

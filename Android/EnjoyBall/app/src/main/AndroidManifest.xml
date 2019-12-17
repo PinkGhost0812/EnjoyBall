@@ -26,8 +26,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity"> -->
-        <activity android:name="com.example.lenovo.Activity.LoginActivity">
+        <!--<activity android:name="com.example.lenovo.Activity.PersonalcenterActivity">-->
+         <activity android:name="com.example.lenovo.Activity.LoginActivity">
+        <!--<activity android:name="com.example.lenovo.Activity.LoginActivity">-->
             <!-- <activity android:name="com.example.lenovo.Activity.MainActivity"> -->
             <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity"> -->
             <intent-filter>
@@ -36,6 +37,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.lenovo.Activity.ModifyLocationActivity"/>
+        <activity android:name="com.example.lenovo.enjoyball.ContestActivity"/>
         <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity" />
         <activity android:name="com.example.lenovo.Activity.MainActivity" />
         <activity android:name="com.example.lenovo.Activity.CreateAgreementActivity" />

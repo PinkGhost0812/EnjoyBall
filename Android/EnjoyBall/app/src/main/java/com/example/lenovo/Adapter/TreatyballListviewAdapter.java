@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TreatyballListviewAdapter extends BaseAdapter {
+    ViewHolder viewHolder;
     private List<Map<String,Object>> datasource = null;
     private Context context = null;
     private int item_layout_id;
@@ -44,27 +45,54 @@ public class TreatyballListviewAdapter extends BaseAdapter {
         if(null == convertView) {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(item_layout_id, null);
+            viewHolder = new ViewHolder();
+            viewHolder.tv_dates = convertView.findViewById(R.id.tv_treatyball_date);
+            viewHolder.tv_type = convertView.findViewById(R.id.tv_treatyball_type);
+            viewHolder.tv_status = convertView.findViewById(R.id.tv_treatyball_symbol);
+            convertView.setTag(viewHolder);
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        TextView tv_troop1 = convertView.findViewById(R.id.tv_treatyball_troops1);
-        TextView tv_troop2 = convertView.findViewById(R.id.tv_treatyball_troops2);
-        TextView tv_scores1 = convertView.findViewById(R.id.tv_treatyball_score1);
-        TextView tv_score2 = convertView.findViewById(R.id.tv_treatyball_score2);
-        TextView tv_times = convertView.findViewById(R.id.tv_treatyball_time);
-        TextView tv_dates = convertView.findViewById(R.id.tv_treatyball_date);
-        TextView tv_place = convertView.findViewById(R.id.tv_treatyball_place);
-        TextView tv_symbol = convertView.findViewById(R.id.tv_treatyball_symbol);
-        TextView tv_type = convertView.findViewById(R.id.tv_treatyball_type);
 
         Map<String,Object> map = datasource.get(position);
-        tv_troop1.setText(map.get("teams1").toString());
-        tv_troop2.setText(map.get("teams2").toString());
-        tv_scores1.setText(map.get("scores1").toString());
-        tv_score2.setText(map.get("scores2").toString());
-        tv_times.setText(map.get("times").toString());
-        tv_place.setText(map.get("places").toString());
-        tv_dates.setText(map.get("dates").toString());
-        tv_type.setText(map.get("types").toString());
-        tv_symbol.setText(map.get("symbols").toString());
+        viewHolder.tv_dates.setText(map.get("dates").toString());
+        switch ((int)map.get("types")){
+            case 0:
+                viewHolder.tv_type.setText("足球");
+                break;
+            case 1:
+                viewHolder.tv_type.setText("篮球");
+                break;
+            case 2:
+                viewHolder.tv_type.setText("排球");
+                break;
+            case 3:
+                viewHolder.tv_type.setText("羽毛球");
+                break;
+            case 4:
+                viewHolder.tv_type.setText("乒乓球");
+                break;
+        }
+        switch ((int)map.get("status")){
+            case 0:
+                viewHolder.tv_status.setText("未开始");
+                break;
+            case 1:
+                viewHolder.tv_status.setText("未开始");
+                break;
+            case 2:
+                viewHolder.tv_status.setText("进行中");
+                break;
+            case 3:
+                viewHolder.tv_status.setText("已结束");
+                break;
+        }
         return convertView;
+    }
+
+    private class ViewHolder{
+        public TextView tv_dates;
+        public TextView tv_type;
+        public TextView tv_status;
     }
 }

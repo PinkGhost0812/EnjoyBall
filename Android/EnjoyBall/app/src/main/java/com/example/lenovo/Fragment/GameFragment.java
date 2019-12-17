@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lenovo.Adapter.GameAdapter;
+import com.example.lenovo.enjoyball.ContestActivity;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Contest;
@@ -171,7 +172,7 @@ public class GameFragment extends Fragment {
 
                 Intent intent = new Intent();
                 intent.putExtra("id",dataSource.get(position).getContest().getGame_id());
-                intent.setClass(getActivity(), Team.class);
+                intent.setClass(getActivity(), ContestActivity.class);
                 startActivity(intent);
 
             }

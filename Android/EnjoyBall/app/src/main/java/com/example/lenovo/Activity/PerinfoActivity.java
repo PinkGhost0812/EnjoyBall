@@ -438,7 +438,7 @@ public class PerinfoActivity extends AppCompatActivity {
                 .into(ivPerinfoPortrait);
 
         Log.e("test,setinfoglideurl",this.getFilesDir()+"/HeadPortrait.jpg");
-
+        Log.e("user",user.toString());
         tvPerinfoNickname.setText(user.getUser_nickname());
         tvPerinfoSex.setText(user.getUser_sex());
         tvPerinfoAge.setText(user.getUser_age().toString());

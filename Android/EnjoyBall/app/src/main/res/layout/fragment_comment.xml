@@ -1,11 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+<RelativeLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <ListView
+        android:layout_marginBottom="50dp"
         android:id="@+id/lv_contestDetail_comment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <LinearLayout
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff">
 
-</android.support.constraint.ConstraintLayout>
+        <EditText
+            android:id="@+id/ed_fragcom_commentContent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:hint="写评论" />
+
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/iv_fragcom_releaseComment"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:src="@drawable/fly" />
+
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/iv_fragcom_collect"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:src="@drawable/col" />
+
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/iv_fragcom_remindWho"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:src="@drawable/remindhe" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+
+

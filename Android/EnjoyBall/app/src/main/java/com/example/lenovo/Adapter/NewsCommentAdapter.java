@@ -10,7 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.lenovo.Util.AuthorAndComment;
+//import com.example.lenovo.enjoyball.GlideApp;
 import com.example.lenovo.enjoyball.GlideApp;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;

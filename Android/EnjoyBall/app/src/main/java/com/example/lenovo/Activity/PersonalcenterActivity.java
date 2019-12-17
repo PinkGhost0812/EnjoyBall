@@ -75,6 +75,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
         user=((Info)getApplicationContext()).getUser();
 
+
         setInfo();
 
         getCommentNum();
@@ -261,15 +262,26 @@ public class PersonalcenterActivity extends AppCompatActivity {
                     break;
                 case R.id.ll_personalcenter_yueqiu:
                     //点击约球
+                    intent = new Intent();
+                    intent.setClass(PersonalcenterActivity.this,TreatyballActivity.class);
+                    intent.putExtra("user",user);
+                    startActivity(intent);
                     break;
                 case R.id.ll_personalcenter_collect:
                     //点击收藏
+                    intent = new Intent();
+                    intent.setClass(PersonalcenterActivity.this, CollectActivity.class);
+                    intent.putExtra("user",user);
+                    startActivity(intent);
                     break;
                 case R.id.ll_personalcenter_vip:
                     //点击vip
                     break;
                 case R.id.ll_personalcenter_feedback:
                     //点击反馈
+                    intent = new Intent();
+                    intent.setClass(PersonalcenterActivity.this,FeedBackActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.ll_personalcenter_logout:
                     //点击注销

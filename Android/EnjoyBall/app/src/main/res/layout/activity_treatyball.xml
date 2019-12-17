@@ -20,24 +20,9 @@
             android:gravity="center"
             android:layout_weight="20"
             android:textSize="25sp"
-            android:text="反馈"
+            android:text="约球记录"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/tv_treatyball_order"
-            android:text="倒序"
-            android:layout_gravity="center"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content" />
-        <Spinner
-            android:id="@+id/spin_treatyball_match"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content">
-
-        </Spinner>
     </LinearLayout>
     <LinearLayout
         android:background="	#D3D3D3"

@@ -37,6 +37,8 @@ MobSDK {
 }
 
 dependencies {
+    implementation 'com.sun.mail:android-mail:1.5.5'
+    implementation 'com.sun.mail:android-activation:1.5.5'
     //智能刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
