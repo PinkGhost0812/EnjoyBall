@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.lenovo.enjoyball.Info;
-import com.example.lenovo.enjoyball.MainActivity;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;

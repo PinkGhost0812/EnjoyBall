@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.example.lenovo.Adapter.TeamDetailAdapter;
 import com.example.lenovo.Adapter.TeamManageMemberAdapter;
 import com.example.lenovo.enjoyball.Info;
-import com.example.lenovo.enjoyball.MainActivity;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;

@@ -26,36 +26,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< Updated upstream
-        <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity"> -->
-        <activity android:name="com.example.lenovo.Activity.LoginActivity">
-            <!-- <activity android:name="com.example.lenovo.Activity.MainActivity"> -->
-            <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity"> -->
-=======
 
         <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity"> -->
         <activity android:name="com.example.lenovo.Activity.LoginActivity">
             <!--<activity android:name="com.example.lenovo.Activity.MainActivity">-->
             <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity">-->
 
->>>>>>> Stashed changes
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< Updated upstream
-        <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity" />
-        <activity android:name="com.example.lenovo.Activity.MainActivity" />
-        <activity android:name="com.example.lenovo.Activity.CreateAgreementActivity" />
-        <activity android:name="com.example.lenovo.Activity.NewsDetailActivity" />
-=======
         <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity"/>
         <activity android:name="com.example.lenovo.Activity.MainActivity"/>
         <activity android:name="com.example.lenovo.Activity.CreateAgreementActivity"/>
         <activity android:name="com.example.lenovo.Activity.NewsDetailActivity"/>
->>>>>>> Stashed changes
         <activity android:name="com.example.lenovo.Activity.FeedBackActivity" />
         <activity android:name="com.example.lenovo.Activity.CollectActivity" />
         <activity android:name="com.example.lenovo.Activity.TreatyballActivity" />
@@ -67,20 +53,6 @@
         <activity android:name="com.example.lenovo.Activity.HomepageActivity" />
         <activity android:name="com.example.lenovo.Activity.PerinfoActivity" />
         <activity android:name="com.example.lenovo.Activity.TeamActivity" />
-<<<<<<< Updated upstream
-        <activity android:name="com.example.lenovo.Activity.TeamCreateActivity" />
-        <activity android:name="com.example.lenovo.Activity.PerinfoSignatureActivity" />
-        <activity android:name="com.example.lenovo.Activity.PerinfoEmailActivity" />
-        <activity android:name="com.example.lenovo.Activity.PerinfoNicknameActivity" />
-        <activity android:name="com.example.lenovo.Activity.NotifyMessageActivity" />
-        <activity android:name="com.example.lenovo.Activity.ManageMessageActivity" />
-        <activity android:name="com.example.lenovo.Activity.TeamManageActivity" />
-        <activity android:name="com.example.lenovo.Activity.TeamManageNameActivity" />
-        <activity android:name="com.example.lenovo.Activity.TeamManageSloganActivity" />
-        <activity android:name="com.example.lenovo.Activity.InviteActivity" />
-        <activity android:name="com.example.lenovo.Activity.ShowAgreementActivity" />
-==
-=======
         <activity android:name="com.example.lenovo.Activity.TeamCreateActivity"/>
         <activity android:name="com.example.lenovo.Activity.PerinfoSignatureActivity"/>
         <activity android:name="com.example.lenovo.Activity.PerinfoEmailActivity"/>
@@ -91,7 +63,6 @@
         <activity android:name="com.example.lenovo.Activity.TeamManageNameActivity" />
         <activity android:name="com.example.lenovo.Activity.TeamManageSloganActivity" />
         <activity android:name="com.example.lenovo.Activity.SearchActivity"/>
->>>>>>> Stashed changes
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -187,8 +158,7 @@
         <!-- </>值来自开发者平台取得的AppKey -->
 
         <activity android:name="com.example.lenovo.Activity.TeamManageMemberActivity" />
-        <activity android:name="com.example.lenovo.Activity.TeamManageInviteActivity" />
-        <activity android:name="com.example.lenovo.Activity.TeamVisitDetailActivity"></activity>
+        <activity android:name="com.example.lenovo.Activity.TeamManageInviteActivity"></activity>
     </application>
 
 </manifest>
