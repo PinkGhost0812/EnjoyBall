@@ -210,16 +210,27 @@ public class ManageMessageAdapter extends BaseAdapter {
         int userId = 0;
         int teamId = 0;
         int applyId = 0;
+        int demandId = 0;
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = null;
 
         if (message.equals("agree")) {
-            userId = applyUtil.getApplyInfo().getReceiver();
-            teamId = applyUtil.getApplyInfo().getTeamId();
-            applyId = applyUtil.getApplyInfo().getId();
-            request = new Request.Builder()
-                    .url(url + "appointment/apply?userId=" + userId + "&teamId=" + teamId + "&&applyId=" + applyId)
-                    .build();
+           if (applyUtil.getDemand().getDemand_oom()==0){
+               userId = applyUtil.getApplyInfo().getReceiver();
+               teamId = applyUtil.getApplyInfo().getTeamId();
+               applyId = applyUtil.getApplyInfo().getId();
+               request = new Request.Builder()
+                       .url(url + "appointment/apply?userId=" + userId + "&teamId=" + teamId + "&&applyId=" + applyId)
+                       .build();
+           }
+           else {
+               teamId = applyUtil.getApplyInfo().getTeamId();
+               demandId = applyUtil.getDemand().getDemand_id();
+               applyId = applyUtil.getApplyInfo().getId();
+               request = new Request.Builder()
+                       .url(url + "appointment/acceptApply?teamId=" + teamId + "&&demandId=" + demandId+"&&applyId="+applyId)
+                       .build();
+           }
         } else {
             applyId = applyUtil.getApplyInfo().getId();
             request = new Request.Builder()

@@ -82,7 +82,7 @@ public class ManageMessageActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String messagesJson = response.body().string();
-                Log.e("json",messagesJson);
+                Log.e("json",messagesJson+".");
                 Type type = new TypeToken<List<ApplyUtil>>(){}.getType();
 
                 if (!messagesJson.equals("false")){
@@ -106,6 +106,7 @@ public class ManageMessageActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setView(String message){
         if (message.equals("OK")){
+            Log.e("消息",messages.toString());
             adapter = new ManageMessageAdapter(messages,this);
             lv_manage.setAdapter(adapter);
         }

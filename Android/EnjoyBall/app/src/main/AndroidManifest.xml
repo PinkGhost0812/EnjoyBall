@@ -26,22 +26,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< Updated upstream
 
         <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity"> -->
         <activity android:name="com.example.lenovo.Activity.LoginActivity">
             <!--<activity android:name="com.example.lenovo.Activity.MainActivity">-->
             <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity">-->
 
+=======
+        <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity">-->
+        <activity android:name="com.example.lenovo.Activity.LoginActivity">
+            <!-- <activity android:name="com.example.lenovo.Activity.MainActivity"> -->
+>>>>>>> Stashed changes
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< Updated upstream
         <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity"/>
         <activity android:name="com.example.lenovo.Activity.MainActivity"/>
         <activity android:name="com.example.lenovo.Activity.CreateAgreementActivity"/>
         <activity android:name="com.example.lenovo.Activity.NewsDetailActivity"/>
+=======
+       <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity" />
+        <activity android:name="com.example.lenovo.Activity.MainActivity" />
+        <activity android:name="com.example.lenovo.Activity.CreateAgreementActivity" />
+        <activity android:name="com.example.lenovo.Activity.NewsDetailActivity" />
+>>>>>>> Stashed changes
         <activity android:name="com.example.lenovo.Activity.FeedBackActivity" />
         <activity android:name="com.example.lenovo.Activity.CollectActivity" />
         <activity android:name="com.example.lenovo.Activity.TreatyballActivity" />

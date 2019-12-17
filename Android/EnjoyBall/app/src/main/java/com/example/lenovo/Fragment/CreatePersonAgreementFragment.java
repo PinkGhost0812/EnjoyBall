@@ -226,7 +226,7 @@ public class CreatePersonAgreementFragment extends Fragment {
                     if (object==null){
                         description = new String();
                     }else {
-                        description = object.toString();
+                        description = "come on";
                     }
                     AlertDialog.Builder adBuilder = new AlertDialog.Builder(getActivity());
                     adBuilder.setTitle("确认");

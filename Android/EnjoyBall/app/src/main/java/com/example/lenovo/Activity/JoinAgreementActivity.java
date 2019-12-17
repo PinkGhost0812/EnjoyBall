@@ -81,7 +81,12 @@ public class JoinAgreementActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 if (demandInfo.getDemand_oom()==0){
+
                     if (datasource.get(i).get("object")==null){
+                        if (getUser().getUser_id()==demandInfo.getDemand_user()){
+                            Toast.makeText(JoinAgreementActivity.this,"不能加入自己的队伍",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         android.app.AlertDialog.Builder adBuilder = new android.app.AlertDialog.Builder(JoinAgreementActivity.this);
                         adBuilder.setTitle("确认");
                         adBuilder.setMessage("确认加入约球吗");
@@ -109,8 +114,11 @@ public class JoinAgreementActivity extends AppCompatActivity {
                         startActivity(intent1);
                     }
                 }else if (demandInfo.getDemand_oom()==1){
+                    if (getUser().getUser_id()==demandInfo.getDemand_user()){
+                        Toast.makeText(JoinAgreementActivity.this,"不能加入自己的队伍",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     if (datasource.get(i).get("object")==null){
-                        getTeams();
                         if (team!=null){
                             AlertDialog.Builder builder = new AlertDialog.Builder(JoinAgreementActivity.this);
                             builder.setTitle("确认加入");
@@ -150,8 +158,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
     }
     //获取队长为当前用户的队伍信息
     private void getTeams() {
-        int id = 7;
-        //int id = getApplication().getUser().getUser_id();
+        int id = ((Info)getApplication()).getUser().getUser_id();
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder().url(url+"team/findByIdCls?id="+id+"&cls="+demandInfo.getDemand_class()).build();
         Call call = okHttpClient.newCall(request);
@@ -253,6 +260,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
                 Log.e("约球信息",jsonInfo);
                 Gson gson = new GsonBuilder().setDateFormat("YYYY-MM-DD hh:mm:ss").create();
                 demandInfo = gson.fromJson(jsonInfo, DemandInfo.class);
+                getTeams();
                 Message message = new Message();
                 message.what = POST_DEMANDINFO;
                 message.obj = demandInfo;
