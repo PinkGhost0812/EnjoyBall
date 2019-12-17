@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.tab_spec_main_volleyball:
                     tabtop =  3;
                     Log.e("球类",tabStrTopId[tabtop]);
-                    //changeTabTop(tabStrTopId[3],tab,tabtop);
+                    changeTabTop(tabStrTopId[3],tab,tabtop);
                     break;
                 case R.id.tab_spec_main_badminton:
                     tabtop =  4;

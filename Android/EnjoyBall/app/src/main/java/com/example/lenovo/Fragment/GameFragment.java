@@ -113,8 +113,13 @@ public class GameFragment extends Fragment {
                 listView.setAdapter(adapter);
                 break;
             case "page":
-
+                initPage(gameList);
+                adapter.notifyDataSetChanged();
+                //结束加载更多的动画
+                refreshLayout.finishLoadMore();
                 break;
+            case "102":
+
         }
 
 
@@ -267,6 +272,14 @@ public class GameFragment extends Fragment {
         for (int i=0;i<gameList.size();++i){
             dataSource.add(gameList.get(i));
             Log.e("test",dataSource.get(i).getTeamMap().toString());
+        }
+    }
+
+    private void initPage(List<TeamAndContest> gameList){
+        for (int i = 0;i<gameList.size();++i){
+            //dataSource.add(list.get(i));
+            dataSource.add(dataSource.size(),gameList.get(i));
+
         }
     }
 

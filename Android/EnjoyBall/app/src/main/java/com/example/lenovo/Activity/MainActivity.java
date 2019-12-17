@@ -1,5 +1,6 @@
 package com.example.lenovo.Activity;
 
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
+import com.example.lenovo.Activity.PersonalcenterActivity;
 import com.example.lenovo.Fragment.GameFragment;
 import com.example.lenovo.Fragment.HomeFragment;
 import com.example.lenovo.Fragment.MessageFragment;
@@ -50,6 +53,8 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
 
     private ImageView ivMainPortrait;
+    private ImageView ivSearch;
+    private EditText etSearch;
     private LinearLayout ll_top;
     private int tabtop = 0;
     private int tab = 0;
@@ -207,16 +212,19 @@ public class MainActivity extends AppCompatActivity {
                     tabtop =  2;
                     changeTabTop(tabStrTopId[2],tab,tabtop);
                     break;
-                case R.id.tab_spec_main_badminton:
+                case R.id.tab_spec_main_volleyball:
                     tabtop =  3;
+                    Log.e("球类",tabStrTopId[tabtop]);
                     changeTabTop(tabStrTopId[3],tab,tabtop);
                     break;
-                case R.id.tab_spec_main_tabletennis:
+                case R.id.tab_spec_main_badminton:
                     tabtop =  4;
+                    Log.e("球类",tabStrTopId[tabtop]);
                     changeTabTop(tabStrTopId[4],tab,tabtop);
                     break;
-                case R.id.tab_spec_main_volleyball:
+                case R.id.tab_spec_main_tabletennis:
                     tabtop =  5;
+                    Log.e("球类",tabStrTopId[tabtop]);
                     changeTabTop(tabStrTopId[5],tab,tabtop);
                     break;
                 case R.id.iv_main_portrait:
@@ -233,6 +241,17 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     startTime = System.currentTimeMillis();
+                    break;
+                case R.id.iv_main_serch:
+                    Intent intent1 =new Intent();
+                    intent1.setClass(MainActivity.this, SearchActivity.class);
+                    startActivity(intent1);
+                    break;
+                case R.id.et_main_search:
+                    Intent intent2 =new Intent();
+                    intent2.setClass(MainActivity.this, SearchActivity.class);
+                    overridePendingTransition(R.anim.personalcenter_in, R.anim.personalcenter_out);
+                    startActivity(intent2);
                     break;
 
             }
@@ -259,7 +278,6 @@ public class MainActivity extends AppCompatActivity {
     // 根据Tab ID 切换 Tab显示的Fragment
     private void changeFragment(String s,int i) {
         Fragment fragment = map.get(s).getFragment();
-
         if(curFragment == fragment) return;
 
         FragmentTransaction transaction =
@@ -327,9 +345,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout linearLayouttop1 = findViewById(R.id.tab_spec_main_topall);
         LinearLayout linearLayouttop2 = findViewById(R.id.tab_spec_main_football);
         LinearLayout linearLayouttop3 = findViewById(R.id.tab_spec_main_basketball);
-        LinearLayout linearLayouttop4 = findViewById(R.id.tab_spec_main_badminton);
-        LinearLayout linearLayouttop5 = findViewById(R.id.tab_spec_main_tabletennis);
-        LinearLayout linearLayouttop6 = findViewById(R.id.tab_spec_main_volleyball);
+        LinearLayout linearLayouttop4 = findViewById(R.id.tab_spec_main_volleyball);
+        LinearLayout linearLayouttop5 = findViewById(R.id.tab_spec_main_badminton);
+        LinearLayout linearLayouttop6 = findViewById(R.id.tab_spec_main_tabletennis);
         LinearLayout linearLayout1 = findViewById(R.id.tab_spec_main_home);
         LinearLayout linearLayout2 = findViewById(R.id.tab_spec_main_game);
         LinearLayout linearLayout3 = findViewById(R.id.tab_spec_main_time);
@@ -348,6 +366,8 @@ public class MainActivity extends AppCompatActivity {
         linearLayout4.setOnClickListener(listener);
 
         ivMainPortrait.setOnClickListener(listener);
+        etSearch.setOnClickListener(listener);
+        ivSearch.setOnClickListener(listener);
 
     }
 
@@ -406,6 +426,8 @@ public class MainActivity extends AppCompatActivity {
     // 将ImageView和TextView放入map中的MyTabSpec对象
     private void findView() {
         ivMainPortrait=findViewById(R.id.iv_main_portrait);
+        etSearch = findViewById(R.id.et_main_search);
+        ivSearch = findViewById(R.id.iv_main_serch);
         ImageView ivHome = findViewById(R.id.img_main_home);
         ImageView ivGame = findViewById(R.id.img_main_game);
         ImageView ivTime = findViewById(R.id.img_main_time);
@@ -460,3 +482,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+

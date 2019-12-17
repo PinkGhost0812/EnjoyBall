@@ -52,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements Handler.Callb
     private EditText etRegisterPwd;
     private int eye = 0;
     private int num = 0;
+    private int tx = 0;
     private String phone;
     private String pwd;
     private OkHttpClient okHttpClient;
@@ -75,9 +76,9 @@ public class RegisterActivity extends AppCompatActivity implements Handler.Callb
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what==0){
-                    Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+//                    Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
+//                    startActivity(intent);
+                    RegisterActivity.this.finish();
                 }
             }
         };
@@ -125,6 +126,7 @@ public class RegisterActivity extends AppCompatActivity implements Handler.Callb
         public void onClick(View v){
             switch (v.getId()){
                 case R.id.btn_register_code:
+                    tx=0;
                     registcode();//调用注册短信发送的回调接口
                     //判断是否为null或“”
                     if (TextUtils.isEmpty(etRegisterPhone.getText().toString())) {
@@ -152,9 +154,10 @@ public class RegisterActivity extends AppCompatActivity implements Handler.Callb
                             if (TextUtils.isEmpty(etRegisterPwd.getText().toString())) {
                                 Toast.makeText(RegisterActivity.this, "密码不能为空", Toast.LENGTH_SHORT).show();
                             } else {
+                                num = 1;
                                 registcode();
                                 SMSSDK.submitVerificationCode("86", etRegisterPhone.getText().toString(), etRegisterCode.getText().toString());
-                                register(num);
+                                //register(num);
                             }
                         }
                     }
@@ -186,8 +189,8 @@ public class RegisterActivity extends AppCompatActivity implements Handler.Callb
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                num = 1;
 
+                                register(num);
                             }
                         });
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
@@ -207,7 +210,10 @@ public class RegisterActivity extends AppCompatActivity implements Handler.Callb
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(RegisterActivity.this, "操作失败，请重新获取验证码", Toast.LENGTH_SHORT).show();
+                            if (tx==0){
+                                Toast.makeText(RegisterActivity.this, "操作失败，请重新获取验证码", Toast.LENGTH_SHORT).show();
+                                tx=1;
+                            }
                         }
                     });
                     ((Throwable) data).printStackTrace();

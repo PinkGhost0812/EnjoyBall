@@ -129,7 +129,6 @@ public class HomeFragment extends Fragment {
             EventBus.getDefault().register(this);
         }
         x = (int)getArguments().get("ball");
-        Log.e("收到",x+"");
         int y = x-1;
         page = 1;
         okHttpClient =new OkHttpClient();
@@ -342,7 +341,7 @@ public class HomeFragment extends Fragment {
 
     private void initPage(List<News> list){
         for (int i = 0;i<list.size();++i) {
-            dataSource.add(dataSource.size() - 1, list.get(i));
+            dataSource.add(dataSource.size(), list.get(i));
         }
     }
 

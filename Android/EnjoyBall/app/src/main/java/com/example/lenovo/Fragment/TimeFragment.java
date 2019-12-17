@@ -244,7 +244,7 @@ public class TimeFragment extends Fragment {
     private void initPage(List<DemandInfo> list){
         for (int i = 0;i<list.size();++i){
             //dataSource.add(list.get(i));
-            dataSource.add(dataSource.size()-1,list.get(i));
+            dataSource.add(dataSource.size(),list.get(i));
 
         }
     }

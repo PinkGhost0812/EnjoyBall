@@ -41,12 +41,13 @@
                         android:background="@drawable/et_main_white"
                         android:gravity="center"
                         android:hint="十院联赛"
+                        android:focusable="false"
                         android:textSize="16sp"  />
                 </LinearLayout>
 
 
                 <ImageView
-                    android:id="@+id/iv_serch"
+                    android:id="@+id/iv_main_serch"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
