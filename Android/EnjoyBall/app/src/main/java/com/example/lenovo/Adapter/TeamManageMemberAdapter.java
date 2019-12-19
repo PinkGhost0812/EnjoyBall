@@ -118,6 +118,7 @@ public class TeamManageMemberAdapter extends BaseAdapter {
                     Toast.makeText(context, "您是球队队长，不能删除自己~", Toast.LENGTH_SHORT).show();
                 } else {
                     //删除队员
+                    Log.e("test delete","111"+teamId+"   "+userList.get(position).getUser_id());
                     OkHttpClient okHttpClient = new OkHttpClient();
                     Request request = new Request.Builder()
                             .url(Info.BASE_URL + "team/gun?teamId=" + teamId + "&userId=" + userList.get(position).getUser_id())
@@ -127,7 +128,7 @@ public class TeamManageMemberAdapter extends BaseAdapter {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             Looper.prepare();
-                            //Toast.makeText(context, "删除队员失败~", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "删除队员失败~", Toast.LENGTH_SHORT).show();
                             Looper.loop();
                             e.printStackTrace();
                         }

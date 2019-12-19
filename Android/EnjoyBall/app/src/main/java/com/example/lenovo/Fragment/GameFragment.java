@@ -31,7 +31,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -119,6 +121,10 @@ public class GameFragment extends Fragment {
                 //结束加载更多的动画
                 refreshLayout.finishLoadMore();
                 break;
+            case "refresh":
+                adapter.notifyDataSetChanged();
+                refreshLayout.finishRefresh();
+                break;
 
         }
 
@@ -193,6 +199,7 @@ public class GameFragment extends Fragment {
 
         listView = getActivity().findViewById(R.id.lv_game_game);
         refreshLayout = getActivity().findViewById(R.id.sr_game_refresh);
+        refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
     }
 
     private void setListeners(){
@@ -203,16 +210,24 @@ public class GameFragment extends Fragment {
                 task.execute();
             }
         });
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                //不能执行网络操作，需要使用多线程
+                new Thread(){
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post("refresh");
+                    }
+                }.start();
+
+            }
+        });
     }
 
     private class GameListTask extends AsyncTask{
         @Override
         protected Object doInBackground(Object[] objects) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             return null;
         }
 

@@ -33,7 +33,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -108,6 +110,10 @@ public class HomeFragment extends Fragment {
                 //结束加载更多的动画
                 refreshLayout.finishLoadMore();
                 break;
+            case "refresh":
+                adapter.notifyDataSetChanged();
+                refreshLayout.finishRefresh();
+                break;
         }
 
     }
@@ -164,11 +170,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+
     }
 
     private void findView(){
         refreshLayout = getActivity().findViewById(R.id.sr_home_refresh);
         listView = getActivity().findViewById(R.id.lv_home_news);
+
+        refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
 
     }
 
@@ -186,16 +196,26 @@ public class HomeFragment extends Fragment {
                 task.execute();
             }
         });
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                //不能执行网络操作，需要使用多线程
+                new Thread(){
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post("refresh");
+                    }
+                }.start();
+
+            }
+        });
+
     }
 
     private  class NewsListTask extends AsyncTask{
         @Override
         protected Object doInBackground(Object[] objects) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             return null;
         }
 
@@ -262,19 +282,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                Intent intent = new Intent();
-                intent.putExtra("id",dataSource.get(position).getNews_id()+"");
-                intent.setClass(getActivity(), NewsDetailActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
-    private void createBan(List<News> list){
+    private void createBan(final List<News> list){
         ArrayList<String> title = new ArrayList<>();
         ArrayList<String> imgs = new ArrayList<>();
         for (int i=0;i<list.size();++i){
@@ -306,6 +317,16 @@ public class HomeFragment extends Fragment {
         banner.setBannerAnimation(Transformer.Accordion);
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         banner.start();
+
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent = new Intent();
+                intent.putExtra("id",list.get(position).getNews_id()+"");
+                intent.setClass(getActivity(), NewsDetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initData(List<News> newsList) {

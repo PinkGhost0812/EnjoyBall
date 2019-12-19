@@ -146,7 +146,9 @@ public class HomepageFansFragment extends Fragment {
                 String data=response.body().string();
 
                 if (data.equals("false")){
-                    //Toast.makeText(getActivity(), "用户无粉丝~", Toast.LENGTH_SHORT).show();
+                    Looper.prepare();
+                    Toast.makeText(getActivity(), "用户无粉丝~", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                 }else{
 
                     Gson gson = new GsonBuilder()

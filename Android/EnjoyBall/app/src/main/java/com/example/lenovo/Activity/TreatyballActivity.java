@@ -1,6 +1,7 @@
 package com.example.lenovo.Activity;
 
 import android.content.Intent;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lenovo.Adapter.ModifyLocationAdapter;
 import com.example.lenovo.enjoyball.Info;
@@ -53,6 +55,7 @@ public class TreatyballActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_treatyball);
 
         EventBus.getDefault().register(this);
@@ -84,14 +87,21 @@ public class TreatyballActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String jsonstr = response.body().string();
                 Log.e("demand",jsonstr);
-                Gson gson = new GsonBuilder()
-                        .setDateFormat("yyyy-MM-dd hh:mm:ss")
-                        .setPrettyPrinting()
-                        .serializeNulls()
-                        .create();
-                Type listType = new TypeToken<List<DemandInfo>>(){}.getType();
-                userdemandinfo= gson.fromJson(jsonstr,listType);
-                EventBus.getDefault().post("约球信息列表");
+                if(jsonstr.equals("false")){
+                    Looper.prepare();
+                    Toast.makeText(getApplicationContext(),"用户暂无约球信息",Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }else{
+                    Gson gson = new GsonBuilder()
+                            .setDateFormat("yyyy-MM-dd hh:mm:ss")
+                            .setPrettyPrinting()
+                            .serializeNulls()
+                            .create();
+                    Type listType = new TypeToken<List<DemandInfo>>(){}.getType();
+                    userdemandinfo= gson.fromJson(jsonstr,listType);
+                    EventBus.getDefault().post("约球信息列表");
+                }
+
 
             }
         });

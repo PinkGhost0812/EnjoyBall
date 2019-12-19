@@ -23,6 +23,7 @@ public class CreateAgreementActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_createagreement);
         initTabHost();
         setCurrentTab(tabArr[0]);

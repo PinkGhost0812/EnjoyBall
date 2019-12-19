@@ -55,6 +55,7 @@ public class InviteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.nonetitle);
         super.onCreate(savedInstanceState);
         if (!EventBus.getDefault().isRegistered(this)){
             EventBus.getDefault().register(this);

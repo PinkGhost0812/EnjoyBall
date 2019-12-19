@@ -129,7 +129,7 @@
             android:id="@+id/tv_contest_battleArray"
             android:padding="10dp"
             android:textColor="#000000"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="阵容"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -138,7 +138,7 @@
             android:id="@+id/tv_contest_battleReport"
             android:padding="10dp"
             android:textColor="#000000"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="战报"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -147,7 +147,7 @@
             android:id="@+id/tv_contest_comment"
             android:padding="10dp"
             android:textColor="#000000"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="评论"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

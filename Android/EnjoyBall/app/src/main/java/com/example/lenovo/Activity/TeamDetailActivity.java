@@ -68,6 +68,8 @@ public class TeamDetailActivity extends AppCompatActivity {
 
     private OkHttpClient okHttpClient;
 
+    private TeamDetailAdapter membersAdapter;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,13 +235,12 @@ public class TeamDetailActivity extends AppCompatActivity {
 
         Log.e("test DetailMemberList", list.toString());
 
-        TeamDetailAdapter membersAdapter =
-                new TeamDetailAdapter(this, list, R.layout.listview_item_team_detail);
-
+        membersAdapter = new TeamDetailAdapter(this, list, R.layout.listview_item_team_detail);
+        membersAdapter.notifyDataSetChanged();
         lvTeamDetailMember.setAdapter(membersAdapter);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED, sticky = true)
     public void initMsgData(Message msg) {
 
         if (msg.what == 20) {

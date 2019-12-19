@@ -147,13 +147,14 @@ public class HomepageCommentFragment extends Fragment {
                 String data = response.body().string();
 
                 if (data.equals("false")) {
-                    //Toast.makeText(getActivity(), "用户无评论~", Toast.LENGTH_SHORT).show();
+                    Looper.prepare();
+                    Toast.makeText(getActivity(), "用户无评论~", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                 } else {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                     Type type = new TypeToken<List<CommentAndNews>>() {
                     }.getType();
                     list = gson.fromJson(data, type);
-                    Log.e("test", list.get(1).getComment().getComment_content());
                     Message msg = new Message();
                     msg.obj = list;
                     msg.what = 10;

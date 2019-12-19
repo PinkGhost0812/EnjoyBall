@@ -29,6 +29,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -98,6 +99,11 @@ public class TimeFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 //结束加载更多的动画
                 refreshLayout.finishLoadMore();
+                break;
+            case "refresh":
+                adapter.notifyDataSetChanged();
+                refreshLayout.finishRefresh();
+                break;
 
         }
     }
@@ -161,6 +167,8 @@ public class TimeFragment extends Fragment {
 
         refreshLayout = getActivity().findViewById(R.id.sr_demand_refresh);
         listView = getActivity().findViewById(R.id.lv_time_demand);
+
+        refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
     }
     private void setListeners(){
 //        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -176,16 +184,25 @@ public class TimeFragment extends Fragment {
                 task.execute();
             }
         });
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                //不能执行网络操作，需要使用多线程
+                new Thread(){
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post("refresh");
+                    }
+                }.start();
+
+            }
+        });
     }
 
     private class DemandListTask extends AsyncTask {
         @Override
         protected Object doInBackground(Object[] objects) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             return null;
         }
 

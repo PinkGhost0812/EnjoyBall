@@ -19,7 +19,7 @@
                 android:id="@+id/tv_news_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:padding="20dp"
                 android:textColor="#000000"
                 android:textSize="23dp"
                 android:textStyle="normal" />
@@ -79,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_news_author"
                 android:padding="25dp"
+                android:lineSpacingExtra="7dp"
                 android:textColor="#000000"
                 android:textSize="20dp" />
 

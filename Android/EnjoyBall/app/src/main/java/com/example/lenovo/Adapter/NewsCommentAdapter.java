@@ -1,6 +1,7 @@
 package com.example.lenovo.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.lenovo.Activity.HomepageActivity;
 import com.example.lenovo.Util.AuthorAndComment;
 //import com.example.lenovo.enjoyball.GlideApp;
 import com.example.lenovo.enjoyball.GlideApp;
@@ -120,6 +122,15 @@ public class NewsCommentAdapter extends BaseAdapter {
 
                     }
                 });
+            }
+        });
+        holder.iv_headImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("test author",dataSource.get(position).getAuthor().toString());
+                Intent intent = new Intent(context, HomepageActivity.class);
+                intent.putExtra("user",(User)dataSource.get(position).getAuthor());
+                context.startActivity(intent);
             }
         });
 

@@ -2,6 +2,7 @@ package com.example.lenovo.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lenovo.Adapter.ModifyLocationAdapter;
 import com.example.lenovo.enjoyball.Info;
@@ -51,6 +54,7 @@ public class ModifyLocationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_modifylocation);
 
         EventBus.getDefault().register(this);
@@ -59,8 +63,8 @@ public class ModifyLocationActivity extends AppCompatActivity {
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user");
         demandInfo = (DemandInfo) intent.getSerializableExtra("demandinfo");
-        nickname = Arrays.asList(new String[demandInfo.getDemand_num()]);
-        headsphoto = Arrays.asList(new String[demandInfo.getDemand_num()]);
+        nickname = Arrays.asList(new String[100]);
+        headsphoto = Arrays.asList(new String[100]);
         //获取数据库数据并应用
         FindUserAByDemandinfo(demandInfo.getDemand_id());
 
@@ -114,6 +118,7 @@ public class ModifyLocationActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                userlistB = null;
                 String jsonstr = response.body().string();
                 Gson gson = new GsonBuilder()
                         .setDateFormat("yyyy-MM-dd hh:mm:ss")
@@ -135,15 +140,17 @@ public class ModifyLocationActivity extends AppCompatActivity {
     }
 
     private void init() {
-        if(userlistA.size()!=0){
-            for(int i=0;i<userlistA.size()-1;++i){
+
+        if(userlistA!=null){
+            Log.e("user",userlistA.toString());
+            for(int i=0;i<userlistA.size();++i){
                 nickname.set(2*i,userlistA.get(i).getUser_nickname());
                 headsphoto.set(2*i,userlistA.get(i).getUser_headportrait());
             }
         }
-        Log.e("user",userlistB.toString());
-        if(userlistB.size()!=0){
-            for(int i=0;i<userlistB.size()-1;++i){
+        if(userlistB!=null){
+            for(int i=0;i<userlistB.size();++i){
+                Log.e("user1",userlistB.toString());
                 nickname.set(2*i+1,userlistB.get(i).getUser_nickname());
                 headsphoto.set(2*i+1,userlistB.get(i).getUser_headportrait());
             }
@@ -172,6 +179,15 @@ public class ModifyLocationActivity extends AppCompatActivity {
                 init();
                 Log.e("mes1",nickname.toString());
                 Log.e("mes2",headsphoto.toString());
+                TextView place = findViewById(R.id.tv_modifylocation_place);
+                TextView leader = findViewById(R.id.tv_modifylocation_leader);
+                TextView message = findViewById(R.id.tv_modifylocation_message);
+
+
+                place.setText(demandInfo.getDemand_place());
+                leader.setText(user.getUser_nickname());
+                message.setText(demandInfo.getDemand_description());
+
                 final GridView gridView = findViewById(R.id.gv_modifylocation);
                 final ModifyLocationAdapter adapter = new ModifyLocationAdapter(
                         this,
@@ -205,6 +221,10 @@ public class ModifyLocationActivity extends AppCompatActivity {
                             }
                             flag = position;
                             adapter.notifyDataSetChanged();
+                        }else{
+                            Looper.prepare();
+                            Toast.makeText(getApplicationContext(),"该位置已有人",Toast.LENGTH_SHORT).show();
+                            Looper.loop();
                         }
                     }
                 });

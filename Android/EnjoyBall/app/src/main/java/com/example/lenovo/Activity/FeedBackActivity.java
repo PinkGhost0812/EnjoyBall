@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lenovo.enjoyball.R;
 
@@ -33,6 +34,7 @@ public class FeedBackActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_feedback);
 
         findView();
@@ -46,6 +48,8 @@ public class FeedBackActivity extends AppCompatActivity {
                 phone = mailPhone.getText().toString();
                 myMailTask=new MyMailTask();
                 myMailTask.execute();
+                Toast.makeText(getApplicationContext(),"发送成功",Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 

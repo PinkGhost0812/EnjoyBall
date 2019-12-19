@@ -65,6 +65,7 @@ public class CommentFragment extends Fragment {
     private Comment newcomment;
     private CommentAdapter adapter;
     private List<AuthorAndComment> list;
+    private int type;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -252,11 +253,11 @@ public class CommentFragment extends Fragment {
         Info info = (Info)getApplication();
         newcomment = new Comment();
         Integer author = info.getUser().getUser_id();
-        Integer cla = list.get(0).getComment().getComment_class();
+        Integer cla = getArguments().getInt("type");
         Integer likeNum = 0;
         Date date = new Date(System.currentTimeMillis());
         Log.e("mes",date.toString());
-        Integer contest = list.get(0).getComment().getComment_contest();
+        Integer contest = getArguments().getInt("game");
 
         //属性赋值
         newcomment.setComment_author(author);

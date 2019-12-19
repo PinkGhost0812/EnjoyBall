@@ -19,6 +19,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -268,7 +269,7 @@ public class CreatePersonAgreementFragment extends Fragment {
                             bottomSheetDialog.cancel();
                         }
                     });
-                    DatePicker datePicker = bottomSheetDialog.findViewById(R.id.dp_data);
+                    final DatePicker datePicker = bottomSheetDialog.findViewById(R.id.dp_data);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         datePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
                             @Override
@@ -289,6 +290,30 @@ public class CreatePersonAgreementFragment extends Fragment {
 
                                 tv_getData.setText(year + "-" +monthStr  + "-" + dayStr);
 
+                            }
+                        });
+                    }else {
+                        datePicker.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                int month = datePicker.getMonth()+1;
+                                String monthStr;
+                                String dayStr;
+                                if (datePicker.getDayOfMonth()<10){
+                                    dayStr ="0"+datePicker.getDayOfMonth();
+                                }else {
+                                    dayStr = ""+datePicker.getDayOfMonth();
+                                }
+                                if (month<10){
+                                    monthStr ="0"+month;
+                                }else {
+                                    monthStr = ""+month;
+                                }
+
+                                tv_getData.setText(datePicker.getYear() + "-" +monthStr  + "-" + dayStr);
+
+
+                                return true;
                             }
                         });
                     }

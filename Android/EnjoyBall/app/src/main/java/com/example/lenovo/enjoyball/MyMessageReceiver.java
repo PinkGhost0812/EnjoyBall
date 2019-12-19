@@ -56,13 +56,17 @@ public class MyMessageReceiver extends JPushMessageReceiver {
             intent.putExtra("invite","invite");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
+            //return;
 
-        } else {
+        } else if (!(map.get("invite").equals("inviteJoin"))){
 
-            Intent intent = new Intent(context, ManageMessageActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+//            Intent intent = new Intent(context, ManageMessageActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            context.startActivity(intent);
         }
+//        Intent intent = new Intent(context, ManageMessageActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        context.startActivity(intent);
 
     }
 

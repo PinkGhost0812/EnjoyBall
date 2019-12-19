@@ -199,10 +199,12 @@ public class PerinfoActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 Looper.prepare();
                 if (response.body().string().equals("true")) {
-                    Toast.makeText
-                            (PerinfoActivity.this, "更新成功凹~", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText
+//                            (PerinfoActivity.this, "更新成功凹~", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent();
                     intent.setClass(PerinfoActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    finish();
                     startActivity(intent);
                 } else {
                     Toast.makeText
@@ -248,9 +250,10 @@ public class PerinfoActivity extends AppCompatActivity {
                 String data = response.body().string();
                 if (data.equals("true")) {
                     Toast.makeText(PerinfoActivity.this, "更新信息成功~", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent();
-                    intent.setClass(PerinfoActivity.this, MainActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent();
+//                    intent.setClass(PerinfoActivity.this, MainActivity.class);
+//                    finish();
+                    //startActivity(intent);
                 } else {
                     Toast.makeText(PerinfoActivity.this, "更新信息失败~请重试", Toast.LENGTH_SHORT).show();
                 }
@@ -334,6 +337,7 @@ public class PerinfoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tvPerinfoAge.setText(perinfoAgeList.get(position) + "");
+                user.setUser_age(position);
                 bottomSheetDialog.dismiss();
             }
         });
@@ -445,16 +449,9 @@ public class PerinfoActivity extends AppCompatActivity {
                 .apply(options)
                 .into(ivPerinfoPortrait);
 
-<<<<<<< HEAD
-        Log.e("test,setinfoglideurl",this.getFilesDir()+"/HeadPortrait.jpg");
-        Log.e("user",user.toString());
-=======
-        Log.e("test,setinfoglideurl", this.getFilesDir() + "/HeadPortrait.jpg");
-
->>>>>>> f0662de151f70c0a92901e8a667bd848160b15b1
         tvPerinfoNickname.setText(user.getUser_nickname());
         tvPerinfoSex.setText(user.getUser_sex());
-        tvPerinfoAge.setText(user.getUser_age().toString());
+        tvPerinfoAge.setText(user.getUser_age()+"岁");
         tvPerinfoCity.setText(user.getUser_address());
         tvPerinfoPhone.setText(user.getUser_phonenumber());
         tvPerinfoEmail.setText(user.getUser_email());

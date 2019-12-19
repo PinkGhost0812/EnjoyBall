@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 
@@ -64,7 +66,12 @@ public class ModifyLocationAdapter extends BaseAdapter {
             viewHolder.nickname.setText("待加入");
         }
         if(map.get("headsphoto")!=null){
-            Glide.with(convertView).load(Info.BASE_URL+map.get("headsphoto")).into(viewHolder.headphoto);
+            RequestOptions options = new RequestOptions()
+                    .circleCrop();
+            Glide.with(convertView)
+                    .load(Info.BASE_URL+map.get("headsphoto"))
+                    .apply(options)
+                    .into(viewHolder.headphoto);
         }else{
             viewHolder.headphoto.setImageResource(R.drawable.addportrait);
         }

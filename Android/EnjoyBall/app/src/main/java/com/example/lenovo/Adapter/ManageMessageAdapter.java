@@ -214,7 +214,10 @@ public class ManageMessageAdapter extends BaseAdapter {
 
         if (message.equals("agree")) {
            if (applyUtil.getDemand().getDemand_oom()==0){
-               userId = applyUtil.getApplyInfo().getReceiver();
+               if(applyUtil.getApplyInfo().getIsInvite() == 0)
+                   userId = applyUtil.getApplyInfo().getReceiver();
+               else
+                   userId = applyUtil.getApplyInfo().getSender();
                teamId = applyUtil.getApplyInfo().getTeamId();
                applyId = applyUtil.getApplyInfo().getId();
                request = new Request.Builder()

@@ -64,6 +64,7 @@ public class HomepageUserinfoFragment extends Fragment {
 
         tvUserinfoNickname.setText(user.getUser_nickname());
         tvUserinfoSex.setText(user.getUser_sex());
+        tvUserinfoAge.setText(user.getUser_age()+"岁");
         tvUserinfoCity.setText(user.getUser_address());
         tvUserinfoPhone.setText(user.getUser_phonenumber());
         tvUserinfoEmail.setText(user.getUser_email());

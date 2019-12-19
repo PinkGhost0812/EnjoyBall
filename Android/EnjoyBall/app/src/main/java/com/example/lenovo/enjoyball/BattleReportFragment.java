@@ -2,6 +2,7 @@ package com.example.lenovo.enjoyball;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.lenovo.Activity.NewsDetailActivity;
 import com.example.lenovo.entity.News;
@@ -99,17 +101,26 @@ public class BattleReportFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Battlenews = new ArrayList<>();
+
                 jsonarray = response.body().string();
-                Gson gson = new GsonBuilder()
-                        .setDateFormat("yyyy-MM-dd hh:mm:ss")
-                        .setPrettyPrinting()
-                        .serializeNulls()
-                        .create();
-                Type listType = new TypeToken<List<News>>(){}.getType();
-                Battlenews= gson.fromJson(jsonarray,listType);
-                Log.e("time",Battlenews.toString());
-                EventBus.getDefault().post("查询成功");
+
+                if (jsonarray.equals("false")){
+                    Looper.prepare();
+                    Toast.makeText(getActivity(),"该比赛无战报嗷~",Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }else{
+                    Battlenews = new ArrayList<>();
+
+                    Gson gson = new GsonBuilder()
+                            .setDateFormat("yyyy-MM-dd hh:mm:ss")
+                            .setPrettyPrinting()
+                            .serializeNulls()
+                            .create();
+                    Type listType = new TypeToken<List<News>>(){}.getType();
+                    Battlenews= gson.fromJson(jsonarray,listType);
+                    Log.e("time",Battlenews.toString());
+                    EventBus.getDefault().post("查询成功");
+                }
             }
         });
     }

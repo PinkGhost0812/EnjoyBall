@@ -26,47 +26,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
-        <!--<activity android:name="com.example.lenovo.Activity.PersonalcenterActivity">-->
-         <activity android:name="com.example.lenovo.Activity.LoginActivity">
-        <!--<activity android:name="com.example.lenovo.Activity.LoginActivity">-->
-=======
-<<<<<<< Updated upstream
-
-        <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity"> -->
         <activity android:name="com.example.lenovo.Activity.LoginActivity">
-            <!--<activity android:name="com.example.lenovo.Activity.MainActivity">-->
-            <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity">-->
-
-=======
-        <!-- <activity android:name="com.example.lenovo.Activity.LoginActivity">-->
-        <activity android:name="com.example.lenovo.Activity.LoginActivity">
->>>>>>> f0662de151f70c0a92901e8a667bd848160b15b1
-            <!-- <activity android:name="com.example.lenovo.Activity.MainActivity"> -->
->>>>>>> Stashed changes
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
+        <activity android:name="com.example.lenovo.Activity.TeamVisitDetailActivity"/>
         <activity android:name="com.example.lenovo.Activity.ModifyLocationActivity"/>
         <activity android:name="com.example.lenovo.enjoyball.ContestActivity"/>
+        <activity android:name="com.example.lenovo.Activity.InviteActivity"/>
+        <activity android:name="com.example.lenovo.Activity.ShowAgreementActivity"/>
         <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity" />
-=======
-<<<<<<< Updated upstream
-        <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity"/>
-        <activity android:name="com.example.lenovo.Activity.MainActivity"/>
-        <activity android:name="com.example.lenovo.Activity.CreateAgreementActivity"/>
-        <activity android:name="com.example.lenovo.Activity.NewsDetailActivity"/>
-=======
-       <activity android:name="com.example.lenovo.Activity.JoinAgreementActivity" />
->>>>>>> f0662de151f70c0a92901e8a667bd848160b15b1
         <activity android:name="com.example.lenovo.Activity.MainActivity" />
         <activity android:name="com.example.lenovo.Activity.CreateAgreementActivity" />
         <activity android:name="com.example.lenovo.Activity.NewsDetailActivity" />
->>>>>>> Stashed changes
         <activity android:name="com.example.lenovo.Activity.FeedBackActivity" />
         <activity android:name="com.example.lenovo.Activity.CollectActivity" />
         <activity android:name="com.example.lenovo.Activity.TreatyballActivity" />

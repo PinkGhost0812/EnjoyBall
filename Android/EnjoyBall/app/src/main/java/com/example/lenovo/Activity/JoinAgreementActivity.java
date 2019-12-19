@@ -81,7 +81,6 @@ public class JoinAgreementActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 if (demandInfo.getDemand_oom()==0){
-
                     if (datasource.get(i).get("object")==null){
                         if (getUser().getUser_id()==demandInfo.getDemand_user()){
                             Toast.makeText(JoinAgreementActivity.this,"不能加入自己的队伍",Toast.LENGTH_SHORT).show();
@@ -188,7 +187,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
     private void sendToServer(int position) {
        ApplyInfo applyInfo = new ApplyInfo();
         int teamId = 0;
-        int userId = 7;
+        int userId = getUser().getUser_id();
        if (demandInfo.getDemand_oom()==0){
            if (position%2==0){
                teamId = demandInfo.getDemand_teama();
@@ -328,6 +327,7 @@ public class JoinAgreementActivity extends AppCompatActivity {
                 if (info.getDemand_oom()==0){
                     Type type = new TypeToken<List<User>>(){}.getType();
                     List<User> users = new Gson().fromJson(json,type);
+                    Log.e("2128",users.toString());
 
                     for (int i = 0; i <users.size();i++){
                         Log.e(teamName+"查到的队员",users.get(i).getUser_nickname());

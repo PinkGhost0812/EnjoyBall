@@ -155,7 +155,9 @@ public class HomepageFollowFragment extends Fragment {
                 Log.e("test follow",data);
 
                 if (data.equals("false")){
-                    //Toast.makeText(getActivity(), "用户无关注~", Toast.LENGTH_SHORT).show();
+                    Looper.prepare();
+                    Toast.makeText(getActivity(), "用户无关注~", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                 }else{
                     Gson gson = new GsonBuilder()
                             .create();

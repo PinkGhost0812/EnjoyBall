@@ -90,6 +90,7 @@ public class ContestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_contest);
 
         gameid = getIntent().getIntExtra("id",-1);
@@ -174,6 +175,7 @@ public class ContestActivity extends AppCompatActivity {
         bundle.putInt("team1",contest1.getGame_home());
         bundle.putInt("team2",contest1.getGame_away());
         bundle.putInt("game",gameid);
+        bundle.putInt("type",contest1.getGame_class());
         fragment.setArguments(bundle);
 
         if(curFragment!=null){

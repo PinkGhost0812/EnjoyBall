@@ -65,6 +65,7 @@ public class ShowAgreementActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_joinagreement);
         EventBus.getDefault().register(this);
         okHttpClient = new OkHttpClient();
@@ -223,7 +224,7 @@ public class ShowAgreementActivity extends AppCompatActivity {
                         Log.e(teamName + "查到的队员", users.get(i).getUser_nickname());
                         Map map = new HashMap<String, Object>();
                         map.put("name", users.get(i).getUser_nickname());
-                        map.put("head", users.get(i).getUser_headportrait());
+                        map.put("head", Info.BASE_URL + users.get(i).getUser_headportrait());
                         map.put("object", users.get(i));
                         map.put("status", "1");
                         //保证同一队的队员在同一列，A队在左边,B队在右边
@@ -340,12 +341,13 @@ public class ShowAgreementActivity extends AppCompatActivity {
                             .setDateFormat("YYYY-MM-DD HH:MM")
                             .create();
                     team = gson.fromJson(result, Team.class);
-                    map.put("head", team.getTeam_logo());
+                    map.put("head", Info.BASE_URL+team.getTeam_logo());
                     map.put("name", team.getTeam_name());
                     map.put("object", team);
                     map.put("status", "1");
                     Log.e("team", team.toString());
                     if (teamId == demandInfo.getDemand_teama()) {
+                        Log.e("2310","test");
                         datasource.set(0, map);
                         if (demandInfo.getDemand_teamb() != null) {
                             getRealTeam(demandInfo.getDemand_teamb());

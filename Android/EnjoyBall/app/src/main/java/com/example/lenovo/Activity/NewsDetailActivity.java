@@ -1,6 +1,7 @@
 package com.example.lenovo.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -118,7 +119,7 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
 
                     case 2:   //获得了评论的全部内容，传给Adapter
                         dataSource = gson.fromJson((String)msg.obj,new TypeToken<List<AuthorAndComment>>(){}.getType());
-                        adapter = new NewsCommentAdapter(getBaseContext(),dataSource,R.layout.comment_item);
+                        adapter = new NewsCommentAdapter(NewsDetailActivity.this,dataSource,R.layout.comment_item);
                         myLineraLayout.setAdapter(adapter);
                         break;
                     case 3:   //点击不喜欢之后更新主界面
@@ -396,6 +397,7 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
         ll_dislike.setOnClickListener(this);
         iv_releaseComment.setOnClickListener(this);
         iv_collectNews.setOnClickListener(this);
+        iv_headImg.setOnClickListener(this);
     }
 
     private void getViews(){
@@ -519,6 +521,11 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
                 }else {
                     collect();
                 }
+                break;
+            case R.id.iv_news_headImg:
+                Intent intent = new Intent(this,HomepageActivity.class);
+                intent.putExtra("user",newsAuthor);
+                startActivity(intent);
                 break;
         }
     }

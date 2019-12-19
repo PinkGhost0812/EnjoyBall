@@ -25,7 +25,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -182,6 +184,10 @@ public class SearchActivity extends Activity {
                 //adapter.notifyDataSetInvalidated();
                 //adapter.notifyDataSetChanged();
                 break;
+            case "refresh":
+                adapter.notifyDataSetChanged();
+                refreshLayout.finishRefresh();
+                break;
         }
 
     }
@@ -189,6 +195,7 @@ public class SearchActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_search);
 
         findView();
@@ -328,6 +335,8 @@ public class SearchActivity extends Activity {
         listView = findViewById(R.id.lv_search_news);
         refreshLayout = findViewById(R.id.sr_search_refresh);
 
+        refreshLayout.setRefreshHeader(new ClassicsHeader(this));
+
 
     }
 
@@ -355,16 +364,26 @@ public class SearchActivity extends Activity {
                 task.execute();
             }
         });
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                //不能执行网络操作，需要使用多线程
+                new Thread(){
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post("refresh");
+                    }
+                }.start();
+
+            }
+        });
+
     }
 
     private  class NewsListTask extends AsyncTask {
         @Override
         protected Object doInBackground(Object[] objects) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             return null;
         }
 

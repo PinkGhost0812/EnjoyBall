@@ -49,6 +49,7 @@ public class TeamVisitDetailActivity extends AppCompatActivity {
     private TextView tvTeamDetailAddress;
     private TextView tvTeamDetailTime;
     private TextView tvTeamDetailSlogan;
+    private TextView tvTeamDetailType;
 
     private ImageView ivTeamDetailLogo;
 
@@ -78,7 +79,7 @@ public class TeamVisitDetailActivity extends AppCompatActivity {
             EventBus.getDefault().register(this);
         }
 
-        if (getIntent().getStringExtra("invite").equals("invite")){
+        if (getIntent().getStringExtra("invite")!=null && getIntent().getStringExtra("invite").equals("invite")){
             android.app.AlertDialog.Builder adBuilder = new android.app.AlertDialog.Builder(TeamVisitDetailActivity.this);
             adBuilder.setTitle("加 入？");
             adBuilder.setMessage("球队邀请你加入？");
@@ -105,9 +106,10 @@ public class TeamVisitDetailActivity extends AppCompatActivity {
                             String data = response.body().string();
                             if (data.equals("true")){
                                 Toast.makeText(TeamVisitDetailActivity.this,"加入成功~",Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent();
-                                intent.setClass(TeamVisitDetailActivity.this,MainActivity.class);
-                                startActivity(intent);
+//                                Intent intent=new Intent();
+//                                intent.setClass(TeamVisitDetailActivity.this,MainActivity.class);
+//                                startActivity(intent);
+                                finish();
                                 Looper.loop();
                             }else{
                                 Toast.makeText(TeamVisitDetailActivity.this,"加入失败~",Toast.LENGTH_SHORT).show();
@@ -202,7 +204,7 @@ public class TeamVisitDetailActivity extends AppCompatActivity {
                 msg.obj = memberList;
                 msg.what = 69;
                 Log.e("test", memberList.toString());
-                EventBus.getDefault().postSticky(msg);
+                EventBus.getDefault().post(msg);
             }
         });
     }
@@ -214,6 +216,24 @@ public class TeamVisitDetailActivity extends AppCompatActivity {
         tvTeamDetailTime.setText(sf.format(team.getTeam_time()));
         tvTeamDetailSlogan.setText(team.getTeam_slogan());
 
+        switch (team.getTeam_class()){
+            case 0:
+                tvTeamDetailType.setText("足球");
+                break;
+            case 1:
+                tvTeamDetailType.setText("篮球");
+                break;
+            case 2:
+                tvTeamDetailType.setText("排球");
+                break;
+            case 3:
+                tvTeamDetailType.setText("羽毛球");
+                break;
+            case 4:
+                tvTeamDetailType.setText("乒乓球");
+                break;
+        }
+
         RequestOptions options = new RequestOptions()
                 .signature(new ObjectKey(System.currentTimeMillis()))
                 .circleCrop();
@@ -223,11 +243,6 @@ public class TeamVisitDetailActivity extends AppCompatActivity {
                 .into(ivTeamDetailLogo);
 
         Log.e("test DetailMemberList", list.toString());
-
-        TeamDetailAdapter membersAdapter =
-                new TeamDetailAdapter(this, list, R.layout.listview_item_team_detail);
-
-        lvTeamDetailMember.setAdapter(membersAdapter);
     }
 
     private void findView() {
@@ -237,6 +252,7 @@ public class TeamVisitDetailActivity extends AppCompatActivity {
         tvTeamDetailAddress = findViewById(R.id.tv_team_detail_address);
         tvTeamDetailTime = findViewById(R.id.tv_team_detail_time);
         tvTeamDetailSlogan = findViewById(R.id.tv_team_detail_slogan);
+        tvTeamDetailType=findViewById(R.id.tv_team_detail_type);
 
         ivTeamDetailLogo = findViewById(R.id.iv_team_detail_logo);
 
@@ -246,7 +262,7 @@ public class TeamVisitDetailActivity extends AppCompatActivity {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void initMsgData(Message msg) {
 
         if (msg.what == 69) {
@@ -255,6 +271,11 @@ public class TeamVisitDetailActivity extends AppCompatActivity {
             for (int i = 0; i < memberList.size(); i++) {
                 list.add(memberList.get(i).getUser_nickname());
             }
+            TeamDetailAdapter membersAdapter =
+                    new TeamDetailAdapter(this, list, R.layout.listview_item_team_detail);
+            membersAdapter.notifyDataSetChanged();
+            lvTeamDetailMember.setAdapter(membersAdapter);
+            membersAdapter.notifyDataSetChanged();
         }else if (msg.what==55){
             Log.e("test 55" ,msg.obj.toString());
             tvTeamDetailCaptain.setText(msg.obj.toString());
