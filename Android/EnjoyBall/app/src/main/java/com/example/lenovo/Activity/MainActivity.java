@@ -397,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
         map.get(tabStrId[1]).setFragment(new GameFragment());
         map.get(tabStrId[2]).setFragment(new TimeFragment());
         map.get(tabStrId[3]).setFragment(new MessageFragment());
-        //git 示范用
+        //git 示范Push操作用
     }
 
     // 将图片资源放入map的MyTabSpec对象中
