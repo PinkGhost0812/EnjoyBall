@@ -37,6 +37,8 @@ public class LinearLayoutForListView extends LinearLayout {
         super.setOnClickListener(l);
     }
 
+
+
     /**
      * 绑定布局
      */

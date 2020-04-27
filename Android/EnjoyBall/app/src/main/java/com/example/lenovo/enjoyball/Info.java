@@ -11,7 +11,7 @@ public class Info extends Application{
 
 
 
-    public static final String BASE_URL = "http://10.7.88.10:8080/EnjoyBallServer/";
+    public static final String BASE_URL = "http://192.168.2.102:8080/EnjoyBallServer/";
     public static String registrationId ;
 
 
@@ -39,5 +39,5 @@ public class Info extends Application{
     }
 
     //当前用户头像存储地址
-    public static final String HEADPORTRAIT_URL= "/data/user/0/com.example.lenovo.enjoyball/files/HeadPortrait.jpg";
+//    public static final String HEADPORTRAIT_URL= "/data/user/0/com.example.lenovo.enjoyball/files/HeadPortrait.jpg";
 }
