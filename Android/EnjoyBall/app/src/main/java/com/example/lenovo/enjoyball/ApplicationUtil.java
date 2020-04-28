@@ -38,6 +38,8 @@ public class ApplicationUtil extends Application {
             }
         });
 
+        //嬲
+
         SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
             @NonNull
             @Override
