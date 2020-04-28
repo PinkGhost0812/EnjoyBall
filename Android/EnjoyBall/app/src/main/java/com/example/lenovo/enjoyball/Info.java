@@ -68,7 +68,7 @@ public class Info extends Application{
     private void sendToServer(long useTime) {
         OkHttpClient client = new OkHttpClient();
         final Request request  = new Request.Builder()
-                .url(BASE_URL +"?userId="+getUser().getUser_id()+"&&score="+useTime/(60*1000))
+                .url(BASE_URL +"user?id="+getUser().getUser_id()+"&&score="+useTime/(60*1000))
                 .build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {

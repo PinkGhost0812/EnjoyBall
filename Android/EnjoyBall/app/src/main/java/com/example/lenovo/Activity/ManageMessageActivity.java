@@ -52,7 +52,7 @@ public class ManageMessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message_manage);
         getView();
         getMessages();
-        lv_manage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+         lv_manage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int demandId = messages.get(position).getDemand().getDemand_id();
