@@ -164,9 +164,9 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
     private void sendComment(){
         String content = ed_comment.getText().toString();
         if(content.equals("") || content == null){
-            Looper.prepare();
+//            Looper.prepare();
             Toast.makeText(getApplicationContext(), "啥也没写，发啥评论", Toast.LENGTH_SHORT).show();
-            Looper.loop();
+//            Looper.loop();
             return;
         }
 
