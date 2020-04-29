@@ -17,6 +17,24 @@ public class User implements Serializable {
     private Integer user_vip;
     private Integer user_age;
     private String user_jpushid;
+    private Integer user_identity;
+    private Integer user_namecard;
+
+    public Integer getUser_identity() {
+        return user_identity;
+    }
+
+    public void setUser_identity(Integer user_identity) {
+        this.user_identity = user_identity;
+    }
+
+    public Integer getUser_namecard() {
+        return user_namecard;
+    }
+
+    public void setUser_namecard(Integer user_namecard) {
+        this.user_namecard = user_namecard;
+    }
 
     @Override
     public String toString() {
