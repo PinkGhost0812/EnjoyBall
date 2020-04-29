@@ -20,6 +20,7 @@ import com.bumptech.glide.signature.ObjectKey;
 import com.example.lenovo.Fragment.GameFragment;
 import com.example.lenovo.Fragment.HomeFragment;
 import com.example.lenovo.Fragment.MessageFragment;
+import com.example.lenovo.enjoyball.AddScoreService;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.Fragment.TimeFragment;
@@ -135,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_main);
 
+        //开启定时增加积分的服务
+        startAddScoreService();
         user=((Info)getApplicationContext()).getUser();
         //嬲
         initData();
@@ -153,6 +156,11 @@ public class MainActivity extends AppCompatActivity {
                 .load(Info.BASE_URL+user.getUser_headportrait())
                 .apply(options)
                 .into(ivMainPortrait);
+    }
+
+    private void startAddScoreService() {
+        Intent startAddIntent = new Intent(MainActivity.this, AddScoreService.class);
+        startService(startAddIntent);
     }
 
     private class MyListener implements View.OnClickListener{

@@ -77,6 +77,7 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </activity>
+        <service android:name=".AddScoreService"/>
 
         <service
             android:name="cn.jpush.android.service.PushService"
