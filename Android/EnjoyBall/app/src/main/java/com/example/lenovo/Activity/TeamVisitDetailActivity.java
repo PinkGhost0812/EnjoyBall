@@ -1,7 +1,6 @@
 package com.example.lenovo.Activity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;

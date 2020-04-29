@@ -190,6 +190,22 @@ public class Information extends Controller {
 			e.printStackTrace();
 		}
 	}
+	
+	public void delete(){
+		try {
+			HttpServletResponse response = getResponse();
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			String id = getPara("commentId");
+			String ans = new CommentService().delete(id);
+			out.print(ans);
+			out.close();
+			renderNull();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	
 }

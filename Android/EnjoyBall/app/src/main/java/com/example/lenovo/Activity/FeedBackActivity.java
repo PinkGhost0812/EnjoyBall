@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,12 +26,19 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class FeedBackActivity extends AppCompatActivity {
+
     private EditText mailText;
     private EditText mailPhone;
+
     private TextView feedback;
+
+    private ImageView ivFeedBackReturn;
+
     private MyMailTask myMailTask;
+
     private String content;
     private String phone;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,16 +47,21 @@ public class FeedBackActivity extends AppCompatActivity {
 
         findView();
 
-
-
         feedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 content = mailText.getText().toString();
                 phone = mailPhone.getText().toString();
-                myMailTask=new MyMailTask();
+                myMailTask = new MyMailTask();
                 myMailTask.execute();
-                Toast.makeText(getApplicationContext(),"发送成功",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "发送成功", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+        ivFeedBackReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
             }
         });
@@ -56,22 +69,26 @@ public class FeedBackActivity extends AppCompatActivity {
 
     }
 
-    private class MyMailTask extends AsyncTask<Void,Void,Void>{
+    private void findView() {
+
+        mailText = findViewById(R.id.et_feedback_write);
+        mailPhone = findViewById(R.id.et_feedback_phone);
+        feedback = findViewById(R.id.tv_feedback_submit);
+        ivFeedBackReturn = findViewById(R.id.iv_feedback_return);
+
+    }
+
+    private class MyMailTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
             content = mailPhone.getText().toString();
-            Log.e("content",content);
+            Log.e("content", content);
             send();
             return null;
         }
     }
 
-    private void findView() {
-        mailText = findViewById(R.id.et_feedback_write);
-        mailPhone = findViewById(R.id.et_feedback_phone);
-        feedback = findViewById(R.id.tv_feedback_submit);
-    }
     private void send() {
         try {
             Properties props = new Properties();
@@ -109,4 +126,5 @@ public class FeedBackActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 }

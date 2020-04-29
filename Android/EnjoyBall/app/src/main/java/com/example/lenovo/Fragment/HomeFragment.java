@@ -3,31 +3,23 @@ package com.example.lenovo.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.example.lenovo.Activity.NewsDetailActivity;
-import com.example.lenovo.Adapter.HomepageFollowAdapter;
 import com.example.lenovo.Adapter.NewsAdapter;
 import com.example.lenovo.Util.ImageLoadBanner;
 import com.example.lenovo.Util.UnScrollListView;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.News;
-import com.example.lenovo.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -48,9 +40,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -71,7 +61,8 @@ public class HomeFragment extends Fragment {
     private Banner banner;
     private UnScrollListView listView;
     private Call call;
-    private int x = 0;
+    private int newsType=0;
+
     private int page = 0;
 
 
@@ -80,7 +71,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.tab_home_layout,
+        View view = inflater.inflate(R.layout.tab_home_layout,
                 container, false);
 
 
@@ -89,7 +80,7 @@ public class HomeFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void setContent(String msgs) {
-        switch (msgs){
+        switch (msgs) {
             case "news":
                 initData(newsList);
 
@@ -118,33 +109,37 @@ public class HomeFragment extends Fragment {
 
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
 
         findView();
+
         setListeners();
-        if(!EventBus.getDefault().isRegistered(this)){
+
+        if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-        x = (int)getArguments().get("ball");
-        int y = x-1;
+
+        newsType = (int) getArguments().get("ball");
         page = 1;
-        okHttpClient =new OkHttpClient();
+        okHttpClient = new OkHttpClient();
         newsList = new ArrayList<>();
-        if (x==0){
-            Request request = new Request.Builder().url(Info.BASE_URL + "news/newsPage?page="+page).build();
+        if (newsType == 0) {
+            Request request = new Request.Builder().url(Info.BASE_URL + "news/newsPage?page=" + page).build();
             call = okHttpClient.newCall(request);
 
-        }else {
-            Request request = new Request.Builder().url(Info.BASE_URL + "news/newsPageByClass?page=" +page+"&cls="+y).build();
+        } else {
+            Request request = new Request.Builder().url(Info.BASE_URL + "news/newsPageByClass?page=" + page + "&cls=" + (newsType-1)).build();
             call = okHttpClient.newCall(request);
 
         }
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                Toast.makeText(getContext(),"网络质量不佳，请求出错~",Toast.LENGTH_SHORT).show();
+                Looper.loop();
                 e.printStackTrace();
             }
 
@@ -152,8 +147,9 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call call, Response response) throws IOException {
                 String n = response.body().string();
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                Type listType = new TypeToken<List<News>>(){}.getType();
-                newsList = gson.fromJson(n,listType);
+                Type listType = new TypeToken<List<News>>() {
+                }.getType();
+                newsList = gson.fromJson(n, listType);
                 EventBus.getDefault().post("news");
             }
         });
@@ -163,7 +159,7 @@ public class HomeFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent();
-                intent.putExtra("id",dataSource.get(position).getNews_id()+"");
+                intent.putExtra("id", dataSource.get(position).getNews_id() + "");
                 intent.setClass(getActivity(), NewsDetailActivity.class);
                 startActivity(intent);
 
@@ -171,87 +167,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-    }
-
-    private void findView(){
-        refreshLayout = getActivity().findViewById(R.id.sr_home_refresh);
-        listView = getActivity().findViewById(R.id.lv_home_news);
-
-        refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
-
-    }
-
-    private void setListeners(){
-//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-//            @Override
-//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-//
-//            }
-//        });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                NewsListTask task = new NewsListTask();
-                task.execute();
-            }
-        });
-
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                //不能执行网络操作，需要使用多线程
-                new Thread(){
-                    @Override
-                    public void run() {
-                        EventBus.getDefault().post("refresh");
-                    }
-                }.start();
-
-            }
-        });
-
-    }
-
-    private  class NewsListTask extends AsyncTask{
-        @Override
-        protected Object doInBackground(Object[] objects) {
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            //更新视图
-            srokHttpClient =new OkHttpClient();
-            newsList = new ArrayList<>();
-
-            int y = x-1;
-            page++;
-            if (x==0){
-                Request request = new Request.Builder().url(Info.BASE_URL + "news/newsPage?page="+page).build();
-                call = srokHttpClient.newCall(request);
-
-            }else {
-                Request request = new Request.Builder().url(Info.BASE_URL + "news/newsPageByClass?page=" +page+"&cls="+y).build();
-                call = srokHttpClient.newCall(request);
-
-            }
-            call.enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    e.printStackTrace();
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String n = response.body().string();
-                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                    Type listType = new TypeToken<List<News>>(){}.getType();
-                    newsList = gson.fromJson(n,listType);
-                    EventBus.getDefault().post("page");
-                }
-            });
-        }
     }
 
     @Override
@@ -275,8 +190,9 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call call, Response response) throws IOException {
                 String ban = response.body().string();
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                Type listType = new TypeToken<List<News>>(){}.getType();
-                banList = gson.fromJson(ban,listType);
+                Type listType = new TypeToken<List<News>>() {
+                }.getType();
+                banList = gson.fromJson(ban, listType);
 
                 EventBus.getDefault().post("ban");
             }
@@ -285,33 +201,19 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void createBan(final List<News> list){
+    private void createBan(final List<News> list) {
+
         ArrayList<String> title = new ArrayList<>();
         ArrayList<String> imgs = new ArrayList<>();
-        for (int i=0;i<list.size();++i){
-            imgs.add(Info.BASE_URL+list.get(i).getNews_image());
+        for (int i = 0; i < list.size(); ++i) {
+            imgs.add(Info.BASE_URL + list.get(i).getNews_image());
             title.add(list.get(i).getNews_title());
         }
-//        ArrayList<Integer> imgs = new ArrayList<>();
-//        imgs.add(R.drawable.ban1);
-//        imgs.add(R.drawable.ban2);
-//        imgs.add(R.drawable.ban3);
-//        imgs.add(R.drawable.ban4);
-////        imgs.add("http://10.7.88.233:8080/EnjoyBallServer/img/default.png");
-////        imgs.add("http://10.7.88.233:8080/EnjoyBallServer/img/default.png");
-////        imgs.add("http://10.7.88.233:8080/EnjoyBallServer/img/default.png");
-////        imgs.add("http://10.7.88.233:8080/EnjoyBallServer/img/default.png");
-//
-//        ArrayList<String> title = new ArrayList<>();
-//        title.add("新闻1");
-//        title.add("新闻2");
-//        title.add("新闻3");
-//        title.add("新闻4");
 
         banner.setImages(imgs);
         banner.setImageLoader(new ImageLoadBanner());
         banner.setBannerTitles(title);
-        banner.setDelayTime(2000);
+        banner.setDelayTime(3000);
         banner.isAutoPlay(true);
         banner.setIndicatorGravity(BannerConfig.CENTER);
         banner.setBannerAnimation(Transformer.Accordion);
@@ -322,7 +224,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void OnBannerClick(int position) {
                 Intent intent = new Intent();
-                intent.putExtra("id",list.get(position).getNews_id()+"");
+                intent.putExtra("id", list.get(position).getNews_id() + "");
                 intent.setClass(getActivity(), NewsDetailActivity.class);
                 startActivity(intent);
             }
@@ -332,14 +234,94 @@ public class HomeFragment extends Fragment {
     private void initData(List<News> newsList) {
 
         dataSource = new ArrayList<>();
-        for(int i=0;i<newsList.size();++i){
+        for (int i = 0; i < newsList.size(); ++i) {
             dataSource.add(newsList.get(i));
         }
     }
 
-    private void initPage(List<News> list){
-        for (int i = 0;i<list.size();++i) {
+    private void initPage(List<News> list) {
+        for (int i = 0; i < list.size(); ++i) {
             dataSource.add(dataSource.size(), list.get(i));
+        }
+    }
+
+    private void findView() {
+        refreshLayout = getActivity().findViewById(R.id.sr_home_refresh);
+        listView = getActivity().findViewById(R.id.lv_home_news);
+
+        refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
+
+    }
+
+    private void setListeners() {
+//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//
+//            }
+//        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                NewsListTask task = new NewsListTask();
+                task.execute();
+            }
+        });
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                //不能执行网络操作，需要使用多线程
+                new Thread() {
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post("refresh");
+                    }
+                }.start();
+
+            }
+        });
+
+    }
+
+    private class NewsListTask extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            //更新视图
+            srokHttpClient = new OkHttpClient();
+            newsList = new ArrayList<>();
+
+            page++;
+            if (newsType == 0) {
+                Request request = new Request.Builder().url(Info.BASE_URL + "news/newsPage?page=" + page).build();
+                call = srokHttpClient.newCall(request);
+
+            } else {
+                Request request = new Request.Builder().url(Info.BASE_URL + "news/newsPageByClass?page=" + page + "&cls=" + (newsType-1)).build();
+                call = srokHttpClient.newCall(request);
+
+            }
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String n = response.body().string();
+                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                    Type listType = new TypeToken<List<News>>() {
+                    }.getType();
+                    newsList = gson.fromJson(n, listType);
+                    EventBus.getDefault().post("page");
+                }
+            });
         }
     }
 

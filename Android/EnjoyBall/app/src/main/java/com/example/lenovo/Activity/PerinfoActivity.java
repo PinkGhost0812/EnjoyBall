@@ -1,8 +1,6 @@
 package com.example.lenovo.Activity;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,11 +12,9 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -46,7 +42,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -96,6 +91,13 @@ public class PerinfoActivity extends AppCompatActivity {
     private OkHttpClient okHttpClientHeadPortrait;
 
     private String imgPath = "0";
+    private String preNickname=null;
+    private String preSex=null;
+    private int preAge=0;
+    private String preCity=null;
+    private String prePhoneNumber=null;
+    private String preEmail=null;
+    private String preSignature=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +112,13 @@ public class PerinfoActivity extends AppCompatActivity {
         }
 
         user = ((Info) getApplicationContext()).getUser();
+        preNickname=user.getUser_nickname();
+        preSex=user.getUser_sex();
+        preAge=user.getUser_age();
+        preCity=user.getUser_address();
+        prePhoneNumber=user.getUser_phonenumber();
+        preEmail=user.getUser_email();
+        preSignature=user.getUser_signature();
 
         setInfo();
 
@@ -117,70 +126,34 @@ public class PerinfoActivity extends AppCompatActivity {
 
     }
 
-    private class PerinfoListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.ll_perinfo_portrait:
-                    //点击头像
-                    ActivityCompat.requestPermissions(PerinfoActivity.this,
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            100);
-                    break;
-                case R.id.ll_perinfo_nickname:
-                    //点击用户名
-                    intent = new Intent();
-                    intent.putExtra("id", user.getUser_id());
-                    intent.setClass(PerinfoActivity.this, PerinfoNicknameActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.ll_perinfo_sex:
-                    //点击性别
-                    showSexBottomSheetDialog();
-                    break;
-                case R.id.ll_perinfo_age:
-                    //点击年龄
-                    showAgeBottomSheetDialog();
-                    break;
-                case R.id.ll_perinfo_city:
-                    //点击城市
-                    break;
-                case R.id.ll_perinfo_phone:
-                    //点击手机号
-                    Toast.makeText
-                            (PerinfoActivity.this, "修改手机号功能开发人员正在加班研究，敬请期待凹~", Toast.LENGTH_LONG).show();
-                    break;
-                case R.id.ll_perinfo_email:
-                    //点击邮箱
-                    intent = new Intent();
-                    intent.setClass(PerinfoActivity.this, PerinfoEmailActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.ll_perinfo_signature:
-                    //点击个性签名
-                    intent = new Intent();
-                    intent.setClass(PerinfoActivity.this, PerinfoSignatureActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.ll_perinfo_vip:
-                    //点击vip
-                    Toast.makeText
-                            (PerinfoActivity.this, "开通会员功能开发人员正在加班研究，敬请期待凹~", Toast.LENGTH_LONG).show();
-                    break;
-                case R.id.tv_perinfo_save:
-                    //点击保存
-                    save();
-                    break;
-
-            }
-        }
-    }
-
     private void save() {
 
         //更新用户基本信息
+        updateOrdinaryInfo();
+
+        //更新头像信息
+        if (imgPath.equals("0")) {
+            Log.e("test", "未更新头像");
+        } else {
+            uploadHeadPortrait(imgPath);
+        }
+    }
+
+    private void updateOrdinaryInfo() {
+
         okHttpClient = new OkHttpClient();
         Gson gson = new GsonBuilder().create();
+        if (user.getUser_nickname().equals(preNickname)){
+            Log.e("test change","未改名");
+        }else {
+            Log.e("test change","改名了");
+            if (user.getUser_namecard()<1){
+                user.setUser_nickname(preNickname);
+                Looper.prepare();
+                Toast.makeText(PerinfoActivity.this,"改名卡不足,无法改名",Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+        }
         String userJson = gson.toJson(user);
         Request request = new Request.Builder()
                 .url(Info.BASE_URL + "user/update?info=" + userJson)
@@ -199,8 +172,10 @@ public class PerinfoActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 Looper.prepare();
                 if (response.body().string().equals("true")) {
-//                    Toast.makeText
-//                            (PerinfoActivity.this, "更新成功凹~", Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText
+                            (PerinfoActivity.this, "更新成功凹~", Toast.LENGTH_SHORT).show();
+
                     Intent intent = new Intent();
                     intent.setClass(PerinfoActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -214,12 +189,21 @@ public class PerinfoActivity extends AppCompatActivity {
             }
         });
 
-        //更新头像信息
-        if (imgPath.equals("0")) {
-            Log.e("test", "未更新头像");
-        } else {
-            uploadHeadPortrait(imgPath);
-        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        System.out.println("按下了back键   onBackPressed()");
+
+        tvPerinfoNickname.setText(preNickname);
+        tvPerinfoSex.setText(preSex);
+        tvPerinfoAge.setText(preAge);
+        tvPerinfoCity.setText(preCity);
+        tvPerinfoPhone.setText(prePhoneNumber);
+        tvPerinfoEmail.setText(preEmail);
+        tvPerinfoSignature.setText(preSignature);
+
     }
 
     private void uploadHeadPortrait(String imgPath) {
@@ -432,15 +416,6 @@ public class PerinfoActivity extends AppCompatActivity {
 
     private void setInfo() {
 
-        //todo:设置头像，先从本地拿取头像信息，如果没有再从服务器上拿
-//        RequestOptions options = new RequestOptions()
-//                .signature(new ObjectKey(System.currentTimeMillis()))
-//                .circleCrop();
-//        Glide.with(PerinfoActivity.this)
-//                .load(this.getFilesDir()+"/HeadPortrait.jpg")
-//                .apply(options)
-//                .into(ivPerinfoPortrait);
-
         RequestOptions options = new RequestOptions()
                 .signature(new ObjectKey(System.currentTimeMillis()))
                 .circleCrop();
@@ -489,6 +464,65 @@ public class PerinfoActivity extends AppCompatActivity {
         llPerinfoSignature = findViewById(R.id.ll_perinfo_signature);
         llPerinfoVip = findViewById(R.id.ll_perinfo_vip);
 
+    }
+
+    private class PerinfoListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.ll_perinfo_portrait:
+                    //点击头像
+                    ActivityCompat.requestPermissions(PerinfoActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            100);
+                    break;
+                case R.id.ll_perinfo_nickname:
+                    //点击用户名
+                    intent = new Intent();
+                    intent.putExtra("user", user);
+                    intent.setClass(PerinfoActivity.this, PerinfoNicknameActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.ll_perinfo_sex:
+                    //点击性别
+                    showSexBottomSheetDialog();
+                    break;
+                case R.id.ll_perinfo_age:
+                    //点击年龄
+                    showAgeBottomSheetDialog();
+                    break;
+                case R.id.ll_perinfo_city:
+                    //点击城市
+                    break;
+                case R.id.ll_perinfo_phone:
+                    //点击手机号
+                    Toast.makeText
+                            (PerinfoActivity.this, "修改手机号功能开发人员正在加班研究，敬请期待凹~", Toast.LENGTH_LONG).show();
+                    break;
+                case R.id.ll_perinfo_email:
+                    //点击邮箱
+                    intent = new Intent();
+                    intent.setClass(PerinfoActivity.this, PerinfoEmailActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.ll_perinfo_signature:
+                    //点击个性签名
+                    intent = new Intent();
+                    intent.setClass(PerinfoActivity.this, PerinfoSignatureActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.ll_perinfo_vip:
+                    //点击vip
+                    Toast.makeText
+                            (PerinfoActivity.this, "开通会员功能开发人员正在加班研究，敬请期待凹~", Toast.LENGTH_LONG).show();
+                    break;
+                case R.id.tv_perinfo_save:
+                    //点击保存
+                    save();
+                    break;
+
+            }
+        }
     }
 
     @Override

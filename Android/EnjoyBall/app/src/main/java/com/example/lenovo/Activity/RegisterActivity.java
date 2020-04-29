@@ -1,12 +1,6 @@
 package com.example.lenovo.Activity;
 
-import android.Manifest;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.RestrictionsManager;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -31,7 +25,6 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
-import cn.jpush.android.api.JPushInterface;
 import cn.smssdk.EventHandler;
 import cn.smssdk.OnSendMessageHandler;
 import cn.smssdk.SMSSDK;
@@ -230,7 +223,7 @@ public class RegisterActivity extends AppCompatActivity implements Handler.Callb
 
             //手机号密码规则
             if (phone.length() == 11 && pwd.length() != 0) {
-                User user = new User(null,null,pwd,null,null,phone,null,null,null,null,null,null,null,Info.registrationId);
+                User user = new User(null,null,pwd,null,null,phone,null,null,null,null,null,null,null, Info.registrationId,null);
                 String info = new Gson().toJson(user);
                 final Request request = new Request.Builder().url(com.example.lenovo.enjoyball.Info.BASE_URL + "user/register?info=" + info).build();
                 Call call = okHttpClient.newCall(request);

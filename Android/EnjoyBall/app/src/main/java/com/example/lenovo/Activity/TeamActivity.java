@@ -16,8 +16,6 @@ import com.example.lenovo.Adapter.TeamAdapter;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 
-import com.example.lenovo.entity.Comment;
-import com.example.lenovo.entity.News;
 import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;
 import com.example.lenovo.entity.UserAndTeam;
@@ -31,9 +29,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +59,8 @@ public class TeamActivity extends AppCompatActivity {
     private OkHttpClient okHttpClient;
 
     private List<User> userList = new ArrayList<>();
+
+    private final int TAG_MESSAGE_TEAMANDCAPTAIN=11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,17 +142,14 @@ public class TeamActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setTeamInfo(Message msg) {
 
-        if (msg.what == 11) {
+        if (msg.what == TAG_MESSAGE_TEAMANDCAPTAIN) {
 
             list = (List<UserAndTeam>) msg.obj;
             initData(list);
             TeamAdapter adapter = new TeamAdapter
                     (this, dataSource, R.layout.listview_item_team);
             lvTeam.setAdapter(adapter);
-        } else if (msg.what == 45) {
-            Toast.makeText(TeamActivity.this, "您还没有加入球队凹~", Toast.LENGTH_SHORT).show();
         }
-
 
     }
 
@@ -199,9 +194,9 @@ public class TeamActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String data = response.body().string();
                 if (data.equals("false")) {
-                    Message msg = new Message();
-                    msg.what = 45;
-                    EventBus.getDefault().post(msg);
+                    Looper.prepare();
+                    Toast.makeText(TeamActivity.this,"您还没有加入球队凹~",Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                 } else {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                     Type listType = new TypeToken<List<UserAndTeam>>() {
@@ -209,7 +204,7 @@ public class TeamActivity extends AppCompatActivity {
                     list = gson.fromJson(data, listType);
                     Log.e("test captains", list.get(0).getUser().getUser_id().toString());
                     Message msg = new Message();
-                    msg.what = 11;
+                    msg.what = TAG_MESSAGE_TEAMANDCAPTAIN;
                     msg.obj = list;
                     EventBus.getDefault().post(msg);
                 }

@@ -11,13 +11,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lenovo.Adapter.InviteAdapter;
 import com.example.lenovo.Adapter.TeamManageInviteAdapter;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;
-import com.example.lenovo.entity.UserAndTeam;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

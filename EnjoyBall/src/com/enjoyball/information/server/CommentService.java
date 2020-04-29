@@ -78,4 +78,8 @@ public class CommentService {
 			return "false";
 	}
 	
+	public String delete(String id){
+		return new CommentDao().delete(id);
+	}
+	
 }

@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,16 +22,12 @@ import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,11 +59,15 @@ public class TeamDetailActivity extends AppCompatActivity {
     private User user;
 
     private List<User> userList;
+
     private ArrayList<String> list = new ArrayList<>();
 
     private OkHttpClient okHttpClient;
 
     private TeamDetailAdapter membersAdapter;
+
+    private final int TAG_MESSAGE_TEAM_QUIT=76;
+    private final int TAG_MESSAGE_TEAM_DISSOLVE=77;
 
     @Override
 
@@ -162,7 +161,7 @@ public class TeamDetailActivity extends AppCompatActivity {
                 String data = response.body().string();
 
                 Message msg = new Message();
-                msg.what = 76;
+                msg.what = TAG_MESSAGE_TEAM_QUIT;
                 msg.obj = data;
                 EventBus.getDefault().postSticky(msg);
             }
@@ -191,7 +190,7 @@ public class TeamDetailActivity extends AppCompatActivity {
                 String data = response.body().string();
 
                 Message msg = new Message();
-                msg.what = 77;
+                msg.what = TAG_MESSAGE_TEAM_DISSOLVE;
                 msg.obj = data;
                 EventBus.getDefault().postSticky(msg);
 
@@ -201,6 +200,7 @@ public class TeamDetailActivity extends AppCompatActivity {
     }
 
     private void setInfo() {
+
         tvTeamDetailName.setText(team.getTeam_name());
         tvTeamDetailCaptain.setText(captain.getUser_nickname());
         tvTeamDetailAddress.setText(team.getTeam_region());
@@ -232,23 +232,25 @@ public class TeamDetailActivity extends AppCompatActivity {
                 .load(Info.BASE_URL + team.getTeam_logo())
                 .apply(options)
                 .into(ivTeamDetailLogo);
-
-        Log.e("test DetailMemberList", list.toString());
-
-        membersAdapter = new TeamDetailAdapter(this, list, R.layout.listview_item_team_detail);
-        membersAdapter.notifyDataSetChanged();
-        lvTeamDetailMember.setAdapter(membersAdapter);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED, sticky = true)
     public void initMsgData(Message msg) {
 
+        Log.e("test hand?", msg.obj.toString());
+
         if (msg.what == 20) {
+            Log.e("test 20", msg.obj.toString());
             userList = (List<User>) msg.obj;
             for (int i = 0; i < userList.size(); i++) {
                 list.add(userList.get(i).getUser_nickname());
             }
-        } else if (msg.what == 77) {
+            Log.e("test DetailMemberList", list.toString());
+
+            membersAdapter = new TeamDetailAdapter(this, list, R.layout.listview_item_team_detail);
+            membersAdapter.notifyDataSetChanged();
+            lvTeamDetailMember.setAdapter(membersAdapter);
+        } else if (msg.what == TAG_MESSAGE_TEAM_DISSOLVE) {
             String data = (String) msg.obj;
             if (data.equals("true")) {
                 Toast.makeText(TeamDetailActivity.this, "解散球队成功~", Toast.LENGTH_SHORT).show();
@@ -258,7 +260,7 @@ public class TeamDetailActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(TeamDetailActivity.this, "解散球队失败~", Toast.LENGTH_SHORT).show();
             }
-        } else if (msg.what == 76) {
+        } else if (msg.what == TAG_MESSAGE_TEAM_QUIT) {
             String data = (String) msg.obj;
 
             if (data.equals("true")) {
@@ -273,14 +275,8 @@ public class TeamDetailActivity extends AppCompatActivity {
             }
         }else if(msg.what==66){
             String data=(String)msg.obj;
-            setCaptainName(data);
+            tvTeamDetailCaptain.setText(data);
         }
-
-    }
-
-    private void setCaptainName(String data) {
-
-        tvTeamDetailCaptain.setText(data);
 
     }
 

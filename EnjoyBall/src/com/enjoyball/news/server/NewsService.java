@@ -5,6 +5,7 @@ import java.util.List;
 import com.enjoyball.entity.Collection;
 import com.enjoyball.entity.News;
 import com.enjoyball.news.dao.NewsDao;
+import com.enjoyball.util.NewsAndCommentNum;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jfinal.kit.JsonKit;
@@ -39,7 +40,7 @@ public class NewsService {
 	}
 	
 	public String findByUserId(String id) {
-		List<com.enjoyball.util.News> list = new NewsDao().findByUserId(id);
+		List<com.enjoyball.util.NewsAndAuthor> list = new NewsDao().findByUserId(id);
 		return gson.toJson(list);
 	}
 	
@@ -76,6 +77,18 @@ public class NewsService {
 	
 	public String search(int page, String content) {
 		List<News> list = new NewsDao().search(page,content);
+		return JsonKit.toJson(list);
+	}
+	
+	public int findCommentNumByNews(String id){
+		
+		int num=new NewsDao().findCommentNumByNews(id);
+		return num;
+		
+	}
+	
+	public String findNewsAndCommentNumList(){
+		List<NewsAndCommentNum> list=new NewsDao().findNewsAndCommentNumList();
 		return JsonKit.toJson(list);
 	}
 }

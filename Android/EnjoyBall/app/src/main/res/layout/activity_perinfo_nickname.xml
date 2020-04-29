@@ -6,20 +6,15 @@
     android:background="#EFEFEF"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_perinfo_nickname"
+        android:layout_width="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shapebutton_1"
+        android:text="修改"
         android:layout_height="50dp"
-        android:background="#EBE8E8"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="修改用户名"
-            android:textSize="20dp"
-            android:layout_gravity="center"/>
-
-    </LinearLayout>
+        android:textSize="20dp"/>
 
     <EditText
         android:id="@+id/et_perinfo_nickname"
@@ -31,15 +26,71 @@
         android:layout_gravity="center"
         android:layout_height="50dp" />
 
-    <Button
-        android:id="@+id/btn_perinfo_nickname"
-        android:layout_width="200dp"
-        android:text="修改"
-        android:textSize="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前改名卡剩余："/>
+
+        <TextView
+            android:id="@+id/tv_perinfo_namecard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="999"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="张"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/shapebutton_1"/>
+        android:background="#EBE8E8"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_perinfo_nickname_back"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/back"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修改用户名"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"></LinearLayout>
+
+    </LinearLayout>
 
 
 

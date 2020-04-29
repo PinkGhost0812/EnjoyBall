@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.lenovo.Activity.HomepageActivity;
 import com.example.lenovo.Adapter.HomepageFansAdapter;
-import com.example.lenovo.Adapter.HomepageFollowAdapter;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;

@@ -10,7 +10,6 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -178,8 +177,7 @@ public class TeamManageActivity extends AppCompatActivity {
         });
 
         //更新头像信息
-        if (logoPath.equals("0")) {
-            Log.e("test", "未更新logo");
+        if (logoPath==null||logoPath.equals("0")) {
         } else {
             uploadLogo(logoPath);
         }
@@ -191,7 +189,6 @@ public class TeamManageActivity extends AppCompatActivity {
     private void uploadLogo(String logoPath) {
 
         File file = new File(logoPath);
-        Log.e("test-upimgpath",logoPath);
         okHttpClientLogo=new OkHttpClient();
         RequestBody body = RequestBody.create(MediaType.parse("image/*"),
                 file);
@@ -231,7 +228,6 @@ public class TeamManageActivity extends AppCompatActivity {
     public void setMsgInfo(Message msg) {
         switch (msg.what) {
             case 31:
-                Log.e("testnickname",msg.obj.toString());
                 tvTeamManageName.setText(msg.obj.toString());
                 team.setTeam_name(msg.obj.toString());
                 break;

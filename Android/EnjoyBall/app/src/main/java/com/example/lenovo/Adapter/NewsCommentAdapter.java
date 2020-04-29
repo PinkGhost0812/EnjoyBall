@@ -11,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.lenovo.Activity.HomepageActivity;
 import com.example.lenovo.Util.AuthorAndComment;
 //import com.example.lenovo.enjoyball.GlideApp;
@@ -21,7 +20,6 @@ import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
 import com.google.gson.Gson;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 

@@ -12,6 +12,7 @@ import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 
 public class NewsController extends Controller{
+	
 	public void like() {
 		System.out.println("newsLike");
 		try {
@@ -214,6 +215,37 @@ public class NewsController extends Controller{
 			String content = getPara("content");
 			int page = getInt("page");
 			String ans = new NewsService().search(page,content);
+			out.print(ans);
+			out.close();
+			renderNull();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void findCommentNumByNews(){
+		try {
+			HttpServletResponse response = getResponse();
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			String id = getPara("id");
+			int ans = new NewsService().findCommentNumByNews(id);
+			out.print(ans);
+			out.close();
+			renderNull();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void findNewsAndCommentNumList(){
+		try {
+			HttpServletResponse response = getResponse();
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			String ans = new NewsService().findNewsAndCommentNumList();
 			out.print(ans);
 			out.close();
 			renderNull();

@@ -1,7 +1,6 @@
 package com.example.lenovo.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,17 +14,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
-import com.example.lenovo.Activity.HomepageActivity;
-import com.example.lenovo.Activity.TeamManageActivity;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
-import com.example.lenovo.entity.Message;
-import com.example.lenovo.entity.Team;
 import com.example.lenovo.entity.User;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.util.List;
@@ -136,7 +129,9 @@ public class TeamManageMemberAdapter extends BaseAdapter {
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
 
-//                            Toast.makeText(context,"删除成功~",Toast.LENGTH_SHORT).show();
+                            Looper.prepare();
+                            Toast.makeText(context,"删除成功~",Toast.LENGTH_SHORT).show();
+                            Looper.loop();
                             android.os.Message msg = new android.os.Message();
                             msg.what = 40;
                             msg.obj=position;

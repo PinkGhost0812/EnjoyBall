@@ -1,30 +1,15 @@
 package com.example.lenovo.Adapter;
 
 import android.content.Context;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.lenovo.Activity.TeamDetailActivity;
-import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class TeamDetailAdapter extends BaseAdapter {
 

@@ -17,12 +17,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.lenovo.Util.CodeTimeUtil;
-import com.example.lenovo.entity.User;
-import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;

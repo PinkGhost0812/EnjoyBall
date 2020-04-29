@@ -176,6 +176,19 @@ public class CommentDao {
 		return comment.set("comment_likenum", ++likeNum).update();
 	}
 	
-
+	public String delete(String id){
+		int tag=DbUtil.executeUpdate
+				("delete from comment_info where comment_id = ?", 
+						new Object[] {id});
+		
+		System.out.println(tag);
+		
+		if(tag==0){
+			return "false";
+		}else{
+			return "true";
+		}
+		
+	}
 
 }

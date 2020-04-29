@@ -28,8 +28,6 @@ import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import okhttp3.Call;
@@ -148,6 +146,7 @@ public class TeamCreateActivity extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(Info.BASE_URL + "team/regist?info=" + teamJson)
                 .build();
+        Log.e("test team json",teamJson.toString());
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -165,6 +164,7 @@ public class TeamCreateActivity extends AppCompatActivity {
                 if (data.equals("false")){
                     Toast.makeText(TeamCreateActivity.this,"创建失败~",Toast.LENGTH_SHORT);
                 }else {
+                    Log.e("test",data.toString());
                     uploadLogo(imgPath,data);
                     Toast.makeText
                             (TeamCreateActivity.this,"创建成功~",Toast.LENGTH_SHORT);

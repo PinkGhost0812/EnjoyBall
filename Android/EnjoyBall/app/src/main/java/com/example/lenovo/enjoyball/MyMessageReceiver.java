@@ -4,17 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.lenovo.Activity.InviteActivity;
-import com.example.lenovo.Activity.ManageMessageActivity;
 import com.example.lenovo.Activity.TeamVisitDetailActivity;
 import com.example.lenovo.entity.Team;
-import com.example.lenovo.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.List;
 import java.util.Map;
 
 import cn.jpush.android.api.CustomMessage;

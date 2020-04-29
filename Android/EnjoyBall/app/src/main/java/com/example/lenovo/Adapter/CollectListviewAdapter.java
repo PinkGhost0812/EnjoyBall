@@ -1,9 +1,6 @@
 package com.example.lenovo.Adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +12,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
+import com.example.lenovo.entity.News;
+import com.example.lenovo.entity.User;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -71,10 +65,14 @@ public class CollectListviewAdapter extends BaseAdapter {
         }
 
         Map<String,Object> map = datasource.get(position);
-        viewHolder.tv_heads.setText(map.get("heads").toString());
-        viewHolder.tv_authors.setText(map.get("authors").toString());
-        viewHolder.tv_times.setText(map.get("times").toString());
-        Glide.with(convertView).load(Info.BASE_URL+map.get("imgs")).into(viewHolder.imgs);
+        News news=(News)map.get("newsList");
+        User user=(User)map.get("authorList");
+        Log.e("test user",user.toString());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        viewHolder.tv_heads.setText(news.getNews_title());
+        viewHolder.tv_authors.setText(user.getUser_nickname()+"");
+        viewHolder.tv_times.setText( simpleDateFormat.format(news.getNews_time()));
+        Glide.with(convertView).load(Info.BASE_URL+news.getNews_image()).into(viewHolder.imgs);
 
         return convertView;
     }

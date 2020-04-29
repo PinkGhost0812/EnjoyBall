@@ -2,8 +2,6 @@ package com.example.lenovo.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +12,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
-import com.example.lenovo.entity.Contest;
 import com.example.lenovo.entity.TeamAndContest;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GameAdapter extends BaseAdapter {
 

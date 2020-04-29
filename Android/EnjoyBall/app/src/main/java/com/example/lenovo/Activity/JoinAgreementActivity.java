@@ -14,8 +14,6 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.lenovo.Activity.TeamDetailActivity;
 import com.example.lenovo.Adapter.AgreementAdapter;
 import com.example.lenovo.Util.ApplyInfo;
 import com.example.lenovo.enjoyball.Info;

@@ -1,7 +1,6 @@
 package com.example.lenovo.Activity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -10,12 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.lenovo.Adapter.TeamDetailAdapter;
 import com.example.lenovo.Adapter.TeamManageMemberAdapter;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;

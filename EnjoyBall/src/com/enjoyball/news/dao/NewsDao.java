@@ -4,8 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.enjoyball.entity.Collection;
+import com.enjoyball.entity.Comment;
 import com.enjoyball.entity.News;
+import com.enjoyball.entity.User;
+import com.enjoyball.user.controller.UserController;
+import com.enjoyball.user.server.UserServer;
+import com.enjoyball.util.CommentAndNews;
 import com.enjoyball.util.DbUtil;
+import com.enjoyball.util.NewsAndAuthor;
+import com.enjoyball.util.NewsAndCommentNum;
 import com.jfinal.kit.JsonKit;
 import com.jfinal.plugin.activerecord.Page;
 
@@ -38,14 +45,31 @@ public class NewsDao {
 		return list;
 	}
 	
-	public List<com.enjoyball.util.News> findByUserId(String id){
-		List<com.enjoyball.util.News> list = new ArrayList<>();
-		List<Collection> collecList = Collection.dao.find("select * from user_collection where user_id = ?",id);
+	public List<com.enjoyball.util.NewsAndAuthor> findByUserId(String id){
+		System.out.println(id);
+		List<com.enjoyball.util.NewsAndAuthor> list = new ArrayList<>();
+		List<Collection> collecList = Collection.dao.find
+				("select * from user_collection where user_id = ?",id);
+		System.out.println(collecList.toString());
 		for(int i = 0 ; i < collecList.size() ; i++) {
-			List<Object> news = DbUtil.findAllWithWhere("select * from news_info where news_id = ?", com.enjoyball.util.News.class, 
-					new Object[] {collecList.get(i).get("news_id")});
-			if(news.size() != 0)
-				list.add((com.enjoyball.util.News)news.get(0));
+			
+			Collection collection= collecList.get(i);
+			List<Object> newsList = DbUtil.findAllWithWhere("select * from news_info where news_id = ?",
+					com.enjoyball.util.News.class, new Object[] {collection.get("news_id")});
+			System.out.println(newsList.toString());
+			if(newsList != null && newsList.size() != 0) {
+				System.out.println(newsList.size()+"");
+				System.out.println(i);
+				com.enjoyball.util.News news = (com.enjoyball.util.News) newsList.get(0);
+				//根据newsid查找作者
+				String authorId=String.valueOf(news.getNews_author());
+				List<Object> author = DbUtil.findAllWithWhere("select * from user_info where user_id = ?",
+						com.enjoyball.util.User.class, new Object[] {authorId});
+				NewsAndAuthor naa = new NewsAndAuthor();
+				naa.setAuthor((com.enjoyball.util.User)author.get(0));
+				naa.setNews(news);
+				list.add(naa);
+			}
 		}
 		return list;
 	}
@@ -85,5 +109,32 @@ public class NewsDao {
 		Page<News> list = News.dao.paginate(page, 8, "select *", "from news_info where news_title like '%" + content + "%'");
 		List<News> newsList = list.getList();
 		return newsList;
+	}
+
+	public int findCommentNumByNews(String id){
+
+		List<Comment> list = Comment.dao.find("select * from comment_info where comment_belone = ?",id);
+		return list.size();
+	}
+	
+	public List<NewsAndCommentNum> findNewsAndCommentNumList(){
+		
+		List<NewsAndCommentNum> list=new ArrayList<>();
+		
+		List<Object> newsList = DbUtil.findAllWithWhere("select * from news_info",
+				com.enjoyball.util.News.class, new Object[] {});
+
+		for(int i=0;i<newsList.size();i++){
+			System.out.println(newsList.get(i));
+			NewsAndCommentNum cacn=new NewsAndCommentNum();
+			cacn.setNews((com.enjoyball.util.News)newsList.get(i));
+			int num=findCommentNumByNews(String.valueOf(cacn.getNews().getNews_id()));
+			cacn.setCommentNum(num);
+			list.add(cacn);
+			System.out.println(list.get(i));
+		}
+		
+		return list;
+		
 	}
 }

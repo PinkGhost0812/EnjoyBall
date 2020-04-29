@@ -113,10 +113,21 @@ public class UserDao {
 		List<User> list = User.dao.find("select * from user_info where user_phonenumber = ?",u.getUser_phonenumber());
 		if(list.size() != 0)
 			return false;
-		return u.set("user_phonenumber", u.getUser_phonenumber()).set("user_password", u.getUser_password()).set("user_age", 0)
-				.set("user_sex", "不告诉你").set("user_nickname", "取个名字吧").set("user_email", "@lff.com")
-				.set("user_address", "可能是地球吧").set("user_headportrait", "img/default.png").set("user_signature", "这个人很懒，什么都没留下")
-				.set("user_score", 0).set("user_likenum", 0).set("user_vip", 0).set("user_jpushid", u.getUser_jpushid()).save();
+		return u.set("user_namecard", 0)
+				.set("user_phonenumber", u.getUser_phonenumber())
+				.set("user_password", u.getUser_password())
+				.set("user_age", 0)
+				.set("user_sex", "不告诉你")
+				.set("user_nickname", "取个名字吧")
+				.set("user_email", "@lff.com")
+				.set("user_address", "可能是地球吧")
+				.set("user_headportrait", "img/default.png")
+				.set("user_signature", "这个人很懒，什么都没留下")
+				.set("user_score", 0)
+				.set("user_likenum", 0)
+				.set("user_vip", 0)
+				.set("user_jpushid", u.getUser_jpushid())
+				.save();
 	}
 	
 	public boolean updatePwd(String phone, String pwd) {
@@ -152,6 +163,17 @@ public class UserDao {
 		if(x != -1 && x != 0) 
 			return true;
 		return false;
+	}
+	
+	public boolean buyNamecard(String id,String num){
+		int tag= DbUtil.executeUpdate
+				("update user_info set user_namecard =user_namecard+? where user_id = ?",
+						new Object[] {num,id});
+		if(tag==1){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 }

@@ -44,13 +44,14 @@ public class ModifyLocationActivity extends AppCompatActivity {
     private OkHttpClient okHttpClient;
     private User user;
     private DemandInfo demandInfo;
-    private List<Map<String,Object>> datasource;
+    private List<Map<String, Object>> datasource;
     private List<User> userlistA;
     private List<User> userlistB;
     private List<String> nickname;
     private List<String> headsphoto;
     private int flag = -1;
-    private int a = -1,b=-1;
+    private int a = -1, b = -1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +75,7 @@ public class ModifyLocationActivity extends AppCompatActivity {
     private void FindUserAByDemandinfo(int demandid) {
         okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Info.BASE_URL+"appointment/teamA?demandId="+demandid)
+                .url(Info.BASE_URL + "appointment/teamA?demandId=" + demandid)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -92,13 +93,14 @@ public class ModifyLocationActivity extends AppCompatActivity {
                         .setPrettyPrinting()
                         .serializeNulls()
                         .create();
-                Log.e("mes3",jsonstr);
-                if(jsonstr.equals("false")){
+                Log.e("mes3", jsonstr);
+                if (jsonstr.equals("false")) {
                     EventBus.getDefault().post("A队信息已收到");
-                }else{
+                } else {
                     userlistA = new ArrayList<>();
-                    Type listType = new TypeToken<List<User>>(){}.getType();
-                    userlistA = gson.fromJson(jsonstr,listType);
+                    Type listType = new TypeToken<List<User>>() {
+                    }.getType();
+                    userlistA = gson.fromJson(jsonstr, listType);
                     EventBus.getDefault().post("A队信息已收到");
                 }
             }
@@ -107,7 +109,7 @@ public class ModifyLocationActivity extends AppCompatActivity {
 
     private void FindUserBByDemandinfo(int demandid) {
         Request request = new Request.Builder()
-                .url(Info.BASE_URL+"appointment/teamB?demandId="+demandid)
+                .url(Info.BASE_URL + "appointment/teamB?demandId=" + demandid)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -125,13 +127,14 @@ public class ModifyLocationActivity extends AppCompatActivity {
                         .setPrettyPrinting()
                         .serializeNulls()
                         .create();
-                Log.e("mes2",jsonstr);
-                if(jsonstr.equals("false")){
+                Log.e("mes2", jsonstr);
+                if (jsonstr.equals("false")) {
                     EventBus.getDefault().post("B队信息已收到");
-                }else{
+                } else {
                     userlistB = new ArrayList<>();
-                    Type listType = new TypeToken<List<User>>(){}.getType();
-                    userlistB = gson.fromJson(jsonstr,listType);
+                    Type listType = new TypeToken<List<User>>() {
+                    }.getType();
+                    userlistB = gson.fromJson(jsonstr, listType);
                     EventBus.getDefault().post("B队信息已收到");
                 }
 
@@ -141,44 +144,44 @@ public class ModifyLocationActivity extends AppCompatActivity {
 
     private void init() {
 
-        if(userlistA!=null){
-            Log.e("user",userlistA.toString());
-            for(int i=0;i<userlistA.size();++i){
-                nickname.set(2*i,userlistA.get(i).getUser_nickname());
-                headsphoto.set(2*i,userlistA.get(i).getUser_headportrait());
+        if (userlistA != null) {
+            Log.e("user", userlistA.toString());
+            for (int i = 0; i < userlistA.size(); ++i) {
+                nickname.set(2 * i, userlistA.get(i).getUser_nickname());
+                headsphoto.set(2 * i, userlistA.get(i).getUser_headportrait());
             }
         }
-        if(userlistB!=null){
-            for(int i=0;i<userlistB.size();++i){
-                Log.e("user1",userlistB.toString());
-                nickname.set(2*i+1,userlistB.get(i).getUser_nickname());
-                headsphoto.set(2*i+1,userlistB.get(i).getUser_headportrait());
+        if (userlistB != null) {
+            for (int i = 0; i < userlistB.size(); ++i) {
+                Log.e("user1", userlistB.toString());
+                nickname.set(2 * i + 1, userlistB.get(i).getUser_nickname());
+                headsphoto.set(2 * i + 1, userlistB.get(i).getUser_headportrait());
             }
         }
 
 
         datasource = new ArrayList<>();
-        for(int i=0;i<demandInfo.getDemand_num();++i){
-            Map<String,Object> map = new HashMap();
-            map.put("nickname",nickname.get(i));
-            map.put("headsphoto",headsphoto.get(i));
+        for (int i = 0; i < demandInfo.getDemand_num(); ++i) {
+            Map<String, Object> map = new HashMap();
+            map.put("nickname", nickname.get(i));
+            map.put("headsphoto", headsphoto.get(i));
 
-            Log.e("nickname"+i,Integer.toString(flag));
+            Log.e("nickname" + i, Integer.toString(flag));
             datasource.add(map);
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void inits(String msg){
-        switch (msg){
+    public void inits(String msg) {
+        switch (msg) {
             case "A队信息已收到":
                 FindUserBByDemandinfo(demandInfo.getDemand_id());
                 break;
             case "B队信息已收到":
                 //初始化数据
                 init();
-                Log.e("mes1",nickname.toString());
-                Log.e("mes2",headsphoto.toString());
+                Log.e("mes1", nickname.toString());
+                Log.e("mes2", headsphoto.toString());
                 TextView place = findViewById(R.id.tv_modifylocation_place);
                 TextView leader = findViewById(R.id.tv_modifylocation_leader);
                 TextView message = findViewById(R.id.tv_modifylocation_message);
@@ -194,36 +197,36 @@ public class ModifyLocationActivity extends AppCompatActivity {
                         datasource,
                         R.layout.gridview_item_location
                 );
-                for(int i=0;i<nickname.size();++i){
-                    if(nickname.get(i)!=null&&nickname.get(i).equals(user.getUser_nickname())){
+                for (int i = 0; i < nickname.size(); ++i) {
+                    if (nickname.get(i) != null && nickname.get(i).equals(user.getUser_nickname())) {
                         flag = i;
-                        if(i%2==0){
+                        if (i % 2 == 0) {
                             a = 1;
-                        }else{
-                            a=0;
+                        } else {
+                            a = 0;
                         }
                     }
                 }
-                Log.e("fa",Integer.toString(flag));
+                Log.e("fa", Integer.toString(flag));
                 gridView.setAdapter(adapter);
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        if(datasource.get(position).get("nickname")==null){
-                            datasource.get(position).put("nickname",user.getUser_nickname());
-                            datasource.get(position).put("headsphoto",user.getUser_headportrait());
-                            datasource.get(flag).put("nickname",null);
-                            datasource.get(flag).put("headsphoto",null);
-                            if(position%2==0){
-                                b=1;
-                            }else{
-                                b=0;
+                        if (datasource.get(position).get("nickname") == null) {
+                            datasource.get(position).put("nickname", user.getUser_nickname());
+                            datasource.get(position).put("headsphoto", user.getUser_headportrait());
+                            datasource.get(flag).put("nickname", null);
+                            datasource.get(flag).put("headsphoto", null);
+                            if (position % 2 == 0) {
+                                b = 1;
+                            } else {
+                                b = 0;
                             }
                             flag = position;
                             adapter.notifyDataSetChanged();
-                        }else{
+                        } else {
                             Looper.prepare();
-                            Toast.makeText(getApplicationContext(),"该位置已有人",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "该位置已有人", Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }
@@ -232,11 +235,11 @@ public class ModifyLocationActivity extends AppCompatActivity {
                 btn_save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(a!=b&&b==1){
-                            changeteam(demandInfo.getDemand_teamb(),user.getUser_id(),demandInfo.getDemand_teama());
-                        }else if(a!=b&&b==0){
-                            changeteam(demandInfo.getDemand_teama(),user.getUser_id(),demandInfo.getDemand_teamb());
-                        } else{
+                        if (a != b && b == 1) {
+                            changeteam(demandInfo.getDemand_teamb(), user.getUser_id(), demandInfo.getDemand_teama());
+                        } else if (a != b && b == 0) {
+                            changeteam(demandInfo.getDemand_teama(), user.getUser_id(), demandInfo.getDemand_teamb());
+                        } else {
                             finish();
                         }
                     }
@@ -257,7 +260,7 @@ public class ModifyLocationActivity extends AppCompatActivity {
 
     private void changeteam(Integer demand_teama, Integer user_id, Integer demand_teamb) {
         Request request = new Request.Builder()
-                .url(Info.BASE_URL+"appointment/change?teama="+demand_teama+"&userId="+user_id+"&teamb="+demand_teamb)
+                .url(Info.BASE_URL + "appointment/change?teama=" + demand_teama + "&userId=" + user_id + "&teamb=" + demand_teamb)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -269,7 +272,7 @@ public class ModifyLocationActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String jsonstr = response.body().string();
-                Log.e("ok",jsonstr);
+                Log.e("ok", jsonstr);
                 EventBus.getDefault().post("已保存");
 
             }

@@ -51,10 +51,12 @@ public class TeamDao {
 		if(teamList.size() == 0)
 			return null;
 		List<UserAndTeam> list = new ArrayList<UserAndTeam>();
+		System.out.println("teamlist"+teamList);
 		
 		for(int i = 0 ; i < teamList.size() ; i++) {
 			List<Object> team = DbUtil.findAllWithWhere("select * from team_info where team_id = ?", com.enjoyball.util.Team.class,
 					new Object[] {teamList.get(i).get("team_id")});
+			System.out.println("team"+team.toString());
 			List<Object> user = DbUtil.findAllWithWhere("select * from user_info where user_id = ?", com.enjoyball.util.User.class,
 					new Object[] { ((com.enjoyball.util.Team)team.get(0)).getTeam_captain()});
 			if(team.size() == 0 || user.size() == 0)
@@ -65,10 +67,6 @@ public class TeamDao {
 				uat.setTeam((com.enjoyball.util.Team) team.get(0));
 				list.add(uat);
 			}
-//			Team t = Team.dao.findById(teamList.get(i).get("team_id"));
-//			com.enjoyball.util.Team team = new com.enjoyball.util.Team(t.getInt("team_id"),t.getStr("team_name"),
-//					t.getStr("team_region"),t.getDate("team_time"),t.getStr("team_logo"),t.getStr("team_slogan"),
-//					t.getInt("team_score"),t.getInt("team_captain"),t.getInt("team_state"),t.getInt("team_class"),t.getInt("team_number"));
 			
 		}
 		return list;

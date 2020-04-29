@@ -107,4 +107,11 @@ public class UserServer {
 			return "true";
 		return "false";
 	}
+	
+	public String buyNamecard(String id,String num){
+		if(new UserDao().buyNamecard(id, num)){
+			return "true";
+		}
+		return "false";
+	}
 }

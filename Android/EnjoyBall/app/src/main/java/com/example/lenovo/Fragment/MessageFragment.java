@@ -18,12 +18,13 @@ import com.example.lenovo.enjoyball.R;
 public class MessageFragment extends Fragment {
     private LinearLayout ll_notification = null;
     private LinearLayout ll_manage = null;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_mainmessage,
+        View view = inflater.inflate(R.layout.fragment_mainmessage,
                 container, false);
         setView(view);
         ll_manage.setOnClickListener(new Onclicked());
@@ -32,22 +33,23 @@ public class MessageFragment extends Fragment {
     }
 
     private void setView(View view) {
+
         ll_manage = view.findViewById(R.id.ll_mainmessage_manage);
         ll_notification = view.findViewById(R.id.ll_mainmessage_notification);
 
-
     }
-    public class Onclicked implements View.OnClickListener{
+
+    public class Onclicked implements View.OnClickListener {
         Intent intent = null;
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.ll_mainmessage_manage:
                     intent = new Intent(getContext(), ManageMessageActivity.class);
                     break;
                 case R.id.ll_mainmessage_notification:
-                    intent = new Intent(getContext(),NotifyMessageActivity.class);
+                    intent = new Intent(getContext(), NotifyMessageActivity.class);
                     break;
             }
             startActivity(intent);

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
@@ -16,9 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.lenovo.Activity.HomepageActivity;
-import com.example.lenovo.Activity.TeamDetailActivity;
 import com.example.lenovo.Util.ApplyUtil;
 import com.example.lenovo.enjoyball.GlideApp;
 import com.example.lenovo.enjoyball.Info;
@@ -30,8 +27,6 @@ import com.google.gson.GsonBuilder;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;

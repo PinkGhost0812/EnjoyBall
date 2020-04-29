@@ -1,8 +1,9 @@
 package com.example.lenovo.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -56,11 +57,11 @@ public class HomepageCommentFragment extends Fragment {
 
     private OkHttpClient okHttpClient;
 
-    List<Map<String, Object>> mapList = null;
-
     private User user = null;
 
-    private Handler handler;
+    private final int TAG_MESSAGE_HOMEPAGE_COMMENT=10;
+    private final int TAG_MESSAGE_COMMENT_DELETE=765;
+    private HomepageCommentAdapter adapter;
 
     @Nullable
     @Override
@@ -90,6 +91,71 @@ public class HomepageCommentFragment extends Fragment {
             }
         });
 
+        lvHomepageComment.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           final int position, long id) {
+
+                AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+                builder.setMessage("确定删除?");
+                builder.setTitle("提示");
+
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        okHttpClient = new OkHttpClient();
+                        Log.e("test", dataSource.get(position).get("commentsId")+"");
+                        final Request request = new Request.Builder()
+                                .url(Info.BASE_URL + "information/delete?commentId=" + dataSource.get(position).get("commentsId"))
+                                .build();
+                        Call call = okHttpClient.newCall(request);
+                        call.enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                Looper.prepare();
+                                Toast.makeText(getActivity(), "网络走丢，删除失败~", Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+
+                                String data = response.body().string();
+
+                                if (data.equals("false")) {
+                                    Looper.prepare();
+                                    Toast.makeText(getActivity(), "删除失败，请重试~", Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                } else {
+
+                                    Message msg=new Message();
+                                    msg.what=TAG_MESSAGE_COMMENT_DELETE;
+                                    msg.obj=position;
+                                    EventBus.getDefault().post(msg);
+
+                                    Looper.prepare();
+                                    Toast.makeText(getActivity(), "删除成功~", Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                            }
+                        });
+                    }
+                });
+
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                builder.create().show();
+                return true;
+            }
+        });
+
         return view;
 
     }
@@ -97,16 +163,31 @@ public class HomepageCommentFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setInfo(Message msg) {
 
-        if (msg.what == 10) {
+        Log.e("test bus",msg.what+"");
 
-            List<CommentAndNews> list = (List<CommentAndNews>) msg.obj;
+        if (msg.what == TAG_MESSAGE_HOMEPAGE_COMMENT) {
+
+            list = (List<CommentAndNews>) msg.obj;
 
             initData(list);
 
-            HomepageCommentAdapter adapter = new HomepageCommentAdapter
+            adapter = new HomepageCommentAdapter
                     (getContext(), dataSource, R.layout.listview_item_comment);
 
             lvHomepageComment.setAdapter(adapter);
+        }else if (msg.what==TAG_MESSAGE_COMMENT_DELETE){
+
+            adapter.notifyDataSetChanged();
+
+            list.remove(msg.obj);
+            initData(list);
+
+            adapter = new HomepageCommentAdapter
+                    (getContext(), dataSource, R.layout.listview_item_comment);
+            lvHomepageComment.setAdapter(adapter);
+
+            adapter.notifyDataSetChanged();
+
         }
 
     }
@@ -117,6 +198,7 @@ public class HomepageCommentFragment extends Fragment {
 
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> map = new HashMap<>();
+            map.put("commentsId",list.get(i).getComment().getComment_id());
             map.put("comments", list.get(i).getComment().getComment_content().toString());
             map.put("news", list.get(i).getNews().getNews_title().toString());
             dataSource.add(map);
@@ -157,7 +239,7 @@ public class HomepageCommentFragment extends Fragment {
                     list = gson.fromJson(data, type);
                     Message msg = new Message();
                     msg.obj = list;
-                    msg.what = 10;
+                    msg.what = TAG_MESSAGE_HOMEPAGE_COMMENT;
                     EventBus.getDefault().post(msg);
                 }
             }

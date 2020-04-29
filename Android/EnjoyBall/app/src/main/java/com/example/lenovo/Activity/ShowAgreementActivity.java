@@ -1,6 +1,5 @@
 package com.example.lenovo.Activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lenovo.Adapter.AgreementAdapter;
-import com.example.lenovo.Util.ApplyInfo;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.DemandInfo;

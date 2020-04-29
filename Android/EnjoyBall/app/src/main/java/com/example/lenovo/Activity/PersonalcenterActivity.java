@@ -1,13 +1,12 @@
 package com.example.lenovo.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,6 +60,11 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
     private OkHttpClient okHttpClient;
 
+    private final int TAG_MESSAGE_COMMENT_NUM=1;
+    private final int TAG_MESSAGE_FOLLOW_NUM=2;
+    private final int TAG_MESSAGE_FANS_NUM=3;
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +78,6 @@ public class PersonalcenterActivity extends AppCompatActivity {
         findView();
 
         user=((Info)getApplicationContext()).getUser();
-
 
         setInfo();
 
@@ -107,7 +110,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Message msg=new Message();
-                msg.what=3;
+                msg.what=TAG_MESSAGE_FANS_NUM;
                 msg.obj=response.body().string();
                 EventBus.getDefault().post(msg);
             }
@@ -134,7 +137,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Message msg=new Message();
-                msg.what=2;
+                msg.what=TAG_MESSAGE_FOLLOW_NUM;
                 msg.obj=response.body().string();
                 EventBus.getDefault().post(msg);
             }
@@ -161,7 +164,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Message msg=new Message();
-                msg.what=1;
+                msg.what=TAG_MESSAGE_COMMENT_NUM;
                 msg.obj=response.body().string();
                 EventBus.getDefault().post(msg);
             }
@@ -188,13 +191,13 @@ public class PersonalcenterActivity extends AppCompatActivity {
     public void setHttpInfo(Message msg) {
 
         switch (msg.what){
-            case 1:
+            case TAG_MESSAGE_COMMENT_NUM:
                 tvPersonalcenterCommentnum.setText(msg.obj.toString());
                 break;
-            case 2:
+            case TAG_MESSAGE_FOLLOW_NUM:
                 tvPersonalcenterFollownum.setText(msg.obj.toString());
                 break;
-            case 3:
+            case TAG_MESSAGE_FANS_NUM:
                 tvPersonalcenterFansnum.setText(msg.obj.toString());
                 break;
         }
@@ -285,6 +288,33 @@ public class PersonalcenterActivity extends AppCompatActivity {
                     break;
                 case R.id.ll_personalcenter_logout:
                     //点击注销
+                    android.app.AlertDialog.Builder adBuilder = new android.app.AlertDialog.Builder(PersonalcenterActivity.this);
+                    adBuilder.setTitle("注 销");
+                    adBuilder.setMessage("确认退出登录吗？");
+                    adBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sharedPreferences = getSharedPreferences("loginInfo",
+                                    MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.remove("phone");
+                            editor.remove("password");
+                            editor.remove("isAuto");
+                            editor.commit();
+
+                            Intent intent=new Intent(PersonalcenterActivity.this,LoginActivity.class);
+                            startActivity(intent);
+
+                        }
+                    });
+                    adBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    android.app.AlertDialog alertDialog = adBuilder.create();
+                    alertDialog.show();
                     break;
 
             }

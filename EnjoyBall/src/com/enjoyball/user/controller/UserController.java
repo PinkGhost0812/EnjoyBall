@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.enjoyball.entity.User;
+import com.enjoyball.user.dao.UserDao;
 import com.enjoyball.user.server.UserServer;
 import com.jfinal.core.Controller;
 
@@ -224,7 +225,7 @@ public class UserController extends Controller {
 			while((len = is.read(buffer)) != -1){
 				fos.write(buffer,0,len);
 			}
-			User.dao.findById(id).set("user_headportrait", "img/u"+id+".png").update();
+			User.dao.set("user_headportrait", "img/u"+id+".png").update();
 			out.print("true");
 			out.close();
 			renderNull();
@@ -317,21 +318,21 @@ public class UserController extends Controller {
 		}
 	}
 	
-	
-//	
-//	public void test() {
-//		HttpServletResponse response = getResponse();
-//		HttpServletRequest request = getRequest();
-//		System.out.println("根目录所对应的绝对路径"+request.getServletPath());
-//		System.out.println("文件的绝对路径"+request.getSession().getServletContext().getRealPath(request.getRequestURI()));
-//		System.out.println("内容所在路径:"+request.getContextPath());
-//		System.out.println("绝对路径:"+request.getRequestURL());
-//		try {
-//			response.getWriter().write("test");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	public void buyNamecard(){
+		try {
+			HttpServletResponse response = getResponse();
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			String id = getPara("id");
+			String num = getPara("num");
+			String ans = new UserServer().buyNamecard(id, num);
+			out.print(ans);
+			out.close();
+			renderNull();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 }

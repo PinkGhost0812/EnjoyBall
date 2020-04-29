@@ -15,7 +15,7 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
-        android:background="@color/green"
+        android:background="#37E137"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -41,11 +41,12 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
-        android:background="	#D3D3D3"
+        android:background="#D3D3D3"
         android:layout_width="match_parent"
         android:layout_height="10dp">
     </LinearLayout>
     <ListView
+        android:background="#D3D3D3"
         android:id="@+id/lv_collect_news"
         android:dividerHeight="3pt"
         android:layout_width="match_parent"

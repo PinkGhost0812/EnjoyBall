@@ -19,6 +19,7 @@ public class Info extends Application{
 
 
     public static final String BASE_URL = "http://192.168.2.102:8080/EnjoyBallServer/";
+
     public static String registrationId ;
     private long startTime = 0;//应用启动的时间
     private long finalTime = 0;//应用关闭的时间
