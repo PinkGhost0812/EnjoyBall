@@ -39,6 +39,7 @@ import okhttp3.Response;
 
 public class IdentityActivity extends AppCompatActivity {
 
+    //niao
     private OkHttpClient okHttpClient;
 
     private User user;
