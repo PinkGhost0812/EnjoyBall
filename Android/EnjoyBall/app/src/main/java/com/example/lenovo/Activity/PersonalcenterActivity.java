@@ -316,7 +316,12 @@ public class PersonalcenterActivity extends AppCompatActivity {
                     android.app.AlertDialog alertDialog = adBuilder.create();
                     alertDialog.show();
                     break;
-
+                case R.id.ll_personalcenter_identification:
+                    //点击认证
+                    intent = new Intent();
+                    intent.setClass(PersonalcenterActivity.this,IdentityActivity.class);
+                    startActivity(intent);
+                    break;
             }
         }
     }
