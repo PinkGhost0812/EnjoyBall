@@ -92,7 +92,6 @@ public class PersonalcenterActivity extends AppCompatActivity {
     }
 
     private void getFansNum() {
-
         okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(Info.BASE_URL + "user/fans?id=" + user.getUser_id())
