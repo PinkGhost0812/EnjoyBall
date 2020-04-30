@@ -29,12 +29,18 @@ public class AddScoreService extends IntentService {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.e("service", "service test OK");
+    }
+
+    @Override
     protected void onHandleIntent( Intent intent) {
         int id = ((Info)getApplicationContext()).getUser().getUser_id();
         while (true){
             try {
                 //每在线五分钟增加1积分
-                Thread.sleep(1000*60*5);
+                Thread.sleep(10*1000);
                 Log.e("tag","服务循环执行");
                 sendToServer(id,1);
             } catch (InterruptedException e) {
@@ -47,7 +53,7 @@ public class AddScoreService extends IntentService {
     private void sendToServer(int id, int score) {
         OkHttpClient client = new OkHttpClient();
         final Request request  = new Request.Builder()
-                .url(url+id+"&&score="+score)
+                .url(url+id+"&&addScore="+score)
                 .build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {

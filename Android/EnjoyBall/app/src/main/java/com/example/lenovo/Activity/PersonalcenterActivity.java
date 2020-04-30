@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -319,6 +320,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
                     //点击认证
                     intent = new Intent();
                     intent.setClass(PersonalcenterActivity.this,IdentityActivity.class);
+                    Log.e("renzheng", "认证跳转");
                     startActivity(intent);
                     break;
             }

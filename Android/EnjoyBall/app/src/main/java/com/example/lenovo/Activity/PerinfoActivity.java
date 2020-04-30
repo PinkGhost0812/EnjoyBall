@@ -194,15 +194,15 @@ public class PerinfoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        System.out.println("按下了back键   onBackPressed()");
-
-        tvPerinfoNickname.setText(preNickname);
-        tvPerinfoSex.setText(preSex);
-        tvPerinfoAge.setText(preAge);
-        tvPerinfoCity.setText(preCity);
-        tvPerinfoPhone.setText(prePhoneNumber);
-        tvPerinfoEmail.setText(preEmail);
-        tvPerinfoSignature.setText(preSignature);
+//        System.out.println("按下了back键   onBackPressed()");
+//
+//        tvPerinfoNickname.setText(preNickname);
+//        tvPerinfoSex.setText(preSex);
+//        tvPerinfoAge.setText(preAge);
+//        tvPerinfoCity.setText(preCity);
+//        tvPerinfoPhone.setText(prePhoneNumber);
+//        tvPerinfoEmail.setText(preEmail);
+//        tvPerinfoSignature.setText(preSignature);
 
     }
 

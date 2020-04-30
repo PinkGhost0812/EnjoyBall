@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -138,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
         //开启定时增加积分的服务
         startAddScoreService();
+        Log.e("开启Service", "方法执行");
         user=((Info)getApplicationContext()).getUser();
         //嬲
         initData();
@@ -159,8 +161,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startAddScoreService() {
-        Intent startAddIntent = new Intent(MainActivity.this, AddScoreService.class);
+        Intent startAddIntent = new Intent(MainActivity.this, com.example.lenovo.enjoyball.AddScoreService.class);
         startService(startAddIntent);
+        Log.e("Service OK", "服务开启");
     }
 
     private class MyListener implements View.OnClickListener{

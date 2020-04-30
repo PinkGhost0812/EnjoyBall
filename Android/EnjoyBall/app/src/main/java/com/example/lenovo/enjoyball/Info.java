@@ -24,7 +24,7 @@ public class Info extends Application{
     private long startTime = 0;//应用启动的时间
     private long finalTime = 0;//应用关闭的时间
     private long useTime = 0;//应用的使用时间
-    private long minTime = 5*60*1000;//增加积分的最小使用时间：五分钟
+    private long minTime = 10*1000;//增加积分的最小使用时间：五分钟
 
 
 
@@ -69,7 +69,7 @@ public class Info extends Application{
     private void sendToServer(long useTime) {
         OkHttpClient client = new OkHttpClient();
         final Request request  = new Request.Builder()
-                .url(BASE_URL +"user?id="+getUser().getUser_id()+"&&score="+useTime/(60*1000))
+                .url(BASE_URL +"user?id="+getUser().getUser_id()+"&&addScore="+useTime/(10*1000))
                 .build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
