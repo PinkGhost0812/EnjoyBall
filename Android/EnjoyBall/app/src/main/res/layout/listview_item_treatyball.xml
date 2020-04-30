@@ -55,4 +55,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+    <Button
+        android:layout_marginLeft="10dp"
+        android:text="再约一次"
+        android:id="@+id/btn_treat_again"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"/>
 </LinearLayout>

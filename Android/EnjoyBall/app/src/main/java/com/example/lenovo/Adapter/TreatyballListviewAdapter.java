@@ -1,12 +1,15 @@
 package com.example.lenovo.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.lenovo.Activity.CreateAgreementAgainActivity;
 import com.example.lenovo.enjoyball.R;
 
 import java.util.List;
@@ -87,6 +90,17 @@ public class TreatyballListviewAdapter extends BaseAdapter {
                 viewHolder.tv_status.setText("已结束");
                 break;
         }
+
+        //再约一次
+        Button btn_again = convertView.findViewById(R.id.btn_treat_again);
+        btn_again.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(context,CreateAgreementAgainActivity.class);
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
 
