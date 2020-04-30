@@ -93,12 +93,25 @@
 
         </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:layout_marginBottom="10dp"
-        android:id="@+id/tv_game_state"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="已完场"
-        android:layout_gravity="center"
-        android:textSize="13sp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tv_game_state"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="已完场"
+            android:layout_gravity="center"
+            android:textSize="13sp"/>
+        <ImageView
+            android:id="@+id/iv_addgame"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="63dp"
+            android:layout_height="18dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/addgame"/>
+    </RelativeLayout>
 </LinearLayout>
