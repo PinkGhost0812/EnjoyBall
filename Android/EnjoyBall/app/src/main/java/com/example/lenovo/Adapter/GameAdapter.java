@@ -2,6 +2,10 @@ package com.example.lenovo.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.lenovo.Fragment.AddGameDiaglog;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.TeamAndContest;
@@ -53,7 +58,7 @@ public class GameAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if(null == convertView) {
             convertView = LayoutInflater.from(context).inflate(item_layout_id,null);
@@ -66,6 +71,7 @@ public class GameAdapter extends BaseAdapter {
             viewHolder.tv_state = convertView.findViewById(R.id.tv_game_state);
             viewHolder.iv_imghome = convertView.findViewById(R.id.iv_game_team_imghome);
             viewHolder.iv_imgaway = convertView.findViewById(R.id.iv_game_team_imgaway);
+            viewHolder.iv_addgame = convertView.findViewById(R.id.iv_addgame);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -91,9 +97,17 @@ public class GameAdapter extends BaseAdapter {
             if (dataSource.get(position).getContest().getGame_status()!=2)
                 viewHolder.tv_state.setTextColor(
                         Color.parseColor("#000000"));
-            else
+            else {
                 viewHolder.tv_state.setTextColor(
                         Color.parseColor("#1afa29"));
+                viewHolder.iv_addgame.setVisibility(convertView.GONE);
+            }
+            viewHolder.iv_addgame.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    OutDialog(position);
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,5 +122,22 @@ public class GameAdapter extends BaseAdapter {
         TextView tv_state;
         ImageView iv_imghome;
         ImageView iv_imgaway;
+        ImageView iv_addgame;
+    }
+    private void OutDialog(int i){
+        FragmentManager manager = ((FragmentActivity)context).getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        AddGameDiaglog addGameDiaglog = new AddGameDiaglog();
+        if (!addGameDiaglog.isAdded()){
+            Bundle bundle = new Bundle();
+            bundle.putInt("gameid",dataSource.get(i).getContest().getGame_id());
+            bundle.putString("teama",dataSource.get(i).getTeamMap().get("nameA").toString());
+            bundle.putString("teamb",dataSource.get(i).getTeamMap().get("nameB").toString());
+            addGameDiaglog.setArguments(bundle);
+            transaction.add(addGameDiaglog,"dialog_tag");
+        }
+        transaction.show(addGameDiaglog);
+        transaction.commit();
+
     }
 }
