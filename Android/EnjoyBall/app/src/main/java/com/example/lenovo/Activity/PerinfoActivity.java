@@ -149,46 +149,80 @@ public class PerinfoActivity extends AppCompatActivity {
             Log.e("test change","改名了");
             if (user.getUser_namecard()<1){
                 user.setUser_nickname(preNickname);
-                Looper.prepare();
-                Toast.makeText(PerinfoActivity.this,"改名卡不足,无法改名",Toast.LENGTH_SHORT).show();
-                Looper.loop();
+                String userJson = gson.toJson(user);
+                Request request = new Request.Builder()
+                        .url(Info.BASE_URL + "user/update?info=" + userJson)
+                        .build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Looper.prepare();
+                        Toast.makeText(getApplicationContext(), "世界上最远的距离就是没网络o(╥﹏╥)o", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        Looper.prepare();
+                        if (response.body().string().equals("true")) {
+
+                            Toast.makeText
+                                    (PerinfoActivity.this, "改名卡不足，用户名更新失败~", Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent();
+                            intent.setClass(PerinfoActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            finish();
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText
+                                    (PerinfoActivity.this, "改名卡不足，用户名更新失败~", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                        Looper.loop();
+                    }
+                });
+            }else {
+                int namecard = user.getUser_namecard() - 1;
+                user.setUser_namecard(namecard);
+                String userJson = gson.toJson(user);
+                Request request = new Request.Builder()
+                        .url(Info.BASE_URL + "user/update?info=" + userJson)
+                        .build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Looper.prepare();
+                        Toast.makeText(getApplicationContext(), "世界上最远的距离就是没网络o(╥﹏╥)o", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        Looper.prepare();
+                        if (response.body().string().equals("true")) {
+
+                            Toast.makeText
+                                    (PerinfoActivity.this, "更新成功凹~", Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent();
+                            intent.setClass(PerinfoActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            finish();
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText
+                                    (PerinfoActivity.this, "更新失败凹~", Toast.LENGTH_SHORT).show();
+                        }
+                        Looper.loop();
+                    }
+                });
             }
         }
-        String userJson = gson.toJson(user);
-        Request request = new Request.Builder()
-                .url(Info.BASE_URL + "user/update?info=" + userJson)
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Looper.prepare();
-                Toast.makeText(getApplicationContext(), "世界上最远的距离就是没网络o(╥﹏╥)o", Toast.LENGTH_SHORT).show();
-                Looper.loop();
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Looper.prepare();
-                if (response.body().string().equals("true")) {
-
-                        Toast.makeText
-                            (PerinfoActivity.this, "更新成功凹~", Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent();
-                    intent.setClass(PerinfoActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    finish();
-                    startActivity(intent);
-                } else {
-                    Toast.makeText
-                            (PerinfoActivity.this, "更新失败凹~", Toast.LENGTH_SHORT).show();
-                }
-                Looper.loop();
-            }
-        });
-
     }
 
     @Override

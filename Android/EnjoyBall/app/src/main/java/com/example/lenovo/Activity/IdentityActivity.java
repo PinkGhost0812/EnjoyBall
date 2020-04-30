@@ -63,6 +63,7 @@ public class IdentityActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(IdentityActivity.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         100);
+                Log.e("click", "clicK");
             }
         });
 

@@ -130,8 +130,8 @@ public class CollectActivity extends AppCompatActivity {
                 Type listType = new TypeToken<List<NewsAndAuthor>>() {
                 }.getType();
                 collection = gson.fromJson(jsonStr, listType);
-                Log.e("test collection tltle", collection.get(2).getNews().getNews_title());
-                Log.e("test collection antuor", collection.get(2).getAuthor().getUser_nickname());
+//                Log.e("test collection tltle", collection.get(2).getNews().getNews_title());
+//                Log.e("test collection antuor", collection.get(2).getAuthor().getUser_nickname());
                 Message msg = new Message();
                 msg.obj = collection;
                 msg.what = TAG_MESSAGE_LIST_NEWSANDAUTHOR;

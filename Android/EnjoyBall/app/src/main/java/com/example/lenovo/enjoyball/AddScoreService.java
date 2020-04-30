@@ -14,7 +14,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class AddScoreService extends IntentService {
-    String url = Info.BASE_URL+"user?";
+    String url = Info.BASE_URL+"user/addScore?";
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -40,7 +40,7 @@ public class AddScoreService extends IntentService {
         while (true){
             try {
                 //每在线五分钟增加1积分
-                Thread.sleep(10*1000);
+                Thread.sleep(60*1000*5);
                 Log.e("tag","服务循环执行");
                 sendToServer(id,1);
             } catch (InterruptedException e) {
@@ -53,7 +53,7 @@ public class AddScoreService extends IntentService {
     private void sendToServer(int id, int score) {
         OkHttpClient client = new OkHttpClient();
         final Request request  = new Request.Builder()
-                .url(url+id+"&&addScore="+score)
+                .url(url+"id=" + id + "&&score=" + score)
                 .build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
