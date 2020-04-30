@@ -54,6 +54,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
     private LinearLayout llPersonalcneterVip;
     private LinearLayout llPersonalcneterFeedback;
     private LinearLayout llPersonalcenterLogout;
+    private LinearLayout llPersonalcenterIdentity;
 
     private Intent intent;
 
@@ -346,6 +347,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
         llPersonalcneterVip.setOnClickListener(personalcenterListener);
         llPersonalcneterFeedback.setOnClickListener(personalcenterListener);
         llPersonalcenterLogout.setOnClickListener(personalcenterListener);
+        llPersonalcenterIdentity.setOnClickListener(personalcenterListener);
 
     }
 
@@ -370,6 +372,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
         llPersonalcneterVip = findViewById(R.id.ll_personalcenter_vip);
         llPersonalcneterFeedback = findViewById(R.id.ll_personalcenter_feedback);
         llPersonalcenterLogout = findViewById(R.id.ll_personalcenter_logout);
+        llPersonalcenterIdentity = findViewById(R.id.ll_personalcenter_identification);
 
     }
 

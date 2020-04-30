@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.lenovo.Activity.IdentityActivity"></activity>
+        <activity android:name="com.example.lenovo.Activity.CreateAgreementAgainActivity"></activity>
+        <activity android:name="com.example.lenovo.Activity.IdentityActivity" />
         <activity android:name="com.example.lenovo.Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,7 +62,6 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="cn.jpush.android.service.JNotifyActivity"
             android:exported="false"
@@ -73,7 +73,6 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </activity>
-
         <activity android:name="com.example.lenovo.Activity.TeamManageMemberActivity" />
         <activity android:name="com.example.lenovo.Activity.TeamManageInviteActivity" />
 
@@ -83,12 +82,12 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="c2da9fbeb135fff410c09ce6" />
+
         <provider
             android:name="cn.jpush.android.service.DataProvider"
             android:authorities="${applicationId}.DataProvider"
             android:exported="false"
             android:process=":pushcore" />
-
         <provider
             android:name="cn.jpush.android.service.DownloadProvider"
             android:authorities="${applicationId}.DownloadProvider"
@@ -114,7 +113,6 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name="cn.jpush.android.service.AlarmReceiver"
             android:exported="false" />
@@ -144,6 +142,7 @@
             </intent-filter>
         </service>
     </application>
+
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
@@ -155,7 +154,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
