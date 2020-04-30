@@ -14,6 +14,15 @@ public class Contest implements Serializable {
     private Integer game_grade;
     private Integer game_status;
     private String game_result;
+    private Integer game_category;
+
+    public Integer getGame_category() {
+        return game_category;
+    }
+
+    public void setGame_category(Integer game_category) {
+        this.game_category = game_category;
+    }
 
     public Contest(){}
 
