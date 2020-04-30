@@ -322,8 +322,15 @@ public class PersonalcenterActivity extends AppCompatActivity {
                 case R.id.ll_personalcenter_identification:
                     //点击认证
                     intent = new Intent();
-                    intent.setClass(PersonalcenterActivity.this,IdentityActivity.class);
-                    Log.e("renzheng", "认证跳转");
+                    if(user.getUser_identity()==0){
+                        intent.setClass(PersonalcenterActivity.this,IdentityActivity.class);
+                    }else if(user.getUser_identity()==1){
+                        intent.setClass(PersonalcenterActivity.this,IdentityActivity2.class);
+                    }else if(user.getUser_identity()==2){
+                        intent.setClass(PersonalcenterActivity.this,IdentityActivity3.class);
+                    }else{
+                        intent.setClass(PersonalcenterActivity.this,IdentityActivity4.class);
+                    }
                     startActivity(intent);
                     break;
             }
