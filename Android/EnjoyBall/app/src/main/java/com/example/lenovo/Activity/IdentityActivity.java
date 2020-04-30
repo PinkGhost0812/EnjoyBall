@@ -112,7 +112,7 @@ public class IdentityActivity extends AppCompatActivity {
                     Toast.makeText(IdentityActivity.this, "上传认证信息成功~", Toast.LENGTH_SHORT).show();
 //                    Intent intent = new Intent();
 //                    intent.setClass(PerinfoActivity.this, MainActivity.class);
-//                    finish();
+                    finish();
                     //startActivity(intent);
                 } else {
                     Toast.makeText(IdentityActivity.this, "上传认证信息失败~请重试", Toast.LENGTH_SHORT).show();

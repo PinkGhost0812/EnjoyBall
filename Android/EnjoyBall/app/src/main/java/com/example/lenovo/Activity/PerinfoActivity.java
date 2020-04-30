@@ -145,6 +145,41 @@ public class PerinfoActivity extends AppCompatActivity {
         Gson gson = new GsonBuilder().create();
         if (user.getUser_nickname().equals(preNickname)){
             Log.e("test change","未改名");
+            Log.e("性别:", user.getUser_sex() + " ");
+            String userJson = gson.toJson(user);
+            Request request = new Request.Builder()
+                    .url(Info.BASE_URL + "user/update?info=" + userJson)
+                    .build();
+            Call call = okHttpClient.newCall(request);
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Looper.prepare();
+                    Toast.makeText(getApplicationContext(), "世界上最远的距离就是没网络o(╥﹏╥)o", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Looper.prepare();
+                    if (response.body().string().equals("true")) {
+
+                        Toast.makeText
+                                (PerinfoActivity.this, "更新成功凹~", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent();
+                        intent.setClass(PerinfoActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText
+                                (PerinfoActivity.this, "更新失败凹~", Toast.LENGTH_SHORT).show();
+                    }
+                    Looper.loop();
+                }
+            });
         }else {
             Log.e("test change","改名了");
             if (user.getUser_namecard()<1){

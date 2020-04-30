@@ -303,7 +303,9 @@ public class PersonalcenterActivity extends AppCompatActivity {
                             editor.remove("isAuto");
                             editor.commit();
 
-                            Intent intent=new Intent(PersonalcenterActivity.this,LoginActivity.class);
+                            Intent intent=new Intent();
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.setClass(PersonalcenterActivity.this,LoginActivity.class);
                             startActivity(intent);
 
                         }
