@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-    <item
-        android:id="@+id/item_game"
-        android:title="我的比赛">
-        <menu>
-            <item
-                android:id="@+id/item_game_my"
-                android:title="我的比赛" />
-            <item
-                android:id="@+id/item_game_school"
-                android:title="校园赛" />
-        </menu>
-    </item>
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="全部比赛" android:id="@+id/game_all"/>
+    <item android:title="校园赛" android:id="@+id/game_university"/>
+    <item android:title="个人赛" android:id="@+id/game_person"/>
 </menu>
