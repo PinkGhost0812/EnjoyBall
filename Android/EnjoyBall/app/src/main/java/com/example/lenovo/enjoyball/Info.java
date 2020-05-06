@@ -23,14 +23,19 @@ public class Info extends Application{
 
     public static String registrationId ;
     private int onlineAddScoreFrequency = 0;//今日通过在线增加积分的次数
-    private long lastSigninTime = 0;
 
+    public int getOnlineAddScoreFrequency() {
+        return onlineAddScoreFrequency;
+    }
 
+    public void setOnlineAddScoreFrequency(int onlineAddScoreFrequency) {
+        this.onlineAddScoreFrequency = onlineAddScoreFrequency;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Calendar calendar = Calendar.getInstance();
+
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
 
