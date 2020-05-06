@@ -22,16 +22,6 @@ public class Info extends Application{
     public static final String BASE_URL = "http://192.168.2.102:8080/EnjoyBallServer/";
 
     public static String registrationId ;
-    private int onlineAddScoreFrequency = 0;//今日通过在线增加积分的次数
-
-    public int getOnlineAddScoreFrequency() {
-        return onlineAddScoreFrequency;
-    }
-
-    public void setOnlineAddScoreFrequency(int onlineAddScoreFrequency) {
-        this.onlineAddScoreFrequency = onlineAddScoreFrequency;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();

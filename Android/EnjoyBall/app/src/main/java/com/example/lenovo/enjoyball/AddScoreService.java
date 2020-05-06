@@ -41,27 +41,30 @@ public class AddScoreService extends IntentService {
     @Override
     protected void onHandleIntent( Intent intent) {
         int id = ((Info)getApplicationContext()).getUser().getUser_id();
+        int frequency;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String signInTime = sdf.format(new Date());
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("signinTime", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(""+id, Context.MODE_PRIVATE);
         if (!signInTime.equals(sharedPreferences.getString("lastSignInTime",""))){
-            ((Info)getApplication()).setOnlineAddScoreFrequency(0);
+            frequency = 0;
+        }else {
+            frequency = sharedPreferences.getInt("frequency",0);
         }
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("lastSignInTime",signInTime);
         editor.apply();
-        int frequency =  ((Info)getApplication()).getOnlineAddScoreFrequency();
         while (true){
             if (frequency<3){
                 try {
                     //每在线10分钟增加3积分
                     Thread.sleep(60*1000*10);
-                    Log.e("tag","服务循环执行");
+                    Log.e("tag","服务循环执行"+frequency+1+"次");
                     sendToServer(id,3);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                ((Info)getApplication()).setOnlineAddScoreFrequency(frequency+1);
+                frequency++;
+                editor.putInt("frequency",frequency);
             }
             else {
                 break;
