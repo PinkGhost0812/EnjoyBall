@@ -39,10 +39,10 @@ public class AddScoreService extends IntentService {
         int id = ((Info)getApplicationContext()).getUser().getUser_id();
         while (true){
             try {
-                //每在线五分钟增加1积分
-                Thread.sleep(60*1000*5);
+                //每在线10分钟增加3积分
+                Thread.sleep(60*1000*10);
                 Log.e("tag","服务循环执行");
-                sendToServer(id,1);
+                sendToServer(id,3);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
