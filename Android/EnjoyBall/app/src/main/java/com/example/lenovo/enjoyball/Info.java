@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.lenovo.entity.*;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
@@ -22,12 +23,14 @@ public class Info extends Application{
 
     public static String registrationId ;
     private int onlineAddScoreFrequency = 0;//今日通过在线增加积分的次数
+    private long lastSigninTime = 0;
 
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+        Calendar calendar = Calendar.getInstance();
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
 
