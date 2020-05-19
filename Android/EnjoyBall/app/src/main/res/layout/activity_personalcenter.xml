@@ -15,6 +15,27 @@
         android:background="@drawable/bgcenter">
 
         <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <ImageView
+                android:layout_marginLeft="27dp"
+                android:layout_gravity="center"
+                android:background="#ffffff"
+                android:src="@drawable/qiandao"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:background="#ffffff"
+                android:layout_gravity="center"
+                android:textSize="16dp"
+
+                android:text="点此签到"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="56"

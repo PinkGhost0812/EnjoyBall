@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.lenovo.Activity.TaskActivity"></activity>
+        <activity android:name="com.example.lenovo.Activity.CheckInActivity"></activity>
+        <activity android:name="com.example.lenovo.Activity.TaskActivity" />
         <activity android:name="com.example.lenovo.Activity.IdentityActivity4" />
         <activity android:name="com.example.lenovo.Activity.IdentityActivity3" />
         <activity android:name="com.example.lenovo.Activity.IdentityActivity2" />
