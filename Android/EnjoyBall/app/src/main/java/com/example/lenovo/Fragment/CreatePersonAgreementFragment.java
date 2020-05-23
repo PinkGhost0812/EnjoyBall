@@ -73,6 +73,7 @@ public class CreatePersonAgreementFragment extends Fragment {
     private int oom = 0;
     private TextView tv_getTime;
     private TextView tv_getData;
+    private boolean achieve = false;
 
 
     @Nullable
@@ -225,6 +226,18 @@ public class CreatePersonAgreementFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             //向服务器发送信息
                             sendToServer();
+                            if (achieve==true){
+                                SharedPreferences addScoreShare = getContext().getSharedPreferences(""+(getUser().getUser_id()),Context.MODE_PRIVATE);
+                                boolean create = addScoreShare.getBoolean("createAgreement",false);
+                                if (create=false){
+                                    SharedPreferences.Editor editor = addScoreShare.edit();
+                                    editor.putBoolean("createAgreement",true);
+                                    editor.apply();
+                                    addScore();
+                                }
+
+
+                            }
                             SharedPreferences sharedPreferences = getContext().getSharedPreferences(getUser().getUser_id()+"", Context.MODE_PRIVATE);
 
                         }
@@ -345,6 +358,30 @@ public class CreatePersonAgreementFragment extends Fragment {
             }
         }
     }
+    //完成创建约球任务增加积分
+    private void addScore() {
+        User user = getUser();
+        int userId = user.getUser_id();
+        OkHttpClient client = new OkHttpClient();
+        final Request request  = new Request.Builder()
+                .url(url+"id=" + userId + "&&score=" + 5)
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("增加积分","失败");
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.e("增加积分","成功");
+
+            }
+        });
+
+    }
 
     //向服务器发送请求
     private void sendToServer() {
@@ -380,6 +417,7 @@ public class CreatePersonAgreementFragment extends Fragment {
             public void onResponse(Call call, Response response) throws IOException {
                 String result = response.body().string();
                 if (result.equals("true")) {
+                    achieve = true;
                     Looper.prepare();
                     Toast.makeText(getContext(), "约球队伍创建成功", Toast.LENGTH_SHORT).show();
                     Looper.loop();
