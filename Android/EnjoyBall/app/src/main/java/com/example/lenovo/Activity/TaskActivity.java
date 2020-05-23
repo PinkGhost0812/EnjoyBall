@@ -41,6 +41,12 @@ public class TaskActivity extends AppCompatActivity {
     }
 
     private void setSignIn() {
+        int flag = sharedPreferences.getInt("flag",0);
+        if (flag==0){
+            tv_task_signIn.setText("(0/1)");
+        }else {
+            tv_task_signIn.setText("(1/1)");
+        }
 
     }
 
