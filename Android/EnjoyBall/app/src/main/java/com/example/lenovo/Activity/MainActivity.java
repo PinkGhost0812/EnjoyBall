@@ -1,7 +1,9 @@
 package com.example.lenovo.Activity;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -30,6 +32,8 @@ import com.example.lenovo.entity.DemandInfo;
 import com.example.lenovo.entity.News;
 import com.example.lenovo.entity.User;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private Contest contest;
     private News news;
     private DemandInfo demandInfo;
-    private long startTime=1;
+    private long startTime = 1;
 
     private User user;
 
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         private Fragment fragment = null;
 
         private void setSelect(boolean b) {
-            if (b){
+            if (b) {
                 imageView.setImageResource(selectImage);
                 textView.setTextColor(
                         Color.parseColor("#1afa29"));
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private void setSelectTop(boolean b) {
-            if (b){
+            if (b) {
                 imageView.setImageResource(selectImage);
                 textView.setTextColor(
                         Color.parseColor("#1afa29"));
@@ -125,28 +129,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private Map<String,MyTabSpec> map = new HashMap<>();
-    private Map<String,MyTabSpec> mapTop = new HashMap<>();
-    private String[] tabStrTopId = {"全部","足球","篮球","排球","羽毛球","乒乓球"};
-    private String[] tabStrId = {"首页","比赛","约球","消息"};
+    private Map<String, MyTabSpec> map = new HashMap<>();
+    private Map<String, MyTabSpec> mapTop = new HashMap<>();
+    private String[] tabStrTopId = {"全部", "足球", "篮球", "排球", "羽毛球", "乒乓球"};
+    private String[] tabStrId = {"首页", "比赛", "约球", "消息"};
     private Fragment curFragment = null;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_main);
+        int id = ((Info) getApplicationContext()).getUser().getUser_id();
+        sharedPreferences = getApplicationContext().getSharedPreferences("" + id, Context.MODE_PRIVATE);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String signInTime = sdf.format(new Date());
+        if (!signInTime.equals(sharedPreferences.getString("lastSignInTime",""))){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("lastSignInTime",signInTime);
+            editor.putBoolean("createAgreement",false);
+            editor.putInt("frequency", 0);
+            editor.apply();
 
-        //开启定时增加积分的服务
-        startAddScoreService();
+        }
+
+            //开启定时增加积分的服务
+            startAddScoreService();
         Log.e("开启Service", "方法执行");
-        user=((Info)getApplicationContext()).getUser();
+        user = ((Info) getApplicationContext()).getUser();
         //嬲
         initData();
 
         setListener();
 
-        changeTab(tabStrId[0],tabtop);
+        changeTab(tabStrId[0], tabtop);
 
         changeImageTop(tabStrTopId[0]);
 
@@ -155,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                 .circleCrop();
 
         Glide.with(this)
-                .load(Info.BASE_URL+user.getUser_headportrait())
+                .load(Info.BASE_URL + user.getUser_headportrait())
                 .apply(options)
                 .into(ivMainPortrait);
     }
@@ -166,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         Log.e("Service OK", "服务开启");
     }
 
-    private class MyListener implements View.OnClickListener{
+    private class MyListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -174,55 +191,55 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.tab_spec_main_home:
                     tab = 0;
                     ll_top.setVisibility(View.VISIBLE);
-                    changeTab(tabStrId[0],tabtop);
+                    changeTab(tabStrId[0], tabtop);
                     break;
                 case R.id.tab_spec_main_game:
-                    tab =  1;
+                    tab = 1;
                     ll_top.setVisibility(View.VISIBLE);
-                    changeTab(tabStrId[1],tabtop);
+                    changeTab(tabStrId[1], tabtop);
                     break;
                 case R.id.tab_spec_main_time:
-                    tab =  2;
+                    tab = 2;
                     ll_top.setVisibility(View.VISIBLE);
-                    changeTab(tabStrId[2],tabtop);
+                    changeTab(tabStrId[2], tabtop);
                     break;
                 case R.id.tab_spec_main_message:
-                    tab =  3;
+                    tab = 3;
                     ll_top.setVisibility(View.GONE);
-                    changeTab(tabStrId[3],tabtop);
+                    changeTab(tabStrId[3], tabtop);
                     break;
                 case R.id.tab_spec_main_topall:
-                    tabtop =  0;
-                    changeTabTop(tabStrTopId[0],tab,tabtop);
+                    tabtop = 0;
+                    changeTabTop(tabStrTopId[0], tab, tabtop);
                     break;
                 case R.id.tab_spec_main_football:
-                    tabtop =  1;
-                    changeTabTop(tabStrTopId[1],tab,tabtop);
+                    tabtop = 1;
+                    changeTabTop(tabStrTopId[1], tab, tabtop);
                     break;
                 case R.id.tab_spec_main_basketball:
-                    tabtop =  2;
-                    changeTabTop(tabStrTopId[2],tab,tabtop);
+                    tabtop = 2;
+                    changeTabTop(tabStrTopId[2], tab, tabtop);
                     break;
                 case R.id.tab_spec_main_volleyball:
-                    tabtop =  3;
-                    changeTabTop(tabStrTopId[3],tab,tabtop);
+                    tabtop = 3;
+                    changeTabTop(tabStrTopId[3], tab, tabtop);
                     break;
                 case R.id.tab_spec_main_badminton:
-                    tabtop =  4;
-                    changeTabTop(tabStrTopId[4],tab,tabtop);
+                    tabtop = 4;
+                    changeTabTop(tabStrTopId[4], tab, tabtop);
                     break;
                 case R.id.tab_spec_main_tabletennis:
-                    tabtop =  5;
-                    changeTabTop(tabStrTopId[5],tab,tabtop);
+                    tabtop = 5;
+                    changeTabTop(tabStrTopId[5], tab, tabtop);
                     break;
                 case R.id.iv_main_portrait:
                     //跳转到个人中心页面
-                    if(startTime!=0){
+                    if (startTime != 0) {
                         long endTime = System.currentTimeMillis();
-                        if(endTime-startTime<500){
+                        if (endTime - startTime < 500) {
                             Toast.makeText(getApplicationContext(), "点的太快了噢~", Toast.LENGTH_LONG).show();
-                        }else{
-                            Intent intent =new Intent();
+                        } else {
+                            Intent intent = new Intent();
                             intent.setClass(MainActivity.this, PersonalcenterActivity.class);
                             overridePendingTransition(R.anim.personalcenter_in, R.anim.personalcenter_out);
                             startActivity(intent);
@@ -231,12 +248,12 @@ public class MainActivity extends AppCompatActivity {
                     startTime = System.currentTimeMillis();
                     break;
                 case R.id.iv_main_serch:
-                    Intent intent1 =new Intent();
+                    Intent intent1 = new Intent();
                     intent1.setClass(MainActivity.this, SearchActivity.class);
                     startActivity(intent1);
                     break;
                 case R.id.et_main_search:
-                    Intent intent2 =new Intent();
+                    Intent intent2 = new Intent();
                     intent2.setClass(MainActivity.this, SearchActivity.class);
                     overridePendingTransition(R.anim.personalcenter_in, R.anim.personalcenter_out);
                     startActivity(intent2);
@@ -247,38 +264,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 根据Tab ID 切换Tab
-    private void changeTab(String s,int i) {
+    private void changeTab(String s, int i) {
         // 1 切换Fragment
-        changeFragment(s,i);
+        changeFragment(s, i);
 
         // 2 切换图标及字体颜色
         changeImage(s);
     }
-    private void changeTabTop(String s,int x,int y) {
+
+    private void changeTabTop(String s, int x, int y) {
         // 1 切换Fragment
         //removeTop();
-        changeFragmentTop(x,y);
+        changeFragmentTop(x, y);
         //changeBall(x,y);
         // 2 切换图标及字体颜色
         changeImageTop(s);
     }
 
     // 根据Tab ID 切换 Tab显示的Fragment
-    private void changeFragment(String s,int i) {
+    private void changeFragment(String s, int i) {
         Fragment fragment = map.get(s).getFragment();
-        if(curFragment == fragment) return;
+        if (curFragment == fragment) return;
 
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
 
-        if(curFragment!=null)
+        if (curFragment != null)
             transaction.hide(curFragment);
 
-        if(!fragment.isAdded()) {
+        if (!fragment.isAdded()) {
             Bundle bundle = new Bundle();
-            bundle.putInt("ball",i);
+            bundle.putInt("ball", i);
             fragment.setArguments(bundle);
-            transaction.replace(R.id.tab_content,fragment);
+            transaction.replace(R.id.tab_content, fragment);
             refresh = 0;
         }
         // 显示对应Fragment
@@ -288,15 +306,15 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void changeFragmentTop(int x,int y) {
+    private void changeFragmentTop(int x, int y) {
         Fragment fragment = map.get(tabStrId[x]).getFragment();
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
 
         Bundle bundle = new Bundle();
-        bundle.putInt("ball",y);
+        bundle.putInt("ball", y);
         fragment.setArguments(bundle);
-        transaction.replace(R.id.tab_content,fragment);
+        transaction.replace(R.id.tab_content, fragment);
         // 显示对应Fragment
         transaction.show(fragment);
         curFragment = fragment;
@@ -314,6 +332,7 @@ public class MainActivity extends AppCompatActivity {
         // 2 设置选中的Tab的图片和字体颜色
         map.get(s).setSelect(true);
     }
+
     private void changeImageTop(String s) {
         // 1 所有Tab的图片和字体颜色恢复默认
         for (String key : mapTop.keySet()) {
@@ -325,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 设置监听器
-    private void setListener(){
+    private void setListener() {
 
         //vpBanner = (ViewPager)findViewById(R.id.et_login_pwd);
 
@@ -394,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 将图片资源放入map的MyTabSpec对象中
-    private void setImage(){
+    private void setImage() {
 //        map.get(tabStrId[0]).setNormalImage(R.drawable.);
 //        map.get(tabStrId[0]).setSelectImage(R.drawable.);
         map.get(tabStrId[0]).setNormalImage(R.drawable.home2);
@@ -405,7 +424,7 @@ public class MainActivity extends AppCompatActivity {
         map.get(tabStrId[2]).setSelectImage(R.drawable.time);
         map.get(tabStrId[3]).setNormalImage(R.drawable.message2);
         map.get(tabStrId[3]).setSelectImage(R.drawable.message);
-        for (int i = 0;i<6;i++){
+        for (int i = 0; i < 6; i++) {
             mapTop.get(tabStrTopId[i]).setNormalImage(R.drawable.underline11);
             mapTop.get(tabStrTopId[i]).setSelectImage(R.drawable.underlinegreen);
         }
@@ -413,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
 
     // 将ImageView和TextView放入map中的MyTabSpec对象
     private void findView() {
-        ivMainPortrait=findViewById(R.id.iv_main_portrait);
+        ivMainPortrait = findViewById(R.id.iv_main_portrait);
         etSearch = findViewById(R.id.et_main_search);
         ivSearch = findViewById(R.id.iv_main_serch);
         ImageView ivHome = findViewById(R.id.img_main_home);
