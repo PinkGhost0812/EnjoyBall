@@ -1,11 +1,15 @@
 package com.example.lenovo.enjoyball;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -14,7 +18,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class AddScoreService extends IntentService {
-    String url = Info.BASE_URL+"user/addScore?";
+    String url = Info.BASE_URL + "user/addScore?";
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -23,7 +28,8 @@ public class AddScoreService extends IntentService {
     public AddScoreService(String name) {
         super(name);
     }
-    public AddScoreService(){
+
+    public AddScoreService() {
         super("AddScoreService");
 
     }
@@ -35,25 +41,38 @@ public class AddScoreService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent( Intent intent) {
-        int id = ((Info)getApplicationContext()).getUser().getUser_id();
-        while (true){
-            try {
-                //每在线五分钟增加1积分
-                Thread.sleep(60*1000*5);
-                Log.e("tag","服务循环执行");
-                sendToServer(id,1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+    protected void onHandleIntent(Intent intent) {
+        int id = ((Info) getApplicationContext()).getUser().getUser_id();
+        int frequency;
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("" + id, Context.MODE_PRIVATE);
+        frequency = sharedPreferences.getInt("frequency", 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        while (true) {
+            if (frequency < 3) {
+                try {
+                    //每在线10分钟增加3积分
+                    Thread.sleep(60 * 1000 * 10);
+                    Log.e("tag", "服务循环执行" + frequency + 1 + "次");
+                    sendToServer(id, 3);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                frequency++;
+                editor.putInt("frequency", frequency);
+                editor.apply();
+            } else {
+                break;
             }
+
+
         }
 
     }
 
     private void sendToServer(int id, int score) {
         OkHttpClient client = new OkHttpClient();
-        final Request request  = new Request.Builder()
-                .url(url+"id=" + id + "&&score=" + score)
+        final Request request = new Request.Builder()
+                .url(url + "id=" + id + "&&score=" + score)
                 .build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {

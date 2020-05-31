@@ -18,6 +18,14 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:textSize="16sp" />
+        <Button
+            android:id="@+id/btn_game_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_game_date"
+            android:layout_marginLeft="15dp"
+            android:background="#fff"
+            android:text="全部比赛"/>
         <android.support.v7.widget.ActionMenuView
             android:id="@+id/mv_game_menu"
             android:layout_marginRight="5dp"

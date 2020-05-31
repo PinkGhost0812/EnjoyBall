@@ -8,10 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.lenovo.Adapter.GameAdapter;
@@ -48,6 +51,7 @@ import okhttp3.Response;
 public class GameFragment extends Fragment {
 
     private TextView tvDate;
+    private Button btnGame;
     private List<TeamAndContest> gameList = null;
     private OkHttpClient okHttpClient;
     private OkHttpClient srokHttpClient;
@@ -59,6 +63,7 @@ public class GameFragment extends Fragment {
             ,"select * from game_info where game_class = 4"};
     private int x = 0;
     private int page = 1;
+    private int category = 0;
 
 
     private List<TeamAndContest> dataSource = null;
@@ -116,6 +121,9 @@ public class GameFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 refreshLayout.finishRefresh();
                 break;
+            case "category":
+                Log.e("比赛分类",category+"");
+                this.onResume();
 
         }
 
@@ -187,7 +195,7 @@ public class GameFragment extends Fragment {
 
         tvDate = getActivity().findViewById(R.id.tv_game_date);
         tvDate.setText(getTime()+"");
-
+        btnGame = getActivity().findViewById(R.id.btn_game_category);
         listView = getActivity().findViewById(R.id.lv_game_game);
         refreshLayout = getActivity().findViewById(R.id.sr_game_refresh);
         refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
@@ -214,6 +222,43 @@ public class GameFragment extends Fragment {
 
             }
         });
+        btnGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopUpMenu();
+            }
+        });
+    }
+
+    private void showPopUpMenu(){
+        PopupMenu menu = new PopupMenu(getContext(),btnGame);
+        getActivity().getMenuInflater().inflate(R.menu.game_menu,menu.getMenu());
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.game_all:
+                        btnGame.setText("全部比赛");
+                        category = 0;
+                        EventBus.getDefault().post("category");
+                        return true;
+                    case R.id.game_university:
+                        btnGame.setText("校园赛");
+                        category = 1;
+                        EventBus.getDefault().post("category");
+                        return true;
+                    case R.id.game_person:
+                        btnGame.setText("个人赛");
+                        category = 2;
+                        EventBus.getDefault().post("category");
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+        menu.show();
     }
 
     private class GameListTask extends AsyncTask{
@@ -231,12 +276,21 @@ public class GameFragment extends Fragment {
             int y = x-1;
             page++;
             if (x==0){
-                Request request = new Request.Builder().url(Info.BASE_URL + "contest/list?page="+page).build();
-                call = srokHttpClient.newCall(request);
-
+                if (category==0){
+                    Request request = new Request.Builder().url(Info.BASE_URL + "contest/list?page="+page).build();
+                    call = srokHttpClient.newCall(request);
+                }else {
+                    Request request = new Request.Builder().url(Info.BASE_URL + "contest/classList?category="+category+"&page="+page).build();
+                    call = srokHttpClient.newCall(request);
+                }
             }else {
-                Request request = new Request.Builder().url(Info.BASE_URL + "contest/find?cls="+y+"&page="+page).build();
-                call = srokHttpClient.newCall(request);
+                if (category==0){
+                    Request request = new Request.Builder().url(Info.BASE_URL + "contest/find?cls="+y+"&page="+page).build();
+                    call = srokHttpClient.newCall(request);
+                }else {
+                    Request request = new Request.Builder().url(Info.BASE_URL + "contest/classList?category="+category+"&page="+page).build();
+                    call = srokHttpClient.newCall(request);
+                }
             }
             call.enqueue(new Callback() {
                 @Override

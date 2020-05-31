@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/img_feedback_return"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/arrow"
+            android:layout_width="20dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:layout_weight="20"
+            android:textSize="25sp"
+            android:text="每日签到"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_feedback_submit"
+            android:textColor="@color/green"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/cxk1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btn_checkin"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="590dp"
+            android:text="点击签到"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+        <TextView
+            android:gravity="center"
+            android:text="今日共有5个人签到"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>

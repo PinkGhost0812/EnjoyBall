@@ -37,6 +37,8 @@ import com.example.lenovo.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -73,6 +75,7 @@ public class CreatePersonAgreementFragment extends Fragment {
     private int oom = 0;
     private TextView tv_getTime;
     private TextView tv_getData;
+    private boolean achieve = false;
 
 
     @Nullable
@@ -84,7 +87,7 @@ public class CreatePersonAgreementFragment extends Fragment {
         btn_OK.setOnClickListener(new OnClicked());
         btn_invite.setOnClickListener(new OnClicked());
         tv_getTime.setOnClickListener(new OnClicked());
-        tv_getData.setOnClickListener( new OnClicked());
+        tv_getData.setOnClickListener(new OnClicked());
         return view;
     }
 
@@ -199,22 +202,22 @@ public class CreatePersonAgreementFragment extends Fragment {
             switch (v.getId()) {
                 case R.id.btn_createagreement_OK:
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-                    String timeStr = tv_getData.getText().toString()+" "+tv_getTime.getText().toString();
-                    Log.e("时间",timeStr);
+                    String timeStr = tv_getData.getText().toString() + " " + tv_getTime.getText().toString();
+                    Log.e("时间", timeStr);
                     try {
                         time = simpleDateFormat.parse(timeStr);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    if (time==null) {
+                    if (time == null) {
                         Toast.makeText(getContext(), "请选择时间", Toast.LENGTH_SHORT).show();
 
                         return;
                     }
                     Object object = et_say.getText();
-                    if (object==null){
+                    if (object == null) {
                         description = new String();
-                    }else {
+                    } else {
                         description = "come on";
                     }
                     AlertDialog.Builder adBuilder = new AlertDialog.Builder(getActivity());
@@ -225,7 +228,7 @@ public class CreatePersonAgreementFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             //向服务器发送信息
                             sendToServer();
-                            SharedPreferences sharedPreferences = getContext().getSharedPreferences(getUser().getUser_id()+"", Context.MODE_PRIVATE);
+                            SharedPreferences sharedPreferences = getContext().getSharedPreferences(getUser().getUser_id() + "", Context.MODE_PRIVATE);
 
                         }
                     });
@@ -245,7 +248,7 @@ public class CreatePersonAgreementFragment extends Fragment {
                     getContext().startActivity(intent);
                     break;
                 case R.id.tv_getData:
-                    Log.e("获取时间","日期");
+                    Log.e("获取时间", "日期");
                     final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
                     bottomSheetDialog.setContentView(R.layout.layout_bottomsheetdialog_data);
                     bottomSheetDialog.setCanceledOnTouchOutside(false);
@@ -262,43 +265,43 @@ public class CreatePersonAgreementFragment extends Fragment {
                         datePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
                             @Override
                             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                int month = monthOfYear+1;
+                                int month = monthOfYear + 1;
                                 String monthStr;
                                 String dayStr;
-                                if (dayOfMonth<10){
-                                    dayStr ="0"+dayOfMonth;
-                                }else {
-                                    dayStr = ""+dayOfMonth;
+                                if (dayOfMonth < 10) {
+                                    dayStr = "0" + dayOfMonth;
+                                } else {
+                                    dayStr = "" + dayOfMonth;
                                 }
-                                if (month<10){
-                                    monthStr ="0"+month;
-                                }else {
-                                    monthStr = ""+month;
+                                if (month < 10) {
+                                    monthStr = "0" + month;
+                                } else {
+                                    monthStr = "" + month;
                                 }
 
-                                tv_getData.setText(year + "-" +monthStr  + "-" + dayStr);
+                                tv_getData.setText(year + "-" + monthStr + "-" + dayStr);
 
                             }
                         });
-                    }else {
+                    } else {
                         datePicker.setOnTouchListener(new View.OnTouchListener() {
                             @Override
                             public boolean onTouch(View v, MotionEvent event) {
-                                int month = datePicker.getMonth()+1;
+                                int month = datePicker.getMonth() + 1;
                                 String monthStr;
                                 String dayStr;
-                                if (datePicker.getDayOfMonth()<10){
-                                    dayStr ="0"+datePicker.getDayOfMonth();
-                                }else {
-                                    dayStr = ""+datePicker.getDayOfMonth();
+                                if (datePicker.getDayOfMonth() < 10) {
+                                    dayStr = "0" + datePicker.getDayOfMonth();
+                                } else {
+                                    dayStr = "" + datePicker.getDayOfMonth();
                                 }
-                                if (month<10){
-                                    monthStr ="0"+month;
-                                }else {
-                                    monthStr = ""+month;
+                                if (month < 10) {
+                                    monthStr = "0" + month;
+                                } else {
+                                    monthStr = "" + month;
                                 }
 
-                                tv_getData.setText(datePicker.getYear() + "-" +monthStr  + "-" + dayStr);
+                                tv_getData.setText(datePicker.getYear() + "-" + monthStr + "-" + dayStr);
 
 
                                 return true;
@@ -307,7 +310,7 @@ public class CreatePersonAgreementFragment extends Fragment {
                     }
                     break;
                 case R.id.tv_getTime:
-                    Log.e("获取时间","时间");
+                    Log.e("获取时间", "时间");
                     final BottomSheetDialog bottomSheetDialogTime = new BottomSheetDialog(getContext());
                     bottomSheetDialogTime.setContentView(R.layout.layout_bottomsheetdialog_time);
                     bottomSheetDialogTime.setCanceledOnTouchOutside(false);
@@ -325,25 +328,49 @@ public class CreatePersonAgreementFragment extends Fragment {
                         public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
                             String hourStr;
                             String minuteStr;
-                            if (minute<10){
-                                minuteStr = "0"+minute;
-                            }else {
-                                minuteStr = ""+minute;
+                            if (minute < 10) {
+                                minuteStr = "0" + minute;
+                            } else {
+                                minuteStr = "" + minute;
                             }
-                            if (hourOfDay<10){
-                                hourStr = "0"+hourOfDay;
-                            }else {
-                                hourStr = ""+hourOfDay;
+                            if (hourOfDay < 10) {
+                                hourStr = "0" + hourOfDay;
+                            } else {
+                                hourStr = "" + hourOfDay;
                             }
-                            tv_getTime.setText(hourStr+":"+minuteStr);
+                            tv_getTime.setText(hourStr + ":" + minuteStr);
                         }
                     });
                     break;
 
 
-
             }
         }
+    }
+
+    //完成创建约球任务增加积分
+    private void addScore() {
+        User user = getUser();
+        int userId = user.getUser_id();
+        OkHttpClient client = new OkHttpClient();
+        final Request request = new Request.Builder()
+                .url(url + "id=" + userId + "&&score=" + 5)
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("增加积分", "失败");
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.e("增加积分", "成功");
+
+            }
+        });
+
     }
 
     //向服务器发送请求
@@ -362,10 +389,10 @@ public class CreatePersonAgreementFragment extends Fragment {
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
         OkHttpClient client = new OkHttpClient();
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("invited",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("invited", Context.MODE_PRIVATE);
         String invited = sharedPreferences.getString("user", "");
         final Request request = new Request.Builder()
-                .url(url + "appointment/addAppointmentWithInvite?demandInfo=" + gson.toJson(info)+"&&idList="+invited)
+                .url(url + "appointment/addAppointmentWithInvite?demandInfo=" + gson.toJson(info) + "&&idList=" + invited)
                 .build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
@@ -380,6 +407,17 @@ public class CreatePersonAgreementFragment extends Fragment {
             public void onResponse(Call call, Response response) throws IOException {
                 String result = response.body().string();
                 if (result.equals("true")) {
+                    achieve = true;
+                    SharedPreferences addScoreShare = getContext().getSharedPreferences("" + (getUser().getUser_id()), Context.MODE_PRIVATE);
+                    boolean create = addScoreShare.getBoolean("createAgreement", false);
+                    if (create = false) {
+                        SharedPreferences.Editor editor = addScoreShare.edit();
+                        editor.putBoolean("createAgreement", true);
+                        editor.apply();
+                        addScore();
+                    }
+
+
                     Looper.prepare();
                     Toast.makeText(getContext(), "约球队伍创建成功", Toast.LENGTH_SHORT).show();
                     Looper.loop();
@@ -396,7 +434,7 @@ public class CreatePersonAgreementFragment extends Fragment {
 
     //获取当前登陆的用户的信息
     private User getUser() {
-        Info info = (Info)getActivity().getApplication();
+        Info info = (Info) getActivity().getApplication();
         User user = info.getUser();
         return user;
     }
@@ -404,10 +442,10 @@ public class CreatePersonAgreementFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("invited",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("invited", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("user", "");
-        editor.putString("team","");
+        editor.putString("team", "");
         editor.apply();
     }
 }

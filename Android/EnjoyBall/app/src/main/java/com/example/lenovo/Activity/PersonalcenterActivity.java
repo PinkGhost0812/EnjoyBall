@@ -333,6 +333,8 @@ public class PersonalcenterActivity extends AppCompatActivity {
                     }
                     startActivity(intent);
                     break;
+                case R.id.ll_personalcenter_task:
+                    intent = new Intent();
             }
         }
     }
