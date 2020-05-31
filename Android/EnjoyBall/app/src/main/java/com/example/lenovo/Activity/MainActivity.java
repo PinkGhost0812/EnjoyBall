@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("lastSignInTime",signInTime);
             editor.putBoolean("createAgreement",false);
             editor.putInt("frequency", 0);
+            editor.putLong("readNewsTime",0);
             editor.apply();
 
         }

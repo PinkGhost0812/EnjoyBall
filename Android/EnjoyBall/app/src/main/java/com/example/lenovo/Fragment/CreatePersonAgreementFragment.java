@@ -347,32 +347,6 @@ public class CreatePersonAgreementFragment extends Fragment {
             }
         }
     }
-
-    //完成创建约球任务增加积分
-    private void addScore() {
-        User user = getUser();
-        int userId = user.getUser_id();
-        OkHttpClient client = new OkHttpClient();
-        final Request request = new Request.Builder()
-                .url(url + "id=" + userId + "&&score=" + 5)
-                .build();
-        Call call = client.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("增加积分", "失败");
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Log.e("增加积分", "成功");
-
-            }
-        });
-
-    }
-
     //向服务器发送请求
     private void sendToServer() {
         User user = getUser();
@@ -414,7 +388,6 @@ public class CreatePersonAgreementFragment extends Fragment {
                         SharedPreferences.Editor editor = addScoreShare.edit();
                         editor.putBoolean("createAgreement", true);
                         editor.apply();
-                        addScore();
                     }
 
 
