@@ -19,6 +19,15 @@ public class User implements Serializable {
     private String user_jpushid;
     private Integer user_identity;
     private Integer user_namecard;
+    private Integer user_package;
+
+    public Integer getUser_package() {
+        return user_package;
+    }
+
+    public void setUser_package(Integer user_package) {
+        this.user_package = user_package;
+    }
 
     public Integer getUser_identity() {
         return user_identity;
