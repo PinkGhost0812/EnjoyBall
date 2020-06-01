@@ -74,9 +74,9 @@ public class KnapsackActivity extends AppCompatActivity {
 
     private void initData() {
 
-        String[] name = {"改名卡","积分卡"};
+        String[] name = {"积分卡","改名卡"};
         int[] img = {R.drawable.addgame, R.drawable.changename};
-        int[] num = {10,5};
+        int[] num = {10,3};
         dataSource = new ArrayList<>();
         for(int i=0; i<name.length; ++i) {
             Knapsack knapsack = new Knapsack();

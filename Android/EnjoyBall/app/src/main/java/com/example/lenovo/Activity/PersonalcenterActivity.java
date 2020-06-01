@@ -282,7 +282,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
                 case R.id.ll_personalcenter_package:
                     //点击背包
                     intent = new Intent();
-                    intent.setClass(PersonalcenterActivity.this, CollectActivity.class);
+                    intent.setClass(PersonalcenterActivity.this, KnapsackActivity.class);
                     intent.putExtra("user",user);
                     startActivity(intent);
                     break;
