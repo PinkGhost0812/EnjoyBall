@@ -7,6 +7,16 @@ public class PYQ {
     private Integer UserId;
     private String time;
     private Integer good;
+    private String content;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     private Integer number;
     private List<PYQComment> comments;
 
