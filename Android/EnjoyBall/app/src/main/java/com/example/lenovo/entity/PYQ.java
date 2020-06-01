@@ -1,11 +1,22 @@
 package com.example.lenovo.entity;
 
+import java.util.List;
+
 public class PYQ {
     private Integer id;
     private Integer UserId;
     private String time;
     private Integer good;
     private Integer number;
+    private List<Comment> comments;
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     @Override
     public String toString() {
@@ -58,11 +69,12 @@ public class PYQ {
         this.number = number;
     }
 
-    public PYQ(Integer id, Integer userId, String time, Integer good, Integer number) {
+    public PYQ(Integer id, Integer userId, String time, Integer good, Integer number, List<Comment> comments) {
         this.id = id;
         UserId = userId;
         this.time = time;
         this.good = good;
         this.number = number;
+        this.comments = comments;
     }
 }
