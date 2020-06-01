@@ -8,13 +8,15 @@ public class PYQ {
     private String time;
     private Integer good;
     private Integer number;
-    private List<Comment> comments;
+    private List<PYQComment> comments;
 
-    public List<Comment> getComments() {
+    public PYQ(){}
+
+    public List<PYQComment> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<PYQComment> comments) {
         this.comments = comments;
     }
 
@@ -69,7 +71,7 @@ public class PYQ {
         this.number = number;
     }
 
-    public PYQ(Integer id, Integer userId, String time, Integer good, Integer number, List<Comment> comments) {
+    public PYQ(Integer id, Integer userId, String time, Integer good, Integer number, List<PYQComment> comments) {
         this.id = id;
         UserId = userId;
         this.time = time;
