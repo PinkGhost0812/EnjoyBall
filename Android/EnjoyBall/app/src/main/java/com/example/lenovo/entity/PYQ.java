@@ -8,6 +8,15 @@ public class PYQ {
     private String time;
     private Integer good;
     private String content;
+    private String img;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public String getContent() {
         return content;
