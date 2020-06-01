@@ -8,7 +8,7 @@ public class StuffInfo implements Serializable{
     private String name;
     private Integer price;
     private String content;
-    private Integer number = 1;
+    private int number = 1;
 
     @Override
     public String toString() {

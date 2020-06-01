@@ -85,7 +85,7 @@ public class ShoppingFragment extends Fragment {
         okHttpClient =new OkHttpClient();
         shoppingList = new ArrayList<>();
 
-        Request request = new Request.Builder().url(Info.BASE_URL + "shopping/list").build();
+        Request request = new Request.Builder().url(Info.BASE_URL + "information/shopList").build();
         call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
