@@ -23,6 +23,7 @@ import com.bumptech.glide.signature.ObjectKey;
 import com.example.lenovo.Fragment.GameFragment;
 import com.example.lenovo.Fragment.HomeFragment;
 import com.example.lenovo.Fragment.MessageFragment;
+import com.example.lenovo.Fragment.ShoppingFragment;
 import com.example.lenovo.enjoyball.AddScoreService;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     private Map<String, MyTabSpec> map = new HashMap<>();
     private Map<String, MyTabSpec> mapTop = new HashMap<>();
     private String[] tabStrTopId = {"全部", "足球", "篮球", "排球", "羽毛球", "乒乓球"};
-    private String[] tabStrId = {"首页", "比赛", "约球", "消息"};
+    private String[] tabStrId = {"首页","比赛","约球","商城","消息"};
     private Fragment curFragment = null;
     private SharedPreferences sharedPreferences;
 
@@ -204,10 +205,13 @@ public class MainActivity extends AppCompatActivity {
                     ll_top.setVisibility(View.VISIBLE);
                     changeTab(tabStrId[2], tabtop);
                     break;
+                case R.id.tab_spec_main_shopping:
+                    tab =  3;
+                    changeTab(tabStrId[3],tabtop);
+                    break;
                 case R.id.tab_spec_main_message:
-                    tab = 3;
-                    ll_top.setVisibility(View.GONE);
-                    changeTab(tabStrId[3], tabtop);
+                    tab =  4;
+                    changeTab(tabStrId[4],tabtop);
                     break;
                 case R.id.tab_spec_main_topall:
                     tabtop = 0;
@@ -295,7 +299,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (!fragment.isAdded()) {
             Bundle bundle = new Bundle();
-            bundle.putInt("ball", i);
+            bundle.putInt("ball",i);
+            bundle.putInt("identity",user.getUser_identity());
+            bundle.putSerializable("user",user);
             fragment.setArguments(bundle);
             transaction.replace(R.id.tab_content, fragment);
             refresh = 0;
@@ -359,7 +365,8 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout linearLayout1 = findViewById(R.id.tab_spec_main_home);
         LinearLayout linearLayout2 = findViewById(R.id.tab_spec_main_game);
         LinearLayout linearLayout3 = findViewById(R.id.tab_spec_main_time);
-        LinearLayout linearLayout4 = findViewById(R.id.tab_spec_main_message);
+        LinearLayout linearLayout4 = findViewById(R.id.tab_spec_main_shopping);
+        LinearLayout linearLayout5 = findViewById(R.id.tab_spec_main_message);
 
         MyListener listener = new MyListener();
         linearLayouttop1.setOnClickListener(listener);
@@ -372,6 +379,7 @@ public class MainActivity extends AppCompatActivity {
         linearLayout2.setOnClickListener(listener);
         linearLayout3.setOnClickListener(listener);
         linearLayout4.setOnClickListener(listener);
+        linearLayout5.setOnClickListener(listener);
 
         ivMainPortrait.setOnClickListener(listener);
         etSearch.setOnClickListener(listener);
@@ -386,6 +394,7 @@ public class MainActivity extends AppCompatActivity {
         map.put(tabStrId[1], new MyTabSpec());
         map.put(tabStrId[2], new MyTabSpec());
         map.put(tabStrId[3], new MyTabSpec());
+        map.put(tabStrId[4], new MyTabSpec());
 
         mapTop.put(tabStrTopId[0], new MyTabSpec());
         mapTop.put(tabStrTopId[1], new MyTabSpec());
@@ -409,7 +418,8 @@ public class MainActivity extends AppCompatActivity {
         map.get(tabStrId[0]).setFragment(new HomeFragment());
         map.get(tabStrId[1]).setFragment(new GameFragment());
         map.get(tabStrId[2]).setFragment(new TimeFragment());
-        map.get(tabStrId[3]).setFragment(new MessageFragment());
+        map.get(tabStrId[3]).setFragment(new ShoppingFragment());
+        map.get(tabStrId[4]).setFragment(new MessageFragment());
         //git 示范Push操作用
     }
 
@@ -423,8 +433,10 @@ public class MainActivity extends AppCompatActivity {
         map.get(tabStrId[1]).setSelectImage(R.drawable.game);
         map.get(tabStrId[2]).setNormalImage(R.drawable.time2);
         map.get(tabStrId[2]).setSelectImage(R.drawable.time);
-        map.get(tabStrId[3]).setNormalImage(R.drawable.message2);
-        map.get(tabStrId[3]).setSelectImage(R.drawable.message);
+        map.get(tabStrId[3]).setNormalImage(R.drawable.shopping2);
+        map.get(tabStrId[3]).setSelectImage(R.drawable.shopping);
+        map.get(tabStrId[4]).setNormalImage(R.drawable.message2);
+        map.get(tabStrId[4]).setSelectImage(R.drawable.message);
         for (int i = 0; i < 6; i++) {
             mapTop.get(tabStrTopId[i]).setNormalImage(R.drawable.underline11);
             mapTop.get(tabStrTopId[i]).setSelectImage(R.drawable.underlinegreen);
@@ -456,6 +468,8 @@ public class MainActivity extends AppCompatActivity {
         TextView tvBadminton = findViewById(R.id.tv_main_badminton);
         TextView tvTabletennis = findViewById(R.id.tv_main_tabletennis);
         TextView tvVolleyball = findViewById(R.id.tv_main_volleyball);
+        ImageView ivShopping = findViewById(R.id.img_main_shopping);
+        TextView tvShopping = findViewById(R.id.tv_main_shopping);
 
         map.get(tabStrId[0]).setImageView(ivHome);
         map.get(tabStrId[0]).setTextView(tvHome);
@@ -466,8 +480,11 @@ public class MainActivity extends AppCompatActivity {
         map.get(tabStrId[2]).setImageView(ivTime);
         map.get(tabStrId[2]).setTextView(tvTime);
 
-        map.get(tabStrId[3]).setImageView(ivMessage);
-        map.get(tabStrId[3]).setTextView(tvMessage);
+        map.get(tabStrId[3]).setImageView(ivShopping);
+        map.get(tabStrId[3]).setTextView(tvShopping);
+
+        map.get(tabStrId[4]).setImageView(ivMessage);
+        map.get(tabStrId[4]).setTextView(tvMessage);
 
         mapTop.get(tabStrTopId[0]).setImageView(ivAll);
         mapTop.get(tabStrTopId[0]).setTextView(tvAll);

@@ -68,7 +68,7 @@ public class AddGameDiaglog extends DialogFragment {
                         String a = etScorea.getText().toString().trim();
                         String b = etScoreb.getText().toString().trim();
                         String result = a+"-"+b;
-                        Request request = new Request.Builder().url(Info.BASE_URL + "contest/upload?id=" + gameId + "&result" + result).build();
+                        Request request = new Request.Builder().url(Info.BASE_URL + "contest/upload?id=" + gameId + "&result=" + result).build();
                         Call call = okHttpClient.newCall(request);
                         call.enqueue(new Callback() {
                             @Override

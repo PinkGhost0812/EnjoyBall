@@ -1,11 +1,14 @@
 package com.example.lenovo.entity;
 
-public class StuffInfo {
+import java.io.Serializable;
+
+public class StuffInfo implements Serializable{
     private Integer id;
     private String img;
     private String name;
     private Integer price;
     private String content;
+    private Integer number = 1;
 
     @Override
     public String toString() {
@@ -56,6 +59,14 @@ public class StuffInfo {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public StuffInfo(Integer id, String img, String name, Integer price, String content) {

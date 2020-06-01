@@ -29,16 +29,18 @@ public class GameAdapter extends BaseAdapter {
     private Context context = null;
 
     private int item_layout_id;
+    private int identity = 0;
     private SimpleDateFormat sf = new SimpleDateFormat("HH:mm");
     private String[] status = {"已完场","进行中","未开始"};
 
 
     public GameAdapter(Context context,
                        List<TeamAndContest> dataSource,
-                       int item_layout_id) {
+                       int item_layout_id,int identity) {
         this.context = context;
         this.dataSource = dataSource;
         this.item_layout_id = item_layout_id;
+        this.identity = identity;
     }
 
 
@@ -100,6 +102,11 @@ public class GameAdapter extends BaseAdapter {
             else {
                 viewHolder.tv_state.setTextColor(
                         Color.parseColor("#1afa29"));
+            }
+            if (identity==3 && dataSource.get(position).getContest().getGame_status()!=1){
+                viewHolder.iv_addgame.setVisibility(convertView.VISIBLE);
+            }
+            else {
                 viewHolder.iv_addgame.setVisibility(convertView.GONE);
             }
             viewHolder.iv_addgame.setOnClickListener(new View.OnClickListener() {

@@ -64,6 +64,7 @@ public class GameFragment extends Fragment {
     private int x = 0;
     private int page = 1;
     private int category = 0;
+    private int identity = 0;
 
 
     private List<TeamAndContest> dataSource = null;
@@ -106,7 +107,8 @@ public class GameFragment extends Fragment {
                 adapter = new GameAdapter(
                         getContext(),
                         dataSource,
-                        R.layout.listview_item_game
+                        R.layout.listview_item_game,
+                        identity
                 );
 
                 listView.setAdapter(adapter);
@@ -140,6 +142,7 @@ public class GameFragment extends Fragment {
             EventBus.getDefault().register(this);
         }
         x = (int)getArguments().get("ball");
+        identity = (int)getArguments().get("identity");
         int y = x-1;
         page = 1;
         okHttpClient =new OkHttpClient();
