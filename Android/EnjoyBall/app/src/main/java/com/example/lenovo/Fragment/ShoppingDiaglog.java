@@ -35,6 +35,7 @@ public class ShoppingDiaglog extends DialogFragment {
     private OkHttpClient okHttpClient;
     private int buyscore;
     private int myscore;
+    private int num;
     private User user;
     private StuffInfo shop;
 
@@ -44,8 +45,12 @@ public class ShoppingDiaglog extends DialogFragment {
         View view = inflater.inflate(R.layout.shoppingdiaglog_layout,container,false);
 
         buyscore = (int)getArguments().get("buyscore");
+        num = (int) getArguments().get("num");
         user = (User)getArguments().get("user");
         shop = (StuffInfo)getArguments().get("shop");
+        Log.e("user",user.toString());
+        Log.e("StuffInfo",shop.toString());
+        Log.e("商品数量",num+"");
         myscore  =user.getUser_score();
         MyListener myListener = new MyListener();
         tvContent = view.findViewById(R.id.tv_shopping_dialog);
@@ -53,7 +58,7 @@ public class ShoppingDiaglog extends DialogFragment {
         btnConfirm = view.findViewById(R.id.btn_shopping_confirm);
         btnCancel.setOnClickListener(myListener);
         btnConfirm.setOnClickListener(myListener);
-        tvContent.setText("尊敬的用户您好，您将要花费"+buyscore+"积分购买"+shop.getNumber()+"张"+shop.getName()+"，是否确认？");
+        tvContent.setText("尊敬的用户您好，您将要花费"+buyscore+"积分购买"+num+"张"+shop.getName()+"，是否确认？");
 
         return view;
     }
@@ -70,7 +75,7 @@ public class ShoppingDiaglog extends DialogFragment {
                     if (myscore>buyscore){
                         x = myscore-buyscore;
                         Log.e("剩余积分",x+"");
-                        Request request = new Request.Builder().url(Info.BASE_URL + "user/buy?userId="+user.getUser_id()+"&packageId="+user.getUser_package()+"&stuffId="+shop.getId()+"&num="+shop.getNumber()+"&score" + x).build();
+                        Request request = new Request.Builder().url(Info.BASE_URL + "user/buy?userId="+user.getUser_id()+"&packageId="+user.getUser_package()+"&stuffId="+shop.getId()+"&num="+num+"&score" + x).build();
                         Call call = okHttpClient.newCall(request);
                         call.enqueue(new Callback() {
                             @Override
