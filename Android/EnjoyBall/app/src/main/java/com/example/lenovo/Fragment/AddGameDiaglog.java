@@ -45,7 +45,8 @@ public class AddGameDiaglog extends DialogFragment {
 
         Teama = (String)getArguments().get("teama");
         Teamb = (String)getArguments().get("teamb");
-        gameId = (int)getArguments().get("gameid");
+        //gameId = (int)getArguments().get("gameid");
+        gameId = getActivity().getIntent().getIntExtra("gameid",10);
         MyListener myListener = new MyListener();
        tvTeama = view.findViewById(R.id.tv_team_a);
         tvTeamb = view.findViewById(R.id.tv_team_b);
