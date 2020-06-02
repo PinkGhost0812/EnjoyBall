@@ -94,6 +94,7 @@ public class CheckInActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("time",df.format(new Date()));
                     editor.putInt("flag",1);
+                    editor.apply();
                     checkin.setText("已签到");
                     checkin.getBackground().setAlpha(100);
                     checkin.setEnabled(false);

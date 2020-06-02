@@ -32,8 +32,6 @@ public class GuessArrayAdapter extends BaseAdapter {
 
     private int flag=0;
     private int score;
-    private List<User> team1;
-    private List<User> team2;
     @Override
     public int getCount() {
         return dataSource.size();
