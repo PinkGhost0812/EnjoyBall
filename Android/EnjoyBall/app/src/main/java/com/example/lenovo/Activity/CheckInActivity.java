@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -44,8 +45,10 @@ public class CheckInActivity extends AppCompatActivity {
 
         TextView days = findViewById(R.id.tv_check_days);
         TextView mouths = findViewById(R.id.tv_check_mouthsandweek);
-
-        days.setText(day);
+        Log.e("day",""+day);
+        Log.e("month",""+month);
+        Log.e("week",""+week);
+        days.setText(""+day);
         mouths.setText(month+"月 "+week);
 
         final Button checkin = findViewById(R.id.btn_checkin);
