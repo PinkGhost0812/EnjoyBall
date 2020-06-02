@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.lenovo.Activity.ManageMessageActivity;
-import com.example.lenovo.Activity.NotifyMessageActivity;
+import com.example.lenovo.Activity.TrendActivity;
 import com.example.lenovo.enjoyball.R;
 
 public class MessageFragment extends Fragment {
@@ -49,7 +48,7 @@ public class MessageFragment extends Fragment {
                     intent = new Intent(getContext(), ManageMessageActivity.class);
                     break;
                 case R.id.ll_mainmessage_notification:
-                    intent = new Intent(getContext(), NotifyMessageActivity.class);
+                    intent = new Intent(getContext(), TrendActivity.class);
                     break;
             }
             startActivity(intent);

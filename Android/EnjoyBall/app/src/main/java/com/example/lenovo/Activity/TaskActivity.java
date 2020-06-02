@@ -130,6 +130,9 @@ public class TaskActivity extends AppCompatActivity {
         btn_task_createAgreement = findViewById(R.id.btn_task_createAgreement);
         btn_task_readNews = findViewById(R.id.btn_task_readNews);
         btn_task_signIn = findViewById(R.id.btn_task_signIn);
+        btn_task_readNews.setOnClickListener(new Onclicked());
+        btn_task_createAgreement.setOnClickListener(new Onclicked());
+        btn_task_signIn.setOnClickListener(new Onclicked());
     }
 
     private void setOnlineTimes() {

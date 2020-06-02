@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:minHeight="120dp">
+    <!--发布者信息-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/iv_trend_head"
+            android:layout_width="50dp"
+            android:src="@drawable/portrait"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:id="@+id/tv_trend_name"
+                android:text="张三"
+                android:textSize="15dp"
+                android:layout_weight="3"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:id="@+id/tv_trend_time"
+                android:textSize="10dp"
+                android:text="2020年6月1日"
+                android:layout_weight="2"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <!--动态内容-->
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="7dp"
+            android:id="@+id/tv_trend_body"
+            android:textColor="#000000"
+            android:text="测试"
+            android:textSize="20dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_trend_bodyImg"
+            android:layout_gravity="center"
+            android:src="@drawable/portrait"/>
+
+    </LinearLayout>
+    <!--点赞评论-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/iv_trend_likePic"
+            android:src="@drawable/like" />
+        <TextView
+            android:id="@+id/tv_trend_likeNum"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="30"
+            android:textSize="20dp" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/comment"
+            android:id="@+id/iv_trend_comment"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:id="@+id/tv_trend_commentNum"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="30"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

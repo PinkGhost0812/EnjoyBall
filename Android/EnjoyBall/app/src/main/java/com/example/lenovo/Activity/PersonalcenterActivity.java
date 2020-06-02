@@ -55,7 +55,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
     private LinearLayout llPersonalcneterFeedback;
     private LinearLayout llPersonalcenterLogout;
     private LinearLayout llPersonalcenterIdentity;
-    private LinearLayout llPersonalcneterPackage;
+    private LinearLayout llPersonalCenterTask;
 
     private Intent intent;
 
@@ -279,13 +279,6 @@ public class PersonalcenterActivity extends AppCompatActivity {
                     intent.putExtra("user",user);
                     startActivity(intent);
                     break;
-                case R.id.ll_personalcenter_package:
-                    //点击背包
-                    intent = new Intent();
-                    intent.setClass(PersonalcenterActivity.this, KnapsackActivity.class);
-                    intent.putExtra("user",user);
-                    startActivity(intent);
-                    break;
                 case R.id.ll_personalcenter_vip:
                     //点击vip
                     break;
@@ -293,6 +286,12 @@ public class PersonalcenterActivity extends AppCompatActivity {
                     //点击反馈
                     intent = new Intent();
                     intent.setClass(PersonalcenterActivity.this,FeedBackActivity.class);
+                    startActivity(intent);
+                    break;
+                    //点击任务
+                case R.id.ll_personalCenter_task:
+                    intent = new Intent();
+                    intent.setClass(PersonalcenterActivity.this,TaskActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.ll_personalcenter_logout:
@@ -367,7 +366,6 @@ public class PersonalcenterActivity extends AppCompatActivity {
         llPersonalcneterFeedback.setOnClickListener(personalcenterListener);
         llPersonalcenterLogout.setOnClickListener(personalcenterListener);
         llPersonalcenterIdentity.setOnClickListener(personalcenterListener);
-        llPersonalcneterPackage.setOnClickListener(personalcenterListener);
 
     }
 
@@ -393,7 +391,6 @@ public class PersonalcenterActivity extends AppCompatActivity {
         llPersonalcneterFeedback = findViewById(R.id.ll_personalcenter_feedback);
         llPersonalcenterLogout = findViewById(R.id.ll_personalcenter_logout);
         llPersonalcenterIdentity = findViewById(R.id.ll_personalcenter_identification);
-        llPersonalcneterPackage = findViewById(R.id.ll_personalcenter_package);
 
     }
 
