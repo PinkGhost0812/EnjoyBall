@@ -96,7 +96,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                     Looper.loop();
                 }else{
                     showAlertDialog(finalConvertView);
-                    if(flag==1){
+//                    if(flag==1){
                         score=score-10;
                         finalViewHolder.score.setText("用户当前积分"+score);
                         dataSource.get(0).put("left",(int)dataSource.get(0).get("left")+10);
@@ -109,11 +109,11 @@ public class GuessArrayAdapter extends BaseAdapter {
                             double rate = rightscore/leftscore;
                             finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
                         }
-                        flag=0;
+//                        flag=0;
                         Looper.prepare();
                         Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
                         Looper.loop();
-                    }
+//                    }
 
                 }
             }
