@@ -1,14 +1,19 @@
 package com.example.lenovo.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.lenovo.Activity.CreateAgreementActivity;
+import com.example.lenovo.Activity.LuckPanActivity;
 import com.example.lenovo.Adapter.ShoppingAdapter;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
@@ -39,6 +44,7 @@ public class ShoppingFragment extends Fragment {
     private ShoppingAdapter adapter;
     private ListView listView;
     private Call call;
+    private FloatingActionButton fabPrize;
     private List<StuffInfo> dataSource = null;
     private int myscore = 0;
     private User user;
@@ -49,6 +55,23 @@ public class ShoppingFragment extends Fragment {
         View view = inflater.inflate(R.layout.tab_shopping_layout,container,false);
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        fabPrize = getActivity().findViewById(R.id.fab_shopping_prize);
+        fabPrize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intents = new Intent();
+                intents.putExtra("user",user);
+                Log.e("抽奖用户",user.toString());
+                intents.setClass(getActivity(), LuckPanActivity.class);
+                startActivity(intents);
+            }
+        });
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
@@ -80,7 +103,7 @@ public class ShoppingFragment extends Fragment {
         }
 
         //myscore = (int)getArguments().get("myscore");
-        user = (User)getArguments().get("user");
+        user = (User)getArguments().getSerializable("user");
         EventBus.getDefault().post("shopping");
         okHttpClient =new OkHttpClient();
         shoppingList = new ArrayList<>();
