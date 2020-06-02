@@ -48,7 +48,7 @@ public class ShoppingDiaglog extends DialogFragment {
 
         buyscore = (int)getArguments().get("buyscore");
         num = (int) getArguments().get("num");
-        id = (int) getArguments().get("id");
+        id = (int) getArguments().get("shop_id");
         name = (String) getArguments().get("name");
 //        user = (User)getArguments().get("user");
 //        shop = (StuffInfo) getArguments().getSerializable("shop");
