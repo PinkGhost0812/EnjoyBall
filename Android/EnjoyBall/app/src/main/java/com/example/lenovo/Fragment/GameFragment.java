@@ -150,11 +150,10 @@ public class GameFragment extends Fragment {
 //        x = (int)getArguments().get("ball");
 //        identity = (int)getArguments().get("identity");
         int ball = getActivity().getIntent().getIntExtra("ball",-1);
-        int my = getActivity().getIntent().getIntExtra("identity",-1);
-        if (ball!=-1 || my!=-1){
+        if (ball!=-1){
             x = ball;
-            identity = my;
         }
+        identity = ((Info) getActivity().getApplicationContext()).getUser().getUser_identity();
         int y = x-1;
         page = 1;
         okHttpClient =new OkHttpClient();
