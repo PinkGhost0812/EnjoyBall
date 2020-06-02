@@ -17,19 +17,10 @@ import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.User;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class CheckInActivity extends AppCompatActivity {
 
@@ -37,7 +28,6 @@ public class CheckInActivity extends AppCompatActivity {
     private int flag;//已签到为1，未签到为0
     private int id ;
     private User user = null;
-    private OkHttpClient okHttpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +76,7 @@ public class CheckInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(flag == 0){
-
+                    Toast.makeText(CheckInActivity.this, "签到成功，积分+10", Toast.LENGTH_SHORT).show();
                     //上次签到时间的存储
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     System.out.println(df.format(new Date()));
@@ -96,8 +86,6 @@ public class CheckInActivity extends AppCompatActivity {
                     editor.putInt("flag",1);
                     checkin.setText("已签到");
                     checkin.getBackground().setAlpha(100);
-                    checkin.setEnabled(false);
-                    addscore();
                 }else{
 
                 }
@@ -105,39 +93,6 @@ public class CheckInActivity extends AppCompatActivity {
         });
 
 
-    }
-
-    private void addscore() {
-        okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(Info.BASE_URL + "user/addScore?id=" + user.getUser_id()+"score="+10)
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Looper.prepare();
-                Toast.makeText(getApplicationContext(), "世界上最远的距离就是没网络o(╥﹏╥)o", Toast.LENGTH_SHORT).show();
-                Looper.loop();
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Looper.prepare();
-                String data = response.body().string();
-                if (data.equals("true")) {
-                    Toast.makeText(CheckInActivity.this, "签到成功，积分+10", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent();
-//                    intent.setClass(PerinfoActivity.this, MainActivity.class);
-//                    finish();
-                    //startActivity(intent);
-                } else {
-                    Toast.makeText(CheckInActivity.this, "签到失败~请重试", Toast.LENGTH_SHORT).show();
-                }
-                Looper.loop();
-            }
-        });
     }
 
     public static int subDay(String lastTime, String nowTime) throws ParseException {
