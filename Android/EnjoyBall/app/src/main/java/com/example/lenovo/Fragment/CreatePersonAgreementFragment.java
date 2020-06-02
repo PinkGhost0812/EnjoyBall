@@ -387,6 +387,7 @@ public class CreatePersonAgreementFragment extends Fragment {
                     if (create = false) {
                         SharedPreferences.Editor editor = addScoreShare.edit();
                         editor.putBoolean("createAgreement", true);
+
                         editor.apply();
                     }
 

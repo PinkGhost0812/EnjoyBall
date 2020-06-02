@@ -83,8 +83,9 @@ public class TrendAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if (dataSource.get(position).getImg()!=null){
+            Log.e("朋友圈图片",dataSource.get(position).getImg());
             GlideApp.with(mContext)
-                    .load(dataSource.get(position).getUserImg())
+                    .load(dataSource.get(position).getImg())
                     .circleCrop()
                     .error(mContext.getResources().getDrawable(R.drawable.member))
                     .into(viewHolder.iv_trendHead);
