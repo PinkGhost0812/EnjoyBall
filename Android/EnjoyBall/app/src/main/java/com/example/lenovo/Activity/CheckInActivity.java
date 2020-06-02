@@ -32,6 +32,7 @@ public class CheckInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_check_in);
 
         user = ((Info) getApplicationContext()).getUser();
@@ -48,7 +49,11 @@ public class CheckInActivity extends AppCompatActivity {
         Log.e("day",""+day);
         Log.e("month",""+month);
         Log.e("week",""+week);
-        days.setText(""+day);
+        if(day<10){
+            days.setText("0"+day);
+        }else{
+            days.setText(""+day);
+        }
         mouths.setText(month+"月 "+week);
 
         final Button checkin = findViewById(R.id.btn_checkin);

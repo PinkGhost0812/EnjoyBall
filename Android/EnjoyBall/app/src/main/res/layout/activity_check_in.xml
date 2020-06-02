@@ -31,6 +31,12 @@
             android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_weight="1"
+
+            android:layout_width="20dp"
+            android:layout_height="40dp" />
     </LinearLayout>
     <LinearLayout
         android:background="@drawable/cxk1"
@@ -40,7 +46,7 @@
         <TextView
             android:textSize="60sp"
             android:layout_marginTop="35dp"
-            android:layout_marginLeft="330dp"
+            android:layout_marginLeft="300dp"
             android:id="@+id/tv_check_days"
             android:text="04"
             android:layout_width="wrap_content"
@@ -48,13 +54,13 @@
         <TextView
             android:id="@+id/tv_check_mouthsandweek"
             android:textSize="16sp"
-            android:layout_marginLeft="330dp"
+            android:layout_marginLeft="300dp"
             android:text="6月 星期四"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
             android:textSize="20sp"
-            android:layout_marginLeft="330dp"
+            android:layout_marginLeft="300dp"
             android:text="宜 童 心"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
