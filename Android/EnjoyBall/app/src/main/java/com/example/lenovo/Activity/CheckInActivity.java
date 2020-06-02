@@ -110,7 +110,7 @@ public class CheckInActivity extends AppCompatActivity {
     public void addscore() {
         okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Info.BASE_URL + "user/addScore?id=" + user.getUser_id()+"score="+10)
+                .url(Info.BASE_URL + "user/addScore?id=" + user.getUser_id()+"&score="+10)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {

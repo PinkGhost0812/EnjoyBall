@@ -80,18 +80,14 @@ public class GuessArrayAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
         //设值
         viewHolder.score.setText("用户当前积分"+score);
-
-
         //设置点击事件
         final View finalConvertView = convertView;
         final ViewHolder finalViewHolder = viewHolder;
         viewHolder.left1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(score<10){
                     Looper.prepare();
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
