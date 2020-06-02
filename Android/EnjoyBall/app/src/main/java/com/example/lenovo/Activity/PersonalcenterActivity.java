@@ -56,7 +56,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
     private LinearLayout llPersonalcneterFeedback;
     private LinearLayout llPersonalcenterLogout;
     private LinearLayout llPersonalcenterIdentity;
-    private LinearLayout llPersonalCenterTask;
+    private LinearLayout llPersonalcneterPackage;
 
     private Intent intent;
 
@@ -281,10 +281,11 @@ public class PersonalcenterActivity extends AppCompatActivity {
                     startActivity(intent);
                     //
                     break;
-                case R.id.tv_checkin:
-                    //点击签到
+                case R.id.ll_personalcenter_package:
+                    //点击背包
                     intent = new Intent();
-                    intent.setClass(PersonalcenterActivity.this,CheckInActivity.class);
+                    intent.setClass(PersonalcenterActivity.this, KnapsackActivity.class);
+                    intent.putExtra("user",user);
                     startActivity(intent);
                     break;
                 case R.id.ll_personalcenter_vip:
@@ -375,6 +376,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
         llPersonalcneterFeedback.setOnClickListener(personalcenterListener);
         llPersonalcenterLogout.setOnClickListener(personalcenterListener);
         llPersonalcenterIdentity.setOnClickListener(personalcenterListener);
+        llPersonalcneterPackage.setOnClickListener(personalcenterListener);
 
     }
 
@@ -401,6 +403,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
         llPersonalcneterFeedback = findViewById(R.id.ll_personalcenter_feedback);
         llPersonalcenterLogout = findViewById(R.id.ll_personalcenter_logout);
         llPersonalcenterIdentity = findViewById(R.id.ll_personalcenter_identification);
+        llPersonalcneterPackage = findViewById(R.id.ll_personalcenter_package);
 
     }
 
