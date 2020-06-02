@@ -43,6 +43,7 @@ public class GuessFragment extends Fragment{
         return view;
     }
 
+    //
     //从服务器获取数据初始化界面
     private void init(){
         dataSource = new ArrayList<>();
