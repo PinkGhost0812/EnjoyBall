@@ -29,7 +29,7 @@
                 android:background="#ffffff"
                 android:layout_gravity="center"
                 android:textSize="16dp"
-
+                android:id="@+id/tv_checkin"
                 android:text="点此签到"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

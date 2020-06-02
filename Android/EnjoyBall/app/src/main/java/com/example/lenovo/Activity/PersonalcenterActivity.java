@@ -46,6 +46,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
     private TextView tvPersonalcenterCommentnum;
     private TextView tvPersonalcenterFollownum;
     private TextView tvPersonalcenterFansnum;
+    private TextView tvcheckin;
 
     private LinearLayout llPersonalcenterData;
     private LinearLayout llPersonalcneterTeam;
@@ -279,6 +280,11 @@ public class PersonalcenterActivity extends AppCompatActivity {
                     intent.putExtra("user",user);
                     startActivity(intent);
                     break;
+                case R.id.tv_checkin:
+                    intent = new Intent();
+                    intent.setClass(PersonalcenterActivity.this,CheckInActivity.class);
+                    startActivity(intent);
+                    break;
                 case R.id.ll_personalcenter_vip:
                     //点击vip
                     break;
@@ -357,6 +363,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
 
         tvPersonalcenterNickname.setOnClickListener(personalcenterListener);
         tvPersonalcenterSignature.setOnClickListener(personalcenterListener);
+        tvcheckin.setOnClickListener(personalcenterListener);
 
         llPersonalcenterData.setOnClickListener(personalcenterListener);
         llPersonalcneterTeam.setOnClickListener(personalcenterListener);
@@ -382,6 +389,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
         tvPersonalcenterCommentnum=findViewById(R.id.tv_personalcenter_commentNum);
         tvPersonalcenterFollownum=findViewById(R.id.tv_personalcneter_followNum);
         tvPersonalcenterFansnum=findViewById(R.id.tv_personalcneter_fansNum);
+        tvcheckin=findViewById(R.id.tv_checkin);
 
         llPersonalcenterData = findViewById(R.id.ll_personalcenter_data);
         llPersonalcneterTeam = findViewById(R.id.ll_personalcenter_team);
