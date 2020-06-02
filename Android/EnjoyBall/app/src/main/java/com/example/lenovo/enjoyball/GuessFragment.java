@@ -24,7 +24,7 @@ public class GuessFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_battle_array,container,false);
+        View view = inflater.inflate(R.layout.fragment_guess,container,false);
         listView = view.findViewById(R.id.lv_contestDetail_guess);
 //        EventBus.getDefault().register(this);
         t1 = getArguments().getInt("team1");
