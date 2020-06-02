@@ -84,6 +84,7 @@
         <activity android:name="com.example.lenovo.Activity.LuckPanActivity"/>
         <activity android:name="com.example.lenovo.Activity.KnapsackActivity"/>
 
+
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="baidu_market" />
