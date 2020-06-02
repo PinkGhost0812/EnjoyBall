@@ -83,6 +83,7 @@ public class TaskActivity extends AppCompatActivity {
                     if (text.equals("去完成")) {
                         intent = new Intent(TaskActivity.this,MainActivity.class);
                         startActivity(intent);
+                        finish();
                     } else {
                         sendToServer(id, 10);
                         btn_task_readNews.setEnabled(false);
@@ -91,6 +92,7 @@ public class TaskActivity extends AppCompatActivity {
                 case R.id.btn_task_signIn:
                     intent = new Intent(TaskActivity.this,CheckInActivity.class);
                     startActivity(intent);
+                    finish();
                     break;
 
             }

@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt("frequency", 0);
             editor.putLong("readNewsTime",0);
             editor.apply();
+            Log.e("在线次数",sharedPreferences.getInt("frequency",0)+"");
 
         }
 
