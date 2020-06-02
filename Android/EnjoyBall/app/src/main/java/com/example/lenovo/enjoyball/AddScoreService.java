@@ -48,6 +48,7 @@ public class AddScoreService extends IntentService {
         frequency = sharedPreferences.getInt("frequency", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         while (true) {
+            Log.e("次数",frequency+"");
             if (frequency < 3) {
                 try {
                     //每在线10分钟增加3积分
