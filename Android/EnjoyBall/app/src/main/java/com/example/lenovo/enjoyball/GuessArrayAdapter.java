@@ -95,9 +95,9 @@ public class GuessArrayAdapter extends BaseAdapter {
                     if(flag==1){
                         score=score-10;
                         finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("left",dataSource.get(0).get("left")+10);
-                        double leftscore=(double)dataSource.get(0).get("left");
-                        double rightscore=(double)dataSource.get(0).get("right");
+                        dataSource.get(0).put("left",dataSource.get(0).get("leftscore")+10);
+                        double leftscore=(double)dataSource.get(0).get("leftscore");
+                        double rightscore=(double)dataSource.get(0).get("rightscore");
                         if(leftscore>rightscore){
                             double rate = leftscore/rightscore;
                             finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
@@ -126,9 +126,9 @@ public class GuessArrayAdapter extends BaseAdapter {
                     if(flag==1){
                         score=score-100;
                         finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("left",(int)dataSource.get(0).get("left")+100);
-                        double leftscore=(double)dataSource.get(0).get("left");
-                        double rightscore=(double)dataSource.get(0).get("right");
+                        dataSource.get(0).put("left",(int)dataSource.get(0).get("leftscore")+100);
+                        double leftscore=(double)dataSource.get(0).get("leftscore");
+                        double rightscore=(double)dataSource.get(0).get("rightscore");
                         if(leftscore>rightscore){
                             double rate = leftscore/rightscore;
                             finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
@@ -157,9 +157,9 @@ public class GuessArrayAdapter extends BaseAdapter {
                     if(flag==1){
                         score=score-1000;
                         finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("left",(int)dataSource.get(0).get("left")+1000);
-                        double leftscore=(double)dataSource.get(0).get("left");
-                        double rightscore=(double)dataSource.get(0).get("right");
+                        dataSource.get(0).put("left",(int)dataSource.get(0).get("leftscore")+1000);
+                        double leftscore=(double)dataSource.get(0).get("leftscore");
+                        double rightscore=(double)dataSource.get(0).get("rightscore");
                         if(leftscore>rightscore){
                             double rate = leftscore/rightscore;
                             finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
@@ -188,9 +188,9 @@ public class GuessArrayAdapter extends BaseAdapter {
                     if(flag==1){
                         score=score-10;
                         finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("right",dataSource.get(0).get("right")+10);
-                        double leftscore=(double)dataSource.get(0).get("left");
-                        double rightscore=(double)dataSource.get(0).get("right");
+                        dataSource.get(0).put("right",dataSource.get(0).get("rightscore")+10);
+                        double leftscore=(double)dataSource.get(0).get("leftscore");
+                        double rightscore=(double)dataSource.get(0).get("rightscore");
                         if(leftscore>rightscore){
                             double rate = leftscore/rightscore;
                             finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
@@ -219,9 +219,9 @@ public class GuessArrayAdapter extends BaseAdapter {
                     if(flag==1){
                         score=score-10;
                         finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("right",(int)dataSource.get(0).get("right")+100);
-                        double leftscore=(double)dataSource.get(0).get("left");
-                        double rightscore=(double)dataSource.get(0).get("right");
+                        dataSource.get(0).put("right",(int)dataSource.get(0).get("rightscore")+100);
+                        double leftscore=(double)dataSource.get(0).get("leftscore");
+                        double rightscore=(double)dataSource.get(0).get("rightscore");
                         if(leftscore>rightscore){
                             double rate = leftscore/rightscore;
                             finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
@@ -250,9 +250,9 @@ public class GuessArrayAdapter extends BaseAdapter {
                     if(flag==1){
                         score=score-10;
                         finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("right",(int)dataSource.get(0).get("right")+1000);
-                        double leftscore=(double)dataSource.get(0).get("left");
-                        double rightscore=(double)dataSource.get(0).get("right");
+                        dataSource.get(0).put("right",(int)dataSource.get(0).get("rightscore")+1000);
+                        double leftscore=(double)dataSource.get(0).get("leftscore");
+                        double rightscore=(double)dataSource.get(0).get("rightscore");
                         if(leftscore>rightscore){
                             double rate = leftscore/rightscore;
                             finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
