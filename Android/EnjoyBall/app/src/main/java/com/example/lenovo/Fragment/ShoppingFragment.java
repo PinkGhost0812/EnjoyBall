@@ -67,7 +67,6 @@ public class ShoppingFragment extends Fragment {
             public void onClick(View v) {
                 Intent intents = new Intent();
                 intents.putExtra("user",user);
-                Log.e("抽奖用户",user.toString());
                 intents.setClass(getActivity(), LuckPanActivity.class);
                 startActivity(intents);
             }

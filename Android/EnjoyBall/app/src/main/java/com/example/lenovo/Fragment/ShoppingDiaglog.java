@@ -52,7 +52,8 @@ public class ShoppingDiaglog extends DialogFragment {
 //        name = (String) getArguments().get("name");
 //        user = (User)getArguments().get("user");
         shop = (StuffInfo) getArguments().getSerializable("shop");
-        user = (User) getArguments().getSerializable("user");
+        //user = (User) getArguments().getSerializable("user");
+        user = ((Info) getActivity().getApplicationContext()).getUser();
         Log.e("user",user.toString());
         Log.e("商品数量",num+"");
         myscore  =user.getUser_score();

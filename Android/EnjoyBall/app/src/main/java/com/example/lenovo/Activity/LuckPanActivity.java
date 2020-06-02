@@ -3,6 +3,7 @@ package com.example.lenovo.Activity;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class LuckPanActivity extends AppCompatActivity implements LuckPanLayout.
     private OkHttpClient okHttpClient;
     private String[] strs ;
     private int my_score = 600;
+    private int first_score = 0;
     private int number=0;
     private TextView tvScore;
     private User user;
@@ -41,6 +43,7 @@ public class LuckPanActivity extends AppCompatActivity implements LuckPanLayout.
         setContentView(R.layout.activity_luck_pan);
         user = ((Info) getApplicationContext()).getUser();
         my_score = user.getUser_score();
+        first_score = user.getUser_score();
         strs = getResources().getStringArray(R.array.names);
         luckPanLayout = (LuckPanLayout) findViewById(R.id.luckpan_layout);
         tvScore = findViewById(R.id.hit_user_tv);
@@ -52,7 +55,7 @@ public class LuckPanActivity extends AppCompatActivity implements LuckPanLayout.
 
     public void rotation(View view){
         if(my_score>=100){
-            my_score-=100;
+            my_score= first_score-100;
             tvScore.setText(my_score+"");
             if (number<3){
                 if (number==0){
@@ -76,9 +79,8 @@ public class LuckPanActivity extends AppCompatActivity implements LuckPanLayout.
         okHttpClient =new OkHttpClient();
         if (position%2!=0){
             final int score = Integer.parseInt(strs[position]);
-            my_score+=score;
+            my_score=my_score+score;
             tvScore.setText(my_score+"");
-
             Request request = new Request.Builder().url(Info.BASE_URL + "user/updateScore?id="+user.getUser_id()+"&score="+my_score).build();
             Call call = okHttpClient.newCall(request);
             call.enqueue(new Callback() {
@@ -86,6 +88,7 @@ public class LuckPanActivity extends AppCompatActivity implements LuckPanLayout.
                 public void onFailure(Call call, IOException e) {
                     Looper.prepare();
                     Toast.makeText(LuckPanActivity.this, "抽奖失败，请稍后重试", Toast.LENGTH_SHORT).show();
+                    //my_score = first_score;
                     Looper.loop();
                     e.printStackTrace();
                 }
@@ -93,6 +96,8 @@ public class LuckPanActivity extends AppCompatActivity implements LuckPanLayout.
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Looper.prepare();
+
+                    //first_score = my_score;
                     Toast.makeText(getApplicationContext(), "恭喜您抽中"+score+"积分！", Toast.LENGTH_SHORT).show();
                     Looper.loop();
                 }
@@ -105,6 +110,7 @@ public class LuckPanActivity extends AppCompatActivity implements LuckPanLayout.
                 public void onFailure(Call call, IOException e) {
                     Looper.prepare();
                     Toast.makeText(LuckPanActivity.this, "抽奖失败，请稍后重试", Toast.LENGTH_SHORT).show();
+                    //my_score = first_score;
                     Looper.loop();
                     e.printStackTrace();
                 }
@@ -113,6 +119,7 @@ public class LuckPanActivity extends AppCompatActivity implements LuckPanLayout.
                 public void onResponse(Call call, Response response) throws IOException {
                     Looper.prepare();
                     Toast.makeText(getApplicationContext(), "谢谢参与", Toast.LENGTH_SHORT).show();
+                    //first_score = my_score;
                     Looper.loop();
                 }
             });
