@@ -35,6 +35,7 @@ public class TrendAdapter extends BaseAdapter {
     private int itemResId;
     private Context mContext;
     private String url = Info.BASE_URL + "user/updateGood?";
+    private String imageUrl = Info.BASE_URL;
 
     public TrendAdapter(List<PYQ> dataSource, int itemResId, Context mContext) {
         this.dataSource = dataSource;
@@ -85,11 +86,16 @@ public class TrendAdapter extends BaseAdapter {
         if (dataSource.get(position).getImg()!=null){
             Log.e("朋友圈图片",dataSource.get(position).getImg());
             GlideApp.with(mContext)
-                    .load(dataSource.get(position).getImg())
+                    .load(imageUrl+dataSource.get(position).getImg())
                     .circleCrop()
                     .error(mContext.getResources().getDrawable(R.drawable.member))
-                    .into(viewHolder.iv_trendHead);
+                    .into(viewHolder.iv_trendBodyImg);
         }
+        GlideApp.with(mContext)
+                .load(imageUrl+dataSource.get(position).getUserImg())
+                .circleCrop()
+                .error(mContext.getResources().getDrawable(R.drawable.member))
+                .into(viewHolder.iv_trendHead);
         viewHolder.tv_trendName.setText(dataSource.get(position).getUserName());
         viewHolder.tv_trendTime.setText(dataSource.get(position).getTime());
         viewHolder.tv_trendBody.setText(dataSource.get(position).getContent());
