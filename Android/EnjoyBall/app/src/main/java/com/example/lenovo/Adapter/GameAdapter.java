@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,6 +138,7 @@ public class GameAdapter extends BaseAdapter {
         AddGameDiaglog addGameDiaglog = new AddGameDiaglog();
         if (!addGameDiaglog.isAdded()){
             Bundle bundle = new Bundle();
+            Log.e("比赛id",dataSource.get(i).getContest().getGame_id().toString());
             bundle.putInt("gameid",dataSource.get(i).getContest().getGame_id());
             bundle.putString("teama",dataSource.get(i).getTeamMap().get("nameA").toString());
             bundle.putString("teamb",dataSource.get(i).getTeamMap().get("nameB").toString());
