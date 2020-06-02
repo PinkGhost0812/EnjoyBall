@@ -95,7 +95,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
                     Looper.loop();
                 }else{
-                    showAlertDialog();
+                    showAlertDialog(finalConvertView);
                     if(flag==1){
                         score=score-10;
                         finalViewHolder.score.setText("用户当前积分"+score);
@@ -126,7 +126,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
                     Looper.loop();
                 }else{
-                    showAlertDialog();
+                    showAlertDialog(finalConvertView);
                     if(flag==1){
                         score=score-100;
                         finalViewHolder.score.setText("用户当前积分"+score);
@@ -157,7 +157,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
                     Looper.loop();
                 }else{
-                    showAlertDialog();
+                    showAlertDialog(finalConvertView);
                     if(flag==1){
                         score=score-1000;
                         finalViewHolder.score.setText("用户当前积分"+score);
@@ -188,7 +188,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
                     Looper.loop();
                 }else{
-                    showAlertDialog();
+                    showAlertDialog(finalConvertView);
                     if(flag==1){
                         score=score-10;
                         finalViewHolder.score.setText("用户当前积分"+score);
@@ -219,7 +219,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
                     Looper.loop();
                 }else{
-                    showAlertDialog();
+                    showAlertDialog(finalConvertView);
                     if(flag==1){
                         score=score-10;
                         finalViewHolder.score.setText("用户当前积分"+score);
@@ -250,7 +250,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
                     Looper.loop();
                 }else{
-                    showAlertDialog();
+                    showAlertDialog(finalConvertView);
                     if(flag==1){
                         score=score-10;
                         finalViewHolder.score.setText("用户当前积分"+score);
@@ -276,9 +276,9 @@ public class GuessArrayAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void showAlertDialog() {
+    private void showAlertDialog(View convertView) {
         //创建Builder对象
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(convertView.getContext());
         //设置对话框属性
         builder.setTitle("温馨提示");//标题
         builder.setMessage("确定要支持这支队伍吗");//显示的提示内容
