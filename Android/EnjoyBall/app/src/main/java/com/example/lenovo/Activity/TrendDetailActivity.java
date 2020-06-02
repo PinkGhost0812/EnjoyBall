@@ -70,6 +70,7 @@ public class TrendDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Type type = new TypeToken<List<PYQComment>>(){}.getType();
         dataSource = new Gson().fromJson(intent.getStringExtra("comment"),type);
+        Log.e("LJMtstDataSource", dataSource.get(0).getContent());
         trendCommentAdapter = new TrendCommentAdapter(dataSource,R.layout.listview_item_trend,this);
         lv_comment.setAdapter(trendCommentAdapter);
         ifGood = intent.getBooleanExtra("ifGood",false);
@@ -116,11 +117,11 @@ public class TrendDetailActivity extends AppCompatActivity {
                 if (ifGood){
                     ifGood=false;
                     iv_like.setImageResource(R.drawable.goodb);
-                    tv_likeNum.setText(--num);
+                    tv_likeNum.setText(--num + "");
                 }else {
                     ifGood = true;
                     iv_like.setImageResource(R.drawable.goodb);
-                    tv_likeNum.setText(++num);
+                    tv_likeNum.setText(++num + "");
 
                 }
                 setLike(id,num);

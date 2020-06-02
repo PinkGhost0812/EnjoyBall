@@ -164,16 +164,15 @@ public class TrendAdapter extends BaseAdapter {
                         ImageView iv = (ImageView) v;
                         iv.setImageResource(R.drawable.gooda);
                         int num = Integer.parseInt(likeNum.getText().toString());
-                        likeNum.setText(num++ + "");
+                        likeNum.setText(++num + "");
                         setLike(id,num);
                     }else {
                         viewHolder.ifGood=false;
                         ImageView iv = (ImageView) v;
-                        iv.setImageResource(R.drawable.gooda);
+                        iv.setImageResource(R.drawable.goodb);
                         int num = Integer.parseInt(likeNum.getText().toString());
-                        likeNum.setText(num-- + "");
+                        likeNum.setText(--num + "");
                         setLike(id,num);
-
                     }
                     break;
 
