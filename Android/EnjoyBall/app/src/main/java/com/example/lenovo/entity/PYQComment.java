@@ -5,6 +5,24 @@ public class PYQComment {
     private String content;
     private Integer author;
     private Integer belong;
+    private String userImg;
+    private String userName;
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public PYQComment(){}
 
