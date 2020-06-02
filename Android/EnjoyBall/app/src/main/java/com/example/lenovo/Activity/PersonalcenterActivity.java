@@ -282,6 +282,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
                     //
                     break;
                 case R.id.tv_checkin:
+                    //点击签到
                     intent = new Intent();
                     intent.setClass(PersonalcenterActivity.this,CheckInActivity.class);
                     startActivity(intent);

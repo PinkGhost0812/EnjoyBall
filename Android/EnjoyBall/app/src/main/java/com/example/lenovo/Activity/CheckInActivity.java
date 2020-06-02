@@ -24,13 +24,14 @@ public class CheckInActivity extends AppCompatActivity {
 
     private final int UPDATE_TEXT = 1;
     private int flag;//已签到为1，未签到为0
-    private int id = ((Info) getApplicationContext()).getUser().getUser_id();
+    private int id ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in);
 
+        id = ((Info) getApplicationContext()).getUser().getUser_id();
         Date date = new Date();
         String week = getWeekOfDate(date);
         Calendar cale = null;
