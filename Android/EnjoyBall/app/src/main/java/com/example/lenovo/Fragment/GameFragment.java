@@ -163,18 +163,18 @@ public class GameFragment extends Fragment {
         if (x==0){
             if (category==0){
                 Request request = new Request.Builder().url(Info.BASE_URL + "contest/list?page="+page).build();
-                call = srokHttpClient.newCall(request);
+                call = okHttpClient.newCall(request);
             }else {
                 Request request = new Request.Builder().url(Info.BASE_URL + "contest/classList?category="+category+"&page="+page).build();
-                call = srokHttpClient.newCall(request);
+                call = okHttpClient.newCall(request);
             }
         }else {
             if (category==0){
                 Request request = new Request.Builder().url(Info.BASE_URL + "contest/find?cls="+y+"&page="+page).build();
-                call = srokHttpClient.newCall(request);
+                call = okHttpClient.newCall(request);
             }else {
                 Request request = new Request.Builder().url(Info.BASE_URL + "contest/classList?category="+category+"&page="+page).build();
-                call = srokHttpClient.newCall(request);
+                call = okHttpClient.newCall(request);
             }
         }
         call.enqueue(new Callback() {
