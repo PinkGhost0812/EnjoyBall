@@ -288,8 +288,10 @@ public class PersonalcenterActivity extends AppCompatActivity {
                     intent.putExtra("user",user);
                     startActivity(intent);
                     break;
-                case R.id.ll_personalcenter_vip:
-                    //点击vip
+                case R.id.tv_checkin:
+                    intent = new Intent();
+                    intent.setClass(PersonalcenterActivity.this,CheckInActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.ll_personalcenter_feedback:
                     //点击反馈
@@ -399,7 +401,6 @@ public class PersonalcenterActivity extends AppCompatActivity {
         llPersonalcneterTeam = findViewById(R.id.ll_personalcenter_team);
         llPersonalcneterYueqiu = findViewById(R.id.ll_personalcenter_yueqiu);
         llPersonalcneterCollect = findViewById(R.id.ll_personalcenter_collect);
-        llPersonalcneterVip = findViewById(R.id.ll_personalcenter_vip);
         llPersonalcneterFeedback = findViewById(R.id.ll_personalcenter_feedback);
         llPersonalcenterLogout = findViewById(R.id.ll_personalcenter_logout);
         llPersonalcenterIdentity = findViewById(R.id.ll_personalcenter_identification);
