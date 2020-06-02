@@ -374,7 +374,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
         llPersonalcneterTeam.setOnClickListener(personalcenterListener);
         llPersonalcneterYueqiu.setOnClickListener(personalcenterListener);
         llPersonalcneterCollect.setOnClickListener(personalcenterListener);
-        llPersonalcneterVip.setOnClickListener(personalcenterListener);
+//        llPersonalcneterVip.setOnClickListener(personalcenterListener);
         llPersonalcneterFeedback.setOnClickListener(personalcenterListener);
         llPersonalcenterLogout.setOnClickListener(personalcenterListener);
         llPersonalcenterIdentity.setOnClickListener(personalcenterListener);
