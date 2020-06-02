@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lenovo.Activity.TrendDetailActivity;
+import com.example.lenovo.enjoyball.GlideApp;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.PYQ;

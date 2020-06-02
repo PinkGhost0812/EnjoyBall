@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.lenovo.Adapter.TrendAdapter;
 import com.example.lenovo.Adapter.TrendCommentAdapter;
+import com.example.lenovo.enjoyball.GlideApp;
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.PYQ;
