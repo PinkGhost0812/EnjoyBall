@@ -139,7 +139,7 @@ public class GameAdapter extends BaseAdapter {
         if (!addGameDiaglog.isAdded()){
             Bundle bundle = new Bundle();
             Log.e("比赛id",dataSource.get(i).getContest().getGame_id().toString());
-            bundle.putInt("gameid",dataSource.get(i).getContest().getGame_id());
+            bundle.putString("gameid",dataSource.get(i).getContest().getGame_id().toString());
             bundle.putString("teama",dataSource.get(i).getTeamMap().get("nameA").toString());
             bundle.putString("teamb",dataSource.get(i).getTeamMap().get("nameB").toString());
             addGameDiaglog.setArguments(bundle);

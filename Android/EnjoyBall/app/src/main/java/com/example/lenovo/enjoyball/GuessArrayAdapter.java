@@ -273,15 +273,33 @@ public class GuessArrayAdapter extends BaseAdapter {
     }
 
     private void showAlertDialog() {
-        new AlertDialog.Builder(context).setTitle("温馨提示")
-                .setMessage("确定要支持这支队伍吗")
-                .setNegativeButton("取消",null)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        flag = 1;
-                    }
-                }).create().show();
+        //创建Builder对象
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        //设置对话框属性
+        builder.setTitle("温馨提示");//标题
+        builder.setMessage("确定要支持这支队伍吗");//显示的提示内容
+        builder.setNegativeButton("取消",null);//设置取消按钮
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //退出当前的Activity
+                flag =1;
+//                finish();
+            }
+        }); //设置确定按钮
+        //创建对话框对象
+        AlertDialog alertDialog = builder.create();
+        //显示对话框
+        alertDialog.show();
+//        new AlertDialog.Builder(context).setTitle("温馨提示")
+//                .setMessage("确定要支持这支队伍吗")
+//                .setNegativeButton("取消",null)
+//                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        flag = 1;
+//                    }
+//                }).create().show();
     }
 
 
