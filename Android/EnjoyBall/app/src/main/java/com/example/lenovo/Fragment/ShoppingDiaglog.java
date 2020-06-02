@@ -47,12 +47,12 @@ public class ShoppingDiaglog extends DialogFragment {
         View view = inflater.inflate(R.layout.shoppingdiaglog_layout,container,false);
 
         buyscore = (int)getArguments().get("buyscore");
-//        num = (int) getArguments().get("num");
-//        id = (int) getArguments().get("id");
-//        name = (String) getArguments().get("name");
+        num = (int) getArguments().get("num");
+        id = (int) getArguments().get("id");
+        name = (String) getArguments().get("name");
 //        user = (User)getArguments().get("user");
-        shop = (StuffInfo) getArguments().getSerializable("shop");
-        //user = (User) getArguments().getSerializable("user");
+//        shop = (StuffInfo) getArguments().getSerializable("shop");
+//        user = (User) getArguments().getSerializable("user");
         user = ((Info) getActivity().getApplicationContext()).getUser();
         Log.e("user",user.toString());
         Log.e("商品数量",num+"");
@@ -63,7 +63,8 @@ public class ShoppingDiaglog extends DialogFragment {
         btnConfirm = view.findViewById(R.id.btn_shopping_confirm);
         btnCancel.setOnClickListener(myListener);
         btnConfirm.setOnClickListener(myListener);
-        tvContent.setText("尊敬的用户您好，您将要花费"+buyscore+"积分购买"+shop.getNumber()+"张"+shop.getName()+"，是否确认？");
+        tvContent.setText("尊敬的用户您好，您将要花费"+buyscore+"积分购买"+num+"张"+name+"，是否确认？");
+//        tvContent.setText("尊敬的用户您好，您将要花费"+buyscore+"积分购买"+shop.getNumber()+"张"+shop.getName()+"，是否确认？");
 
         return view;
     }
@@ -81,7 +82,7 @@ public class ShoppingDiaglog extends DialogFragment {
                         x = myscore-buyscore;
                         Log.e("剩余积分",x+"");
                         okHttpClient =new OkHttpClient();
-                        Request request = new Request.Builder().url(Info.BASE_URL + "user/buy?userId="+user.getUser_id()+"&packageId="+user.getUser_package()+"&stuffId="+shop.getId()+"&num="+shop.getNumber()+"&score" + x).build();
+                        Request request = new Request.Builder().url(Info.BASE_URL + "user/buy?userId="+user.getUser_id()+"&packageId="+user.getUser_package()+"&stuffId="+id+"&num="+num+"&score" + x).build();
                         Call call = okHttpClient.newCall(request);
                         call.enqueue(new Callback() {
                             @Override

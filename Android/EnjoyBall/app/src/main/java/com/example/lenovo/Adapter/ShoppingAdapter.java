@@ -137,11 +137,11 @@ public class ShoppingAdapter extends BaseAdapter {
         ShoppingDiaglog shoppingDiaglog = new ShoppingDiaglog();
         if (!shoppingDiaglog.isAdded()){
             Bundle bundle = new Bundle();
-            bundle.putSerializable("shop",dataSource.get(i));
+//            bundle.putSerializable("shop",dataSource.get(i));
+            bundle.putInt("buyscore",buy);
             bundle.putInt("num",dataSource.get(i).getNumber());
             bundle.putInt("shop_id",dataSource.get(i).getId());
             bundle.putString("name",dataSource.get(i).getName().toString());
-            bundle.putInt("buyscore",buy);
             bundle.putSerializable("user",user);
             shoppingDiaglog.setArguments(bundle);
             transaction.add(shoppingDiaglog,"dialog_tag");
