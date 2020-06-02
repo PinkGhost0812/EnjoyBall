@@ -126,6 +126,12 @@ public class GameFragment extends Fragment {
             case "category":
                 Log.e("比赛分类",category+"");
                 this.onResume();
+            case "category1":
+                Log.e("比赛分类",category+"");
+                this.onResume();
+            case "category2":
+                Log.e("比赛分类",category+"");
+                this.onResume();
 
         }
 
@@ -149,12 +155,21 @@ public class GameFragment extends Fragment {
         gameList = new ArrayList<>();
 
         if (x==0){
-            Request request = new Request.Builder().url(Info.BASE_URL + "contest/list?page="+page).build();
-            call = okHttpClient.newCall(request);
-
+            if (category==0){
+                Request request = new Request.Builder().url(Info.BASE_URL + "contest/list?page="+page).build();
+                call = srokHttpClient.newCall(request);
+            }else {
+                Request request = new Request.Builder().url(Info.BASE_URL + "contest/classList?category="+category+"&page="+page).build();
+                call = srokHttpClient.newCall(request);
+            }
         }else {
-            Request request = new Request.Builder().url(Info.BASE_URL + "contest/find?cls="+y+"&page="+page).build();
-            call = okHttpClient.newCall(request);
+            if (category==0){
+                Request request = new Request.Builder().url(Info.BASE_URL + "contest/find?cls="+y+"&page="+page).build();
+                call = srokHttpClient.newCall(request);
+            }else {
+                Request request = new Request.Builder().url(Info.BASE_URL + "contest/classList?category="+category+"&page="+page).build();
+                call = srokHttpClient.newCall(request);
+            }
         }
         call.enqueue(new Callback() {
             @Override
@@ -248,12 +263,12 @@ public class GameFragment extends Fragment {
                     case R.id.game_university:
                         btnGame.setText("校园赛");
                         category = 1;
-                        EventBus.getDefault().post("category");
+                        EventBus.getDefault().post("category1");
                         return true;
                     case R.id.game_person:
                         btnGame.setText("个人赛");
                         category = 2;
-                        EventBus.getDefault().post("category");
+                        EventBus.getDefault().post("category2");
                         return true;
 
                     default:
