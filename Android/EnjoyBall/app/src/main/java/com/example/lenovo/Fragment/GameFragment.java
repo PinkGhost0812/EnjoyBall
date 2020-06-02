@@ -147,8 +147,14 @@ public class GameFragment extends Fragment {
         if(!EventBus.getDefault().isRegistered(this)){
             EventBus.getDefault().register(this);
         }
-        x = (int)getArguments().get("ball");
-        identity = (int)getArguments().get("identity");
+//        x = (int)getArguments().get("ball");
+//        identity = (int)getArguments().get("identity");
+        int ball = getActivity().getIntent().getIntExtra("ball",-1);
+        int my = getActivity().getIntent().getIntExtra("identity",-1);
+        if (ball!=-1 || my!=-1){
+            x = ball;
+            identity = my;
+        }
         int y = x-1;
         page = 1;
         okHttpClient =new OkHttpClient();

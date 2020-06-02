@@ -320,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putInt("ball", y);
+        bundle.putInt("identity",user.getUser_identity());
         fragment.setArguments(bundle);
         transaction.replace(R.id.tab_content, fragment);
         // 显示对应Fragment

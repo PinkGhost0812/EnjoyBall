@@ -30,6 +30,7 @@ public class ShoppingAdapter extends BaseAdapter {
 
     private int item_layout_id;
     private User user;
+    private int[] imgs = {R.drawable.addgame,R.drawable.changename};
 
 
     public ShoppingAdapter(Context context,
@@ -113,8 +114,8 @@ public class ShoppingAdapter extends BaseAdapter {
             viewHolder.tv_name.setText(dataSource.get(position).getName());
             viewHolder.tv_score.setText(dataSource.get(position).getPrice()+"");
             viewHolder.tv_num.setText(dataSource.get(position).getNumber()+"");
-            //viewHolder.iv_shopping.setImageResource(dataSource.get(position).getShopping_img());
-            Glide.with(convertView).load(Info.BASE_URL + dataSource.get(position).getImg().toString()).into(viewHolder.iv_shopping);
+            viewHolder.iv_shopping.setImageResource(imgs[position]);
+            //Glide.with(convertView).load(Info.BASE_URL + dataSource.get(position).getImg().toString()).into(viewHolder.iv_shopping);
         }catch (Exception e) {
             e.printStackTrace();
         }
