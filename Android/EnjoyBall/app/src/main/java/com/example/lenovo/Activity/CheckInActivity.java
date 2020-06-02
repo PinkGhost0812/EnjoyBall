@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
+import com.example.lenovo.entity.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,13 +26,15 @@ public class CheckInActivity extends AppCompatActivity {
     private final int UPDATE_TEXT = 1;
     private int flag;//已签到为1，未签到为0
     private int id ;
+    private User user = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in);
 
-        id = ((Info) getApplicationContext()).getUser().getUser_id();
+        user = ((Info) getApplicationContext()).getUser();
+        id = user.getUser_id();
         Date date = new Date();
         String week = getWeekOfDate(date);
         Calendar cale = null;
