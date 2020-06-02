@@ -4,6 +4,7 @@
     android:layout_marginLeft="10dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="20dp"
     android:minHeight="120dp">
     <!--发布者信息-->
     <LinearLayout
@@ -54,8 +55,9 @@
             android:text="测试"
             android:textSize="20dp" />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
             android:id="@+id/iv_trend_bodyImg"
             android:layout_gravity="center"/>
 
@@ -78,8 +80,9 @@
             android:text="30"
             android:textSize="20dp" />
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/comment"
             android:id="@+id/iv_trend_comment"
             android:layout_marginLeft="20dp"/>

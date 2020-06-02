@@ -100,23 +100,23 @@
             android:layout_height="match_parent">
             <Button
                 android:id="@+id/btn_guess_left10"
-                android:textSize="11sp"
+                android:textSize="7sp"
                 android:layout_weight="1"
                 android:text="10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"></Button>
             <Button
                 android:id="@+id/btn_guess_left100"
-                android:textSize="11sp"
+                android:textSize="7sp"
                 android:layout_weight="1"
                 android:text="100"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"></Button>
             <Button
                 android:id="@+id/btn_guess_left1000"
-                android:textSize="11sp"
+                android:textSize="7sp"
                 android:layout_weight="1"
-                android:text="1000"
+                android:text="500"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"></Button>
         </LinearLayout>
@@ -143,23 +143,23 @@
                 android:layout_height="match_parent">
                 <Button
                     android:id="@+id/btn_guess_right10"
-                    android:textSize="11sp"
+                    android:textSize="7sp"
                     android:layout_weight="1"
                     android:text="10"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"></Button>
                 <Button
                     android:id="@+id/btn_guess_right100"
-                    android:textSize="11sp"
+                    android:textSize="7sp"
                     android:layout_weight="1"
                     android:text="100"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"></Button>
                 <Button
                     android:id="@+id/btn_guess_right1000"
-                    android:textSize="11sp"
+                    android:textSize="7sp"
                     android:layout_weight="1"
-                    android:text="1000"
+                    android:text="500"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"></Button>
             </LinearLayout>

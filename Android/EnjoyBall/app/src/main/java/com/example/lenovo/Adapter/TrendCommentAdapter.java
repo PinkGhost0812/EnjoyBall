@@ -55,7 +55,7 @@ public class TrendCommentAdapter extends BaseAdapter {
         if (convertView==null){
             convertView = LayoutInflater.from(mContext).inflate(itemResId, null);
             viewHolder = new ViewHolder();
-            viewHolder.tv_content.setText(dataSource.get(position).getContent());
+            viewHolder.tv_content.setText(dataSource.get(position).getContent() + "");
             viewHolder.tv_commentName.setText(dataSource.get(position).getUserName());
             GlideApp.with(mContext)
                     .load(dataSource.get(position).getUserImg())
