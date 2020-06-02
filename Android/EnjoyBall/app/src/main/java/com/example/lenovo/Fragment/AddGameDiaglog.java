@@ -45,8 +45,9 @@ public class AddGameDiaglog extends DialogFragment {
 
         Teama = (String)getArguments().get("teama");
         Teamb = (String)getArguments().get("teamb");
-        //gameId = (int)getArguments().get("gameid");
-        gameId = getActivity().getIntent().getIntExtra("gameid",10);
+        String sgameId = (String)getArguments().get("gameid");
+        gameId = Integer.parseInt(sgameId);
+        //gameId = getActivity().getIntent().getIntExtra("gameid",10);
         MyListener myListener = new MyListener();
        tvTeama = view.findViewById(R.id.tv_team_a);
         tvTeamb = view.findViewById(R.id.tv_team_b);
@@ -73,7 +74,7 @@ public class AddGameDiaglog extends DialogFragment {
                         Log.e("弹窗内容",result);
                         String score = "1-3";
                         okHttpClient = new OkHttpClient();
-                        Request request = new Request.Builder().url(Info.BASE_URL + "contest/upload?id=" + gameId + "&result=" + score).build();
+                        Request request = new Request.Builder().url(Info.BASE_URL + "contest/upload?id=" + gameId + "&result=" + result).build();
                         Call call = okHttpClient.newCall(request);
                         call.enqueue(new Callback() {
                             @Override
