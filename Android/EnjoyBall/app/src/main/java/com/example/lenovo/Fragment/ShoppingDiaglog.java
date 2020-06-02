@@ -82,7 +82,7 @@ public class ShoppingDiaglog extends DialogFragment {
                         x = myscore-buyscore;
                         Log.e("剩余积分",x+"");
                         okHttpClient =new OkHttpClient();
-                        Request request = new Request.Builder().url(Info.BASE_URL + "user/buy?userId="+user.getUser_id()+"&packageId="+user.getUser_package()+"&stuffId="+id+"&num="+num+"&score" + x).build();
+                        Request request = new Request.Builder().url(Info.BASE_URL + "user/buy?userId="+user.getUser_id()+"&packageId="+user.getUser_package()+"&stuffId="+id+"&num="+num+"&score=" + x).build();
                         Call call = okHttpClient.newCall(request);
                         call.enqueue(new Callback() {
                             @Override
