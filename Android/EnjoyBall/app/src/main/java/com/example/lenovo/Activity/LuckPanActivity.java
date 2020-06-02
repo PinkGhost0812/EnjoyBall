@@ -55,7 +55,7 @@ public class LuckPanActivity extends AppCompatActivity implements LuckPanLayout.
 
     public void rotation(View view){
         if(my_score>=100){
-            my_score= first_score-100;
+            my_score-=100;
             tvScore.setText(my_score+"");
             if (number<3){
                 if (number==0){
@@ -79,7 +79,7 @@ public class LuckPanActivity extends AppCompatActivity implements LuckPanLayout.
         okHttpClient =new OkHttpClient();
         if (position%2!=0){
             final int score = Integer.parseInt(strs[position]);
-            my_score=my_score+score;
+            my_score+=+score;
             tvScore.setText(my_score+"");
             Request request = new Request.Builder().url(Info.BASE_URL + "user/updateScore?id="+user.getUser_id()+"&score="+my_score).build();
             Call call = okHttpClient.newCall(request);
