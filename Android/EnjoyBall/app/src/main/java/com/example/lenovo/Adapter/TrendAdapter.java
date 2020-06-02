@@ -18,6 +18,7 @@ import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.PYQ;
 import com.example.lenovo.entity.User;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
@@ -136,6 +137,8 @@ public class TrendAdapter extends BaseAdapter {
             switch (v.getId()){
                 case R.id.iv_trend_comment:
                     Intent intent = new Intent(mContext, TrendDetailActivity.class);
+                    String json = new Gson().toJson(pyq.getComments());
+                    intent.putExtra("comment",json);
                     intent.putExtra("head",pyq.getUserImg());
                     intent.putExtra("name",pyq.getUserName());
                     intent.putExtra("time",pyq.getTime());
@@ -145,6 +148,7 @@ public class TrendAdapter extends BaseAdapter {
                     intent.putExtra("commentNum",pyq.getNumber());
                     intent.putExtra("id",pyq.getId());
                     intent.putExtra("ifGood",ifGood);
+
                     mContext.startActivity(intent);
                     break;
                 case R.id.iv_trend_likePic:

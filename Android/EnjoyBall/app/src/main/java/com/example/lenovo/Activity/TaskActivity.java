@@ -81,7 +81,7 @@ public class TaskActivity extends AppCompatActivity {
                 case R.id.btn_task_readNews:
                     text = btn_task_readNews.getText().toString();
                     if (text.equals("去完成")) {
-                        intent = new Intent();
+                        intent = new Intent(TaskActivity.this,MainActivity.class);
                         startActivity(intent);
                     } else {
                         sendToServer(id, 10);
@@ -89,7 +89,7 @@ public class TaskActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.btn_task_signIn:
-                    intent = new Intent();
+                    intent = new Intent(TaskActivity.this,CheckInActivity.class);
                     startActivity(intent);
                     break;
 

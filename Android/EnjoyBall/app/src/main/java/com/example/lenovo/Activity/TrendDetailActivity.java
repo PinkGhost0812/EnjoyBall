@@ -66,9 +66,12 @@ public class TrendDetailActivity extends AppCompatActivity {
         id = ((Info) getApplicationContext()).getUser().getUser_id();
         EventBus.getDefault().register(this);
         getView();
-        getComments();
         //给页面上各个控件赋值
         Intent intent = getIntent();
+        Type type = new TypeToken<List<PYQComment>>(){}.getType();
+        dataSource = new Gson().fromJson(intent.getStringExtra("comment"),type);
+        trendCommentAdapter = new TrendCommentAdapter(dataSource,R.layout.listview_item_trend,this);
+        lv_comment.setAdapter(trendCommentAdapter);
         ifGood = intent.getBooleanExtra("ifGood",false);
         GlideApp.with(this)
                 .load(intent.getStringExtra("head"))
@@ -94,32 +97,6 @@ public class TrendDetailActivity extends AppCompatActivity {
         tv_likeNum.setText(intent.getStringExtra("likeNum"));
 
     }
-
-    private void getComments() {
-        final Request request = new Request.Builder()
-                .url(url)
-                .build();
-        Call call = client.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String json = response.body().string();
-                Type type = new TypeToken<List<PYQ>>(){}.getType();
-                List<PYQComment> comments = new Gson().fromJson(json,type);
-                dataSource = comments;
-                Message message = new Message();
-                message.what = 1;
-                EventBus.getDefault().post(message);
-            }
-        });
-
-    }
-
     private void getView() {
         iv_head = findViewById(R.id.iv_trend_head);
         tv_name = findViewById(R.id.tv_trend_name);
@@ -158,14 +135,21 @@ public class TrendDetailActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"评论内容不能为空",Toast.LENGTH_SHORT);
                     return;
                 }
-                sendComment();
+                sendComment(comment);
             }
         });
     }
 
-    private void sendComment() {
+    private void sendComment(String content) {
+        PYQComment pyqComment = new PYQComment();
+        pyqComment.setAuthor(id);
+        pyqComment.setBelong(trendId);
+        pyqComment.setContent(content);
+        pyqComment.setUserImg(((Info) getApplicationContext()).getUser().getUser_headportrait());
+        pyqComment.setUserName(((Info) getApplicationContext()).getUser().getUser_nickname());
+        String gson = new Gson().toJson(pyqComment);
         Request request = new Request.Builder()
-                .url(url)
+                .url(url+"cnm?info="+gson)
                 .build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
