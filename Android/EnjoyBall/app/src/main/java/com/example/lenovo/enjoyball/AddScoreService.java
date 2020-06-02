@@ -48,18 +48,19 @@ public class AddScoreService extends IntentService {
         frequency = sharedPreferences.getInt("frequency", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         while (true) {
+            Log.e("次数",frequency+"");
             if (frequency < 3) {
                 try {
                     //每在线10分钟增加3积分
                     Thread.sleep(60 * 1000 * 10);
                     Log.e("tag", "服务循环执行" + frequency + 1 + "次");
                     sendToServer(id, 3);
+                    frequency++;
+                    editor.putInt("frequency", frequency);
+                    editor.apply();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                frequency++;
-                editor.putInt("frequency", frequency);
-                editor.apply();
             } else {
                 break;
             }
