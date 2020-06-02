@@ -52,7 +52,7 @@ public class AddGameDiaglog extends DialogFragment {
         tvTeamb = view.findViewById(R.id.tv_team_b);
         etScorea = view.findViewById(R.id.et_score_a);
         etScoreb = view.findViewById(R.id.et_score_b);
-        btnAdd = view.findViewById(R.id.btn_add);
+        btnAdd = view.findViewById(R.id.btn_add_score);
         btnAdd.setOnClickListener(myListener);
         tvTeama.setText(Teama);
         tvTeamb.setText(Teamb);
@@ -64,12 +64,16 @@ public class AddGameDiaglog extends DialogFragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.btn_add:
+                case R.id.btn_add_score:
                     if (!etScorea.getText().toString().isEmpty() && !etScoreb.getText().toString().isEmpty()){
                         String a = etScorea.getText().toString().trim();
                         String b = etScoreb.getText().toString().trim();
                         String result = a+"-"+b;
-                        Request request = new Request.Builder().url(Info.BASE_URL + "contest/upload?id=" + gameId + "&result=" + result).build();
+                        Log.e("弹窗比赛id",gameId+"");
+                        Log.e("弹窗内容",result);
+                        String score = "1-3";
+                        okHttpClient = new OkHttpClient();
+                        Request request = new Request.Builder().url(Info.BASE_URL + "contest/upload?id=" + gameId + "&result=" + score).build();
                         Call call = okHttpClient.newCall(request);
                         call.enqueue(new Callback() {
                             @Override
