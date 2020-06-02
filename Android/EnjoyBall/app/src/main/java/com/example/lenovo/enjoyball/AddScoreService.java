@@ -54,12 +54,12 @@ public class AddScoreService extends IntentService {
                     Thread.sleep(60 * 1000 * 10);
                     Log.e("tag", "服务循环执行" + frequency + 1 + "次");
                     sendToServer(id, 3);
+                    frequency++;
+                    editor.putInt("frequency", frequency);
+                    editor.apply();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                frequency++;
-                editor.putInt("frequency", frequency);
-                editor.apply();
             } else {
                 break;
             }
