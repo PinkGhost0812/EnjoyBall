@@ -114,11 +114,10 @@ public class ShoppingAdapter extends BaseAdapter {
             viewHolder.tv_score.setText(dataSource.get(position).getPrice()+"");
             viewHolder.tv_num.setText(dataSource.get(position).getNumber()+"");
             //viewHolder.iv_shopping.setImageResource(dataSource.get(position).getShopping_img());
-
+            Glide.with(convertView).load(Info.BASE_URL + dataSource.get(position).getImg().toString()).into(viewHolder.iv_shopping);
         }catch (Exception e) {
             e.printStackTrace();
         }
-        Glide.with(convertView).load(Info.BASE_URL + dataSource.get(position).getImg().toString()).into(viewHolder.iv_shopping);
 
         return convertView;
     }
