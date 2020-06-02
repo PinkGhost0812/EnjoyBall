@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class GuessFragment extends Fragment{
     int t1,t2;
-    private List<Map<String, Object>> dataSource = null;
+    private List<Map<String, Integer>> dataSource = null;
     private int UserScore;
     private ListView listView;
     @Nullable
@@ -46,7 +46,7 @@ public class GuessFragment extends Fragment{
     //从服务器获取数据初始化界面
     private void init(){
         dataSource = new ArrayList<>();
-        Map<String,Object> map= new HashMap<>();
+        Map<String,Integer> map= new HashMap<>();
         map.put("leftscore",100);
         map.put("rightscore",100);
         map.put("userscore",UserScore);

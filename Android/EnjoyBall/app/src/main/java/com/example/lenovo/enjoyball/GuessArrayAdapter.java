@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class GuessArrayAdapter extends BaseAdapter {
     // 原始数据
-    private List<Map<String, Object>> dataSource = null;
+    private List<Map<String, Integer>> dataSource = null;
     // 上下文环境
     private Context context = null;
     // item对应的布局文件
@@ -39,7 +39,7 @@ public class GuessArrayAdapter extends BaseAdapter {
 
     public GuessArrayAdapter(
             Context context,
-            List<Map<String, Object>> dataSource,
+            List<Map<String, Integer>> dataSource,
             int item_layout_id) {
         this.context = context;
         this.dataSource = dataSource;
@@ -92,10 +92,10 @@ public class GuessArrayAdapter extends BaseAdapter {
                     Looper.loop();
                 }else{
                     showAlertDialog(finalConvertView);
-//                    if(flag==1){
+                    if(flag==1){
                         score=score-10;
                         finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("left",(int)dataSource.get(0).get("left")+10);
+                        dataSource.get(0).put("left",dataSource.get(0).get("left")+10);
                         double leftscore=(double)dataSource.get(0).get("left");
                         double rightscore=(double)dataSource.get(0).get("right");
                         if(leftscore>rightscore){
@@ -105,11 +105,11 @@ public class GuessArrayAdapter extends BaseAdapter {
                             double rate = rightscore/leftscore;
                             finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
                         }
-//                        //flag=0;
+                        flag=0;
                         Looper.prepare();
                         Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
                         Looper.loop();
-//                    }
+                    }
 
                 }
             }
@@ -188,7 +188,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                     if(flag==1){
                         score=score-10;
                         finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("right",(int)dataSource.get(0).get("right")+10);
+                        dataSource.get(0).put("right",dataSource.get(0).get("right")+10);
                         double leftscore=(double)dataSource.get(0).get("left");
                         double rightscore=(double)dataSource.get(0).get("right");
                         if(leftscore>rightscore){
@@ -273,6 +273,7 @@ public class GuessArrayAdapter extends BaseAdapter {
     }
 
     private void showAlertDialog(View convertView) {
+        final int[] my = {0};
         //创建Builder对象
         AlertDialog.Builder builder = new AlertDialog.Builder(convertView.getContext());
         //设置对话框属性
