@@ -37,17 +37,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <TextView
+            android:textSize="60sp"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="330dp"
+            android:id="@+id/tv_check_days"
+            android:text="04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_check_mouthsandweek"
+            android:textSize="16sp"
+            android:layout_marginLeft="330dp"
+            android:text="6月 星期四"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textSize="20sp"
+            android:layout_marginLeft="330dp"
+            android:text="宜 童 心"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/btn_checkin"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="590dp"
-            android:text="点击签到"
+            android:layout_marginTop="430dp"
+            android:text="未签到"
             android:layout_width="match_parent"
             android:layout_height="40dp"/>
         <TextView
             android:gravity="center"
-            android:text="今日共有5个人签到"
+            android:text="今日共有0个人签到"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

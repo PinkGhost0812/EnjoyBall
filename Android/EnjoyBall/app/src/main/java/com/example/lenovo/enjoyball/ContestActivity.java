@@ -19,6 +19,7 @@ import com.example.lenovo.Activity.TeamDetailActivity;
 import com.example.lenovo.Activity.TeamVisitDetailActivity;
 import com.example.lenovo.entity.Contest;
 import com.example.lenovo.entity.Team;
+import com.example.lenovo.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -53,9 +54,10 @@ public class ContestActivity extends AppCompatActivity {
     private Team team1;
     private Team team2;
 
+    private User user;
     private Contest contest1;
     private Map<String,MyTabSpec> map = new HashMap<>();
-    private String[] tabStrId = {"阵容","战报","评论"};
+    private String[] tabStrId = {"阵容","战报","评论","竞猜"};
 
     private Fragment curFragment = null;
 
@@ -93,6 +95,7 @@ public class ContestActivity extends AppCompatActivity {
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_contest);
 
+        user=((Info)getApplicationContext()).getUser();
         gameid = getIntent().getIntExtra("id",-1);
         EventBus.getDefault().register(this);
         Intent intent = getIntent();
@@ -104,10 +107,12 @@ public class ContestActivity extends AppCompatActivity {
 
     }
 
+    //初始化选项卡
     private void initFragment() {
         map.put(tabStrId[0],new MyTabSpec());
         map.put(tabStrId[1],new MyTabSpec());
         map.put(tabStrId[2],new MyTabSpec());
+        map.put(tabStrId[3],new MyTabSpec());
 
         setFragment();
 
@@ -122,11 +127,13 @@ public class ContestActivity extends AppCompatActivity {
         TextView tv1 = findViewById(R.id.tv_contest_battleArray);
         TextView tv2 = findViewById(R.id.tv_contest_battleReport);
         TextView tv3 = findViewById(R.id.tv_contest_comment);
+        TextView tv4 = findViewById(R.id.tv_contest_guess);
 
         MyListener myListener = new MyListener();
         tv1.setOnClickListener(myListener);
         tv2.setOnClickListener(myListener);
         tv3.setOnClickListener(myListener);
+        tv4.setOnClickListener(myListener);
 
 
     }
@@ -145,14 +152,19 @@ public class ContestActivity extends AppCompatActivity {
                 case R.id.tv_contest_comment:
                     changeTab(tabStrId[2]);
                     break;
+                case R.id.tv_contest_guess:
+                    changeTab(tabStrId[3]);
+                    break;
             }
         }
     }
 
+    //切换选项卡
     private void changeTab(String s) {
+        //更改fragment
         changeFragment(s);
 
-
+        //更改选项卡颜色
         changeText(s);
     }
 
@@ -176,6 +188,7 @@ public class ContestActivity extends AppCompatActivity {
         bundle.putInt("team2",contest1.getGame_away());
         bundle.putInt("game",gameid);
         bundle.putInt("type",contest1.getGame_class());
+        bundle.putInt("userscore",user.getUser_score());
         fragment.setArguments(bundle);
 
         if(curFragment!=null){
@@ -195,10 +208,12 @@ public class ContestActivity extends AppCompatActivity {
         TextView tv1 = findViewById(R.id.tv_contest_battleArray);
         TextView tv2 = findViewById(R.id.tv_contest_battleReport);
         TextView tv3 = findViewById(R.id.tv_contest_comment);
+        TextView tv4 = findViewById(R.id.tv_contest_guess);
 
         map.get(tabStrId[0]).setTextView(tv1);
         map.get(tabStrId[1]).setTextView(tv2);
         map.get(tabStrId[2]).setTextView(tv3);
+        map.get(tabStrId[3]).setTextView(tv4);
 
     }
 
@@ -206,6 +221,7 @@ public class ContestActivity extends AppCompatActivity {
         map.get(tabStrId[0]).setFragment(new BattleArrayFragment());
         map.get(tabStrId[1]).setFragment(new BattleReportFragment());
         map.get(tabStrId[2]).setFragment(new CommentFragment());
+        map.get(tabStrId[3]).setFragment(new GuessFragment());
 
     }
 

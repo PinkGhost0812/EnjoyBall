@@ -46,6 +46,7 @@ public class BattleArrayFragment extends Fragment {
     private List<User> team1Member = new ArrayList<>();
     private List<User> team2Member = new ArrayList<>();
     private ListView listView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class BattleArrayFragment extends Fragment {
         EventBus.getDefault().register(this);
         t1 = getArguments().getInt("team1");
         t2 = getArguments().getInt("team2");
+
         FindTeamMember1(t1);
 
 
