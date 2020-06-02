@@ -57,22 +57,6 @@ public class ShoppingFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        fabPrize = getActivity().findViewById(R.id.fab_shopping_prize);
-        fabPrize.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intents = new Intent();
-                intents.putExtra("user",user);
-                intents.setClass(getActivity(), LuckPanActivity.class);
-                startActivity(intents);
-            }
-        });
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setContent(String msgs){
         switch (msgs){
@@ -133,6 +117,21 @@ public class ShoppingFragment extends Fragment {
         for (int i=0;i<shoppingList.size();++i){
             dataSource.add(shoppingList.get(i));
         }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        fabPrize = getActivity().findViewById(R.id.fab_shopping_prize);
+        fabPrize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intents = new Intent();
+                intents.setClass(getActivity(), LuckPanActivity.class);
+                startActivity(intents);
+            }
+        });
     }
 
 
