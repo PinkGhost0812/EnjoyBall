@@ -9,6 +9,24 @@ public class PYQ {
     private Integer good;
     private String content;
     private String img;
+    private String userImg;
+    private String userName;
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getImg() {
         return img;
@@ -29,7 +47,8 @@ public class PYQ {
     private Integer number;
     private List<PYQComment> comments;
 
-    public PYQ(){}
+    public PYQ() {
+    }
 
     public List<PYQComment> getComments() {
         return comments;
