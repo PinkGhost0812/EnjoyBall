@@ -39,7 +39,6 @@ public class PersonalcenterActivity extends AppCompatActivity {
     private ImageView ivPersonalcenterComment;
     private ImageView ivPersonalcenterFollow;
     private ImageView ivPersonalcenterFans;
-
     private TextView tvPersonalcenterNickname;
     private TextView tvPersonalcenterSignature;
     private TextView tvPersonalcenterScores;
@@ -57,6 +56,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
     private LinearLayout llPersonalcenterLogout;
     private LinearLayout llPersonalcenterIdentity;
     private LinearLayout llPersonalcneterPackage;
+    private LinearLayout llPersonalCenterTask;
 
     private Intent intent;
 
@@ -369,7 +369,6 @@ public class PersonalcenterActivity extends AppCompatActivity {
         tvPersonalcenterNickname.setOnClickListener(personalcenterListener);
         tvPersonalcenterSignature.setOnClickListener(personalcenterListener);
         tvcheckin.setOnClickListener(personalcenterListener);
-
         llPersonalcenterData.setOnClickListener(personalcenterListener);
         llPersonalcneterTeam.setOnClickListener(personalcenterListener);
         llPersonalcneterYueqiu.setOnClickListener(personalcenterListener);
@@ -379,6 +378,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
         llPersonalcenterLogout.setOnClickListener(personalcenterListener);
         llPersonalcenterIdentity.setOnClickListener(personalcenterListener);
         llPersonalcneterPackage.setOnClickListener(personalcenterListener);
+        llPersonalCenterTask.setOnClickListener(personalcenterListener);
 
     }
 
@@ -405,6 +405,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
         llPersonalcenterLogout = findViewById(R.id.ll_personalcenter_logout);
         llPersonalcenterIdentity = findViewById(R.id.ll_personalcenter_identification);
         llPersonalcneterPackage = findViewById(R.id.ll_personalcenter_package);
+        llPersonalCenterTask = findViewById(R.id.ll_personalCenter_task);
 
     }
 
