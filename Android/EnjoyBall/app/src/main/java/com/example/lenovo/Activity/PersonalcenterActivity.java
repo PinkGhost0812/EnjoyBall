@@ -279,6 +279,7 @@ public class PersonalcenterActivity extends AppCompatActivity {
                     intent.setClass(PersonalcenterActivity.this, CollectActivity.class);
                     intent.putExtra("user",user);
                     startActivity(intent);
+                    //
                     break;
                 case R.id.tv_checkin:
                     intent = new Intent();
