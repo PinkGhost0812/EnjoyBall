@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.PYQ;
 import com.example.lenovo.entity.PYQComment;
 
@@ -53,6 +55,12 @@ public class TrendCommentAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(itemResId, null);
             viewHolder = new ViewHolder();
             viewHolder.tv_content.setText(dataSource.get(position).getContent());
+            viewHolder.tv_commentName.setText(dataSource.get(position).getUserName());
+            GlideApp.with(this)
+                    .load(dataSource.get(position).getUserImg())
+                    .circleCrop()
+                    .error(mContext.getResources().getDrawable(R.drawable.member))
+                    .into(viewHolder.iv_commentHead);
         }
         return convertView;
     }
