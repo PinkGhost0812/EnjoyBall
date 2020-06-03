@@ -54,6 +54,7 @@ public class CheckInActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putInt("flag",0);
                 editor.putString("time","0");
+                editor.apply();
             }
         });
 
@@ -97,7 +98,7 @@ public class CheckInActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(predate.equals("0")||flag==1){
+        if(flag==1){
             checkin.setText("已签到");
             checkin.getBackground().setAlpha(100);
         }
