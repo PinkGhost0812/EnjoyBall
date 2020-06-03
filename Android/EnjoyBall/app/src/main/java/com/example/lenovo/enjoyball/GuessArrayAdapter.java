@@ -87,27 +87,25 @@ public class GuessArrayAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if(score<10){
-                    Looper.prepare();
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
                 }else{
-                    showAlertDialog(finalConvertView);
-                    if(flag==1){
-                        score=score-10;
-                        finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("left",dataSource.get(0).get("leftscore")+10);
-                        double leftscore=(double)dataSource.get(0).get("leftscore");
-                        double rightscore=(double)dataSource.get(0).get("rightscore");
-                        if(leftscore>rightscore){
-                            double rate = leftscore/rightscore;
-                            finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
-                        }else{
-                            double rate = rightscore/leftscore;
-                            finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
-                        }
-                        flag=0;
-                        Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
-                    }
+                    showAlertDialog(finalConvertView,finalViewHolder,10,"left");
+//                    if(flag==1){
+//                        score=score-10;
+//                        finalViewHolder.score.setText("用户当前积分"+score);
+//                        dataSource.get(0).put("left",dataSource.get(0).get("leftscore")+10);
+//                        double leftscore=(double)dataSource.get(0).get("leftscore");
+//                        double rightscore=(double)dataSource.get(0).get("rightscore");
+//                        if(leftscore>rightscore){
+//                            double rate = leftscore/rightscore;
+//                            finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
+//                        }else{
+//                            double rate = rightscore/leftscore;
+//                            finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
+//                        }
+//                        flag=0;
+//                        Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
+//                    }
 
                 }
             }
@@ -116,27 +114,25 @@ public class GuessArrayAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if(score<100){
-                    Looper.prepare();
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
                 }else{
-                    showAlertDialog(finalConvertView);
-                    if(flag==1){
-                        score=score-100;
-                        finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("left",(int)dataSource.get(0).get("leftscore")+100);
-                        double leftscore=(double)dataSource.get(0).get("leftscore");
-                        double rightscore=(double)dataSource.get(0).get("rightscore");
-                        if(leftscore>rightscore){
-                            double rate = leftscore/rightscore;
-                            finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
-                        }else{
-                            double rate = rightscore/leftscore;
-                            finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
-                        }
-                        flag=0;
-                        Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
-                    }
+                    showAlertDialog(finalConvertView,finalViewHolder,100,"left");
+//                    if(flag==1){
+//                        score=score-100;
+//                        finalViewHolder.score.setText("用户当前积分"+score);
+//                        dataSource.get(0).put("left",(int)dataSource.get(0).get("leftscore")+100);
+//                        double leftscore=(double)dataSource.get(0).get("leftscore");
+//                        double rightscore=(double)dataSource.get(0).get("rightscore");
+//                        if(leftscore>rightscore){
+//                            double rate = leftscore/rightscore;
+//                            finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
+//                        }else{
+//                            double rate = rightscore/leftscore;
+//                            finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
+//                        }
+//                        flag=0;
+//                        Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
+//                    }
 
                 }
             }
@@ -145,27 +141,25 @@ public class GuessArrayAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if(score<1000){
-                    Looper.prepare();
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
                 }else{
-                    showAlertDialog(finalConvertView);
-                    if(flag==1){
-                        score=score-1000;
-                        finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("left",(int)dataSource.get(0).get("leftscore")+1000);
-                        double leftscore=(double)dataSource.get(0).get("leftscore");
-                        double rightscore=(double)dataSource.get(0).get("rightscore");
-                        if(leftscore>rightscore){
-                            double rate = leftscore/rightscore;
-                            finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
-                        }else{
-                            double rate = rightscore/leftscore;
-                            finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
-                        }
-                        flag=0;
-                        Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
-                    }
+                    showAlertDialog(finalConvertView,finalViewHolder,1000,"left");
+//                    if(flag==1){
+//                        score=score-1000;
+//                        finalViewHolder.score.setText("用户当前积分"+score);
+//                        dataSource.get(0).put("left",(int)dataSource.get(0).get("leftscore")+1000);
+//                        double leftscore=(double)dataSource.get(0).get("leftscore");
+//                        double rightscore=(double)dataSource.get(0).get("rightscore");
+//                        if(leftscore>rightscore){
+//                            double rate = leftscore/rightscore;
+//                            finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
+//                        }else{
+//                            double rate = rightscore/leftscore;
+//                            finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
+//                        }
+//                        flag=0;
+//                        Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
+//                    }
 
                 }
             }
@@ -174,27 +168,25 @@ public class GuessArrayAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if(score<10){
-                    Looper.prepare();
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
                 }else{
-                    showAlertDialog(finalConvertView);
-                    if(flag==1){
-                        score=score-10;
-                        finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("right",dataSource.get(0).get("rightscore")+10);
-                        double leftscore=(double)dataSource.get(0).get("leftscore");
-                        double rightscore=(double)dataSource.get(0).get("rightscore");
-                        if(leftscore>rightscore){
-                            double rate = leftscore/rightscore;
-                            finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
-                        }else{
-                            double rate = rightscore/leftscore;
-                            finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
-                        }
-                        flag=0;
-                        Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
-                    }
+                    showAlertDialog(finalConvertView,finalViewHolder,10,"right");
+//                    if(flag==1){
+//                        score=score-10;
+//                        finalViewHolder.score.setText("用户当前积分"+score);
+//                        dataSource.get(0).put("right",dataSource.get(0).get("rightscore")+10);
+//                        double leftscore=(double)dataSource.get(0).get("leftscore");
+//                        double rightscore=(double)dataSource.get(0).get("rightscore");
+//                        if(leftscore>rightscore){
+//                            double rate = leftscore/rightscore;
+//                            finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
+//                        }else{
+//                            double rate = rightscore/leftscore;
+//                            finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
+//                        }
+//                        flag=0;
+//                        Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
+//                    }
 
                 }
             }
@@ -203,27 +195,25 @@ public class GuessArrayAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if(score<100){
-                    Looper.prepare();
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
                 }else{
-                    showAlertDialog(finalConvertView);
-                    if(flag==1){
-                        score=score-10;
-                        finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("right",(int)dataSource.get(0).get("rightscore")+100);
-                        double leftscore=(double)dataSource.get(0).get("leftscore");
-                        double rightscore=(double)dataSource.get(0).get("rightscore");
-                        if(leftscore>rightscore){
-                            double rate = leftscore/rightscore;
-                            finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
-                        }else{
-                            double rate = rightscore/leftscore;
-                            finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
-                        }
-                        flag=0;
-                        Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
-                    }
+                    showAlertDialog(finalConvertView,finalViewHolder,100,"right");
+//                    if(flag==1){
+//                        score=score-100;
+//                        finalViewHolder.score.setText("用户当前积分"+score);
+//                        dataSource.get(0).put("right",(int)dataSource.get(0).get("rightscore")+100);
+//                        double leftscore=(double)dataSource.get(0).get("leftscore");
+//                        double rightscore=(double)dataSource.get(0).get("rightscore");
+//                        if(leftscore>rightscore){
+//                            double rate = leftscore/rightscore;
+//                            finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
+//                        }else{
+//                            double rate = rightscore/leftscore;
+//                            finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
+//                        }
+//                        flag=0;
+//                        Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
+//                    }
 
                 }
             }
@@ -232,27 +222,25 @@ public class GuessArrayAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if(score<1000){
-                    Looper.prepare();
                     Toast.makeText(finalConvertView.getContext(), "当前用户积分不足", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
                 }else{
-                    showAlertDialog(finalConvertView);
-                    if(flag==1){
-                        score=score-10;
-                        finalViewHolder.score.setText("用户当前积分"+score);
-                        dataSource.get(0).put("right",(int)dataSource.get(0).get("rightscore")+1000);
-                        double leftscore=(double)dataSource.get(0).get("leftscore");
-                        double rightscore=(double)dataSource.get(0).get("rightscore");
-                        if(leftscore>rightscore){
-                            double rate = leftscore/rightscore;
-                            finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
-                        }else{
-                            double rate = rightscore/leftscore;
-                            finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
-                        }
-                        flag=0;
-                        Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
-                    }
+                    showAlertDialog(finalConvertView,finalViewHolder,1000,"right");
+//                    if(flag==1){
+//                        score=score-10;
+//                        finalViewHolder.score.setText("用户当前积分"+score);
+//                        dataSource.get(0).put("right",(int)dataSource.get(0).get("rightscore")+1000);
+//                        double leftscore=(double)dataSource.get(0).get("leftscore");
+//                        double rightscore=(double)dataSource.get(0).get("rightscore");
+//                        if(leftscore>rightscore){
+//                            double rate = leftscore/rightscore;
+//                            finalViewHolder.odds.setText("当前支持率:"+rate+":"+1);
+//                        }else{
+//                            double rate = rightscore/leftscore;
+//                            finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
+//                        }
+//                        flag=0;
+//                        Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
+//                    }
 
                 }
             }
@@ -260,7 +248,7 @@ public class GuessArrayAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void showAlertDialog(View convertView) {
+    private void showAlertDialog(final View convertView, final ViewHolder holder, final int addscore, final String position) {
         final int[] my = {0};
         //创建Builder对象
         AlertDialog.Builder builder = new AlertDialog.Builder(convertView.getContext());
@@ -272,7 +260,25 @@ public class GuessArrayAdapter extends BaseAdapter {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //退出当前的Activity
-                flag =1;
+                score=score-addscore;
+                holder.score.setText("用户当前积分"+score);
+                if(position.equals("right")){
+                    dataSource.get(0).put("rightscore",dataSource.get(0).get("rightscore")+addscore);
+                }else{
+                    dataSource.get(0).put("rightscore",dataSource.get(0).get("leftscore")+addscore);
+                }
+
+                double leftscore=(double)dataSource.get(0).get("leftscore");
+                double rightscore=(double)dataSource.get(0).get("rightscore");
+                if(leftscore>rightscore){
+                    double rate = leftscore/rightscore;
+                    holder.odds.setText("当前支持率:"+rate+":"+1);
+                }else{
+                    double rate = rightscore/leftscore;
+                    holder.odds.setText("当前支持率:"+1+":"+rate);
+                }
+                Toast.makeText(convertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
+
 //                finish();
             }
         }); //设置确定按钮
