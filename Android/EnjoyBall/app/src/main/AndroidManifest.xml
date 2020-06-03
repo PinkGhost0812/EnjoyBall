@@ -83,7 +83,7 @@
         <activity android:name="com.example.lenovo.Activity.TeamManageInviteActivity" />
         <activity android:name="com.example.lenovo.Activity.LuckPanActivity"/>
         <activity android:name="com.example.lenovo.Activity.KnapsackActivity"/>
-
+        <activity android:name="com.example.lenovo.Activity.AnnounceActivity"/>
 
         <meta-data
             android:name="JPUSH_CHANNEL"
