@@ -3,6 +3,7 @@ package com.example.lenovo.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -72,10 +73,13 @@ public class TaskActivity extends AppCompatActivity {
                     text = btn_task_createAgreement.getText().toString();
                     if (text.equals("去完成")) {
                         intent = new Intent(TaskActivity.this, CreateAgreementActivity.class);
+                        tv_task_createAgreement.setText("1/1");
+                        btn_task_createAgreement.setText("完成");
                         startActivity(intent);
                     } else {
                         sendToServer(id, 10);
                         btn_task_createAgreement.setEnabled(false);
+                        btn_task_createAgreement.setBackgroundColor(Color.GRAY);
                     }
                     break;
                 case R.id.btn_task_readNews:
@@ -120,6 +124,7 @@ public class TaskActivity extends AppCompatActivity {
             tv_task_signIn.setText("(1/1)");
             btn_task_signIn.setText("已完成");
             btn_task_signIn.setEnabled(false);
+            btn_task_signIn.setBackgroundColor(Color.GRAY);
         }
 
     }

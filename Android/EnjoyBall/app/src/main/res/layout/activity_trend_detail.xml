@@ -93,17 +93,21 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_height="2dp"/>
     <!--评论部分-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="3">
+        android:layout_weight="5">
         <ListView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/lv_trendDetail_comment"
-            android:layout_weight="5" />
+            android:layout_weight="18" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -117,6 +121,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:id="@+id/btn_trendDetail_send"
+                android:background="@color/colorPrimary"
+                android:textColor="#fff"
                 android:text="发送"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

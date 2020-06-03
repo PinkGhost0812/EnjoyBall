@@ -89,6 +89,7 @@
                     <Button
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:background="#FFCC33"
                         android:id="@+id/btn_task_signIn"
                         android:text="未完成"
                         android:layout_height="wrap_content"/>
@@ -128,6 +129,7 @@
                     <Button
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:background="#FFCC33"
                         android:id="@+id/btn_task_readNews"
                         android:text="未完成"
                         android:layout_height="wrap_content"/>
@@ -166,6 +168,7 @@
                     <Button
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:background="#FFCC33"
                         android:id="@+id/btn_task_createAgreement"
                         android:text="未完成"
                         android:layout_height="wrap_content"/>

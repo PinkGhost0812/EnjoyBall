@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/trendbg"
     android:orientation="vertical">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -20,5 +21,7 @@
         android:layout_height="0dp"
         android:id="@+id/btn_trend_createTrend"
         android:layout_weight="1"
-        android:text="发布"/>
+        android:textColor="#FFFF33"
+        style="?android:attr/borderlessButtonStyle"
+        android:text="分享我的动态"/>
 </LinearLayout>
