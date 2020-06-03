@@ -62,6 +62,9 @@ public class TrendCommentAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
+            viewHolder.tv_content = convertView.findViewById(R.id.tv_trendComment_content);
+            viewHolder.tv_commentName = convertView.findViewById(R.id.tv_trendComment_name);
+            viewHolder.iv_commentHead = convertView.findViewById(R.id.iv_trendComment_head);
         }
         viewHolder.tv_content.setText(dataSource.get(position).getContent());
         viewHolder.tv_commentName.setText(dataSource.get(position).getUserName());
