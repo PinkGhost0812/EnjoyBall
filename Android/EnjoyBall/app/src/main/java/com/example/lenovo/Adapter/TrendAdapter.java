@@ -150,7 +150,7 @@ public class TrendAdapter extends BaseAdapter {
                     intent.putExtra("time",pyq.getTime());
                     intent.putExtra("body",pyq.getContent());
                     intent.putExtra("bodyImg",pyq.getImg());
-                    intent.putExtra("goodNum",pyq.getGood());
+                    intent.putExtra("likeNum",pyq.getGood());
                     intent.putExtra("commentNum",pyq.getNumber());
                     intent.putExtra("id",pyq.getId());
                     intent.putExtra("ifGood",ifGood);

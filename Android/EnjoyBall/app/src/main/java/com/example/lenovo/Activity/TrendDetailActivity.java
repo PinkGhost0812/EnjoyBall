@@ -71,11 +71,11 @@ public class TrendDetailActivity extends AppCompatActivity {
         Type type = new TypeToken<List<PYQComment>>(){}.getType();
         dataSource = new Gson().fromJson(intent.getStringExtra("comment"),type);
         Log.e("LJMtstDataSource", dataSource.get(0).getContent());
-        trendCommentAdapter = new TrendCommentAdapter(dataSource,R.layout.listview_item_trend,this);
+        trendCommentAdapter = new TrendCommentAdapter(dataSource,R.layout.activity_item_trendcomment,this);
         lv_comment.setAdapter(trendCommentAdapter);
         ifGood = intent.getBooleanExtra("ifGood",false);
         GlideApp.with(this)
-                .load(intent.getStringExtra("head"))
+                .load(Info.BASE_URL + intent.getStringExtra("head"))
                 .circleCrop()
                 .error(getResources().getDrawable(R.drawable.member))
                 .into(iv_head);
@@ -85,8 +85,7 @@ public class TrendDetailActivity extends AppCompatActivity {
         trendId = intent.getIntExtra("id",404);
         if (intent.getStringExtra("bodyImg")!=null){
             GlideApp.with(this)
-                    .load(intent.getStringExtra("bodyImg"))
-                    .circleCrop()
+                    .load(Info.BASE_URL + intent.getStringExtra("bodyImg"))
                     .error(getResources().getDrawable(R.drawable.member))
                     .into(iv_bodyImg);
         }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.lenovo.enjoyball.GlideApp;
+import com.example.lenovo.enjoyball.Info;
 import com.example.lenovo.enjoyball.R;
 import com.example.lenovo.entity.PYQ;
 import com.example.lenovo.entity.PYQComment;
@@ -55,14 +56,20 @@ public class TrendCommentAdapter extends BaseAdapter {
         if (convertView==null){
             convertView = LayoutInflater.from(mContext).inflate(itemResId, null);
             viewHolder = new ViewHolder();
-            viewHolder.tv_content.setText(dataSource.get(position).getContent() + "");
-            viewHolder.tv_commentName.setText(dataSource.get(position).getUserName());
-            GlideApp.with(mContext)
-                    .load(dataSource.get(position).getUserImg())
-                    .circleCrop()
-                    .error(mContext.getResources().getDrawable(R.drawable.member))
-                    .into(viewHolder.iv_commentHead);
+            viewHolder.tv_content = convertView.findViewById(R.id.tv_trendComment_content);
+            viewHolder.tv_commentName = convertView.findViewById(R.id.tv_trendComment_name);
+            viewHolder.iv_commentHead = convertView.findViewById(R.id.iv_trendComment_head);
+            convertView.setTag(viewHolder);
+        }else {
+            viewHolder = (ViewHolder)convertView.getTag();
         }
+        viewHolder.tv_content.setText(dataSource.get(position).getContent());
+        viewHolder.tv_commentName.setText(dataSource.get(position).getUserName());
+        GlideApp.with(mContext)
+                .load(Info.BASE_URL+dataSource.get(position).getUserImg())
+                .circleCrop()
+                .error(mContext.getResources().getDrawable(R.drawable.member))
+                .into(viewHolder.iv_commentHead);
         return convertView;
     }
     private class ViewHolder {

@@ -93,7 +93,7 @@ public class TrendActivity extends AppCompatActivity {
         btn_createTrend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(TrendActivity.this, AnnounceActivity.class);
                 startActivity(intent);
             }
         });

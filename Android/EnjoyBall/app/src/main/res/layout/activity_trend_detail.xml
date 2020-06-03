@@ -66,8 +66,9 @@
 
             <ImageView
                 android:id="@+id/iv_trend_bodyImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="fitXY"
                 android:layout_gravity="center"
                 android:src="@drawable/portrait" />
 
