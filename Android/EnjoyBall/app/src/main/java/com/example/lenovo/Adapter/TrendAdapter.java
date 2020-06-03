@@ -87,7 +87,6 @@ public class TrendAdapter extends BaseAdapter {
             Log.e("朋友圈图片",dataSource.get(position).getImg());
             GlideApp.with(mContext)
                     .load(imageUrl+dataSource.get(position).getImg())
-                    .circleCrop()
                     .error(mContext.getResources().getDrawable(R.drawable.member))
                     .into(viewHolder.iv_trendBodyImg);
         }
@@ -99,8 +98,8 @@ public class TrendAdapter extends BaseAdapter {
         viewHolder.tv_trendName.setText(dataSource.get(position).getUserName());
         viewHolder.tv_trendTime.setText(dataSource.get(position).getTime());
         viewHolder.tv_trendBody.setText(dataSource.get(position).getContent());
-        viewHolder.tv_likeNum.setText(dataSource.get(position).getGood());
-        viewHolder.tv_commentNum.setText(dataSource.get(position).getNumber());
+        viewHolder.tv_likeNum.setText(dataSource.get(position).getGood() + "");
+        viewHolder.tv_commentNum.setText(dataSource.get(position).getNumber() + "");
         viewHolder.iv_trendComment.setOnClickListener(new OnClicked(viewHolder.ifGood,dataSource.get(position)));
         viewHolder.iv_trendLike.setOnClickListener(new OnClicked(convertView,dataSource.get(position).getId()));
         return convertView;

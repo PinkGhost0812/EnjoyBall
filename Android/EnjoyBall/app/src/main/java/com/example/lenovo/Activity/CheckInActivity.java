@@ -77,6 +77,7 @@ public class CheckInActivity extends AppCompatActivity {
         String predate = sp.getString("perdate","0");
         try {
             if(subDay(predate,df.format(new Date()))>0){
+                Log.e("falg",""+subDay(predate,df.format(new Date())));
                 flag=0;
             }
         } catch (ParseException e) {
