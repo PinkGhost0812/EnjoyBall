@@ -100,6 +100,7 @@ public class AnnounceActivity extends AppCompatActivity {
     }
 
     private void upload1(String content) {
+        pyq = new PYQ();
         pyq.setUserId(user.getUser_id());
         pyq.setContent(content);
         if(imgPath=="0"){

@@ -61,16 +61,17 @@ public class TrendCommentAdapter extends BaseAdapter {
             viewHolder.tv_content = convertView.findViewById(R.id.tv_trendComment_content);
             viewHolder.tv_commentName = convertView.findViewById(R.id.tv_trendComment_name);
             viewHolder.iv_commentHead = convertView.findViewById(R.id.iv_trendComment_head);
-            Log.e("viewHolder1",viewHolder.toString());
+//            Log.e("viewHolder1",viewHolder.toString());
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
             viewHolder.tv_content = convertView.findViewById(R.id.tv_trendComment_content);
             viewHolder.tv_commentName = convertView.findViewById(R.id.tv_trendComment_name);
             viewHolder.iv_commentHead = convertView.findViewById(R.id.iv_trendComment_head);
+//            Log.e("viewHolder2",viewHolder.toString());
         }
         viewHolder.tv_content.setText(dataSource.get(position).getContent());
-        Log.e("viewHolder2",viewHolder.toString());
+
         viewHolder.tv_commentName.setText(dataSource.get(position).getUserName());
         GlideApp.with(mContext)
                 .load(Info.BASE_URL+dataSource.get(position).getUserImg())

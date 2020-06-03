@@ -85,9 +85,10 @@ public class TrendDetailActivity extends AppCompatActivity {
         if (intent.getStringExtra("bodyImg")!=null){
             GlideApp.with(this)
                     .load(Info.BASE_URL+intent.getStringExtra("bodyImg"))
-                    .circleCrop()
                     .error(getResources().getDrawable(R.drawable.member))
                     .into(iv_bodyImg);
+        }else{
+            iv_bodyImg.setVisibility(View.GONE);
         }
         if (intent.getBooleanExtra("ifGood",false)){
             iv_like.setImageResource(R.drawable.gooda);
