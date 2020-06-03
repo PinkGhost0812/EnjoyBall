@@ -56,6 +56,8 @@ public class CheckInActivity extends AppCompatActivity {
 
         TextView days = findViewById(R.id.tv_check_days);
         TextView mouths = findViewById(R.id.tv_check_mouthsandweek);
+
+        //设置当天日期
         Log.e("day",""+day);
         Log.e("month",""+month);
         Log.e("week",""+week);
@@ -73,7 +75,14 @@ public class CheckInActivity extends AppCompatActivity {
         SharedPreferences sp=getSharedPreferences("" + id, Context.MODE_PRIVATE);
         flag = sp.getInt("flag",0);
         String predate = sp.getString("perdate","0");
-        if(predate.equals(0)||flag==1){
+        try {
+            if(subDay(predate,df.format(new Date()))>0){
+                flag=0;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(predate.equals("0")||flag==1){
             checkin.setText("已签到");
             checkin.getBackground().setAlpha(100);
         }
