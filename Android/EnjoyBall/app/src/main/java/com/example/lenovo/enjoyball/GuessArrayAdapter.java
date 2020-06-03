@@ -106,9 +106,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                             finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
                         }
                         flag=0;
-                        Looper.prepare();
                         Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
-                        Looper.loop();
                     }
 
                 }
@@ -137,9 +135,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                             finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
                         }
                         flag=0;
-                        Looper.prepare();
                         Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
-                        Looper.loop();
                     }
 
                 }
@@ -168,9 +164,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                             finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
                         }
                         flag=0;
-                        Looper.prepare();
                         Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
-                        Looper.loop();
                     }
 
                 }
@@ -199,9 +193,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                             finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
                         }
                         flag=0;
-                        Looper.prepare();
                         Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
-                        Looper.loop();
                     }
 
                 }
@@ -230,9 +222,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                             finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
                         }
                         flag=0;
-                        Looper.prepare();
                         Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
-                        Looper.loop();
                     }
 
                 }
@@ -261,9 +251,7 @@ public class GuessArrayAdapter extends BaseAdapter {
                             finalViewHolder.odds.setText("当前支持率:"+1+":"+rate);
                         }
                         flag=0;
-                        Looper.prepare();
                         Toast.makeText(finalConvertView.getContext(), "支持成功，感谢您的支持", Toast.LENGTH_SHORT).show();
-                        Looper.loop();
                     }
 
                 }
