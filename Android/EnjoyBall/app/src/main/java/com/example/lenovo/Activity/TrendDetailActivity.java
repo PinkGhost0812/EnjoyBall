@@ -70,12 +70,11 @@ public class TrendDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Type type = new TypeToken<List<PYQComment>>(){}.getType();
         dataSource = new Gson().fromJson(intent.getStringExtra("comment"),type);
-        Log.e("LJMtstDataSource", dataSource.get(0).getContent());
         trendCommentAdapter = new TrendCommentAdapter(dataSource,R.layout.activity_item_trendcomment,this);
         lv_comment.setAdapter(trendCommentAdapter);
         ifGood = intent.getBooleanExtra("ifGood",false);
         GlideApp.with(this)
-                .load(Info.BASE_URL + intent.getStringExtra("head"))
+                .load(intent.getStringExtra("head"))
                 .circleCrop()
                 .error(getResources().getDrawable(R.drawable.member))
                 .into(iv_head);
@@ -85,7 +84,8 @@ public class TrendDetailActivity extends AppCompatActivity {
         trendId = intent.getIntExtra("id",404);
         if (intent.getStringExtra("bodyImg")!=null){
             GlideApp.with(this)
-                    .load(Info.BASE_URL + intent.getStringExtra("bodyImg"))
+                    .load(intent.getStringExtra("bodyImg"))
+                    .circleCrop()
                     .error(getResources().getDrawable(R.drawable.member))
                     .into(iv_bodyImg);
         }
@@ -94,7 +94,7 @@ public class TrendDetailActivity extends AppCompatActivity {
         }else {
             iv_like.setImageResource(R.drawable.goodb);
         }
-        tv_likeNum.setText(intent.getStringExtra("likeNum"));
+        tv_likeNum.setText(intent.getIntExtra("likeNum",0)+" ");
 
     }
     private void getView() {
@@ -116,11 +116,11 @@ public class TrendDetailActivity extends AppCompatActivity {
                 if (ifGood){
                     ifGood=false;
                     iv_like.setImageResource(R.drawable.goodb);
-                    tv_likeNum.setText(--num + "");
+                    tv_likeNum.setText(--num);
                 }else {
                     ifGood = true;
                     iv_like.setImageResource(R.drawable.goodb);
-                    tv_likeNum.setText(++num + "");
+                    tv_likeNum.setText(++num);
 
                 }
                 setLike(id,num);
@@ -147,6 +147,7 @@ public class TrendDetailActivity extends AppCompatActivity {
         pyqComment.setContent(content);
         pyqComment.setUserImg(((Info) getApplicationContext()).getUser().getUser_headportrait());
         pyqComment.setUserName(((Info) getApplicationContext()).getUser().getUser_nickname());
+        dataSource.add(pyqComment);
         String gson = new Gson().toJson(pyqComment);
         Request request = new Request.Builder()
                 .url(url+"cnm?info="+gson)
@@ -192,6 +193,7 @@ public class TrendDetailActivity extends AppCompatActivity {
     public void setAdapter(Message message) {
         switch (message.what){
             case 1:
+                Log.e("更新评论列表","");
                 trendCommentAdapter = new TrendCommentAdapter(dataSource,R.layout.listview_item_trend,this);
                 lv_comment.setAdapter(trendCommentAdapter);
                 break;
