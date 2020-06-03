@@ -73,12 +73,14 @@ public class CheckInActivity extends AppCompatActivity {
         System.out.println(df.format(new Date()));
 
         SharedPreferences sp=getSharedPreferences("" + id, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
         flag = sp.getInt("flag",0);
-        String predate = sp.getString("perdate","0");
+        String predate = sp.getString("time","0");
         try {
             if(subDay(predate,df.format(new Date()))>0){
                 Log.e("falg",""+subDay(predate,df.format(new Date())));
                 flag=0;
+                editor.putInt("flag",0);
             }
         } catch (ParseException e) {
             e.printStackTrace();
