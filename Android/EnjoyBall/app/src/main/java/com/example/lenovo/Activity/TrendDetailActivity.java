@@ -64,7 +64,7 @@ public class TrendDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trend_detail);
         id = ((Info) getApplicationContext()).getUser().getUser_id();
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
         getView();
         //给页面上各个控件赋值
         Intent intent = getIntent();
@@ -83,6 +83,7 @@ public class TrendDetailActivity extends AppCompatActivity {
         tv_body.setText(intent.getStringExtra("body"));
         trendId = intent.getIntExtra("id",404);
         if (intent.getStringExtra("bodyImg")!=null){
+
             GlideApp.with(this)
                     .load(Info.BASE_URL+intent.getStringExtra("bodyImg"))
                     .error(getResources().getDrawable(R.drawable.member))
@@ -137,6 +138,8 @@ public class TrendDetailActivity extends AppCompatActivity {
                     return;
                 }
                 sendComment(comment);
+                et_comment.setText("");
+
             }
         });
     }
@@ -164,7 +167,7 @@ public class TrendDetailActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 Message message = new Message();
                 message.what = 1;
-                EventBus.getDefault().post(message);
+//                EventBus.getDefault().post(message);
             }
         });
 
@@ -190,13 +193,14 @@ public class TrendDetailActivity extends AppCompatActivity {
 
 
     }
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+//    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void setAdapter(Message message) {
         switch (message.what){
             case 1:
                 Log.e("更新评论列表","");
-                trendCommentAdapter = new TrendCommentAdapter(dataSource,R.layout.listview_item_trend,this);
-                lv_comment.setAdapter(trendCommentAdapter);
+//                trendCommentAdapter = new TrendCommentAdapter(dataSource,R.layout.listview_item_trend,this);
+//                lv_comment.setAdapter(trendCommentAdapter);
+                trendCommentAdapter.notifyDataSetChanged();
                 break;
 
         }

@@ -85,6 +85,7 @@ public class TrendAdapter extends BaseAdapter {
         }
         if (dataSource.get(position).getImg()!=null){
             Log.e("朋友圈图片",dataSource.get(position).getImg());
+            viewHolder.iv_trendBodyImg.setVisibility(View.VISIBLE);
             GlideApp.with(mContext)
                     .load(imageUrl+dataSource.get(position).getImg())
                     .error(mContext.getResources().getDrawable(R.drawable.member))
