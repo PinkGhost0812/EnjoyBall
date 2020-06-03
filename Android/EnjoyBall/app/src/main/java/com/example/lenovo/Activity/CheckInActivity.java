@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,17 @@ public class CheckInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.nonetitle);
         setContentView(R.layout.activity_check_in);
+
+        ImageView re = findViewById(R.id.img_check_return);
+        re.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sp=getSharedPreferences("" + id, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putInt("flag",0);
+                editor.putString("time","0");
+            }
+        });
 
         user = ((Info) getApplicationContext()).getUser();
         id = user.getUser_id();
