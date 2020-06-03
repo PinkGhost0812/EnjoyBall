@@ -74,7 +74,7 @@ public class TrendDetailActivity extends AppCompatActivity {
         lv_comment.setAdapter(trendCommentAdapter);
         ifGood = intent.getBooleanExtra("ifGood",false);
         GlideApp.with(this)
-                .load(intent.getStringExtra("head"))
+                .load(Info.BASE_URL+intent.getStringExtra("head"))
                 .circleCrop()
                 .error(getResources().getDrawable(R.drawable.member))
                 .into(iv_head);
@@ -84,7 +84,7 @@ public class TrendDetailActivity extends AppCompatActivity {
         trendId = intent.getIntExtra("id",404);
         if (intent.getStringExtra("bodyImg")!=null){
             GlideApp.with(this)
-                    .load(intent.getStringExtra("bodyImg"))
+                    .load(Info.BASE_URL+intent.getStringExtra("bodyImg"))
                     .circleCrop()
                     .error(getResources().getDrawable(R.drawable.member))
                     .into(iv_bodyImg);
