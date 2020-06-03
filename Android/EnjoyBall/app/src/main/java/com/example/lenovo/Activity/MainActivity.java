@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
         if (!fragment.isAdded()) {
             Bundle bundle = new Bundle();
             bundle.putInt("ball",i);
-            bundle.putInt("identity",user.getUser_identity());
+//            bundle.putInt("identity",user.getUser_identity());
             bundle.putSerializable("user",user);
             fragment.setArguments(bundle);
             transaction.replace(R.id.tab_content, fragment);
@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putInt("ball", y);
-        bundle.putInt("identity",user.getUser_identity());
+//        bundle.putInt("identity",user.getUser_identity());
         fragment.setArguments(bundle);
         transaction.replace(R.id.tab_content, fragment);
         // 显示对应Fragment

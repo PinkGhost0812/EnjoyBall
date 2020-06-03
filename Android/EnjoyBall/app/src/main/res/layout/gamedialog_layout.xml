@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -56,6 +57,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_gravity="center"
-        android:text="确认上传"/>
+        android:text="确认上传"
+        android:background="@drawable/shapebutton_login"
+        android:textColor="#ffffff"/>
 </LinearLayout>

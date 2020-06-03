@@ -19,7 +19,7 @@ public class Info extends Application{
 
 
 
-    public static final String BASE_URL = "http://192.168.2.102:8080/EnjoyBallServer/";
+    public static final String BASE_URL = "http://192.168.2.142:8080/EnjoyBallServer/";
 
     public static String registrationId ;
     @Override

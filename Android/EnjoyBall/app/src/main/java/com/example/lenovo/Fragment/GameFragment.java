@@ -153,7 +153,8 @@ public class GameFragment extends Fragment {
         if (ball!=-1){
             x = ball;
         }
-        identity = ((Info) getActivity().getApplicationContext()).getUser().getUser_identity();
+        identity = 3;
+        //identity = ((Info) getActivity().getApplicationContext()).getUser().getUser_identity();
         int y = x-1;
         page = 1;
         okHttpClient =new OkHttpClient();
